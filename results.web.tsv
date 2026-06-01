@@ -32,3 +32,10 @@ e75340b	real-chrome-extension-agent	7	0.8571	0.8571	1.0000	1.0000	0.00	0.016	16.
 e75340b	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.009	0.0000	baseline	local-fake-extension benchmark run
 e75340b	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.006	0.107	0.0000	baseline	real-chrome-extension-smoke benchmark run
 e75340b	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.024	144.475	0.0000	keep	review run verified program loop
+75bf82d	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.006	0.010	0.0000	baseline	local-fake-extension benchmark run
+75bf82d	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.010	0.100	0.0000	baseline	real-chrome-extension-smoke benchmark run
+75bf82d	real-chrome-extension-agent	7	0.7143	0.7143	1.0000	1.0000	0.00	0.058	300.008	0.2857	discard	post-pr program run
+75bf82d	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.010	0.0000	baseline	local-fake-extension benchmark run
+75bf82d	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.007	0.123	0.0000	baseline	real-chrome-extension-smoke benchmark run
+75bf82d	real-chrome-extension-agent	0	0.0000	0.0000	0.0000	0.0000	0.00	0.000	0.000	1.0000	timeout	load-only model warmup timed out before tasks
+75bf82d	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.009	0.0000	baseline	local-fake-extension benchmark run

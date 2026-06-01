@@ -42,6 +42,18 @@ git switch -c codex/autoresearch-testing
 
 If the branch already exists, switch to it. Preserve any existing user changes. Do not reset the whole repository to discard one failed experiment. Revert only the files changed by the current experiment, and only after recording the failure.
 
+## PR Policy
+
+This program is fork-first. Push and open draft PRs only against the user's fork, currently `killerapp/gemma-gem-extension`, unless the user explicitly asks to send work upstream.
+
+Rules:
+
+- Use `fork` as the push remote for `codex/autoresearch-testing`.
+- Draft PR target should be `killerapp/gemma-gem-extension:main`.
+- Do not open PRs against `kessler/gemma-gem` or any other upstream repository without explicit user approval in the current thread.
+- If an upstream PR is accidentally opened, close it immediately, leave a short explanatory comment, and continue only with the fork PR.
+- Use the fork PR as a review artifact; do not treat it as proof that upstream is ready.
+
 ## Success Metrics
 
 Primary metric:
@@ -163,6 +175,52 @@ Loop:
 7. Keep if the change improves the primary metric or materially improves a secondary metric with no primary regression.
 8. Discard if success drops, JSON validity regresses, security weakens, or latency/timeouts exceed budget without a large success-rate gain.
 9. Write a short benchmark/report note for every kept change.
+
+## Current Research Notes
+
+Post-PR review run from commit `75bf82d` showed:
+
+- `pnpm benchmark:web` passed.
+- `pnpm benchmark:web -- --real` passed.
+- `pnpm benchmark:web -- --real --include-agent` failed with model-backed timeouts:
+  - `gemma_extract` timed out at about 300 seconds.
+  - `gemma_agent` timed out at about 300 seconds.
+  - deterministic bridge/browser tasks continued to pass.
+  - JSON validity and selector grounding stayed at `1.0000`.
+
+Interpretation:
+
+- The bridge, Chrome runtime, task fixtures, and deterministic MCP helpers are healthy.
+- The failure mode is local model/runtime readiness or generation hang, not selector grounding or JSON formatting.
+- A previous agent-based prewarm moved cold-start cost out of extraction but changed later model behavior and failed the semantic receipt assertion. Do not use a full `gemma_agent` generation as the warmup primitive.
+
+Next high-value experiment:
+
+1. Add a bridge-level `bridge:warm_model` or `model:ensure_ready` path that creates the offscreen document and waits for the model to report `ready` without running an agent generation or touching the page.
+2. Add benchmark support for reporting `model_load_seconds` separately from task durations.
+3. Keep the frozen task assertions unchanged.
+4. Keep the change only if real-agent success returns to `1.0000` and timeout rate returns to `0.0000`, or if the diagnostics prove a narrower runtime fix is needed.
+
+Experiment result:
+
+- A first load-only warmup attempt was tried on June 1, 2026.
+- It added a `bridge:warm_model` request and benchmark-side warmup before real-agent tasks.
+- The warmup itself timed out through MCP at 300 seconds before any benchmark task ran.
+- The code was discarded because it reduced observability of the task suite and did not improve success.
+- The useful finding is that the failure can happen before prompt execution, so the next try should instrument offscreen model-load status, readiness, and WebGPU/ONNX progress rather than changing agent prompts.
+
+Refined next try:
+
+1. Add diagnostics around `model:load`: timestamps for offscreen creation, file progress, `from_pretrained` start/finish, processor load, model load, and `ready/error`.
+2. Make benchmark failures preserve the last model status/progress in `benchmark.web.jsonl` and `report.md`.
+3. Add an isolated debug command that opens the extension profile and only waits for model readiness, outside the task suite.
+4. Only after readiness is reliable, reintroduce model-load timing as a measured preflight.
+
+Relevant platform constraints:
+
+- Extension service workers are event-driven and can shut down when dormant, so long-running model work should not depend on unstated service-worker liveness.
+- Offscreen documents are the intended Chrome extension surface for hidden DOM/WebGPU work, but only `chrome.runtime` messaging is available there.
+- ONNX Runtime WebGPU documentation calls out explicit GPU tensor/buffer lifecycle management; repeated timeout or `OrtRun` failures should be treated as potential runtime state issues, not just prompt failures.
 
 ## Commands
 
