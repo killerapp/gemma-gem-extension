@@ -61,6 +61,51 @@
   },
   {
     "task": {
+      "id": "extract-pricing-json",
+      "suite": "extraction",
+      "title": "Extract pricing cards as strict JSON",
+      "tool": "gemma_extract"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "[data-plan=starter]",
+      "text": "read_page_content selector=[data-plan=starter] format=text",
+      "title": "single starter plan section"
+    }
+  },
+  {
+    "task": {
+      "id": "semantic-page-brief",
+      "suite": "semantic-buttons",
+      "title": "Brief exposes meaningful billing controls",
+      "tool": "gemma_page_brief"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "#download-invoice",
+      "text": "read_page_content selector=#download-invoice format=text",
+      "title": "invoice button content"
+    }
+  },
+  {
+    "task": {
+      "id": "semantic-receipt-agent",
+      "suite": "semantic-buttons",
+      "title": "Choose the receipt proof button",
+      "tool": "gemma_agent"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "#payment-settings",
+      "text": "read_page_content selector=#payment-settings format=text",
+      "title": "payment settings button content"
+    }
+  },
+  {
+    "task": {
       "id": "transfer-profile-fields",
       "suite": "forms",
       "title": "Transfer account fields between tabs",

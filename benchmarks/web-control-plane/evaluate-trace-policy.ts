@@ -21,6 +21,7 @@ const STOP_WORDS = new Set([
   'to',
   'with',
 ])
+const CANDIDATE_TOOL_NAMES = new Set(['click_element', 'type_text', 'read_page_content'])
 
 type TraceRecord = {
   task: {
@@ -223,6 +224,13 @@ function fieldAlignment(selector: string | null, title: string | null): 'match' 
   return null
 }
 
+function requiresFullPageRead(taskId: string): boolean {
+  return taskId === 'extract-pricing-json' ||
+    taskId === 'semantic-page-brief' ||
+    taskId === 'semantic-receipt-agent' ||
+    taskId === 'semantic-observe-json'
+}
+
 function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredRecord {
   const taskText = `${record.task.title} ${record.task.id} ${record.task.tool}`
   const baseTaskTokens = tokens(taskText)
@@ -273,6 +281,14 @@ function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredRecord {
       score -= 4
       reasons.push('transfer_click_distractor')
     }
+    if (
+      record.action.toolName === 'read_page_content' &&
+      requiresFullPageRead(record.task.id) &&
+      record.action.selector !== 'body'
+    ) {
+      score -= 2
+      reasons.push('narrow_context_read')
+    }
     if (record.task.id === 'transfer-profile-fields' && record.action.toolName === 'type_text') {
       const alignment = fieldAlignment(record.action.selector, record.action.title)
       if (alignment === 'match') {
@@ -315,7 +331,7 @@ function pairwiseStats(records: ScoredRecord[]): PairwiseStats {
 
 function candidatePairwiseStats(records: ScoredRecord[]): PairwiseStats {
   return pairwiseStats(records.filter(record =>
-    record.action.toolName === 'click_element' || record.action.toolName === 'type_text'
+    Boolean(record.action.selector && record.action.toolName && CANDIDATE_TOOL_NAMES.has(record.action.toolName))
   ))
 }
 
@@ -463,7 +479,7 @@ async function main(): Promise<void> {
   lines.push('')
   lines.push('- These are deterministic policy baselines, not learned rerankers.')
   lines.push('- `pairwise_task_accuracy` scores all trace events, including context reads and planning starts.')
-  lines.push('- `candidate_pairwise_accuracy` scores only click/type candidate actions and is the primary selector/action ranking baseline.')
+  lines.push('- `candidate_pairwise_accuracy` scores selector-bearing read/click/type candidate actions and is the primary selector/action ranking baseline.')
   lines.push('- Future selector/action policy experiments should beat `candidate_pairwise_accuracy` while preserving benchmark task success.')
 
   checkPolicyResult(bestPolicy, check)

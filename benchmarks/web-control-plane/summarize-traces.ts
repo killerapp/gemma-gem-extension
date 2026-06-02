@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 const REPO_ROOT = resolve(fileURLToPath(import.meta.url), '..', '..', '..')
 const DEFAULT_INPUT = resolve(REPO_ROOT, 'benchmarks', 'web-control-plane', 'action-traces.jsonl')
 const DEFAULT_OUTPUT = resolve(REPO_ROOT, 'benchmarks', 'web-control-plane', 'action-traces.summary.md')
+const CANDIDATE_TOOL_NAMES = new Set(['click_element', 'type_text', 'read_page_content'])
 
 type TraceRecord = {
   recordType: 'web-control-action'
@@ -94,6 +95,11 @@ function sourcePath(path: string): string {
   return path.replace(REPO_ROOT, '.').replaceAll('\\', '/')
 }
 
+function candidateKey(record: TraceRecord): string | null {
+  if (!record.action.selector || !record.action.toolName || !CANDIDATE_TOOL_NAMES.has(record.action.toolName)) return null
+  return `${record.task.id}:${record.action.toolName}`
+}
+
 async function main(): Promise<void> {
   const { input, output } = parseArgs()
   if (!existsSync(input)) throw new Error(`Trace export not found: ${input}`)
@@ -129,8 +135,8 @@ async function main(): Promise<void> {
     if (record.action.toolName === 'click_element' || String(record.action.text ?? '').includes('click_element')) {
       clickRecords += 1
     }
-    if (record.action.toolName === 'click_element' || record.action.toolName === 'type_text') {
-      const key = `${record.task.id}:${record.action.toolName}`
+    const key = candidateKey(record)
+    if (key) {
       const bucket = candidateBuckets.get(key) ?? { positive: 0, negative: 0 }
       if (record.label === 'positive') bucket.positive += 1
       if (record.label === 'negative') bucket.negative += 1
@@ -237,9 +243,9 @@ async function main(): Promise<void> {
     .filter(([, bucket]) => bucket.negative > 0 && bucket.positive === 0)
     .map(([key]) => key)
   if (unpairedNegativeBuckets.length > 0) {
-    lines.push(`- Negative click/type candidates lack same-task same-tool positives for: ${unpairedNegativeBuckets.join(', ')}.`)
+    lines.push(`- Negative ranked candidates lack same-task same-tool positives for: ${unpairedNegativeBuckets.join(', ')}.`)
   } else if ([...candidateBuckets.values()].some(bucket => bucket.positive > 0 && bucket.negative > 0)) {
-    lines.push('- Click/type negative candidates are paired with same-task same-tool positives.')
+    lines.push('- Ranked negative candidates are paired with same-task same-tool positives.')
   }
 
   await mkdir(dirname(output), { recursive: true })

@@ -13,6 +13,7 @@ const VOLATILE_KEYS = new Set([
   'taskOutputPreview',
 ])
 const LABEL_LEAKAGE_PATTERN = /\b(wrong|negative|counterfactual|positive)\b/i
+const CANDIDATE_TOOL_NAMES = new Set(['click_element', 'type_text', 'read_page_content'])
 
 type TraceRecord = {
   recordType?: unknown
@@ -180,6 +181,13 @@ function hasVolatileKeys(value: unknown, path = '$'): string[] {
   return hits
 }
 
+function candidateKey(record: TraceRecord): string | null {
+  const toolName = typeof record.action?.toolName === 'string' ? record.action.toolName : null
+  if (!toolName || !CANDIDATE_TOOL_NAMES.has(toolName)) return null
+  if (typeof record.action?.selector !== 'string' || record.action.selector.length === 0) return null
+  return `${record.task?.id}:${toolName}`
+}
+
 function validateRecord(record: TraceRecord, lineNumber: number): { hasSelector: boolean; hasClick: boolean; label: string; candidateKey: string | null } {
   const prefix = `line ${lineNumber}`
   assert(record.recordType === 'web-control-action', `${prefix}: recordType must be web-control-action`)
@@ -218,9 +226,7 @@ function validateRecord(record: TraceRecord, lineNumber: number): { hasSelector:
     hasSelector: typeof record.action.selector === 'string' && record.action.selector.length > 0,
     hasClick: record.action.toolName === 'click_element' || String(record.action.text ?? '').includes('click_element'),
     label: record.label,
-    candidateKey: record.action.toolName === 'click_element' || record.action.toolName === 'type_text'
-      ? `${record.task.id}:${record.action.toolName}`
-      : null,
+    candidateKey: candidateKey(record),
   }
 }
 
@@ -231,7 +237,7 @@ function assertPairedCandidates(candidateLabels: Map<string, Set<string>>): void
       unpaired.push(key)
     }
   }
-  assert(unpaired.length === 0, `negative candidate actions must have same-task same-tool positives: ${unpaired.join(', ')}`)
+  assert(unpaired.length === 0, `negative ranked candidate actions must have same-task same-tool positives: ${unpaired.join(', ')}`)
   assert([...candidateLabels.values()].some(labels => labels.has('positive') && labels.has('negative')), 'trace export must contain at least one positive/negative candidate pair')
 }
 
