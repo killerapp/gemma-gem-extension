@@ -385,6 +385,8 @@ Experiment result:
 - The `semantic_keyword` policy now penalizes transfer destination-field reads more strongly, keeping those read distractors below useful source/result reads without affecting destination-field typing actions.
 - `pnpm benchmark:traces:training:check` now locks the fully paired ranked-candidate floors: `35` records, `20` positive, `15` negative, `32` selector records, `10` click records, `9` candidate buckets, and `9` paired candidate buckets.
 - `pnpm benchmark:traces:policy:check` now locks the fully paired policy floor: `semantic_keyword`, `pairwise_task_accuracy 1.0000` over `81` pairs, `candidate_pairwise_accuracy 1.0000` over `77` read/click/type candidate pairs, `pairwise_min_margin 0.500`, `candidate_min_margin 0.500`, and `best_threshold_accuracy 1.0000`.
+- `pnpm benchmark:traces:preferences` now writes `benchmarks/web-control-plane/action-preferences.jsonl`, a pairwise preference dataset for a future selector/action reranker. It expands each same-task same-tool positive/negative ranked candidate bucket into direct `preferred` versus `rejected` action pairs.
+- `pnpm benchmark:traces:preferences:check` validates the preference schema, rejects volatile fields and label leakage, requires distinct preferred/rejected action surfaces, and locks the current floors: `28` preference pairs across `9` buckets and `5` tasks, with `13` read pairs, `7` click pairs, and `8` type pairs.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:
