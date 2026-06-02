@@ -125,6 +125,24 @@ function expandedTaskTokens(taskTokens: Set<string>): Set<string> {
   return result
 }
 
+function fieldAlignment(selector: string | null, title: string | null): 'match' | 'mismatch' | null {
+  const selectorParts = selectorTokens(selector)
+  const titleTokens = tokens(title)
+  if (selectorParts.size === 0 || titleTokens.size === 0) return null
+
+  const titleWantsName = titleTokens.has('name')
+  const titleWantsEmail = titleTokens.has('email')
+  if (!titleWantsName && !titleWantsEmail) return null
+
+  const selectorHasName = selectorParts.has('name')
+  const selectorHasEmail = selectorParts.has('email')
+  if (titleWantsName && selectorHasName) return 'match'
+  if (titleWantsEmail && selectorHasEmail) return 'match'
+  if (titleWantsName && selectorHasEmail) return 'mismatch'
+  if (titleWantsEmail && selectorHasName) return 'mismatch'
+  return null
+}
+
 function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredRecord {
   const taskText = `${record.task.title} ${record.task.id} ${record.task.tool}`
   const baseTaskTokens = tokens(taskText)
@@ -166,6 +184,16 @@ function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredRecord {
     if (record.action.selector?.includes('save-profile') && (baseTaskTokens.has('transfer') || baseTaskTokens.has('profile'))) {
       score += 1.5
       reasons.push('profile_submit_selector')
+    }
+    if (record.task.id === 'transfer-profile-fields' && record.action.toolName === 'type_text') {
+      const alignment = fieldAlignment(record.action.selector, record.action.title)
+      if (alignment === 'match') {
+        score += 2
+        reasons.push('field_title_selector_match')
+      } else if (alignment === 'mismatch') {
+        score -= 2
+        reasons.push('field_title_selector_mismatch')
+      }
     }
   }
 
