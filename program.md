@@ -295,6 +295,28 @@ Experiment result:
 - `pnpm benchmark:web -- --real --include-agent` passed with `model_ready_status ready`, `model_load_seconds 0.291`, `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `p95_task_seconds 25.892`, and `timeout_rate 0.0000`.
 - Interpretation: extension/runtime readiness can now be validated and debugged outside the task suite without downloading the model every run or running a generation warmup.
 
+Current visible MCP debug experiment:
+
+- Extend `pnpm browser:model-ready` with `--fixture <page>` and `--run-tool <gemma_page_brief|gemma_agent>`.
+- The command now can serve a benchmark fixture, open it in the visible debug browser, run model readiness, run one MCP tool against the focused page, and optionally keep the browser plus MCP bridge open.
+- This is for visually inspecting foreground page state and background Gemma Relay/MCP behavior without running the whole benchmark suite.
+
+Example:
+
+```powershell
+pnpm browser:model-ready -- --profile .browsers\gemma-gem-benchmark-profile --fixture semantic-buttons --run-tool gemma_agent --keep-open
+pnpm browser:model-ready -- --devtools-port 15067 --mcp-port 15068 --fixture semantic-buttons --run-tool gemma_agent --skip-ready
+```
+
+Experiment result:
+
+- A live keep-open debug browser was opened against `.browsers\gemma-gem-benchmark-profile` with DevTools `http://127.0.0.1:15067` and MCP `http://127.0.0.1:15068/mcp`.
+- Attach mode opened `semantic-buttons.html` in that visible browser and ran `gemma_page_brief` through the existing MCP bridge in `0.032` seconds.
+- Attach mode then opened the same fixture and ran `gemma_agent` through the existing MCP bridge in `93.103` seconds. Gemma clicked `#download-receipt` and returned `Invoice INV-2026-041`.
+- `pnpm compile`, `pnpm test`, `pnpm benchmark:web`, and `pnpm benchmark:web -- --real` passed after the change.
+- A full `pnpm benchmark:web -- --real --include-agent` rerun was not committed for this cycle because the live visual debug browser intentionally held the persistent benchmark profile open, causing a Chrome DevTools launch timeout. The previous real-agent benchmark remains the current committed full-suite evidence.
+- Interpretation: the debug command can now keep the extension visible while running one MCP-driven deterministic or model-backed browser task, which makes foreground page state and background Gemma Relay behavior inspectable during development.
+
 Relevant platform constraints:
 
 - Extension service workers are event-driven and can shut down when dormant, so long-running model work should not depend on unstated service-worker liveness.
