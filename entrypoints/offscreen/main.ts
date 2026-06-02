@@ -88,17 +88,35 @@ async function runWebGPUDiagnostic() {
 
 log.info('Offscreen document initializing')
 
-// Model host — auto-load on startup
-const modelHost = new GemmaModelHost((status, progress, error, phase, elapsedMs) => {
+function emitModelStatus(
+  status: 'loading' | 'ready' | 'error',
+  modelId: ModelId,
+  progress?: number,
+  error?: string,
+  phase?: string,
+  elapsedMs?: number,
+): void {
   chrome.runtime.sendMessage({
     type: 'model:status',
     status,
-    modelId: modelHost.getCurrentModelId() ?? undefined,
+    modelId,
     progress,
     error,
     phase,
     elapsedMs,
   } satisfies Message)
+}
+
+// Model host — auto-load on startup
+const modelHost = new GemmaModelHost((status, progress, error, phase, elapsedMs) => {
+  emitModelStatus(
+    status,
+    modelHost.getCurrentModelId() ?? DEFAULT_MODEL_ID,
+    progress,
+    error,
+    phase,
+    elapsedMs,
+  )
 })
 
 let modelLoadPromise: Promise<void> | null = null
@@ -106,16 +124,22 @@ let modelLoadModelId: ModelId | null = null
 
 async function ensureModelLoaded(modelId: ModelId = modelHost.getCurrentModelId() ?? DEFAULT_MODEL_ID): Promise<void> {
   if (modelHost.isLoaded() && modelHost.getCurrentModelId() === modelId) {
+    emitModelStatus('ready', modelId, 100, undefined, 'already-loaded', 0)
     return
   }
 
   if (modelLoadPromise) {
     if (modelLoadModelId === modelId) {
+      emitModelStatus('loading', modelId, undefined, undefined, 'joining-existing-load')
       await modelLoadPromise
+      if (modelHost.isLoaded() && modelHost.getCurrentModelId() === modelId) {
+        emitModelStatus('ready', modelId, 100, undefined, 'ready-after-existing-load')
+      }
       return
     }
     await modelLoadPromise
     if (modelHost.isLoaded() && modelHost.getCurrentModelId() === modelId) {
+      emitModelStatus('ready', modelId, 100, undefined, 'ready-after-prior-load')
       return
     }
   }

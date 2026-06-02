@@ -325,13 +325,17 @@ Current runtime/debug hardening experiment:
 - Normal debug launches do not reset metadata by default. If `No SW` appears after extension reload/debugging, run one repair launch with `--reset-service-worker-metadata`, close it, then relaunch normally against the same cached profile.
 - `gemma_model_ready` debug calls now give the MCP client a timeout buffer beyond the extension readiness timeout. This lets extension-side readiness timeouts surface as `Status: error` with `Error: Model readiness timed out after ...ms`, instead of an unhelpful raw MCP client timeout.
 - The benchmark model-ready preflight uses the same timeout-buffer discipline, so include-agent runs should record a bounded preflight error instead of hanging the suite.
+- The offscreen `model:load` handler now emits a terminal `model:status ready` when the requested model is already loaded, when a readiness caller joins an existing load, or when a prior in-flight load completes for the same target model. This prevents cached-model readiness checks from timing out only because no new status event was emitted.
 
 Experiment result:
 
 - After resetting small service-worker metadata and relaunching normally, `.browsers\gemma-gem-benchmark-profile` passed visible `gemma_page_brief` with the existing cached profile and no model CacheStorage deletion.
 - `pnpm browser:model-ready -- --devtools-port 50637 --mcp-port 50638 --timeout-ms 10000` returned a bounded readiness diagnostic: `Status: error`, `Error: Model readiness timed out after 10000ms`.
+- After the offscreen status-emission fix, `pnpm browser:model-ready -- --profile .browsers\gemma-gem-benchmark-profile --timeout-ms 60000` returned `status ready`, `phase ready`, `progress 100`, and `load seconds 3.546`.
+- A visible cached-profile run, `pnpm browser:model-ready -- --profile .browsers\gemma-gem-benchmark-profile --fixture semantic-buttons --run-tool gemma_page_brief --keep-open`, returned `status ready`, `load seconds 2.317`, and `gemma_page_brief` in `0.016` seconds.
+- `pnpm benchmark:web -- --real --include-agent` passed with `model_ready_status ready`, `model_load_seconds 0.045`, `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `p95_task_seconds 20.729`, and `timeout_rate 0.0000`.
 - `pnpm compile`, `pnpm build`, `pnpm test`, `pnpm benchmark:web`, and `pnpm benchmark:web -- --real` passed after the change.
-- Interpretation: the debug loop can recover from extension service-worker registration corruption without discarding the downloaded model cache, and readiness failures now stay bounded and diagnostic.
+- Interpretation: the debug loop can recover from extension service-worker registration corruption without discarding the downloaded model cache, cached readiness no longer depends on a fresh load event, and readiness failures stay bounded and diagnostic.
 
 Relevant platform constraints:
 
