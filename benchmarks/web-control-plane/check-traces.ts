@@ -49,11 +49,30 @@ function parseNumber(value: string | undefined, label: string): number {
   return parsed
 }
 
-function parseArgs(): { input: string; requireNegative: boolean; requireCandidatePairs: boolean; minPairedCandidateBuckets?: number } {
+type TraceCheckConfig = {
+  input: string
+  requireNegative: boolean
+  requireCandidatePairs: boolean
+  minRecords?: number
+  minPositive?: number
+  minNegative?: number
+  minSelectors?: number
+  minClicks?: number
+  minCandidateBuckets?: number
+  minPairedCandidateBuckets?: number
+}
+
+function parseArgs(): TraceCheckConfig {
   const args = process.argv.slice(2)
   let input = process.env.GEMMA_GEM_TRACE_OUTPUT ? resolve(process.env.GEMMA_GEM_TRACE_OUTPUT) : DEFAULT_INPUT
   let requireNegative = false
   let requireCandidatePairs = false
+  let minRecords: number | undefined
+  let minPositive: number | undefined
+  let minNegative: number | undefined
+  let minSelectors: number | undefined
+  let minClicks: number | undefined
+  let minCandidateBuckets: number | undefined
   let minPairedCandidateBuckets: number | undefined
 
   for (let i = 0; i < args.length; i += 1) {
@@ -69,17 +88,58 @@ function parseArgs(): { input: string; requireNegative: boolean; requireCandidat
       requireNegative = true
     } else if (arg === '--require-candidate-pairs') {
       requireCandidatePairs = true
+    } else if (arg === '--min-records') {
+      minRecords = parseNumber(value, '--min-records')
+      i += 1
+    } else if (arg.startsWith('--min-records=')) {
+      minRecords = parseNumber(arg.slice('--min-records='.length), '--min-records')
+    } else if (arg === '--min-positive') {
+      minPositive = parseNumber(value, '--min-positive')
+      i += 1
+    } else if (arg.startsWith('--min-positive=')) {
+      minPositive = parseNumber(arg.slice('--min-positive='.length), '--min-positive')
+    } else if (arg === '--min-negative') {
+      minNegative = parseNumber(value, '--min-negative')
+      i += 1
+    } else if (arg.startsWith('--min-negative=')) {
+      minNegative = parseNumber(arg.slice('--min-negative='.length), '--min-negative')
+    } else if (arg === '--min-selectors') {
+      minSelectors = parseNumber(value, '--min-selectors')
+      i += 1
+    } else if (arg.startsWith('--min-selectors=')) {
+      minSelectors = parseNumber(arg.slice('--min-selectors='.length), '--min-selectors')
+    } else if (arg === '--min-clicks') {
+      minClicks = parseNumber(value, '--min-clicks')
+      i += 1
+    } else if (arg.startsWith('--min-clicks=')) {
+      minClicks = parseNumber(arg.slice('--min-clicks='.length), '--min-clicks')
+    } else if (arg === '--min-candidate-buckets') {
+      minCandidateBuckets = parseNumber(value, '--min-candidate-buckets')
+      i += 1
+    } else if (arg.startsWith('--min-candidate-buckets=')) {
+      minCandidateBuckets = parseNumber(arg.slice('--min-candidate-buckets='.length), '--min-candidate-buckets')
     } else if (arg === '--min-paired-candidate-buckets') {
       minPairedCandidateBuckets = parseNumber(value, '--min-paired-candidate-buckets')
       i += 1
     } else if (arg.startsWith('--min-paired-candidate-buckets=')) {
       minPairedCandidateBuckets = parseNumber(arg.slice('--min-paired-candidate-buckets='.length), '--min-paired-candidate-buckets')
     } else {
-      throw new Error(`Unknown argument ${arg}. Use --input <path>, --require-negative, --require-candidate-pairs, and --min-paired-candidate-buckets.`)
+      throw new Error(`Unknown argument ${arg}. Use --input <path>, --require-negative, --require-candidate-pairs, and --min-* coverage options.`)
     }
   }
 
-  return { input, requireNegative, requireCandidatePairs, minPairedCandidateBuckets }
+  return {
+    input,
+    requireNegative,
+    requireCandidatePairs,
+    minRecords,
+    minPositive,
+    minNegative,
+    minSelectors,
+    minClicks,
+    minCandidateBuckets,
+    minPairedCandidateBuckets,
+  }
 }
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -179,8 +239,24 @@ function pairedCandidateBuckets(candidateLabels: Map<string, Set<string>>): numb
   return [...candidateLabels.values()].filter(labels => labels.has('positive') && labels.has('negative')).length
 }
 
+function assertAtLeast(actual: number, minimum: number | undefined, label: string): void {
+  if (minimum === undefined) return
+  assert(actual >= minimum, `${label} ${actual} is below required floor ${minimum}`)
+}
+
 async function main(): Promise<void> {
-  const { input, requireNegative, requireCandidatePairs, minPairedCandidateBuckets } = parseArgs()
+  const {
+    input,
+    requireNegative,
+    requireCandidatePairs,
+    minRecords,
+    minPositive,
+    minNegative,
+    minSelectors,
+    minClicks,
+    minCandidateBuckets,
+    minPairedCandidateBuckets,
+  } = parseArgs()
   if (!existsSync(input)) throw new Error(`Trace export not found: ${input}`)
 
   const lines = (await readFile(input, 'utf8'))
@@ -219,9 +295,13 @@ async function main(): Promise<void> {
   if (requireCandidatePairs) {
     assertPairedCandidates(candidateLabels)
   }
-  if (minPairedCandidateBuckets !== undefined) {
-    assert(pairedBuckets >= minPairedCandidateBuckets, `paired candidate buckets ${pairedBuckets} is below required floor ${minPairedCandidateBuckets}`)
-  }
+  assertAtLeast(lines.length, minRecords, 'records')
+  assertAtLeast(positives, minPositive, 'positive records')
+  assertAtLeast(negatives, minNegative, 'negative records')
+  assertAtLeast(selectors, minSelectors, 'selector records')
+  assertAtLeast(clicks, minClicks, 'click records')
+  assertAtLeast(candidateLabels.size, minCandidateBuckets, 'candidate buckets')
+  assertAtLeast(pairedBuckets, minPairedCandidateBuckets, 'paired candidate buckets')
 
   console.log(`Checked ${lines.length} action trace records`)
   console.log(`Positive records: ${positives}`)

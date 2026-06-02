@@ -370,6 +370,7 @@ Experiment result:
 - `pnpm benchmark:traces:training:check` now requires paired click/type candidates: every negative candidate must have a same-task, same-tool positive candidate. The current training set has `4` total click/type candidate buckets and `3` paired positive/negative buckets.
 - `counterfactual-actions.json` now adds a transfer-form click distractor for `#dest-name`, pairing the existing `#save-profile` click bucket. The `semantic_keyword` policy now penalizes transfer field clicks and receipt/settings distractors, raising the current training set to `27` records, `7` negatives, `4` paired candidate buckets, `pairwise_task_accuracy 0.8684` over `38` pairs, `candidate_pairwise_accuracy 1.0000` over `19` candidate pairs, and `best_threshold_accuracy 0.8148`.
 - `pnpm benchmark:traces:training:check` now also requires `--min-paired-candidate-buckets 4`, turning the current click/type task-tool coverage into an explicit floor.
+- `pnpm benchmark:traces:training:check` now also locks the current training coverage floors: `27` records, `20` positive, `7` negative, `24` selector records, `8` click records, `4` candidate buckets, and `4` paired candidate buckets.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:
