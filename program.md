@@ -233,6 +233,30 @@ June 2, 2026 runtime finding:
 - Branded stable Chrome `148.0.7778.181` did not register the unpacked extension in this harness; CDP returned `Extensions.loadUnpacked failed: Method not available`.
 - Next runtime experiment should use a pinned Chrome-for-Testing or Chromium build with `--load-extension`/`Extensions.loadUnpacked` support and a separate persistent profile, then compare ORT/WebGPU stability before changing Gemma prompts.
 
+Current runtime experiment:
+
+- The Chrome-for-Testing manifest lists Stable `149.0.7827.54`, while the local marker was still on `149.0.7827.22`.
+- Extend `pnpm browser:install` so it can install/select `--channel <Stable|Beta|Dev|Canary>` or exact `--version <x.y.z.w>`, also configurable through `CHROME_FOR_TESTING_CHANNEL` and `CHROME_FOR_TESTING_VERSION`.
+- Install current Stable CFT and run the real-agent suite with a separate profile, for example `.browsers/gemma-gem-benchmark-cft-149.0.7827.54-profile`.
+- Keep only if the runtime change materially improves task success or removes the ORT/WebGPU errors without weakening benchmark assertions.
+
+Experiment result:
+
+- `pnpm browser:install -- --channel Stable` installed Chrome-for-Testing `149.0.7827.54` and updated `.browsers/chrome-for-testing/chrome-path.txt`.
+- Real smoke passed on CFT `149.0.7827.54`: `task_success_rate 1.0000`, `timeout_rate 0.0000`.
+- A separate copied profile was attempted, but the copy failed due low disk space. The partial generated profile was removed after verifying the path stayed under `.browsers`.
+- The real-agent comparison used the warmed persistent benchmark profile to avoid another model download.
+- Result was kept: `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `p95_task_seconds 19.474`, `timeout_rate 0.0000`.
+- Interpretation: updating CFT from `149.0.7827.22` to `149.0.7827.54` removed the observed ORT/WebGPU runtime failures for the frozen local suite.
+
+Current recommended command:
+
+```powershell
+pnpm browser:install -- --channel Stable
+pnpm build
+pnpm benchmark:web -- --real --include-agent
+```
+
 Relevant platform constraints:
 
 - Extension service workers are event-driven and can shut down when dormant, so long-running model work should not depend on unstated service-worker liveness.

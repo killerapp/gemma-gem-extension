@@ -51,3 +51,6 @@ c22ad83	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.047	250
 5608fe4	real-chrome-extension-agent	7	0.7143	0.7143	0.5000	1.0000	0.00	0.036	3.366	0.0000	discard	persistent benchmark profile rerun after cache population
 5608fe4	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.010	0.0000	baseline	local-fake-extension benchmark run
 5608fe4	real-chrome-extension-agent	7	0.7143	0.7143	0.5000	1.0000	0.00	0.022	57.507	0.0000	discard	persistent profile default 180s model task cap
+3d8d760	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.006	0.012	0.0000	baseline	local-fake-extension benchmark run
+3d8d760	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.008	0.162	0.0000	baseline	real-chrome-extension-smoke benchmark run
+3d8d760	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.038	19.474	0.0000	keep	cft 149.0.7827.54 runtime comparison

@@ -8,7 +8,11 @@ import { fileURLToPath } from 'node:url'
 
 const REPO_ROOT = resolve(fileURLToPath(import.meta.url), '..', '..')
 const INSTALL_ROOT = resolve(REPO_ROOT, '.browsers', 'chrome-for-testing')
-const MANIFEST_URL = 'https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json'
+const LAST_KNOWN_GOOD_MANIFEST_URL = 'https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json'
+const KNOWN_GOOD_MANIFEST_URL = 'https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json'
+const CHANNELS = ['Stable', 'Beta', 'Dev', 'Canary'] as const
+
+type Channel = typeof CHANNELS[number]
 
 type Download = {
   platform: string
@@ -16,14 +20,63 @@ type Download = {
 }
 
 type Manifest = {
-  channels: {
-    Stable: {
-      version: string
-      downloads: {
-        chrome: Download[]
-      }
+  channels: Record<Channel, VersionEntry>
+}
+
+type KnownGoodManifest = {
+  versions: VersionEntry[]
+}
+
+type VersionEntry = {
+  channel?: string
+  version: string
+  revision?: string
+  downloads: {
+    chrome: Download[]
+  }
+}
+
+type InstallOptions = {
+  channel: Channel
+  version?: string
+}
+
+function parseOptions(): InstallOptions {
+  let channel = normalizeChannel(process.env.CHROME_FOR_TESTING_CHANNEL ?? 'Stable')
+  let version = process.env.CHROME_FOR_TESTING_VERSION
+  const args = process.argv.slice(2)
+  for (let i = 0; i < args.length; i += 1) {
+    const arg = args[i]
+    if (arg === '--') {
+      continue
+    } else if (arg === '--channel') {
+      const value = args[i + 1]
+      if (!value) throw new Error('--channel requires Stable, Beta, Dev, or Canary')
+      channel = normalizeChannel(value)
+      i += 1
+    } else if (arg.startsWith('--channel=')) {
+      channel = normalizeChannel(arg.slice('--channel='.length))
+    } else if (arg === '--version') {
+      const value = args[i + 1]
+      if (!value) throw new Error('--version requires an exact Chrome for Testing version')
+      version = value
+      i += 1
+    } else if (arg.startsWith('--version=')) {
+      version = arg.slice('--version='.length)
+    } else {
+      throw new Error(`Unknown argument ${arg}. Use --channel <name> or --version <exact-version>.`)
     }
   }
+
+  return { channel, version }
+}
+
+function normalizeChannel(value: string): Channel {
+  const found = CHANNELS.find(channel => channel.toLowerCase() === value.toLowerCase())
+  if (!found) {
+    throw new Error(`Unsupported Chrome for Testing channel ${JSON.stringify(value)}. Use one of: ${CHANNELS.join(', ')}`)
+  }
+  return found
 }
 
 function platformName(): string {
@@ -87,29 +140,47 @@ async function extract(zipPath: string, destination: string): Promise<void> {
   await run('unzip', ['-q', '-o', zipPath, '-d', destination])
 }
 
-async function main(): Promise<void> {
-  const manifest = await fetch(MANIFEST_URL).then(response => {
-    if (!response.ok) throw new Error(`Failed to fetch Chrome for Testing manifest: ${response.status}`)
-    return response.json() as Promise<Manifest>
+async function fetchJson<T>(url: string): Promise<T> {
+  return fetch(url).then(response => {
+    if (!response.ok) throw new Error(`Failed to fetch ${url}: ${response.status}`)
+    return response.json() as Promise<T>
   })
-  const stable = manifest.channels.Stable
+}
+
+async function resolveVersion(options: InstallOptions): Promise<VersionEntry> {
+  if (options.version) {
+    const manifest = await fetchJson<KnownGoodManifest>(KNOWN_GOOD_MANIFEST_URL)
+    const entry = manifest.versions.find(item => item.version === options.version)
+    if (!entry) {
+      throw new Error(`Chrome for Testing version ${options.version} was not found in ${KNOWN_GOOD_MANIFEST_URL}`)
+    }
+    return entry
+  }
+
+  const manifest = await fetchJson<Manifest>(LAST_KNOWN_GOOD_MANIFEST_URL)
+  return manifest.channels[options.channel]
+}
+
+async function main(): Promise<void> {
+  const options = parseOptions()
+  const target = await resolveVersion(options)
   const platform = platformName()
-  const download = stable.downloads.chrome.find(item => item.platform === platform)
+  const download = target.downloads.chrome.find(item => item.platform === platform)
   if (!download) {
     throw new Error(`No Chrome for Testing download for platform ${platform}`)
   }
 
-  const exePath = executablePath(stable.version)
+  const exePath = executablePath(target.version)
   if (existsSync(exePath)) {
     console.log(`Chrome for Testing already installed: ${exePath}`)
     await writeFile(resolve(INSTALL_ROOT, 'chrome-path.txt'), exePath)
     return
   }
 
-  const versionDir = resolve(INSTALL_ROOT, stable.version)
+  const versionDir = resolve(INSTALL_ROOT, target.version)
   const zipPath = resolve(INSTALL_ROOT, basename(download.url))
   await rm(versionDir, { recursive: true, force: true })
-  console.log(`Downloading Chrome for Testing ${stable.version} (${platform})...`)
+  console.log(`Downloading Chrome for Testing ${target.version} (${platform})...`)
   await downloadFile(download.url, zipPath)
   console.log(`Extracting ${zipPath}...`)
   await extract(zipPath, versionDir)
