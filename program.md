@@ -346,6 +346,7 @@ Current action-accounting experiment:
 - `pnpm benchmark:traces` exports normalized action-policy records to `benchmarks/web-control-plane/action-traces.jsonl`. The export omits volatile request IDs, timestamps, tab IDs, durations, and task output previews, then keeps task context, outcome labels, tool names, selector hints, and compact action text.
 - The Relay panel should display streamed thinking as one live `thinking` row per active request. Token-sized `[Thinking]` or `Thinking:` chunks are transport detail, not separate user-visible Relay events.
 - Relay activity statuses are now normalized before rendering, so transport-shaped values like `CHUNK` still enter the coalesced stream path instead of creating one visible row per token-sized thinking chunk.
+- The Relay renderer now treats chunk-shaped activity as non-renderable in the ordinary event path, so `CHUNK / Thinking: ...` rows are dropped instead of leaking through when a payload uses noncanonical casing.
 - This matters for the future training loop: selector/action traces need a reliable action count before they can become useful policy/reranker data.
 
 Experiment result:
@@ -417,6 +418,8 @@ Experiment result:
 - `pnpm benchmark:traces:reranker:baseline:check` now locks `41` pairs and leave-one-task-out learned accuracy at least `0.95`. Current leave-one-task-out accuracy is `0.9512`; the original transfer submit/status miss is now correctly ranked, while remaining misses are source-email read cases.
 - `pnpm benchmark:traces:policy:check` now locks the expanded deterministic policy floor: `semantic_keyword`, `pairwise_task_accuracy 1.0000` over `123` pairs, `candidate_pairwise_accuracy 1.0000` over `119` read/click/type candidate pairs, `pairwise_min_margin 0.500`, `candidate_min_margin 0.500`, and `best_threshold_accuracy 1.0000`.
 - `pnpm benchmark:traces:preferences:policy:check` now locks `semantic_keyword` at `preference_accuracy 1.0000` over `41` pairs with `preference_min_margin 2.000`.
+- The learned reranker now includes tool-specific source/destination field-role features, such as `read_page_content_selector_role_field=source:email`, so source email reads are no longer confused with misplaced email writes.
+- `pnpm benchmark:traces:reranker:baseline:check` now also locks nonnegative leave-one-task-out margin with `--min-learned-loto-margin 0`. Current leave-one-task-out accuracy improved to `0.9634` over `41` pairs with `learned_perceptron_loto min_margin 0.000`; remaining losses are ties, not negative rankings.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

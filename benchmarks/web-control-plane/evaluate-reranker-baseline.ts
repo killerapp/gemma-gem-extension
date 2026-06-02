@@ -68,6 +68,7 @@ type CheckConfig = {
   minSemanticAccuracy?: number
   minLearnedAccuracy?: number
   minLearnedLotoAccuracy?: number
+  minLearnedLotoMargin?: number
   checkOnly: boolean
 }
 
@@ -89,6 +90,7 @@ function parseArgs(): { input: string; output: string; epochs: number; check: Ch
     minSemanticAccuracy: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_SEMANTIC ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_SEMANTIC, 'GEMMA_GEM_RERANKER_BASELINE_MIN_SEMANTIC') : undefined,
     minLearnedAccuracy: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LEARNED ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LEARNED, 'GEMMA_GEM_RERANKER_BASELINE_MIN_LEARNED') : undefined,
     minLearnedLotoAccuracy: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOTO ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOTO, 'GEMMA_GEM_RERANKER_BASELINE_MIN_LOTO') : undefined,
+    minLearnedLotoMargin: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOTO_MARGIN ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOTO_MARGIN, 'GEMMA_GEM_RERANKER_BASELINE_MIN_LOTO_MARGIN') : undefined,
     checkOnly: false,
   }
 
@@ -140,6 +142,11 @@ function parseArgs(): { input: string; output: string; epochs: number; check: Ch
       i += 1
     } else if (arg.startsWith('--min-learned-loto-accuracy=')) {
       check.minLearnedLotoAccuracy = parseNumber(arg.slice('--min-learned-loto-accuracy='.length), '--min-learned-loto-accuracy')
+    } else if (arg === '--min-learned-loto-margin') {
+      check.minLearnedLotoMargin = parseNumber(value, '--min-learned-loto-margin')
+      i += 1
+    } else if (arg.startsWith('--min-learned-loto-margin=')) {
+      check.minLearnedLotoMargin = parseNumber(arg.slice('--min-learned-loto-margin='.length), '--min-learned-loto-margin')
     } else {
       throw new Error(`Unknown argument ${arg}. Use --input <path>, --output <path>, --epochs <n>, --check-only, and metric threshold options.`)
     }
@@ -198,6 +205,13 @@ function clickRole(selector: string): 'submit' | 'status' | 'field' | null {
   return null
 }
 
+function fieldKind(selector: string): 'name' | 'email' | null {
+  const selectorParts = new Set(selectorTokens(selector))
+  if (selectorParts.has('name')) return 'name'
+  if (selectorParts.has('email')) return 'email'
+  return null
+}
+
 function addFeature(features: Map<string, number>, name: string, value = 1): void {
   features.set(name, (features.get(name) ?? 0) + value)
 }
@@ -227,6 +241,10 @@ function actionFeatures(pair: RerankerPreferenceRecord, action: RerankerAction):
   if (role) {
     addFeature(features, `selector_role=${role}`, 2)
     addFeature(features, `${action.toolName}_selector_role=${role}`, 3)
+    const field = fieldKind(action.selector)
+    if (field) {
+      addFeature(features, `${action.toolName}_selector_role_field=${role}:${field}`, 4)
+    }
   }
   if (action.toolName === 'click_element') {
     const role = clickRole(action.selector)
@@ -386,6 +404,7 @@ function checkResults(results: PolicyResult[], check: CheckConfig): void {
   assertAtLeast(semantic.accuracy, check.minSemanticAccuracy, 'semantic_keyword_accuracy')
   assertAtLeast(learned.accuracy, check.minLearnedAccuracy, 'learned_perceptron_accuracy')
   assertAtLeast(loto.accuracy, check.minLearnedLotoAccuracy, 'learned_perceptron_loto_accuracy')
+  assertAtLeast(loto.minMargin, check.minLearnedLotoMargin, 'learned_perceptron_loto_min_margin')
 }
 
 function bestPolicy(results: PolicyResult[]): PolicyResult {

@@ -86,6 +86,19 @@ export function isRelayChunkActivity(activity: { status?: unknown; text?: string
   )
 }
 
+export function relayActivityChunkParts(activity: { status?: unknown; text?: string }): RelayChunkParts | null {
+  if (!isRelayChunkActivity(activity)) return null
+  return relayChunkParts(activity.text)
+}
+
+export function relayRenderableEvent(activity: BridgeActivityMessage): { status: BridgeActivityMessage['status']; text: string } | null {
+  const status = normalizeRelayActivityStatus(activity.status) ?? activity.status
+  if (status === 'chunk') return null
+
+  const text = relayEventText({ ...activity, status })
+  return text ? { status, text } : null
+}
+
 export function appendRelayText(current: string, next: string): string {
   const text = next.replace(/\s+/g, ' ').trim()
   if (!text) return current
@@ -855,14 +868,19 @@ export class ChatOverlay {
       this.setRelayTabState('running')
     }
 
-    if (isRelayChunkActivity(normalizedActivity)) {
-      this.appendRelayChunk(normalizedActivity)
+    const chunk = relayActivityChunkParts(normalizedActivity)
+    if (chunk) {
+      this.appendRelayChunk(normalizedActivity, chunk)
       return
     }
 
-    const eventText = relayEventText(normalizedActivity)
-    if (eventText) {
-      this.addRelayEvent(status, eventText)
+    if (status === 'chunk') {
+      return
+    }
+
+    const event = relayRenderableEvent(normalizedActivity)
+    if (event) {
+      this.addRelayEvent(event.status, event.text)
     }
   }
 
@@ -881,10 +899,7 @@ export class ChatOverlay {
     this.relayStreamText = ''
   }
 
-  private appendRelayChunk(activity: BridgeActivityMessage): void {
-    const chunk = relayChunkParts(activity.text)
-    if (!chunk) return
-
+  private appendRelayChunk(activity: BridgeActivityMessage, chunk: RelayChunkParts): void {
     const requestChanged = Boolean(
       this.relayStreamRow &&
       this.relayStreamRequestId &&

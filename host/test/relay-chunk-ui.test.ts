@@ -4,7 +4,9 @@ import {
   appendRelayText,
   isRelayChunkActivity,
   normalizeRelayActivityStatus,
+  relayActivityChunkParts,
   relayChunkParts,
+  relayRenderableEvent,
 } from '../../content/chat-overlay'
 
 test('Relay chunk helpers normalize transport statuses', () => {
@@ -29,6 +31,18 @@ test('Relay explicit thinking payloads stream even with noncanonical statuses', 
   assert.equal(isRelayChunkActivity({ status: 'agent:chunk', text: 'Thinking: the result' }), true)
   assert.equal(isRelayChunkActivity({ status: 'completed', text: 'Thinking: final note' }), false)
   assert.equal(isRelayChunkActivity({ status: 'error', text: 'Thinking: failed' }), false)
+})
+
+test('Relay chunk payloads do not render as ordinary event rows', () => {
+  const activity = {
+    type: 'bridge:activity' as const,
+    status: 'CHUNK' as 'chunk',
+    text: 'Thinking: click.',
+    timestamp: 1,
+  }
+
+  assert.deepEqual(relayActivityChunkParts(activity), { label: 'thinking', text: 'click.' })
+  assert.equal(relayRenderableEvent(activity), null)
 })
 
 test('Relay token-sized thinking chunks coalesce into readable text', () => {
