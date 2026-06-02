@@ -244,6 +244,43 @@ test('HTTP sidecar delegates semantic button task through the bridge', async (t)
   })
 
   await client.connect(transport)
+  const rankResult = await client.callTool({
+    name: 'gemma_rank_actions',
+    arguments: {
+      task: {
+        id: 'semantic-observe-json',
+        title: 'Find proof of last payment',
+        tool: 'gemma_observe',
+      },
+      candidates: [
+        {
+          description: 'Receipt PDF (#download-receipt)',
+          method: 'click',
+          arguments: ['#download-receipt'],
+          selector: '#download-receipt',
+        },
+        {
+          description: 'Invoice PDF (#download-invoice)',
+          method: 'click',
+          arguments: ['#download-invoice'],
+          selector: '#download-invoice',
+        },
+        {
+          description: 'Payment settings (#payment-settings)',
+          method: 'click',
+          arguments: ['#payment-settings'],
+          selector: '#payment-settings',
+        },
+      ],
+    },
+  })
+  const rankPayload = JSON.parse(toolText(rankResult)) as {
+    best: { score: number; candidate: { selector: string } }
+    ranked: Array<{ score: number; candidate: { selector: string } }>
+  }
+  assert.equal(rankPayload.best.candidate.selector, '#download-receipt')
+  assert.ok(rankPayload.ranked[0].score > rankPayload.ranked[1].score)
+
   const result = await client.callTool({
     name: 'gemma_agent',
     arguments: {

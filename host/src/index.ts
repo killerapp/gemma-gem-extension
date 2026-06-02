@@ -1,5 +1,8 @@
 #!/usr/bin/env node
+import { existsSync, readFileSync } from 'node:fs'
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
@@ -7,11 +10,21 @@ import { WebSocketServer, type WebSocket } from 'ws'
 import * as z from 'zod/v4'
 import type { BridgeEvent, BridgeRequest, ObservedAction } from '../../shared/bridge-messages'
 import { BRIDGE_DEFAULT_PORT } from '../../shared/bridge-settings'
+import {
+  normalizeObservedAction,
+  parseRerankerWeights,
+  rankActionCandidates,
+  type ActionRerankerTask,
+  type RerankerActionInput,
+  type RerankerWeightsArtifact,
+} from '../../shared/action-reranker'
 
 const BRIDGE_TOKEN = process.env.GEMMA_GEM_BRIDGE_TOKEN
 const BRIDGE_PORT = parsePort(process.env.GEMMA_GEM_BRIDGE_PORT)
 const HTTP_MODE = process.argv.includes('--http') || process.env.GEMMA_GEM_MCP_TRANSPORT === 'http'
 const REQUEST_TIMEOUT_MS = 300_000
+const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
+const DEFAULT_RERANKER_WEIGHTS_PATH = resolve(REPO_ROOT, 'benchmarks', 'web-control-plane', 'action-reranker.weights.json')
 
 if (!BRIDGE_TOKEN) {
   console.error('GEMMA_GEM_BRIDGE_TOKEN is required. Copy it from Gemma Gem settings and set it before starting the MCP sidecar.')
@@ -422,6 +435,63 @@ function deterministicObservedActions(instruction: string, pageSnapshot: string)
     }))
 }
 
+type RankableActionCandidate = RerankerActionInput & Partial<ObservedAction> & {
+  description?: string
+  arguments?: unknown[]
+}
+
+type LoadedRerankerWeights = {
+  path: string
+  artifact: RerankerWeightsArtifact
+  weights: Map<string, number>
+}
+
+let actionRerankerWeightsCache: LoadedRerankerWeights | null = null
+
+function loadActionRerankerWeights(): LoadedRerankerWeights {
+  const path = process.env.GEMMA_GEM_ACTION_RERANKER_WEIGHTS
+    ? resolve(process.env.GEMMA_GEM_ACTION_RERANKER_WEIGHTS)
+    : DEFAULT_RERANKER_WEIGHTS_PATH
+  if (actionRerankerWeightsCache?.path === path) return actionRerankerWeightsCache
+  if (!existsSync(path)) {
+    throw new Error(`Gemma Gem action reranker weights not found: ${path}`)
+  }
+
+  const artifact = JSON.parse(readFileSync(path, 'utf8')) as RerankerWeightsArtifact
+  const weights = parseRerankerWeights(artifact)
+  if (weights.size === 0) {
+    throw new Error(`Gemma Gem action reranker weights are empty: ${path}`)
+  }
+
+  actionRerankerWeightsCache = { path, artifact, weights }
+  return actionRerankerWeightsCache
+}
+
+function actionForRankCandidate(candidate: RankableActionCandidate): RerankerActionInput {
+  if (candidate.toolName) {
+    return {
+      status: candidate.status ?? 'candidate',
+      toolName: candidate.toolName,
+      selector: candidate.selector ?? null,
+      text: candidate.text ?? candidate.description ?? null,
+      title: candidate.title ?? candidate.description ?? null,
+    }
+  }
+
+  if (!candidate.method) {
+    throw new Error('Each candidate must include either toolName or an observed action method')
+  }
+
+  return normalizeObservedAction({
+    description: candidate.description ?? '',
+    method: candidate.method,
+    arguments: candidate.arguments ?? [],
+    selector: candidate.selector,
+    ref: candidate.ref,
+    confidence: candidate.confidence,
+  })
+}
+
 async function sendJsonAgentRequest(request: BridgeRequestInput): Promise<unknown> {
   const result = await sendBridgeRequest(request)
   const text = textFromAgentResult(result)
@@ -498,6 +568,58 @@ function registerTools(server: McpServer): void {
       settings: { thinking: false, maxIterations: 6 },
     })
     return asTextResult(normalizeJsonText(textFromAgentResult(result)))
+  })
+
+  server.registerTool('gemma_rank_actions', {
+    description: 'Rank observed or proposed browser action candidates with the checked Gemma Gem action-reranker weights. Use after gemma_observe or when choosing among selectors before gemma_act.',
+    inputSchema: {
+      task: z.object({
+        id: z.string().optional().describe('Stable task id, if known.'),
+        suite: z.string().optional().describe('Task suite/category, if known.'),
+        title: z.string().optional().describe('Natural-language task title or instruction.'),
+        tool: z.string().optional().describe('Calling Gemma Gem tool, such as gemma_observe, gemma_extract, gemma_page_brief, gemma_agent, or gemma_transfer_fields.'),
+      }).optional().describe('Task context used by the reranker feature model.'),
+      instruction: z.string().optional().describe('Fallback task instruction when task.title is not provided.'),
+      tool: z.string().optional().describe('Fallback calling Gemma Gem tool when task.tool is not provided.'),
+      candidates: z.array(z.object({
+        description: z.string().optional().describe('Human-readable action description, usually from gemma_observe.'),
+        method: z.enum(['click', 'type', 'scroll', 'select', 'navigate', 'wait']).optional().describe('ObservedAction method from gemma_observe.'),
+        arguments: z.array(z.unknown()).optional().describe('ObservedAction arguments from gemma_observe.'),
+        selector: z.string().optional().describe('CSS selector for this candidate.'),
+        ref: z.string().optional().describe('Optional observed action ref.'),
+        confidence: z.number().optional().describe('Optional observed action confidence.'),
+        status: z.string().optional().describe('Optional trace status. Defaults to candidate.'),
+        toolName: z.string().optional().describe('Explicit browser tool name such as read_page_content, click_element, or type_text. Overrides method mapping.'),
+        text: z.string().nullable().optional().describe('Optional compact action text for feature scoring.'),
+        title: z.string().nullable().optional().describe('Optional candidate title/label for feature scoring.'),
+      })).min(1).describe('Candidate actions to rank.'),
+    },
+  }, async ({ task, instruction, tool, candidates }) => {
+    const loaded = loadActionRerankerWeights()
+    const taskContext: ActionRerankerTask = {
+      id: task?.id,
+      suite: task?.suite,
+      title: task?.title ?? instruction,
+      tool: task?.tool ?? tool,
+    }
+    const ranked = rankActionCandidates(
+      taskContext,
+      candidates as RankableActionCandidate[],
+      loaded.weights,
+      actionForRankCandidate,
+    )
+
+    return objectResult({
+      model: {
+        type: loaded.artifact.model?.type,
+        featureSet: loaded.artifact.model?.featureSet,
+        weightCount: loaded.weights.size,
+        artifactPath: loaded.path.replace(REPO_ROOT, '.').replaceAll('\\', '/'),
+      },
+      task: taskContext,
+      best: ranked[0] ?? null,
+      ranked,
+    })
   })
 
   server.registerTool('gemma_act', {

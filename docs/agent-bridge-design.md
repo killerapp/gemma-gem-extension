@@ -123,6 +123,7 @@ Model the high-level MCP surface after Stagehand's composable primitives:
 - `gemma_tabs`: list visible tabs the extension can address
 - `gemma_active_tab`: return active tab URL/title
 - `gemma_observe`: discover relevant page actions or extraction targets from natural language
+- `gemma_rank_actions`: score observed or proposed action candidates with the checked local action-reranker weights
 - `gemma_act`: perform one natural-language action or a previously observed action
 - `gemma_extract`: return structured data from the active page, optionally constrained by selector and JSON schema
 - `gemma_agent`: delegate a multi-step browser task to Gemma Gem
@@ -154,6 +155,8 @@ type ObservedAction = {
   confidence?: number
 }
 ```
+
+`gemma_rank_actions` should sit between observe/planning and act. It accepts a task context plus candidate actions, normalizes observed actions to tool actions, and returns ranked scores with feature contributions so caller models can choose selectors without guessing.
 
 `gemma_act` should be single-step. If a caller asks for multiple actions, return a clear validation error telling it to use `gemma_agent`.
 

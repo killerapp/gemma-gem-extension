@@ -114,6 +114,7 @@ When developing from this checkout, the equivalent local commands are `pnpm brid
 The sidecar exposes Stagehand-style MCP tools:
 
 - `gemma_observe`
+- `gemma_rank_actions`
 - `gemma_act`
 - `gemma_extract`
 - `gemma_agent`
