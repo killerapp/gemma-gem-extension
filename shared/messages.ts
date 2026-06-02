@@ -75,6 +75,8 @@ export type ModelStatusMessage = {
   modelId?: ModelId
   progress?: number
   error?: string
+  phase?: string
+  elapsedMs?: number
 }
 
 export type ModelSwitchMessage = {
@@ -142,6 +144,8 @@ export type OffscreenModelStatusMessage = {
   modelId?: ModelId
   progress?: number
   error?: string
+  phase?: string
+  elapsedMs?: number
 }
 
 export type GPUWarningMessage = {

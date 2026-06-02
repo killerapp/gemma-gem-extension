@@ -89,13 +89,15 @@ async function runWebGPUDiagnostic() {
 log.info('Offscreen document initializing')
 
 // Model host — auto-load on startup
-const modelHost = new GemmaModelHost((status, progress, error) => {
+const modelHost = new GemmaModelHost((status, progress, error, phase, elapsedMs) => {
   chrome.runtime.sendMessage({
     type: 'model:status',
     status,
     modelId: modelHost.getCurrentModelId() ?? undefined,
     progress,
     error,
+    phase,
+    elapsedMs,
   } satisfies Message)
 })
 

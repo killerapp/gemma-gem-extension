@@ -164,7 +164,7 @@ async function handleMessage(message: Message, sender: chrome.runtime.MessageSen
 
     case 'model:status': {
       latestModelStatus = { ...message, timestamp: Date.now() }
-      log.info('model:status:', message.status, message.progress ?? '', message.error ?? '')
+      log.info('model:status:', message.status, message.phase ?? '', message.progress ?? '', message.elapsedMs ?? '', message.error ?? '')
       await sendToActiveTab(message)
       return
     }

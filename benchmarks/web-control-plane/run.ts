@@ -15,12 +15,14 @@ const REPO_ROOT = resolve(fileURLToPath(import.meta.url), '..', '..', '..')
 const BENCH_ROOT = resolve(REPO_ROOT, 'benchmarks', 'web-control-plane')
 const TOKEN = 'benchmark-web-control-plane'
 const DEFAULT_TASK_TIMEOUT_MS = 120_000
-const AGENT_TASK_TIMEOUT_MS = 300_000
 const REAL_MODE = process.argv.includes('--real')
 const INCLUDE_AGENT_TASKS = process.argv.includes('--include-agent')
+const FRESH_PROFILE = process.argv.includes('--fresh-profile') || process.env.GEMMA_GEM_FRESH_CHROME_PROFILE === '1'
 const EXTENSION_DIR = resolve(REPO_ROOT, '.output', 'chrome-mv3-dev')
 const BROWSER_MARKER = resolve(REPO_ROOT, '.browsers', 'chrome-for-testing', 'chrome-path.txt')
+const DEFAULT_AGENT_PROFILE = resolve(REPO_ROOT, '.browsers', 'gemma-gem-benchmark-profile')
 const MODEL_DRIVEN_TOOLS = new Set(['gemma_agent', 'gemma_observe', 'gemma_extract'])
+const AGENT_TASK_TIMEOUT_MS = positiveIntEnv('GEMMA_GEM_AGENT_TASK_TIMEOUT_MS', 180_000)
 
 type BenchmarkTask = {
   id: string
@@ -150,6 +152,16 @@ function percentile(values: number[], p: number): number {
   const sorted = [...values].sort((a, b) => a - b)
   const index = Math.min(sorted.length - 1, Math.ceil((p / 100) * sorted.length) - 1)
   return sorted[index]
+}
+
+function positiveIntEnv(name: string, fallback: number): number {
+  const value = process.env[name]
+  if (!value) return fallback
+  const parsed = Number.parseInt(value, 10)
+  if (!Number.isFinite(parsed) || parsed <= 0) {
+    throw new Error(`${name} must be a positive integer number of milliseconds, got ${JSON.stringify(value)}`)
+  }
+  return parsed
 }
 
 async function resolveBrowserExecutable(): Promise<string> {
@@ -455,6 +467,7 @@ class RealChromeHarness implements HarnessProbe {
 
   constructor(
     private readonly chrome: ChildProcess,
+    private readonly browserExe: string,
     private readonly chromePort: number,
     private readonly userDataDir: string,
     private readonly cleanupUserDataDir: boolean,
@@ -480,7 +493,10 @@ class RealChromeHarness implements HarnessProbe {
     const { mkdtemp, mkdir } = await import('node:fs/promises')
     const { tmpdir } = await import('node:os')
     const { join } = await import('node:path')
-    const persistentProfile = process.env.GEMMA_GEM_CHROME_PROFILE
+    const defaultPersistentProfile = INCLUDE_AGENT_TASKS && !FRESH_PROFILE
+      ? DEFAULT_AGENT_PROFILE
+      : undefined
+    const persistentProfile = process.env.GEMMA_GEM_CHROME_PROFILE ?? defaultPersistentProfile
     const userDataDir = persistentProfile
       ? resolve(persistentProfile)
       : await mkdtemp(join(tmpdir(), 'gemma-gem-bench-'))
@@ -505,7 +521,12 @@ class RealChromeHarness implements HarnessProbe {
       stdio: ['ignore', 'ignore', 'pipe'],
     })
 
-    const harness = new RealChromeHarness(chrome, chromePort, userDataDir, !persistentProfile, staticServer, staticAddress.port, sidecarPort)
+    const harness = new RealChromeHarness(chrome, browserExe, chromePort, userDataDir, !persistentProfile, staticServer, staticAddress.port, sidecarPort)
+    harness.chromeOutput += persistentProfile
+      ? `\nBenchmark Chrome profile: persistent ${userDataDir}`
+      : `\nBenchmark Chrome profile: temporary ${userDataDir}`
+    console.log(`Chrome executable: ${browserExe}`)
+    console.log(`Chrome profile: ${persistentProfile ? `persistent ${userDataDir}` : `temporary ${userDataDir}`}`)
     chrome.stderr?.on('data', chunk => {
       harness.chromeOutput += chunk.toString('utf8')
     })
@@ -543,6 +564,8 @@ class RealChromeHarness implements HarnessProbe {
   async diagnostics(): Promise<Record<string, unknown>> {
     return {
       mode: this.mode,
+      browserExecutable: this.browserExe,
+      userDataDir: this.userDataDir,
       bridgeStatus: await this.bridgeStatusForDiagnostics(),
       modelStatus: await this.modelStatusForDiagnostics(),
       chromeOutputTail: this.chromeOutput.slice(-1000),

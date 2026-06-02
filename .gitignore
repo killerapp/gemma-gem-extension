@@ -9,6 +9,8 @@ lerna-debug.log*
 
 node_modules
 .browsers/chrome-for-testing
+.browsers/gemma-gem-benchmark-profile
+.browsers/gemma-gem-benchmark-*-profile
 .browsers/gemma-gem-debug-profile
 .output
 stats.html

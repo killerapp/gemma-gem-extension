@@ -42,3 +42,12 @@ e75340b	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.024	144
 c22ad83	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.006	0.010	0.0000	baseline	local-fake-extension benchmark run
 c22ad83	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.015	0.153	0.0000	baseline	real-chrome-extension-smoke benchmark run
 c22ad83	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.047	250.559	0.0000	keep	capture model status diagnostics on task failure
+5608fe4	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.006	0.011	0.0000	baseline	local-fake-extension benchmark run
+5608fe4	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.007	0.148	0.0000	baseline	real-chrome-extension-smoke benchmark run
+5608fe4	real-chrome-extension-agent	7	0.8571	0.8571	1.0000	1.0000	0.00	0.029	300.009	0.1429	discard	add model load phase diagnostics
+5608fe4	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.006	0.010	0.0000	baseline	local-fake-extension benchmark run
+5608fe4	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.010	0.165	0.0000	baseline	real-chrome-extension-smoke benchmark run
+5608fe4	real-chrome-extension-agent	7	0.4286	0.4286	0.0000	1.0000	0.00	0.033	180.018	0.1429	discard	persistent benchmark profile and model load diagnostics
+5608fe4	real-chrome-extension-agent	7	0.7143	0.7143	0.5000	1.0000	0.00	0.036	3.366	0.0000	discard	persistent benchmark profile rerun after cache population
+5608fe4	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.010	0.0000	baseline	local-fake-extension benchmark run
+5608fe4	real-chrome-extension-agent	7	0.7143	0.7143	0.5000	1.0000	0.00	0.022	57.507	0.0000	discard	persistent profile default 180s model task cap

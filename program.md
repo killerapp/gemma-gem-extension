@@ -216,6 +216,23 @@ Refined next try:
 3. Add an isolated debug command that opens the extension profile and only waits for model readiness, outside the task suite.
 4. Only after readiness is reliable, reintroduce model-load timing as a measured preflight.
 
+Current runtime selection rule:
+
+- Real smoke tests keep using a temporary Chrome profile.
+- Real agent tests default to the persistent profile `.browsers/gemma-gem-benchmark-profile` so the local model cache is reused across runs.
+- Override the profile with `GEMMA_GEM_CHROME_PROFILE=<path>` when debugging against a specific preloaded profile.
+- Force a cold profile only when measuring first-load behavior with `GEMMA_GEM_FRESH_CHROME_PROFILE=1` or `pnpm benchmark:web -- --real --include-agent --fresh-profile`.
+- Model-driven tasks default to the documented 180-second hard cap. Override with `GEMMA_GEM_AGENT_TASK_TIMEOUT_MS=<milliseconds>` when deliberately measuring cold-start behavior.
+- Failed real-agent tasks should report the browser executable, profile path, last model `status`, `phase`, `progress`, and elapsed load time.
+
+June 2, 2026 runtime finding:
+
+- A cold run against the new persistent benchmark profile failed the first model task at the 180-second cap while loading `onnx/embed_tokens_q4f16.onnx_data` at 88 percent.
+- A rerun against the same profile avoided the repeated download/stall: first model task fell to seconds and timeout rate returned to `0.0000`.
+- Remaining failures are now ORT/WebGPU runtime errors, not selector grounding or repeated model download. Observed errors include failed WebGPU compute pipeline creation and `OrtRun()` buffer download failures.
+- Branded stable Chrome `148.0.7778.181` did not register the unpacked extension in this harness; CDP returned `Extensions.loadUnpacked failed: Method not available`.
+- Next runtime experiment should use a pinned Chrome-for-Testing or Chromium build with `--load-extension`/`Extensions.loadUnpacked` support and a separate persistent profile, then compare ORT/WebGPU stability before changing Gemma prompts.
+
 Relevant platform constraints:
 
 - Extension service workers are event-driven and can shut down when dormant, so long-running model work should not depend on unstated service-worker liveness.
