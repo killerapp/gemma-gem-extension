@@ -166,6 +166,24 @@ function selectorTokens(selector: string): string[] {
   return tokens(selector.replace(/^#/, '').replace(/[-_]/g, ' '))
 }
 
+function fieldAlignment(selector: string, title: string | null): 'match' | 'mismatch' | null {
+  const selectorParts = new Set(selectorTokens(selector))
+  const titleTokens = new Set(tokens(title))
+  if (selectorParts.size === 0 || titleTokens.size === 0) return null
+
+  const titleWantsName = titleTokens.has('name')
+  const titleWantsEmail = titleTokens.has('email')
+  if (!titleWantsName && !titleWantsEmail) return null
+
+  const selectorHasName = selectorParts.has('name')
+  const selectorHasEmail = selectorParts.has('email')
+  if (titleWantsName && selectorHasName) return 'match'
+  if (titleWantsEmail && selectorHasEmail) return 'match'
+  if (titleWantsName && selectorHasEmail) return 'mismatch'
+  if (titleWantsEmail && selectorHasName) return 'mismatch'
+  return null
+}
+
 function addFeature(features: Map<string, number>, name: string, value = 1): void {
   features.set(name, (features.get(name) ?? 0) + value)
 }
@@ -189,6 +207,8 @@ function actionFeatures(pair: RerankerPreferenceRecord, action: RerankerAction):
   if (action.selector.includes('save')) addFeature(features, 'selector_contains=save')
   if (action.text?.includes('format=html')) addFeature(features, 'read_format=html')
   if (action.text?.includes('format=text')) addFeature(features, 'read_format=text')
+  const alignment = fieldAlignment(action.selector, action.title)
+  if (alignment) addFeature(features, `field_title_selector=${alignment}`)
 
   for (const token of selectorParts) addFeature(features, `selector_token=${token}`)
   for (const token of actionTokens) addFeature(features, `action_token=${token}`)

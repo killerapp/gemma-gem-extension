@@ -169,7 +169,7 @@ export function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredReco
       score -= 4
       reasons.push('transfer_destination_read_distractor')
     }
-    if (record.task.id === 'transfer-profile-fields' && record.action.toolName === 'type_text') {
+    if (record.action.toolName === 'type_text') {
       const alignment = fieldAlignment(record.action.selector, record.action.title)
       if (alignment === 'match') {
         score += 2
