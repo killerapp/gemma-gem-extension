@@ -246,9 +246,17 @@ function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredRecord {
       score -= 1
       reasons.push('distractor_billing_selector')
     }
+    if (record.action.selector?.includes('settings') && (baseTaskTokens.has('proof') || baseTaskTokens.has('receipt'))) {
+      score -= 1
+      reasons.push('settings_panel_distractor')
+    }
     if (record.action.selector?.includes('save-profile') && (baseTaskTokens.has('transfer') || baseTaskTokens.has('profile'))) {
       score += 1.5
       reasons.push('profile_submit_selector')
+    }
+    if (record.task.id === 'transfer-profile-fields' && record.action.toolName === 'click_element' && !record.action.selector?.includes('save-profile')) {
+      score -= 2
+      reasons.push('transfer_click_distractor')
     }
     if (record.task.id === 'transfer-profile-fields' && record.action.toolName === 'type_text') {
       const alignment = fieldAlignment(record.action.selector, record.action.title)
