@@ -36,7 +36,7 @@
     "browser:model-ready": "tsx scripts/check-model-ready.ts",
     "benchmark:web": "tsx benchmarks/web-control-plane/run.ts",
     "benchmark:traces": "tsx benchmarks/web-control-plane/export-traces.ts",
-    "benchmark:traces:check": "tsx benchmarks/web-control-plane/check-traces.ts",
+    "benchmark:traces:check": "tsx benchmarks/web-control-plane/check-traces.ts --min-records 17 --min-positive 17 --min-selectors 14 --min-clicks 2 --min-candidate-buckets 3",
     "benchmark:traces:summary": "tsx benchmarks/web-control-plane/summarize-traces.ts",
     "benchmark:traces:training": "tsx benchmarks/web-control-plane/build-training-traces.ts",
     "benchmark:traces:training:check": "tsx benchmarks/web-control-plane/check-traces.ts --input benchmarks/web-control-plane/action-traces.training.jsonl --require-negative --require-candidate-pairs --min-records 27 --min-positive 20 --min-negative 7 --min-selectors 24 --min-clicks 8 --min-candidate-buckets 4 --min-paired-candidate-buckets 4",
