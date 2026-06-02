@@ -357,6 +357,7 @@ Experiment result:
 - The same visible run held DevTools on `http://127.0.0.1:2998` and MCP on `http://127.0.0.1:2999/mcp`. The worker activity hook recorded `324` raw chunks, including `286` `[Thinking]` chunks, but the Relay panel rendered them as coalesced stream/thinking rows plus normal tool/completed rows instead of token-sized `CHUNK` spam.
 - The current full real-agent suite passed on `e10d1d7` with `model_ready_status ready`, `model_load_seconds 0.577`, `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `actions_per_success 2.43`, `p95_task_seconds 20.726`, and `timeout_rate 0.0000`.
 - The trace exporter was tightened after that run so `action-traces.jsonl` keeps stable action-policy records and drops volatile duration/output-preview fields.
+- `pnpm benchmark:traces:check` now validates the normalized trace contract. It fails if volatile fields reappear or if the export loses positive, selector-bearing, or click-action records. Current check result: `17` records, `17` positive, `14` selector records, and `2` click records.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:
