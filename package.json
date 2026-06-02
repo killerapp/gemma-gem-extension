@@ -33,6 +33,7 @@
     "bridge:stop": "node host/scripts/stop-bridge.cjs",
     "browser:install": "tsx scripts/install-chrome-for-testing.ts",
     "browser:debug": "tsx scripts/launch-extension-debug.ts",
+    "browser:model-ready": "tsx scripts/check-model-ready.ts",
     "benchmark:web": "tsx benchmarks/web-control-plane/run.ts",
     "compile": "tsc --noEmit",
     "test:e2e": "tsx --test host/test/*.test.ts",

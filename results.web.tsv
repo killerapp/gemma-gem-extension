@@ -58,3 +58,5 @@ c22ad83	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.047	250
 7fe7af5	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.015	0.158	0.0000	0.000	baseline	real-chrome-extension-smoke benchmark run
 7fe7af5	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.045	17.949	0.0000	6.662	keep	model readiness preflight timing
 7fe7af5	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.057	20.008	0.0000	1.106	keep	model readiness preflight timing rerun
+146c5a0	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.010	0.0000	0.000	baseline	local-fake-extension benchmark run
+146c5a0	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.025	25.892	0.0000	0.291	keep	readiness debug command validation

@@ -272,6 +272,29 @@ Experiment result:
 - A warmed rerun passed with `model_load_seconds 1.106`, `task_success_rate 1.0000`, `json_valid_rate 1.0000`, `p95_task_seconds 20.008`, and `timeout_rate 0.0000`.
 - Interpretation: model load is now measured separately from browser task duration without using a generation warmup or weakening frozen task assertions.
 
+Current debug-command experiment:
+
+- Add `pnpm browser:model-ready` as a readiness-only developer command.
+- It launches the built extension in the configured Chrome-for-Testing runtime, starts the local MCP sidecar, connects the extension bridge, calls `gemma_model_ready`, prints readiness timing/status, and exits without running benchmark tasks or a generation.
+- Use `--profile <path>` or `GEMMA_GEM_CHROME_PROFILE=<path>` to target a preloaded profile. Use `--keep-open` to leave the browser, DevTools endpoint, and bridge running for extension debugging.
+- Keep if the command validates model readiness through the same extension/MCP control plane and does not regress the benchmark gates.
+
+Example:
+
+```powershell
+pnpm build
+pnpm browser:model-ready -- --profile .browsers/gemma-gem-benchmark-profile
+pnpm browser:model-ready -- --keep-open
+```
+
+Experiment result:
+
+- `pnpm browser:model-ready -- --profile .browsers\gemma-gem-benchmark-profile` passed through the real extension/MCP path with `modelId gemma-4-e2b`, `status ready`, `phase ready`, `progress 100`, and `load seconds 5.407`.
+- `pnpm test` passed.
+- `pnpm benchmark:web` passed with `model_ready_status skipped`.
+- `pnpm benchmark:web -- --real --include-agent` passed with `model_ready_status ready`, `model_load_seconds 0.291`, `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `p95_task_seconds 25.892`, and `timeout_rate 0.0000`.
+- Interpretation: extension/runtime readiness can now be validated and debugged outside the task suite without downloading the model every run or running a generation warmup.
+
 Relevant platform constraints:
 
 - Extension service workers are event-driven and can shut down when dormant, so long-running model work should not depend on unstated service-worker liveness.
