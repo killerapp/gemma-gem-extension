@@ -109,7 +109,16 @@ function isFormCopyTask(record: TraceRecord): boolean {
 }
 
 function isDestinationReadSelector(selector: string | null): boolean {
+  if (selector?.includes('result')) return false
   return Boolean(selector?.startsWith('#dest-') || selector?.startsWith('#billing-'))
+}
+
+function isSubmitSelector(selector: string | null): boolean {
+  return Boolean(selector?.includes('save') && !selector?.includes('result'))
+}
+
+function isStatusOrFieldClickSelector(selector: string | null): boolean {
+  return Boolean(selector?.includes('result') || selector?.startsWith('#dest-') || selector?.startsWith('#billing-'))
 }
 
 export function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredRecord {
@@ -154,12 +163,12 @@ export function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredReco
       score -= 1
       reasons.push('settings_panel_distractor')
     }
-    if (record.action.selector?.includes('save-profile') && (baseTaskTokens.has('transfer') || baseTaskTokens.has('profile'))) {
+    if (isSubmitSelector(record.action.selector) && isFormCopyTask(record) && record.action.toolName === 'click_element') {
       score += 1.5
       reasons.push('profile_submit_selector')
     }
-    if (record.task.id === 'transfer-profile-fields' && record.action.toolName === 'click_element' && !record.action.selector?.includes('save-profile')) {
-      score -= 4
+    if (isFormCopyTask(record) && record.action.toolName === 'click_element' && isStatusOrFieldClickSelector(record.action.selector) && !isSubmitSelector(record.action.selector)) {
+      score -= 5
       reasons.push('transfer_click_distractor')
     }
     if (

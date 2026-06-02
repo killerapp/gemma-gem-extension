@@ -118,5 +118,20 @@
       "text": "read_page_content selector=#billing-result format=text",
       "title": "billing save result context"
     }
+  },
+  {
+    "task": {
+      "id": "copy-shipping-fields",
+      "suite": "forms-supervised",
+      "title": "Copy checkout contact fields into billing form",
+      "tool": "gemma_transfer_fields"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#save-billing",
+      "text": "click_element selector=#save-billing",
+      "title": "billing save submit button"
+    }
   }
 ]

@@ -283,5 +283,50 @@
       "text": "read_page_content selector=#billing-email format=text",
       "title": "billing email input context"
     }
+  },
+  {
+    "task": {
+      "id": "copy-shipping-fields",
+      "suite": "forms-supervised",
+      "title": "Copy checkout contact fields into billing form",
+      "tool": "gemma_transfer_fields"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#billing-name",
+      "text": "click_element selector=#billing-name",
+      "title": "billing name field control"
+    }
+  },
+  {
+    "task": {
+      "id": "copy-shipping-fields",
+      "suite": "forms-supervised",
+      "title": "Copy checkout contact fields into billing form",
+      "tool": "gemma_transfer_fields"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#billing-email",
+      "text": "click_element selector=#billing-email",
+      "title": "billing email field control"
+    }
+  },
+  {
+    "task": {
+      "id": "copy-shipping-fields",
+      "suite": "forms-supervised",
+      "title": "Copy checkout contact fields into billing form",
+      "tool": "gemma_transfer_fields"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#billing-result",
+      "text": "click_element selector=#billing-result",
+      "title": "billing save result status paragraph"
+    }
   }
 ]

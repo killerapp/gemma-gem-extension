@@ -191,6 +191,13 @@ function selectorRole(selector: string): 'source' | 'destination' | 'result' | n
   return null
 }
 
+function clickRole(selector: string): 'submit' | 'status' | 'field' | null {
+  if (selector.includes('save') && !selector.includes('result')) return 'submit'
+  if (selector.includes('result')) return 'status'
+  if (selector.startsWith('#dest-') || selector.startsWith('#billing-')) return 'field'
+  return null
+}
+
 function addFeature(features: Map<string, number>, name: string, value = 1): void {
   features.set(name, (features.get(name) ?? 0) + value)
 }
@@ -215,11 +222,15 @@ function actionFeatures(pair: RerankerPreferenceRecord, action: RerankerAction):
   if (action.text?.includes('format=html')) addFeature(features, 'read_format=html')
   if (action.text?.includes('format=text')) addFeature(features, 'read_format=text')
   const alignment = fieldAlignment(action.selector, action.title)
-  if (alignment) addFeature(features, `field_title_selector=${alignment}`)
+  if (alignment) addFeature(features, `field_title_selector=${alignment}`, 3)
   const role = selectorRole(action.selector)
   if (role) {
-    addFeature(features, `selector_role=${role}`)
-    addFeature(features, `${action.toolName}_selector_role=${role}`)
+    addFeature(features, `selector_role=${role}`, 2)
+    addFeature(features, `${action.toolName}_selector_role=${role}`, 3)
+  }
+  if (action.toolName === 'click_element') {
+    const role = clickRole(action.selector)
+    if (role) addFeature(features, `click_role=${role}`, 3)
   }
 
   for (const token of selectorParts) addFeature(features, `selector_token=${token}`)
