@@ -42,10 +42,11 @@ type TraceRecord = {
   label?: unknown
 }
 
-function parseArgs(): { input: string; requireNegative: boolean } {
+function parseArgs(): { input: string; requireNegative: boolean; requireCandidatePairs: boolean } {
   const args = process.argv.slice(2)
   let input = process.env.GEMMA_GEM_TRACE_OUTPUT ? resolve(process.env.GEMMA_GEM_TRACE_OUTPUT) : DEFAULT_INPUT
   let requireNegative = false
+  let requireCandidatePairs = false
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i]
@@ -58,12 +59,14 @@ function parseArgs(): { input: string; requireNegative: boolean } {
       input = resolve(arg.slice('--input='.length))
     } else if (arg === '--require-negative') {
       requireNegative = true
+    } else if (arg === '--require-candidate-pairs') {
+      requireCandidatePairs = true
     } else {
-      throw new Error(`Unknown argument ${arg}. Use --input <path> and --require-negative.`)
+      throw new Error(`Unknown argument ${arg}. Use --input <path>, --require-negative, and --require-candidate-pairs.`)
     }
   }
 
-  return { input, requireNegative }
+  return { input, requireNegative, requireCandidatePairs }
 }
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -104,7 +107,7 @@ function hasVolatileKeys(value: unknown, path = '$'): string[] {
   return hits
 }
 
-function validateRecord(record: TraceRecord, lineNumber: number): { hasSelector: boolean; hasClick: boolean; label: string } {
+function validateRecord(record: TraceRecord, lineNumber: number): { hasSelector: boolean; hasClick: boolean; label: string; candidateKey: string | null } {
   const prefix = `line ${lineNumber}`
   assert(record.recordType === 'web-control-action', `${prefix}: recordType must be web-control-action`)
   assertString(record.sourceFile, `${prefix}: sourceFile`)
@@ -142,11 +145,25 @@ function validateRecord(record: TraceRecord, lineNumber: number): { hasSelector:
     hasSelector: typeof record.action.selector === 'string' && record.action.selector.length > 0,
     hasClick: record.action.toolName === 'click_element' || String(record.action.text ?? '').includes('click_element'),
     label: record.label,
+    candidateKey: record.action.toolName === 'click_element' || record.action.toolName === 'type_text'
+      ? `${record.task.id}:${record.action.toolName}`
+      : null,
   }
 }
 
+function assertPairedCandidates(candidateLabels: Map<string, Set<string>>): void {
+  const unpaired: string[] = []
+  for (const [key, labels] of candidateLabels.entries()) {
+    if (labels.has('negative') && !labels.has('positive')) {
+      unpaired.push(key)
+    }
+  }
+  assert(unpaired.length === 0, `negative candidate actions must have same-task same-tool positives: ${unpaired.join(', ')}`)
+  assert([...candidateLabels.values()].some(labels => labels.has('positive') && labels.has('negative')), 'trace export must contain at least one positive/negative candidate pair')
+}
+
 async function main(): Promise<void> {
-  const { input, requireNegative } = parseArgs()
+  const { input, requireNegative, requireCandidatePairs } = parseArgs()
   if (!existsSync(input)) throw new Error(`Trace export not found: ${input}`)
 
   const lines = (await readFile(input, 'utf8'))
@@ -160,6 +177,7 @@ async function main(): Promise<void> {
   let clicks = 0
   let positives = 0
   let negatives = 0
+  const candidateLabels = new Map<string, Set<string>>()
   for (let i = 0; i < lines.length; i += 1) {
     const parsed = JSON.parse(lines[i]) as TraceRecord
     const result = validateRecord(parsed, i + 1)
@@ -167,6 +185,11 @@ async function main(): Promise<void> {
     if (result.hasClick) clicks += 1
     if (result.label === 'positive') positives += 1
     if (result.label === 'negative') negatives += 1
+    if (result.candidateKey) {
+      const labels = candidateLabels.get(result.candidateKey) ?? new Set<string>()
+      labels.add(result.label)
+      candidateLabels.set(result.candidateKey, labels)
+    }
   }
 
   assert(positives > 0, 'trace export must contain at least one positive record')
@@ -175,12 +198,16 @@ async function main(): Promise<void> {
   }
   assert(selectors > 0, 'trace export must contain at least one selector-bearing action')
   assert(clicks > 0, 'trace export must contain at least one click action')
+  if (requireCandidatePairs) {
+    assertPairedCandidates(candidateLabels)
+  }
 
   console.log(`Checked ${lines.length} action trace records`)
   console.log(`Positive records: ${positives}`)
   console.log(`Negative records: ${negatives}`)
   console.log(`Selector records: ${selectors}`)
   console.log(`Click records: ${clicks}`)
+  if (requireCandidatePairs) console.log(`Candidate pair buckets: ${candidateLabels.size}`)
 }
 
 main().catch(error => {

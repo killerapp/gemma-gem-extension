@@ -367,6 +367,7 @@ Experiment result:
 - `expected-actions.json` now also adds supervised positive candidates for `transfer-profile-fields` name/email writes, matching the existing swapped-field counterfactual negatives. The `semantic_keyword` policy scores field-title/selector agreement, raising the current policy report to `26` records, `20` positive, `6` negative, `pairwise_task_accuracy 0.7667`, `candidate_pairwise_accuracy 1.0000`, and `best_threshold_accuracy 0.8077`.
 - `pnpm benchmark:traces:policy:check` now gates the deterministic policy baseline in check-only mode, requiring `best_policy semantic_keyword`, `pairwise_task_accuracy >= 0.75`, `candidate_pairwise_accuracy >= 1.00`, and `best_threshold_accuracy >= 0.80`.
 - The policy report now includes pair-count denominators, and `pnpm benchmark:traces:policy:check` requires at least `30` whole-trace task pairs and `14` click/type candidate pairs so perfect candidate accuracy cannot hide a collapsed training set.
+- `pnpm benchmark:traces:training:check` now requires paired click/type candidates: every negative candidate must have a same-task, same-tool positive candidate, and the current training set validates `4` candidate pair buckets.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

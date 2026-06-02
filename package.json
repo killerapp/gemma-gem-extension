@@ -39,7 +39,7 @@
     "benchmark:traces:check": "tsx benchmarks/web-control-plane/check-traces.ts",
     "benchmark:traces:summary": "tsx benchmarks/web-control-plane/summarize-traces.ts",
     "benchmark:traces:training": "tsx benchmarks/web-control-plane/build-training-traces.ts",
-    "benchmark:traces:training:check": "tsx benchmarks/web-control-plane/check-traces.ts --input benchmarks/web-control-plane/action-traces.training.jsonl --require-negative",
+    "benchmark:traces:training:check": "tsx benchmarks/web-control-plane/check-traces.ts --input benchmarks/web-control-plane/action-traces.training.jsonl --require-negative --require-candidate-pairs",
     "benchmark:traces:training:summary": "tsx benchmarks/web-control-plane/summarize-traces.ts --input benchmarks/web-control-plane/action-traces.training.jsonl --output benchmarks/web-control-plane/action-traces.training.summary.md",
     "benchmark:traces:policy": "tsx benchmarks/web-control-plane/evaluate-trace-policy.ts",
     "benchmark:traces:policy:check": "tsx benchmarks/web-control-plane/evaluate-trace-policy.ts --check-only --require-best-policy semantic_keyword --min-pairwise 0.75 --min-pairwise-pairs 30 --min-candidate-pairwise 1 --min-candidate-pairs 14 --min-threshold-accuracy 0.80",
