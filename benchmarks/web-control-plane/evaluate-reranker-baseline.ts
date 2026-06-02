@@ -44,6 +44,7 @@ type RerankerPreferenceRecord = {
 type PairResult = {
   pairIndex: number
   taskId: string
+  suiteId: string
   toolName: string
   chosenId: string
   rejectedId: string
@@ -69,6 +70,8 @@ type CheckConfig = {
   minLearnedAccuracy?: number
   minLearnedLotoAccuracy?: number
   minLearnedLotoMargin?: number
+  minLearnedLosoAccuracy?: number
+  minLearnedLosoMargin?: number
   checkOnly: boolean
 }
 
@@ -91,6 +94,8 @@ function parseArgs(): { input: string; output: string; epochs: number; check: Ch
     minLearnedAccuracy: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LEARNED ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LEARNED, 'GEMMA_GEM_RERANKER_BASELINE_MIN_LEARNED') : undefined,
     minLearnedLotoAccuracy: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOTO ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOTO, 'GEMMA_GEM_RERANKER_BASELINE_MIN_LOTO') : undefined,
     minLearnedLotoMargin: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOTO_MARGIN ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOTO_MARGIN, 'GEMMA_GEM_RERANKER_BASELINE_MIN_LOTO_MARGIN') : undefined,
+    minLearnedLosoAccuracy: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOSO ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOSO, 'GEMMA_GEM_RERANKER_BASELINE_MIN_LOSO') : undefined,
+    minLearnedLosoMargin: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOSO_MARGIN ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOSO_MARGIN, 'GEMMA_GEM_RERANKER_BASELINE_MIN_LOSO_MARGIN') : undefined,
     checkOnly: false,
   }
 
@@ -147,6 +152,16 @@ function parseArgs(): { input: string; output: string; epochs: number; check: Ch
       i += 1
     } else if (arg.startsWith('--min-learned-loto-margin=')) {
       check.minLearnedLotoMargin = parseNumber(arg.slice('--min-learned-loto-margin='.length), '--min-learned-loto-margin')
+    } else if (arg === '--min-learned-loso-accuracy') {
+      check.minLearnedLosoAccuracy = parseNumber(value, '--min-learned-loso-accuracy')
+      i += 1
+    } else if (arg.startsWith('--min-learned-loso-accuracy=')) {
+      check.minLearnedLosoAccuracy = parseNumber(arg.slice('--min-learned-loso-accuracy='.length), '--min-learned-loso-accuracy')
+    } else if (arg === '--min-learned-loso-margin') {
+      check.minLearnedLosoMargin = parseNumber(value, '--min-learned-loso-margin')
+      i += 1
+    } else if (arg.startsWith('--min-learned-loso-margin=')) {
+      check.minLearnedLosoMargin = parseNumber(arg.slice('--min-learned-loso-margin='.length), '--min-learned-loso-margin')
     } else {
       throw new Error(`Unknown argument ${arg}. Use --input <path>, --output <path>, --epochs <n>, --check-only, and metric threshold options.`)
     }
@@ -212,6 +227,13 @@ function fieldKind(selector: string): 'name' | 'email' | null {
   return null
 }
 
+function expectsFullPageRead(task: RerankerPreferenceRecord['task']): boolean {
+  return task.tool === 'gemma_extract' ||
+    task.tool === 'gemma_page_brief' ||
+    task.tool === 'gemma_agent' ||
+    task.tool === 'gemma_observe'
+}
+
 function addFeature(features: Map<string, number>, name: string, value = 1): void {
   features.set(name, (features.get(name) ?? 0) + value)
 }
@@ -252,6 +274,9 @@ function actionFeatures(pair: RerankerPreferenceRecord, action: RerankerAction):
   if (action.toolName === 'click_element') {
     const role = clickRole(action.selector)
     if (role) addFeature(features, `click_role=${role}`, 3)
+  }
+  if (action.toolName === 'read_page_content' && expectsFullPageRead(pair.task)) {
+    addFeature(features, action.selector === 'body' ? 'full_page_read=body' : 'full_page_read=narrow', 5)
   }
 
   for (const token of selectorParts) addFeature(features, `selector_token=${token}`)
@@ -322,6 +347,7 @@ function evaluateSemanticKeyword(pairs: RerankerPreferenceRecord[]): PolicyResul
     return {
       pairIndex: pair.pairIndex,
       taskId: pair.task.id,
+      suiteId: pair.task.suite,
       toolName: pair.bucket.toolName,
       chosenId: pair.chosen.id,
       rejectedId: pair.rejected.id,
@@ -344,6 +370,7 @@ function evaluateLearned(name: string, pairs: RerankerPreferenceRecord[], weight
     return {
       pairIndex: pair.pairIndex,
       taskId: pair.task.id,
+      suiteId: pair.task.suite,
       toolName: pair.bucket.toolName,
       chosenId: pair.chosen.id,
       rejectedId: pair.rejected.id,
@@ -381,6 +408,19 @@ function evaluateLeaveOneTaskOut(pairs: RerankerPreferenceRecord[], epochs: numb
   return policyResult('learned_perceptron_loto', results.sort((a, b) => a.pairIndex - b.pairIndex))
 }
 
+function evaluateLeaveOneSuiteOut(pairs: RerankerPreferenceRecord[], epochs: number): PolicyResult {
+  const suiteIds = [...new Set(pairs.map(pair => pair.task.suite))].sort()
+  const results: PairResult[] = []
+  for (const suiteId of suiteIds) {
+    const train = pairs.filter(pair => pair.task.suite !== suiteId)
+    const test = pairs.filter(pair => pair.task.suite === suiteId)
+    if (train.length === 0 || test.length === 0) continue
+    const weights = trainPerceptron(train, epochs)
+    results.push(...evaluateLearned('learned_perceptron_loso', test, weights).pairs)
+  }
+  return policyResult('learned_perceptron_loso', results.sort((a, b) => a.pairIndex - b.pairIndex))
+}
+
 function topWeights(weights: Map<string, number>, limit: number): Array<[string, number]> {
   return [...weights.entries()]
     .sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]) || a[0].localeCompare(b[0]))
@@ -399,7 +439,8 @@ function checkResults(results: PolicyResult[], check: CheckConfig): void {
   const semantic = results.find(result => result.name === 'semantic_keyword')
   const learned = results.find(result => result.name === 'learned_perceptron')
   const loto = results.find(result => result.name === 'learned_perceptron_loto')
-  if (!semantic || !learned || !loto) throw new Error('Missing required reranker baseline results')
+  const loso = results.find(result => result.name === 'learned_perceptron_loso')
+  if (!semantic || !learned || !loto || !loso) throw new Error('Missing required reranker baseline results')
   if (check.requireBestPolicy && best.name !== check.requireBestPolicy) {
     throw new Error(`best_policy ${best.name} does not match required policy ${check.requireBestPolicy}`)
   }
@@ -408,6 +449,8 @@ function checkResults(results: PolicyResult[], check: CheckConfig): void {
   assertAtLeast(learned.accuracy, check.minLearnedAccuracy, 'learned_perceptron_accuracy')
   assertAtLeast(loto.accuracy, check.minLearnedLotoAccuracy, 'learned_perceptron_loto_accuracy')
   assertAtLeast(loto.minMargin, check.minLearnedLotoMargin, 'learned_perceptron_loto_min_margin')
+  assertAtLeast(loso.accuracy, check.minLearnedLosoAccuracy, 'learned_perceptron_loso_accuracy')
+  assertAtLeast(loso.minMargin, check.minLearnedLosoMargin, 'learned_perceptron_loso_min_margin')
 }
 
 function bestPolicy(results: PolicyResult[]): PolicyResult {
@@ -420,6 +463,25 @@ function bestPolicy(results: PolicyResult[]): PolicyResult {
 
 function tableRow(cells: Array<string | number>): string {
   return `| ${cells.map(cell => String(cell)).join(' | ')} |`
+}
+
+function pushPairRankingSection(lines: string[], result: PolicyResult, title: string): void {
+  lines.push(`## Pair Rankings (${title})`)
+  lines.push('')
+  lines.push(tableRow(['pair', 'suite', 'task', 'tool', 'chosen', 'rejected', 'margin']))
+  lines.push(tableRow(['---:', '---', '---', '---', '---', '---', '---:']))
+  for (const pair of result.pairs) {
+    lines.push(tableRow([
+      pair.pairIndex,
+      pair.suiteId,
+      pair.taskId,
+      pair.toolName,
+      `${pair.chosenId}:${pair.chosenSelector}`,
+      `${pair.rejectedId}:${pair.rejectedSelector}`,
+      pair.margin.toFixed(3),
+    ]))
+  }
+  lines.push('')
 }
 
 async function main(): Promise<void> {
@@ -436,6 +498,7 @@ async function main(): Promise<void> {
     evaluateSemanticKeyword(pairs),
     evaluateLearned('learned_perceptron', pairs, fullWeights),
     evaluateLeaveOneTaskOut(pairs, epochs),
+    evaluateLeaveOneSuiteOut(pairs, epochs),
   ]
   const best = bestPolicy(results)
   const buckets = new Set(pairs.map(pair => `${pair.bucket.taskId}:${pair.bucket.toolName}`))
@@ -477,27 +540,16 @@ async function main(): Promise<void> {
     lines.push(tableRow([feature, weight.toFixed(3)]))
   }
   lines.push('')
-  lines.push('## Pair Rankings (learned_perceptron_loto)')
-  lines.push('')
-  lines.push(tableRow(['pair', 'task', 'tool', 'chosen', 'rejected', 'margin']))
-  lines.push(tableRow(['---:', '---', '---', '---', '---', '---:']))
   const loto = results.find(result => result.name === 'learned_perceptron_loto')
-  for (const pair of loto?.pairs ?? []) {
-    lines.push(tableRow([
-      pair.pairIndex,
-      pair.taskId,
-      pair.toolName,
-      `${pair.chosenId}:${pair.chosenSelector}`,
-      `${pair.rejectedId}:${pair.rejectedSelector}`,
-      pair.margin.toFixed(3),
-    ]))
-  }
-  lines.push('')
+  const loso = results.find(result => result.name === 'learned_perceptron_loso')
+  if (loto) pushPairRankingSection(lines, loto, 'learned_perceptron_loto')
+  if (loso) pushPairRankingSection(lines, loso, 'learned_perceptron_loso')
   lines.push('## Interpretation')
   lines.push('')
   lines.push('- `semantic_keyword` is the existing deterministic action-policy baseline on the same chosen/rejected pairs.')
   lines.push('- `learned_perceptron` is trained and evaluated on all reranker pairs, so it only proves the current data is linearly separable.')
   lines.push('- `learned_perceptron_loto` trains on all but one task and evaluates the held-out task, giving the first offline generalization check before changing runtime prompts.')
+  lines.push('- `learned_perceptron_loso` trains on all but one suite and evaluates the held-out suite, making supervised-data transfer failures visible before runtime integration.')
 
   checkResults(results, check)
 

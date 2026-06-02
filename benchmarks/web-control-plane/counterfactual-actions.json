@@ -361,6 +361,36 @@
   },
   {
     "task": {
+      "id": "semantic-context-read",
+      "suite": "semantic-buttons-supervised",
+      "title": "Read full payment proof page context",
+      "tool": "gemma_page_brief"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "#payment-settings",
+      "text": "read_page_content selector=#payment-settings format=text",
+      "title": "payment settings button context"
+    }
+  },
+  {
+    "task": {
+      "id": "semantic-context-read",
+      "suite": "semantic-buttons-supervised",
+      "title": "Read full payment proof page context",
+      "tool": "gemma_page_brief"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "#download-invoice",
+      "text": "read_page_content selector=#download-invoice format=text",
+      "title": "invoice button context"
+    }
+  },
+  {
+    "task": {
       "id": "sync-contact-fields",
       "suite": "forms-supervised",
       "title": "Sync customer contact fields into checkout form",

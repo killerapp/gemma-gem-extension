@@ -99,6 +99,7 @@ function fieldAlignment(selector: string | null, title: string | null): 'match' 
 function requiresFullPageRead(taskId: string): boolean {
   return taskId === 'extract-pricing-json' ||
     taskId === 'semantic-page-brief' ||
+    taskId === 'semantic-context-read' ||
     taskId === 'semantic-receipt-agent' ||
     taskId === 'semantic-observe-json'
 }
