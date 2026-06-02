@@ -420,6 +420,14 @@ Experiment result:
 - `pnpm benchmark:traces:preferences:policy:check` now locks `semantic_keyword` at `preference_accuracy 1.0000` over `41` pairs with `preference_min_margin 2.000`.
 - The learned reranker now includes tool-specific source/destination field-role features, such as `read_page_content_selector_role_field=source:email`, so source email reads are no longer confused with misplaced email writes.
 - `pnpm benchmark:traces:reranker:baseline:check` now also locks nonnegative leave-one-task-out margin with `--min-learned-loto-margin 0`. Current leave-one-task-out accuracy improved to `0.9634` over `41` pairs with `learned_perceptron_loto min_margin 0.000`; remaining losses are ties, not negative rankings.
+- `expected-actions.json` and `counterfactual-actions.json` now add supervised observe-click diversity (`semantic-proof-observe`) and a third form-read analogue (`sync-contact-fields`) without changing frozen runtime tasks.
+- The learned reranker now recognizes `contact-*` selectors as source-like, `checkout-*` selectors as destination-like, and result/status read selectors before destination fields. This fixes the prior zero-margin observe and form-read LOTO cases.
+- `pnpm benchmark:traces:training:check` now locks `56` records, `30` positive, `26` negative, `53` selector records, `17` click records, `14` candidate buckets, and `14` paired candidate buckets.
+- `pnpm benchmark:traces:preferences:check` now locks `49` preference pairs across `14` buckets and `8` tasks, with `25` read pairs, `12` click pairs, and `12` type pairs.
+- `pnpm benchmark:traces:reranker:check` now locks `49` prompt-shaped reranker pairs across `14` buckets and `8` tasks, with `25` chosen `candidate_a` and `24` chosen `candidate_b`.
+- `pnpm benchmark:traces:reranker:baseline:check` now locks leave-one-task-out learned accuracy at `1.0000` with `learned_perceptron_loto min_margin 3.000` over `49` pairs; `learned_perceptron` is again the best policy by min margin.
+- `pnpm benchmark:traces:policy:check` now locks the expanded deterministic policy floor: `semantic_keyword`, `pairwise_task_accuracy 1.0000` over `131` pairs, `candidate_pairwise_accuracy 1.0000` over `127` read/click/type candidate pairs, `pairwise_min_margin 0.500`, `candidate_min_margin 0.500`, and `best_threshold_accuracy 1.0000`.
+- `pnpm benchmark:traces:preferences:policy:check` now locks `semantic_keyword` at `preference_accuracy 1.0000` over `49` pairs with `preference_min_margin 2.000`.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

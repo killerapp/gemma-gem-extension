@@ -328,5 +328,65 @@
       "text": "click_element selector=#billing-result",
       "title": "billing save result status paragraph"
     }
+  },
+  {
+    "task": {
+      "id": "semantic-proof-observe",
+      "suite": "semantic-buttons-supervised",
+      "title": "Observe the payment proof receipt action as JSON",
+      "tool": "gemma_observe"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#download-invoice",
+      "text": "click_element selector=#download-invoice",
+      "title": "observed invoice action"
+    }
+  },
+  {
+    "task": {
+      "id": "semantic-proof-observe",
+      "suite": "semantic-buttons-supervised",
+      "title": "Observe the payment proof receipt action as JSON",
+      "tool": "gemma_observe"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#payment-settings",
+      "text": "click_element selector=#payment-settings",
+      "title": "observed payment settings action"
+    }
+  },
+  {
+    "task": {
+      "id": "sync-contact-fields",
+      "suite": "forms-supervised",
+      "title": "Sync customer contact fields into checkout form",
+      "tool": "gemma_transfer_fields"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "#checkout-name",
+      "text": "read_page_content selector=#checkout-name format=text",
+      "title": "checkout name input context"
+    }
+  },
+  {
+    "task": {
+      "id": "sync-contact-fields",
+      "suite": "forms-supervised",
+      "title": "Sync customer contact fields into checkout form",
+      "tool": "gemma_transfer_fields"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "#checkout-email",
+      "text": "read_page_content selector=#checkout-email format=text",
+      "title": "checkout email input context"
+    }
   }
 ]

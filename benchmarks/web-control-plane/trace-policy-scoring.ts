@@ -110,7 +110,7 @@ function isFormCopyTask(record: TraceRecord): boolean {
 
 function isDestinationReadSelector(selector: string | null): boolean {
   if (selector?.includes('result')) return false
-  return Boolean(selector?.startsWith('#dest-') || selector?.startsWith('#billing-'))
+  return Boolean(selector?.startsWith('#dest-') || selector?.startsWith('#billing-') || selector?.startsWith('#checkout-'))
 }
 
 function isSubmitSelector(selector: string | null): boolean {
@@ -118,7 +118,7 @@ function isSubmitSelector(selector: string | null): boolean {
 }
 
 function isStatusOrFieldClickSelector(selector: string | null): boolean {
-  return Boolean(selector?.includes('result') || selector?.startsWith('#dest-') || selector?.startsWith('#billing-'))
+  return Boolean(selector?.includes('result') || selector?.startsWith('#dest-') || selector?.startsWith('#billing-') || selector?.startsWith('#checkout-'))
 }
 
 export function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredRecord {

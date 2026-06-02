@@ -192,16 +192,16 @@ function fieldAlignment(selector: string, title: string | null): 'match' | 'mism
 }
 
 function selectorRole(selector: string): 'source' | 'destination' | 'result' | null {
-  if (selector.startsWith('#source-') || selector.startsWith('#shipping-')) return 'source'
-  if (selector.startsWith('#dest-') || selector.startsWith('#billing-')) return 'destination'
   if (selector.includes('result')) return 'result'
+  if (selector.startsWith('#source-') || selector.startsWith('#shipping-') || selector.startsWith('#contact-')) return 'source'
+  if (selector.startsWith('#dest-') || selector.startsWith('#billing-') || selector.startsWith('#checkout-')) return 'destination'
   return null
 }
 
 function clickRole(selector: string): 'submit' | 'status' | 'field' | null {
   if (selector.includes('save') && !selector.includes('result')) return 'submit'
   if (selector.includes('result')) return 'status'
-  if (selector.startsWith('#dest-') || selector.startsWith('#billing-')) return 'field'
+  if (selector.startsWith('#dest-') || selector.startsWith('#billing-') || selector.startsWith('#checkout-')) return 'field'
   return null
 }
 
@@ -241,6 +241,9 @@ function actionFeatures(pair: RerankerPreferenceRecord, action: RerankerAction):
   if (role) {
     addFeature(features, `selector_role=${role}`, 2)
     addFeature(features, `${action.toolName}_selector_role=${role}`, 3)
+    if (action.toolName === 'read_page_content' && role === 'result') {
+      addFeature(features, 'read_page_content_result_context', 5)
+    }
     const field = fieldKind(action.selector)
     if (field) {
       addFeature(features, `${action.toolName}_selector_role_field=${role}:${field}`, 4)
