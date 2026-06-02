@@ -42,16 +42,24 @@ type TraceRecord = {
   label?: unknown
 }
 
-function parseArgs(): { input: string; requireNegative: boolean; requireCandidatePairs: boolean } {
+function parseNumber(value: string | undefined, label: string): number {
+  if (!value) throw new Error(`${label} requires a value`)
+  const parsed = Number(value)
+  if (!Number.isFinite(parsed)) throw new Error(`${label} must be a finite number`)
+  return parsed
+}
+
+function parseArgs(): { input: string; requireNegative: boolean; requireCandidatePairs: boolean; minPairedCandidateBuckets?: number } {
   const args = process.argv.slice(2)
   let input = process.env.GEMMA_GEM_TRACE_OUTPUT ? resolve(process.env.GEMMA_GEM_TRACE_OUTPUT) : DEFAULT_INPUT
   let requireNegative = false
   let requireCandidatePairs = false
+  let minPairedCandidateBuckets: number | undefined
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i]
+    const value = args[i + 1]
     if (arg === '--input') {
-      const value = args[i + 1]
       if (!value) throw new Error('--input requires a path')
       input = resolve(value)
       i += 1
@@ -61,12 +69,17 @@ function parseArgs(): { input: string; requireNegative: boolean; requireCandidat
       requireNegative = true
     } else if (arg === '--require-candidate-pairs') {
       requireCandidatePairs = true
+    } else if (arg === '--min-paired-candidate-buckets') {
+      minPairedCandidateBuckets = parseNumber(value, '--min-paired-candidate-buckets')
+      i += 1
+    } else if (arg.startsWith('--min-paired-candidate-buckets=')) {
+      minPairedCandidateBuckets = parseNumber(arg.slice('--min-paired-candidate-buckets='.length), '--min-paired-candidate-buckets')
     } else {
-      throw new Error(`Unknown argument ${arg}. Use --input <path>, --require-negative, and --require-candidate-pairs.`)
+      throw new Error(`Unknown argument ${arg}. Use --input <path>, --require-negative, --require-candidate-pairs, and --min-paired-candidate-buckets.`)
     }
   }
 
-  return { input, requireNegative, requireCandidatePairs }
+  return { input, requireNegative, requireCandidatePairs, minPairedCandidateBuckets }
 }
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -167,7 +180,7 @@ function pairedCandidateBuckets(candidateLabels: Map<string, Set<string>>): numb
 }
 
 async function main(): Promise<void> {
-  const { input, requireNegative, requireCandidatePairs } = parseArgs()
+  const { input, requireNegative, requireCandidatePairs, minPairedCandidateBuckets } = parseArgs()
   if (!existsSync(input)) throw new Error(`Trace export not found: ${input}`)
 
   const lines = (await readFile(input, 'utf8'))
@@ -202,8 +215,12 @@ async function main(): Promise<void> {
   }
   assert(selectors > 0, 'trace export must contain at least one selector-bearing action')
   assert(clicks > 0, 'trace export must contain at least one click action')
+  const pairedBuckets = pairedCandidateBuckets(candidateLabels)
   if (requireCandidatePairs) {
     assertPairedCandidates(candidateLabels)
+  }
+  if (minPairedCandidateBuckets !== undefined) {
+    assert(pairedBuckets >= minPairedCandidateBuckets, `paired candidate buckets ${pairedBuckets} is below required floor ${minPairedCandidateBuckets}`)
   }
 
   console.log(`Checked ${lines.length} action trace records`)
@@ -213,7 +230,7 @@ async function main(): Promise<void> {
   console.log(`Click records: ${clicks}`)
   if (requireCandidatePairs) {
     console.log(`Candidate buckets: ${candidateLabels.size}`)
-    console.log(`Paired candidate buckets: ${pairedCandidateBuckets(candidateLabels)}`)
+    console.log(`Paired candidate buckets: ${pairedBuckets}`)
   }
 }
 
