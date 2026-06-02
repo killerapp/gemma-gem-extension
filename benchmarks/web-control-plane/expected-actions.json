@@ -1,0 +1,17 @@
+[
+  {
+    "task": {
+      "id": "semantic-observe-json",
+      "suite": "semantic-buttons",
+      "title": "Observe the receipt action as valid JSON",
+      "tool": "gemma_observe"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#download-receipt",
+      "text": "click_element selector=#download-receipt",
+      "title": "observed receipt action"
+    }
+  }
+]
