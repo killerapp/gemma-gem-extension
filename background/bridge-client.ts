@@ -15,6 +15,7 @@ let reconnectId: number | null = null
 let connectionStatus: BridgeConnectionStatus = 'disabled'
 let connectionError: string | undefined
 let setupComplete = false
+const bridgeActivityLog: BridgeActivityMessage[] = []
 
 const pendingToolResults = new Map<string, { resolve: (result: unknown) => void, timeoutId: number }>()
 const pendingAgentRuns = new Map<number, {
@@ -70,6 +71,7 @@ export async function setupAgentBridge(): Promise<void> {
     (globalThis as typeof globalThis & {
       __gemmaGemBenchmarkConnectBridge?: (settings: BridgeSettings) => Promise<{ status: BridgeConnectionStatus, error?: string }>
       __gemmaGemBenchmarkBridgeStatus?: () => { status: BridgeConnectionStatus, error?: string }
+      __gemmaGemBenchmarkBridgeActivity?: () => BridgeActivityMessage[]
     }).__gemmaGemBenchmarkConnectBridge = async (settings: BridgeSettings) => {
       applyBridgeSettings(settings)
       return getBridgeStatus()
@@ -77,6 +79,9 @@ export async function setupAgentBridge(): Promise<void> {
     ;(globalThis as typeof globalThis & {
       __gemmaGemBenchmarkBridgeStatus?: () => { status: BridgeConnectionStatus, error?: string }
     }).__gemmaGemBenchmarkBridgeStatus = () => getBridgeStatus()
+    ;(globalThis as typeof globalThis & {
+      __gemmaGemBenchmarkBridgeActivity?: () => BridgeActivityMessage[]
+    }).__gemmaGemBenchmarkBridgeActivity = () => [...bridgeActivityLog]
   }
 
   chrome.storage.onChanged.addListener((changes, areaName) => {
@@ -260,6 +265,8 @@ function emitBridgeActivity(payload: Omit<BridgeActivityMessage, 'type' | 'times
     timestamp: Date.now(),
     ...payload,
   }
+  bridgeActivityLog.push(message)
+  while (bridgeActivityLog.length > 500) bridgeActivityLog.shift()
 
   chrome.tabs.query({}).then(tabs => {
     for (const tab of tabs) {

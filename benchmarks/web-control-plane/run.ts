@@ -79,6 +79,7 @@ type HarnessProbe = {
   clicked(selector: string): Promise<boolean> | boolean
   requestCount(): number
   requestsSince(start: number): BridgeRequest[]
+  actionCount(): Promise<number> | number
   toolErrorCount(): number
   diagnostics(): Promise<Record<string, unknown>> | Record<string, unknown>
   close(): Promise<void> | void
@@ -255,6 +256,10 @@ class FakeExtension implements HarnessProbe {
 
   requestCount(): number {
     return this.requests.length
+  }
+
+  actionCount(): number {
+    return this.requests.filter(request => request.type === 'bridge:run_agent' || request.type === 'bridge:execute_tool').length
   }
 
   requestsSince(start: number): BridgeRequest[] {
@@ -576,6 +581,11 @@ class RealChromeHarness implements HarnessProbe {
     return this.requests.slice(start)
   }
 
+  async actionCount(): Promise<number> {
+    const activities = await this.bridgeActivityForDiagnostics()
+    return activities.filter(activity => activity.status === 'started' || activity.status === 'tool').length
+  }
+
   toolErrorCount(): number {
     return 0
   }
@@ -587,6 +597,7 @@ class RealChromeHarness implements HarnessProbe {
       userDataDir: this.userDataDir,
       bridgeStatus: await this.bridgeStatusForDiagnostics(),
       modelStatus: await this.modelStatusForDiagnostics(),
+      bridgeActivityCount: (await this.bridgeActivityForDiagnostics()).length,
       chromeOutputTail: this.chromeOutput.slice(-1000),
     }
   }
@@ -873,6 +884,21 @@ class RealChromeHarness implements HarnessProbe {
     }
   }
 
+  private async bridgeActivityForDiagnostics(): Promise<Array<{ status?: string; toolName?: string; requestId?: string }>> {
+    if (!this.extensionWorkerSession) return []
+    try {
+      const result = await this.extensionWorkerSession.send('Runtime.evaluate', {
+        expression: 'JSON.stringify(globalThis.__gemmaGemBenchmarkBridgeActivity?.() ?? [])',
+        returnByValue: true,
+      })
+      const text = String(result.result?.value ?? '[]')
+      const parsed = JSON.parse(text)
+      return Array.isArray(parsed) ? parsed : []
+    } catch {
+      return []
+    }
+  }
+
   private async targets(): Promise<ChromeTarget[]> {
     return fetch(`http://127.0.0.1:${this.chromePort}/json/list`).then(r => r.json() as Promise<ChromeTarget[]>)
   }
@@ -995,6 +1021,7 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
   const start = performance.now()
   const taskForCall = harness.remapTask(task)
   const startRequestCount = harness.requestCount()
+  const startActionCount = await harness.actionCount()
   const startErrorCount = harness.toolErrorCount()
   const notes: string[] = []
   let success = false
@@ -1121,7 +1148,12 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
 
   const durationMs = performance.now() - start
   const requests = harness.requestsSince(startRequestCount)
-  const actions = requests.filter(request => request.type === 'bridge:run_agent' || request.type === 'bridge:execute_tool').length
+  const endActionCount = await harness.actionCount()
+  const actions = Math.max(
+    0,
+    endActionCount - startActionCount,
+    requests.filter(request => request.type === 'bridge:run_agent' || request.type === 'bridge:execute_tool').length,
+  )
   const toolErrors = harness.toolErrorCount() - startErrorCount
 
   return {

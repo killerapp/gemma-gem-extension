@@ -337,6 +337,18 @@ Experiment result:
 - `pnpm compile`, `pnpm build`, `pnpm test`, `pnpm benchmark:web`, and `pnpm benchmark:web -- --real` passed after the change.
 - Interpretation: the debug loop can recover from extension service-worker registration corruption without discarding the downloaded model cache, cached readiness no longer depends on a fresh load event, and readiness failures stay bounded and diagnostic.
 
+Current action-accounting experiment:
+
+- Real extension mode previously reported `actions_per_success: 0.00` even when `gemma_agent` used page tools, because the real harness cannot see nested offscreen-agent tool calls through the host-side bridge request log.
+- The service worker now keeps a bounded dev-only Gemma Relay activity log exposed as `__gemmaGemBenchmarkBridgeActivity()`.
+- The real benchmark harness uses that activity log to count Relay `started` and `tool` events per task, while the fake harness keeps using its direct bridge request log.
+- This matters for the future training loop: selector/action traces need a reliable action count before they can become useful policy/reranker data.
+
+Experiment result:
+
+- `pnpm compile`, `pnpm build`, `pnpm test`, `pnpm benchmark:web`, and `pnpm benchmark:web -- --real` passed after the instrumentation change.
+- Expected next evidence is a fresh `pnpm benchmark:web -- --real --include-agent` run with non-zero `actions_per_success` for model-driven real-extension tasks.
+
 Relevant platform constraints:
 
 - Extension service workers are event-driven and can shut down when dormant, so long-running model work should not depend on unstated service-worker liveness.
