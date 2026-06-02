@@ -53,10 +53,32 @@ type PolicyResult = {
   best: { threshold: number; accuracy: number }
 }
 
-function parseArgs(): { input: string; output: string } {
+type PolicyCheckConfig = {
+  requireBestPolicy?: string
+  minPairwise?: number
+  minCandidatePairwise?: number
+  minThresholdAccuracy?: number
+  checkOnly: boolean
+}
+
+function parseNumber(value: string | undefined, label: string): number {
+  if (!value) throw new Error(`${label} requires a value`)
+  const parsed = Number(value)
+  if (!Number.isFinite(parsed)) throw new Error(`${label} must be a finite number`)
+  return parsed
+}
+
+function parseArgs(): { input: string; output: string; check: PolicyCheckConfig } {
   const args = process.argv.slice(2)
   let input = process.env.GEMMA_GEM_TRACE_TRAINING_OUTPUT ? resolve(process.env.GEMMA_GEM_TRACE_TRAINING_OUTPUT) : DEFAULT_INPUT
   let output = process.env.GEMMA_GEM_TRACE_POLICY_OUTPUT ? resolve(process.env.GEMMA_GEM_TRACE_POLICY_OUTPUT) : DEFAULT_OUTPUT
+  const check: PolicyCheckConfig = {
+    requireBestPolicy: process.env.GEMMA_GEM_TRACE_POLICY_REQUIRE_BEST,
+    minPairwise: process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE, 'GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE') : undefined,
+    minCandidatePairwise: process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE, 'GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE') : undefined,
+    minThresholdAccuracy: process.env.GEMMA_GEM_TRACE_POLICY_MIN_THRESHOLD_ACCURACY ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_THRESHOLD_ACCURACY, 'GEMMA_GEM_TRACE_POLICY_MIN_THRESHOLD_ACCURACY') : undefined,
+    checkOnly: false,
+  }
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i]
@@ -73,12 +95,35 @@ function parseArgs(): { input: string; output: string } {
       i += 1
     } else if (arg.startsWith('--output=')) {
       output = resolve(arg.slice('--output='.length))
+    } else if (arg === '--check-only') {
+      check.checkOnly = true
+    } else if (arg === '--require-best-policy') {
+      if (!value) throw new Error('--require-best-policy requires a policy name')
+      check.requireBestPolicy = value
+      i += 1
+    } else if (arg.startsWith('--require-best-policy=')) {
+      check.requireBestPolicy = arg.slice('--require-best-policy='.length)
+    } else if (arg === '--min-pairwise') {
+      check.minPairwise = parseNumber(value, '--min-pairwise')
+      i += 1
+    } else if (arg.startsWith('--min-pairwise=')) {
+      check.minPairwise = parseNumber(arg.slice('--min-pairwise='.length), '--min-pairwise')
+    } else if (arg === '--min-candidate-pairwise') {
+      check.minCandidatePairwise = parseNumber(value, '--min-candidate-pairwise')
+      i += 1
+    } else if (arg.startsWith('--min-candidate-pairwise=')) {
+      check.minCandidatePairwise = parseNumber(arg.slice('--min-candidate-pairwise='.length), '--min-candidate-pairwise')
+    } else if (arg === '--min-threshold-accuracy') {
+      check.minThresholdAccuracy = parseNumber(value, '--min-threshold-accuracy')
+      i += 1
+    } else if (arg.startsWith('--min-threshold-accuracy=')) {
+      check.minThresholdAccuracy = parseNumber(arg.slice('--min-threshold-accuracy='.length), '--min-threshold-accuracy')
     } else {
-      throw new Error(`Unknown argument ${arg}. Use --input <path> and --output <path>.`)
+      throw new Error(`Unknown argument ${arg}. Use --input <path>, --output <path>, --check-only, and metric threshold options.`)
     }
   }
 
-  return { input, output }
+  return { input, output, check }
 }
 
 function sourcePath(path: string): string {
@@ -268,12 +313,28 @@ function evaluatePolicy(name: string, records: TraceRecord[]): PolicyResult {
   }
 }
 
+function assertAtLeast(actual: number, minimum: number | undefined, label: string): void {
+  if (minimum === undefined) return
+  if (actual + Number.EPSILON < minimum) {
+    throw new Error(`${label} ${actual.toFixed(4)} is below required floor ${minimum.toFixed(4)}`)
+  }
+}
+
+function checkPolicyResult(bestPolicy: PolicyResult, check: PolicyCheckConfig): void {
+  if (check.requireBestPolicy && bestPolicy.name !== check.requireBestPolicy) {
+    throw new Error(`best_policy ${bestPolicy.name} does not match required policy ${check.requireBestPolicy}`)
+  }
+  assertAtLeast(bestPolicy.pairwise, check.minPairwise, 'pairwise_task_accuracy')
+  assertAtLeast(bestPolicy.candidatePairwise, check.minCandidatePairwise, 'candidate_pairwise_accuracy')
+  assertAtLeast(bestPolicy.best.accuracy, check.minThresholdAccuracy, 'best_threshold_accuracy')
+}
+
 function tableRow(cells: Array<string | number>): string {
   return `| ${cells.map(cell => String(cell)).join(' | ')} |`
 }
 
 async function main(): Promise<void> {
-  const { input, output } = parseArgs()
+  const { input, output, check } = parseArgs()
   if (!existsSync(input)) throw new Error(`Training trace source not found: ${input}`)
 
   const traceRecords = (await readFile(input, 'utf8'))
@@ -347,14 +408,19 @@ async function main(): Promise<void> {
   lines.push('- `candidate_pairwise_accuracy` scores only click/type candidate actions and is the primary selector/action ranking baseline.')
   lines.push('- Future selector/action policy experiments should beat `candidate_pairwise_accuracy` while preserving benchmark task success.')
 
-  await mkdir(dirname(output), { recursive: true })
-  await writeFile(output, `${lines.join('\n')}\n`)
+  checkPolicyResult(bestPolicy, check)
 
-  console.log(`Wrote trace policy baseline: ${sourcePath(output)}`)
+  if (!check.checkOnly) {
+    await mkdir(dirname(output), { recursive: true })
+    await writeFile(output, `${lines.join('\n')}\n`)
+  }
+
+  if (!check.checkOnly) console.log(`Wrote trace policy baseline: ${sourcePath(output)}`)
   console.log(`Best policy: ${bestPolicy.name}`)
   console.log(`Pairwise task accuracy: ${bestPolicy.pairwise.toFixed(4)}`)
   console.log(`Candidate pairwise accuracy: ${bestPolicy.candidatePairwise.toFixed(4)}`)
   console.log(`Best threshold accuracy: ${bestPolicy.best.accuracy.toFixed(4)}`)
+  if (check.checkOnly) console.log('Trace policy gates passed')
 }
 
 main().catch(error => {
