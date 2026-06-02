@@ -66,6 +66,17 @@ export function relayChunkParts(text: string | undefined): RelayChunkParts | nul
   return { label: 'stream', text: raw }
 }
 
+export function isRelayChunkActivity(activity: { status?: unknown; text?: string }): boolean {
+  const status = normalizeRelayActivityStatus(activity.status)
+  if (status === 'chunk') return true
+  if (status) return false
+
+  const text = activity.text?.trim()
+  return Boolean(
+    text?.match(/^(?:\[Thinking\]|Thinking:|\[Tool\]|Tool:)\s*/i),
+  )
+}
+
 export function appendRelayText(current: string, next: string): string {
   const text = next.replace(/\s+/g, ' ').trim()
   if (!text) return current
@@ -835,7 +846,7 @@ export class ChatOverlay {
       this.setRelayTabState('running')
     }
 
-    if (status === 'chunk') {
+    if (isRelayChunkActivity(normalizedActivity)) {
       this.appendRelayChunk(normalizedActivity)
       return
     }

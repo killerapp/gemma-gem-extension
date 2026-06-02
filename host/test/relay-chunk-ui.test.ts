@@ -2,6 +2,7 @@ import { strict as assert } from 'node:assert'
 import test from 'node:test'
 import {
   appendRelayText,
+  isRelayChunkActivity,
   normalizeRelayActivityStatus,
   relayChunkParts,
 } from '../../content/chat-overlay'
@@ -17,6 +18,13 @@ test('Relay thinking chunks parse as stream parts', () => {
   assert.deepEqual(relayChunkParts('[Thinking] click.'), { label: 'thinking', text: 'click.' })
   assert.deepEqual(relayChunkParts('Thinking: 3.'), { label: 'thinking', text: '3.' })
   assert.deepEqual(relayChunkParts('[Tool] click_element'), { label: 'tool', text: 'click_element' })
+})
+
+test('Relay explicit thinking payloads stream even with noncanonical statuses', () => {
+  assert.equal(isRelayChunkActivity({ status: 'CHUNK', text: 'Thinking: click.' }), true)
+  assert.equal(isRelayChunkActivity({ status: 'bridge:chunk', text: 'Thinking: Report' }), true)
+  assert.equal(isRelayChunkActivity({ status: 'completed', text: 'Thinking: final note' }), false)
+  assert.equal(isRelayChunkActivity({ status: 'error', text: 'Thinking: failed' }), false)
 })
 
 test('Relay token-sized thinking chunks coalesce into readable text', () => {
