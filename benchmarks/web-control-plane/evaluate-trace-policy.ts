@@ -45,11 +45,17 @@ type ScoredRecord = TraceRecord & {
   reasons: string[]
 }
 
+type PairwiseStats = {
+  correct: number
+  total: number
+  accuracy: number
+}
+
 type PolicyResult = {
   name: string
   records: ScoredRecord[]
-  pairwise: number
-  candidatePairwise: number
+  pairwise: PairwiseStats
+  candidatePairwise: PairwiseStats
   best: { threshold: number; accuracy: number }
 }
 
@@ -57,6 +63,8 @@ type PolicyCheckConfig = {
   requireBestPolicy?: string
   minPairwise?: number
   minCandidatePairwise?: number
+  minPairwisePairs?: number
+  minCandidatePairs?: number
   minThresholdAccuracy?: number
   checkOnly: boolean
 }
@@ -76,6 +84,8 @@ function parseArgs(): { input: string; output: string; check: PolicyCheckConfig 
     requireBestPolicy: process.env.GEMMA_GEM_TRACE_POLICY_REQUIRE_BEST,
     minPairwise: process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE, 'GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE') : undefined,
     minCandidatePairwise: process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE, 'GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE') : undefined,
+    minPairwisePairs: process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_PAIRS ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_PAIRS, 'GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_PAIRS') : undefined,
+    minCandidatePairs: process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRS ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRS, 'GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRS') : undefined,
     minThresholdAccuracy: process.env.GEMMA_GEM_TRACE_POLICY_MIN_THRESHOLD_ACCURACY ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_THRESHOLD_ACCURACY, 'GEMMA_GEM_TRACE_POLICY_MIN_THRESHOLD_ACCURACY') : undefined,
     checkOnly: false,
   }
@@ -113,6 +123,16 @@ function parseArgs(): { input: string; output: string; check: PolicyCheckConfig 
       i += 1
     } else if (arg.startsWith('--min-candidate-pairwise=')) {
       check.minCandidatePairwise = parseNumber(arg.slice('--min-candidate-pairwise='.length), '--min-candidate-pairwise')
+    } else if (arg === '--min-pairwise-pairs') {
+      check.minPairwisePairs = parseNumber(value, '--min-pairwise-pairs')
+      i += 1
+    } else if (arg.startsWith('--min-pairwise-pairs=')) {
+      check.minPairwisePairs = parseNumber(arg.slice('--min-pairwise-pairs='.length), '--min-pairwise-pairs')
+    } else if (arg === '--min-candidate-pairs') {
+      check.minCandidatePairs = parseNumber(value, '--min-candidate-pairs')
+      i += 1
+    } else if (arg.startsWith('--min-candidate-pairs=')) {
+      check.minCandidatePairs = parseNumber(arg.slice('--min-candidate-pairs='.length), '--min-candidate-pairs')
     } else if (arg === '--min-threshold-accuracy') {
       check.minThresholdAccuracy = parseNumber(value, '--min-threshold-accuracy')
       i += 1
@@ -248,10 +268,10 @@ function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredRecord {
   return { ...record, policy, score, reasons }
 }
 
-function pairwiseAccuracy(records: ScoredRecord[]): number {
+function pairwiseStats(records: ScoredRecord[]): PairwiseStats {
   const positives = records.filter(record => record.label === 'positive')
   const negatives = records.filter(record => record.label === 'negative')
-  if (positives.length === 0 || negatives.length === 0) return 0
+  if (positives.length === 0 || negatives.length === 0) return { correct: 0, total: 0, accuracy: 0 }
 
   let correct = 0
   let total = 0
@@ -264,11 +284,11 @@ function pairwiseAccuracy(records: ScoredRecord[]): number {
     }
   }
 
-  return total ? correct / total : 0
+  return { correct, total, accuracy: total ? correct / total : 0 }
 }
 
-function candidatePairwiseAccuracy(records: ScoredRecord[]): number {
-  return pairwiseAccuracy(records.filter(record =>
+function candidatePairwiseStats(records: ScoredRecord[]): PairwiseStats {
+  return pairwiseStats(records.filter(record =>
     record.action.toolName === 'click_element' || record.action.toolName === 'type_text'
   ))
 }
@@ -307,8 +327,8 @@ function evaluatePolicy(name: string, records: TraceRecord[]): PolicyResult {
   return {
     name,
     records: scored,
-    pairwise: pairwiseAccuracy(scored),
-    candidatePairwise: candidatePairwiseAccuracy(scored),
+    pairwise: pairwiseStats(scored),
+    candidatePairwise: candidatePairwiseStats(scored),
     best: bestThreshold(scored),
   }
 }
@@ -324,8 +344,10 @@ function checkPolicyResult(bestPolicy: PolicyResult, check: PolicyCheckConfig): 
   if (check.requireBestPolicy && bestPolicy.name !== check.requireBestPolicy) {
     throw new Error(`best_policy ${bestPolicy.name} does not match required policy ${check.requireBestPolicy}`)
   }
-  assertAtLeast(bestPolicy.pairwise, check.minPairwise, 'pairwise_task_accuracy')
-  assertAtLeast(bestPolicy.candidatePairwise, check.minCandidatePairwise, 'candidate_pairwise_accuracy')
+  assertAtLeast(bestPolicy.pairwise.accuracy, check.minPairwise, 'pairwise_task_accuracy')
+  assertAtLeast(bestPolicy.candidatePairwise.accuracy, check.minCandidatePairwise, 'candidate_pairwise_accuracy')
+  assertAtLeast(bestPolicy.pairwise.total, check.minPairwisePairs, 'pairwise_task_pairs')
+  assertAtLeast(bestPolicy.candidatePairwise.total, check.minCandidatePairs, 'candidate_pairwise_pairs')
   assertAtLeast(bestPolicy.best.accuracy, check.minThresholdAccuracy, 'best_threshold_accuracy')
 }
 
@@ -347,8 +369,8 @@ async function main(): Promise<void> {
     evaluatePolicy('semantic_keyword', traceRecords),
   ]
   const bestPolicy = [...policyResults].sort((a, b) =>
-    b.candidatePairwise - a.candidatePairwise ||
-    b.pairwise - a.pairwise ||
+    b.candidatePairwise.accuracy - a.candidatePairwise.accuracy ||
+    b.pairwise.accuracy - a.pairwise.accuracy ||
     a.name.localeCompare(b.name)
   )[0]
 
@@ -367,18 +389,22 @@ async function main(): Promise<void> {
   lines.push(`- positive_records: ${positives}`)
   lines.push(`- negative_records: ${negatives}`)
   lines.push(`- best_policy: ${bestPolicy.name}`)
-  lines.push(`- best_pairwise_task_accuracy: ${bestPolicy.pairwise.toFixed(4)}`)
-  lines.push(`- best_candidate_pairwise_accuracy: ${bestPolicy.candidatePairwise.toFixed(4)}`)
+  lines.push(`- best_pairwise_task_accuracy: ${bestPolicy.pairwise.accuracy.toFixed(4)}`)
+  lines.push(`- best_pairwise_task_pairs: ${bestPolicy.pairwise.total}`)
+  lines.push(`- best_candidate_pairwise_accuracy: ${bestPolicy.candidatePairwise.accuracy.toFixed(4)}`)
+  lines.push(`- best_candidate_pairwise_pairs: ${bestPolicy.candidatePairwise.total}`)
   lines.push('')
   lines.push('## Policy Comparison')
   lines.push('')
-  lines.push(tableRow(['policy', 'pairwise_task_accuracy', 'candidate_pairwise_accuracy', 'best_threshold', 'best_threshold_accuracy']))
-  lines.push(tableRow(['---', '---:', '---:', '---:', '---:']))
+  lines.push(tableRow(['policy', 'pairwise_task_accuracy', 'pairwise_pairs', 'candidate_pairwise_accuracy', 'candidate_pairs', 'best_threshold', 'best_threshold_accuracy']))
+  lines.push(tableRow(['---', '---:', '---:', '---:', '---:', '---:', '---:']))
   for (const result of policyResults) {
     lines.push(tableRow([
       result.name,
-      result.pairwise.toFixed(4),
-      result.candidatePairwise.toFixed(4),
+      result.pairwise.accuracy.toFixed(4),
+      result.pairwise.total,
+      result.candidatePairwise.accuracy.toFixed(4),
+      result.candidatePairwise.total,
       result.best.threshold.toFixed(3),
       result.best.accuracy.toFixed(4),
     ]))
@@ -417,8 +443,8 @@ async function main(): Promise<void> {
 
   if (!check.checkOnly) console.log(`Wrote trace policy baseline: ${sourcePath(output)}`)
   console.log(`Best policy: ${bestPolicy.name}`)
-  console.log(`Pairwise task accuracy: ${bestPolicy.pairwise.toFixed(4)}`)
-  console.log(`Candidate pairwise accuracy: ${bestPolicy.candidatePairwise.toFixed(4)}`)
+  console.log(`Pairwise task accuracy: ${bestPolicy.pairwise.accuracy.toFixed(4)} (${bestPolicy.pairwise.total} pairs)`)
+  console.log(`Candidate pairwise accuracy: ${bestPolicy.candidatePairwise.accuracy.toFixed(4)} (${bestPolicy.candidatePairwise.total} pairs)`)
   console.log(`Best threshold accuracy: ${bestPolicy.best.accuracy.toFixed(4)}`)
   if (check.checkOnly) console.log('Trace policy gates passed')
 }
