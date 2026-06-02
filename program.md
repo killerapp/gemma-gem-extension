@@ -343,7 +343,7 @@ Current action-accounting experiment:
 - The service worker now keeps a bounded dev-only Gemma Relay activity log exposed as `__gemmaGemBenchmarkBridgeActivity()`.
 - The real benchmark harness uses that activity log to count Relay `started` and `tool` events per task, while the fake harness keeps using its direct bridge request log.
 - `benchmark.web.jsonl` task records now include an `actionTrace` array with compact per-task Relay/tool events (`status`, `toolName`, `requestId`, `tabId`, title/text preview, timestamp). This keeps the raw action path available for later selector/action policy analysis without replaying the browser session.
-- `pnpm benchmark:traces` exports normalized action-policy records to `benchmarks/web-control-plane/action-traces.jsonl`. The export omits volatile request IDs, timestamps, and tab IDs, then keeps task context, outcome labels, tool names, selector hints, and compact action text.
+- `pnpm benchmark:traces` exports normalized action-policy records to `benchmarks/web-control-plane/action-traces.jsonl`. The export omits volatile request IDs, timestamps, tab IDs, durations, and task output previews, then keeps task context, outcome labels, tool names, selector hints, and compact action text.
 - The Relay panel should display streamed thinking as one live `thinking` row per active request. Token-sized `[Thinking]` or `Thinking:` chunks are transport detail, not separate user-visible Relay events.
 - This matters for the future training loop: selector/action traces need a reliable action count before they can become useful policy/reranker data.
 
@@ -355,6 +355,8 @@ Experiment result:
 - Local fake-mode `pnpm benchmark:web` passed after selector-summary enrichment with `actions_per_success 2.43`; `pnpm benchmark:traces` exported `17` positive records from `6` tasks.
 - A visible debug run on `c8abed8` used `pnpm browser:model-ready -- --profile .browsers\gemma-gem-benchmark-profile --fixture semantic-buttons --run-tool gemma_agent --keep-open`. Cached readiness returned `status ready`, `load seconds 2.890`, then `gemma_agent` completed in `94.739` seconds with selector `#download-receipt` and invoice `INV-2026-041`.
 - The same visible run held DevTools on `http://127.0.0.1:2998` and MCP on `http://127.0.0.1:2999/mcp`. The worker activity hook recorded `324` raw chunks, including `286` `[Thinking]` chunks, but the Relay panel rendered them as coalesced stream/thinking rows plus normal tool/completed rows instead of token-sized `CHUNK` spam.
+- The current full real-agent suite passed on `e10d1d7` with `model_ready_status ready`, `model_load_seconds 0.577`, `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `actions_per_success 2.43`, `p95_task_seconds 20.726`, and `timeout_rate 0.0000`.
+- The trace exporter was tightened after that run so `action-traces.jsonl` keeps stable action-policy records and drops volatile duration/output-preview fields.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

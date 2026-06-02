@@ -65,3 +65,4 @@ af549c5	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.034	23.
 fa86e6b	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	2.43	0.023	20.885	0.0000	0.018	baseline	real-chrome-extension-agent benchmark run
 5c1b693	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.010	0.0000	0.000	baseline	local-fake-extension benchmark run
 5c1b693	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.008	0.0000	0.000	baseline	local-fake-extension benchmark run
+e10d1d7	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	2.43	0.026	20.726	0.0000	0.577	baseline	real-chrome-extension-agent benchmark run

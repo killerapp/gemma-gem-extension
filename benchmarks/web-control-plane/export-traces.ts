@@ -26,10 +26,8 @@ type TaskTrace = {
   selectorHits?: number
   selectorChecks?: number
   actions?: number
-  durationMs?: number
   timeout?: boolean
   toolErrors?: number
-  outputPreview?: string
   notes?: string[]
   actionTrace?: ActionTraceEvent[]
 }
@@ -50,7 +48,6 @@ type ExportRecord = {
     selectorHitRate: number | null
     timeout: boolean
     toolErrors: number
-    durationMs: number
   }
   action: {
     index: number
@@ -61,7 +58,6 @@ type ExportRecord = {
     title: string | null
   }
   label: 'positive' | 'negative'
-  taskOutputPreview: string | null
 }
 
 function parseArgs(): { input: string; output: string } {
@@ -140,7 +136,6 @@ function taskRecords(task: TaskTrace, sourceFile: string): ExportRecord[] {
       selectorHitRate: selectorHitRate(task),
       timeout: task.timeout === true,
       toolErrors: task.toolErrors ?? 0,
-      durationMs: task.durationMs ?? 0,
     },
     action: {
       index,
@@ -151,7 +146,6 @@ function taskRecords(task: TaskTrace, sourceFile: string): ExportRecord[] {
       title: shortText(action.title, 200),
     },
     label: task.success === true && task.strict === true && task.timeout !== true ? 'positive' : 'negative',
-    taskOutputPreview: shortText(task.outputPreview),
   }))
 }
 
