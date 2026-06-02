@@ -401,6 +401,14 @@ Experiment result:
 - `pnpm benchmark:traces:reranker:baseline:check` now locks `semantic_keyword accuracy 1.0000`, learned full-data accuracy `1.0000`, `32` pairs, and leave-one-task-out learned accuracy at least `0.85`. Current leave-one-task-out accuracy improved to `0.8594`.
 - `pnpm benchmark:traces:policy:check` now locks the expanded deterministic policy floor: `semantic_keyword`, `pairwise_task_accuracy 1.0000` over `85` pairs, `candidate_pairwise_accuracy 1.0000` over `81` read/click/type candidate pairs, `pairwise_min_margin 0.500`, `candidate_min_margin 0.500`, and `best_threshold_accuracy 1.0000`.
 - `pnpm benchmark:traces:preferences:policy:check` now locks `semantic_keyword` at `preference_accuracy 1.0000` over `32` pairs with `preference_min_margin 2.000`.
+- `copy-shipping-fields` now also includes supervised `read_page_content` source/result positives and billing-field read distractors, adding form read-context diversity for the remaining LOTO failure mode.
+- The learned reranker features now normalize `source`/`shipping` selectors as source-like and `dest`/`billing` selectors as destination-like, including tool-specific selector-role features for read decisions.
+- `pnpm benchmark:traces:training:check` now locks `44` records, `25` positive, `19` negative, `41` selector records, `10` click records, `11` candidate buckets, and `11` paired candidate buckets.
+- `pnpm benchmark:traces:preferences:check` now locks `38` preference pairs across `11` buckets and `6` tasks, with `19` read pairs, `7` click pairs, and `12` type pairs.
+- `pnpm benchmark:traces:reranker:check` now locks `38` prompt-shaped reranker pairs across `11` buckets and `6` tasks, balanced at `19` chosen `candidate_a` and `19` chosen `candidate_b`.
+- `pnpm benchmark:traces:reranker:baseline:check` now locks `38` pairs and leave-one-task-out learned accuracy at least `0.94`. Current leave-one-task-out accuracy improved to `0.9474`; remaining misses are a held-out shipping read field-alignment case and a transfer submit/status click case.
+- `pnpm benchmark:traces:policy:check` now locks the expanded deterministic policy floor: `semantic_keyword`, `pairwise_task_accuracy 1.0000` over `101` pairs, `candidate_pairwise_accuracy 1.0000` over `97` read/click/type candidate pairs, `pairwise_min_margin 0.500`, `candidate_min_margin 0.500`, and `best_threshold_accuracy 1.0000`.
+- `pnpm benchmark:traces:preferences:policy:check` now locks `semantic_keyword` at `preference_accuracy 1.0000` over `38` pairs with `preference_min_margin 1.000`.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

@@ -73,5 +73,50 @@
       "text": "type_text selector=#billing-email textLength=16",
       "title": "billing for email"
     }
+  },
+  {
+    "task": {
+      "id": "copy-shipping-fields",
+      "suite": "forms-supervised",
+      "title": "Copy checkout contact fields into billing form",
+      "tool": "gemma_transfer_fields"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "#shipping-name",
+      "text": "read_page_content selector=#shipping-name format=text",
+      "title": "shipping name input context"
+    }
+  },
+  {
+    "task": {
+      "id": "copy-shipping-fields",
+      "suite": "forms-supervised",
+      "title": "Copy checkout contact fields into billing form",
+      "tool": "gemma_transfer_fields"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "#shipping-email",
+      "text": "read_page_content selector=#shipping-email format=text",
+      "title": "shipping email input context"
+    }
+  },
+  {
+    "task": {
+      "id": "copy-shipping-fields",
+      "suite": "forms-supervised",
+      "title": "Copy checkout contact fields into billing form",
+      "tool": "gemma_transfer_fields"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "#billing-result",
+      "text": "read_page_content selector=#billing-result format=text",
+      "title": "billing save result context"
+    }
   }
 ]

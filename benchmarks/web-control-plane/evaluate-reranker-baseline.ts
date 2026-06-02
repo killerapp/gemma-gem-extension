@@ -184,6 +184,13 @@ function fieldAlignment(selector: string, title: string | null): 'match' | 'mism
   return null
 }
 
+function selectorRole(selector: string): 'source' | 'destination' | 'result' | null {
+  if (selector.startsWith('#source-') || selector.startsWith('#shipping-')) return 'source'
+  if (selector.startsWith('#dest-') || selector.startsWith('#billing-')) return 'destination'
+  if (selector.includes('result')) return 'result'
+  return null
+}
+
 function addFeature(features: Map<string, number>, name: string, value = 1): void {
   features.set(name, (features.get(name) ?? 0) + value)
 }
@@ -209,6 +216,11 @@ function actionFeatures(pair: RerankerPreferenceRecord, action: RerankerAction):
   if (action.text?.includes('format=text')) addFeature(features, 'read_format=text')
   const alignment = fieldAlignment(action.selector, action.title)
   if (alignment) addFeature(features, `field_title_selector=${alignment}`)
+  const role = selectorRole(action.selector)
+  if (role) {
+    addFeature(features, `selector_role=${role}`)
+    addFeature(features, `${action.toolName}_selector_role=${role}`)
+  }
 
   for (const token of selectorParts) addFeature(features, `selector_token=${token}`)
   for (const token of actionTokens) addFeature(features, `action_token=${token}`)

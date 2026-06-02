@@ -103,6 +103,15 @@ function requiresFullPageRead(taskId: string): boolean {
     taskId === 'semantic-observe-json'
 }
 
+function isFormCopyTask(record: TraceRecord): boolean {
+  const taskTokens = tokens(`${record.task.id} ${record.task.title} ${record.task.tool}`)
+  return taskTokens.has('copy') || taskTokens.has('transfer') || taskTokens.has('fields')
+}
+
+function isDestinationReadSelector(selector: string | null): boolean {
+  return Boolean(selector?.startsWith('#dest-') || selector?.startsWith('#billing-'))
+}
+
 export function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredRecord {
   const taskText = `${record.task.title} ${record.task.id} ${record.task.tool}`
   const baseTaskTokens = tokens(taskText)
@@ -162,9 +171,9 @@ export function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredReco
       reasons.push('narrow_context_read')
     }
     if (
-      record.task.id === 'transfer-profile-fields' &&
+      isFormCopyTask(record) &&
       record.action.toolName === 'read_page_content' &&
-      record.action.selector?.startsWith('#dest-')
+      isDestinationReadSelector(record.action.selector)
     ) {
       score -= 4
       reasons.push('transfer_destination_read_distractor')
