@@ -962,7 +962,7 @@ async function runModelReadyPreflight(client: Client): Promise<ModelReadyPreflig
     const result = await withTimeout(client.callTool({
       name: 'gemma_model_ready',
       arguments: { timeoutMs: MODEL_READY_TIMEOUT_MS },
-    }, undefined, { timeout: MODEL_READY_TIMEOUT_MS }), MODEL_READY_TIMEOUT_MS + 5_000)
+    }, undefined, { timeout: MODEL_READY_TIMEOUT_MS + 15_000 }), MODEL_READY_TIMEOUT_MS + 20_000)
     const text = toolText(result)
     const parsed = parseJsonText(text) as {
       modelId?: string

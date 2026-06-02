@@ -1,7 +1,7 @@
 import { spawn, type ChildProcess } from 'node:child_process'
 import { once } from 'node:events'
 import { existsSync } from 'node:fs'
-import { mkdir, readFile } from 'node:fs/promises'
+import { mkdir, readFile, rm } from 'node:fs/promises'
 import { createServer as createHttpServer, type Server as HttpServer } from 'node:http'
 import { createServer as createNetServer } from 'node:net'
 import { resolve } from 'node:path'
@@ -26,6 +26,7 @@ type Options = {
   devtoolsPort?: number
   mcpPort?: number
   skipReady: boolean
+  resetServiceWorkerMetadata: boolean
 }
 
 type ChromeTarget = {
@@ -85,6 +86,7 @@ function parseOptions(): Options {
   let devtoolsPort: number | undefined
   let mcpPort: number | undefined
   let skipReady = false
+  let resetServiceWorkerMetadata = false
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i]
@@ -94,6 +96,8 @@ function parseOptions(): Options {
       keepOpen = true
     } else if (arg === '--skip-ready') {
       skipReady = true
+    } else if (arg === '--reset-service-worker-metadata') {
+      resetServiceWorkerMetadata = true
     } else if (arg === '--profile') {
       const value = args[i + 1]
       if (!value) throw new Error('--profile requires a path')
@@ -137,7 +141,7 @@ function parseOptions(): Options {
     } else if (arg.startsWith('--mcp-port=')) {
       mcpPort = positivePort(arg.slice('--mcp-port='.length), '--mcp-port')
     } else {
-      throw new Error(`Unknown argument ${arg}. Use --profile <path>, --timeout-ms <ms>, --fixture <page>, --run-tool <tool>, --devtools-port <port>, --mcp-port <port>, or --keep-open.`)
+      throw new Error(`Unknown argument ${arg}. Use --profile <path>, --timeout-ms <ms>, --fixture <page>, --run-tool <tool>, --devtools-port <port>, --mcp-port <port>, --reset-service-worker-metadata, or --keep-open.`)
     }
   }
 
@@ -148,7 +152,7 @@ function parseOptions(): Options {
     throw new Error('--devtools-port is required to open a fixture in an existing debug browser')
   }
 
-  return { keepOpen, profileDir, timeoutMs, fixture, runTool, devtoolsPort, mcpPort, skipReady }
+  return { keepOpen, profileDir, timeoutMs, fixture, runTool, devtoolsPort, mcpPort, skipReady, resetServiceWorkerMetadata }
 }
 
 function positiveInt(value: string, name: string): number {
@@ -177,6 +181,27 @@ function normalizeRunTool(value: string): Options['runTool'] {
   if (value === 'gemma_page_brief' || value === 'page-brief') return 'gemma_page_brief'
   if (value === 'gemma_agent' || value === 'agent' || value === 'receipt-agent') return 'gemma_agent'
   throw new Error(`Unsupported --run-tool ${JSON.stringify(value)}. Use gemma_page_brief or gemma_agent.`)
+}
+
+async function resetRepoBrowserServiceWorkerMetadata(profileDir: string): Promise<string[]> {
+  const browserProfilesRoot = resolve(REPO_ROOT, '.browsers')
+  const normalizedProfile = resolve(profileDir)
+  if (!normalizedProfile.startsWith(browserProfilesRoot)) return []
+
+  const serviceWorkerRoot = resolve(normalizedProfile, 'Default', 'Service Worker')
+  const resetPaths = [
+    resolve(serviceWorkerRoot, 'Database'),
+    resolve(serviceWorkerRoot, 'ScriptCache'),
+  ]
+  const removed: string[] = []
+
+  for (const target of resetPaths) {
+    if (!target.startsWith(serviceWorkerRoot) || !existsSync(target)) continue
+    await rm(target, { recursive: true, force: true })
+    removed.push(target)
+  }
+
+  return removed
 }
 
 async function getFreePort(): Promise<number> {
@@ -415,7 +440,7 @@ async function waitForBridgeConnected(session: CdpSession): Promise<void> {
 }
 
 async function callModelReady(sidecarPort: number, timeoutMs: number): Promise<string> {
-  return callMcpTool(sidecarPort, 'gemma_model_ready', { timeoutMs }, timeoutMs)
+  return callMcpTool(sidecarPort, 'gemma_model_ready', { timeoutMs }, timeoutMs + 15_000)
 }
 
 async function callMcpTool(sidecarPort: number, name: string, args: Record<string, unknown>, timeoutMs: number): Promise<string> {
@@ -475,6 +500,13 @@ async function main(): Promise<void> {
 
   const attachMode = options.mcpPort != null
   await mkdir(options.profileDir, { recursive: true })
+  if (!attachMode && options.resetServiceWorkerMetadata) {
+    const resetPaths = await resetRepoBrowserServiceWorkerMetadata(options.profileDir)
+    if (resetPaths.length > 0) {
+      console.log(`Profile service worker metadata reset: ${resetPaths.map(path => path.replace(REPO_ROOT, '.')).join(', ')}`)
+      console.log('Profile model CacheStorage preserved.')
+    }
+  }
   const browser = attachMode ? 'attached existing browser' : await resolveBrowserExecutable()
   const chromePort = options.devtoolsPort ?? await getFreePort()
   const sidecarPort = options.mcpPort ?? await getFreePort()
@@ -528,7 +560,7 @@ async function main(): Promise<void> {
       try {
         parsed = JSON.parse(text) as typeof parsed
       } catch {
-        throw new Error(`gemma_model_ready returned non-JSON output: ${text}`)
+        parsed = { status: 'error', error: text }
       }
       console.log(`Model: ${parsed.modelId ?? 'unknown'}`)
       console.log(`Status: ${parsed.status ?? 'unknown'}`)
@@ -537,6 +569,9 @@ async function main(): Promise<void> {
       console.log(`Progress: ${typeof parsed.progress === 'number' ? parsed.progress : 'unknown'}`)
       if (parsed.error) console.log(`Error: ${parsed.error}`)
       console.log(`Raw: ${text}`)
+      if (parsed.status === 'error') {
+        process.exitCode = 1
+      }
     }
 
     if (options.runTool) {

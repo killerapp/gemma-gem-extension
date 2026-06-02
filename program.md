@@ -317,6 +317,22 @@ Experiment result:
 - A full `pnpm benchmark:web -- --real --include-agent` rerun was not committed for this cycle because the live visual debug browser intentionally held the persistent benchmark profile open, causing a Chrome DevTools launch timeout. The previous real-agent benchmark remains the current committed full-suite evidence.
 - Interpretation: the debug command can now keep the extension visible while running one MCP-driven deterministic or model-backed browser task, which makes foreground page state and background Gemma Relay behavior inspectable during development.
 
+Current runtime/debug hardening experiment:
+
+- A live extension reload during debugging can leave a persistent `.browsers` Chrome profile in a bad service-worker state where the background worker is visible and the bridge reports connected, but `chrome.tabs.query({})` rejects with `No SW`.
+- The large model cache lives under profile cache storage (`Default\Service Worker\CacheStorage` was about 3.2 GB in the benchmark profile), so repairing this state must not delete the whole `Service Worker` tree.
+- `pnpm browser:model-ready` now has an opt-in `--reset-service-worker-metadata` flag that removes only `Default\Service Worker\Database` and `Default\Service Worker\ScriptCache` for repo-local `.browsers` profiles, preserving `CacheStorage`.
+- Normal debug launches do not reset metadata by default. If `No SW` appears after extension reload/debugging, run one repair launch with `--reset-service-worker-metadata`, close it, then relaunch normally against the same cached profile.
+- `gemma_model_ready` debug calls now give the MCP client a timeout buffer beyond the extension readiness timeout. This lets extension-side readiness timeouts surface as `Status: error` with `Error: Model readiness timed out after ...ms`, instead of an unhelpful raw MCP client timeout.
+- The benchmark model-ready preflight uses the same timeout-buffer discipline, so include-agent runs should record a bounded preflight error instead of hanging the suite.
+
+Experiment result:
+
+- After resetting small service-worker metadata and relaunching normally, `.browsers\gemma-gem-benchmark-profile` passed visible `gemma_page_brief` with the existing cached profile and no model CacheStorage deletion.
+- `pnpm browser:model-ready -- --devtools-port 50637 --mcp-port 50638 --timeout-ms 10000` returned a bounded readiness diagnostic: `Status: error`, `Error: Model readiness timed out after 10000ms`.
+- `pnpm compile`, `pnpm build`, `pnpm test`, `pnpm benchmark:web`, and `pnpm benchmark:web -- --real` passed after the change.
+- Interpretation: the debug loop can recover from extension service-worker registration corruption without discarding the downloaded model cache, and readiness failures now stay bounded and diagnostic.
+
 Relevant platform constraints:
 
 - Extension service workers are event-driven and can shut down when dormant, so long-running model work should not depend on unstated service-worker liveness.
