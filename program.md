@@ -444,6 +444,8 @@ Experiment result:
 - `pnpm benchmark:traces:reranker:baseline:check` now locks both cross-task and cross-suite learned generalization at `1.0000` accuracy with `min_margin 9.000`: `learned_perceptron_loto` and `learned_perceptron_loso` both pass over `57` pairs.
 - `pnpm benchmark:traces:policy:check` now locks the expanded deterministic policy floor: `semantic_keyword`, `pairwise_task_accuracy 1.0000` over `139` pairs, `candidate_pairwise_accuracy 1.0000` over `135` read/click/type candidate pairs, `pairwise_min_margin 0.500`, `candidate_min_margin 0.500`, and `best_threshold_accuracy 1.0000`.
 - `pnpm benchmark:traces:preferences:policy:check` now locks `semantic_keyword` at `preference_accuracy 1.0000` over `57` pairs with `preference_min_margin 2.000`.
+- `pnpm benchmark:traces:reranker:baseline` now also writes `benchmarks/web-control-plane/action-reranker.weights.json`, a machine-readable pairwise perceptron artifact for later runtime integration.
+- `pnpm benchmark:traces:reranker:weights:check` validates the weights schema, stable feature ordering, required policy metric, and required features (`full_page_read=body`, `full_page_read=narrow`, `read_page_content_selector_role=source`, `read_page_content_selector_role=destination`). Current artifact has `281` nonzero weights and locks `learned_perceptron_loso accuracy 1.0000` with `min_margin 9.000`.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

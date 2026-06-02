@@ -49,6 +49,7 @@
     "benchmark:traces:reranker:check": "tsx benchmarks/web-control-plane/check-reranker-preferences.ts --min-pairs 57 --min-buckets 16 --min-tasks 10 --min-chosen-a 29 --min-chosen-b 28",
     "benchmark:traces:reranker:baseline": "tsx benchmarks/web-control-plane/evaluate-reranker-baseline.ts",
     "benchmark:traces:reranker:baseline:check": "tsx benchmarks/web-control-plane/evaluate-reranker-baseline.ts --check-only --require-best-policy learned_perceptron --min-pairs 57 --min-semantic-accuracy 1 --min-learned-accuracy 1 --min-learned-loto-accuracy 1 --min-learned-loto-margin 9 --min-learned-loso-accuracy 1 --min-learned-loso-margin 9",
+    "benchmark:traces:reranker:weights:check": "tsx benchmarks/web-control-plane/check-reranker-weights.ts --min-pairs 57 --min-weights 24 --require-policy learned_perceptron_loso --min-policy-accuracy 1 --min-policy-margin 9 --require-feature=full_page_read=body --require-feature=full_page_read=narrow --require-feature=read_page_content_selector_role=source --require-feature=read_page_content_selector_role=destination",
     "benchmark:traces:policy": "tsx benchmarks/web-control-plane/evaluate-trace-policy.ts",
     "benchmark:traces:policy:check": "tsx benchmarks/web-control-plane/evaluate-trace-policy.ts --check-only --require-best-policy semantic_keyword --min-pairwise 1 --min-pairwise-pairs 139 --min-pairwise-margin 0.5 --min-candidate-pairwise 1 --min-candidate-pairs 135 --min-candidate-margin 0.5 --min-threshold-accuracy 1",
     "compile": "tsc --noEmit",
