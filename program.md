@@ -387,6 +387,8 @@ Experiment result:
 - `pnpm benchmark:traces:policy:check` now locks the fully paired policy floor: `semantic_keyword`, `pairwise_task_accuracy 1.0000` over `81` pairs, `candidate_pairwise_accuracy 1.0000` over `77` read/click/type candidate pairs, `pairwise_min_margin 0.500`, `candidate_min_margin 0.500`, and `best_threshold_accuracy 1.0000`.
 - `pnpm benchmark:traces:preferences` now writes `benchmarks/web-control-plane/action-preferences.jsonl`, a pairwise preference dataset for a future selector/action reranker. It expands each same-task same-tool positive/negative ranked candidate bucket into direct `preferred` versus `rejected` action pairs.
 - `pnpm benchmark:traces:preferences:check` validates the preference schema, rejects volatile fields and label leakage, requires distinct preferred/rejected action surfaces, and locks the current floors: `28` preference pairs across `9` buckets and `5` tasks, with `13` read pairs, `7` click pairs, and `8` type pairs.
+- The deterministic scoring logic now lives in `trace-policy-scoring.ts` so the trace-policy and preference-policy reports use one shared baseline definition.
+- `pnpm benchmark:traces:preferences:policy` now writes `benchmarks/web-control-plane/action-preferences.policy.md`, evaluating policies directly on preferred/rejected pairs. `pnpm benchmark:traces:preferences:policy:check` locks `semantic_keyword` at `preference_accuracy 1.0000` over `28` pairs with `preference_min_margin 2.000`.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:
