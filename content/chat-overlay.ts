@@ -1,7 +1,7 @@
 import { marked } from 'marked'
 import { MODELS, DEFAULT_MODEL_ID, type ModelId } from '@/shared/models'
 import type { BridgeConnectionStatus, BridgeSettings } from '@/shared/bridge-settings'
-import type { BridgeActivityMessage } from '@/shared/messages'
+import type { BridgeActivityMessage, BridgeActivityStatus } from '@/shared/messages'
 
 marked.setOptions({ breaks: true })
 
@@ -34,7 +34,20 @@ function relayEventText(activity: BridgeActivityMessage): string {
     .replace(/^\[Tool\]\s*/, 'Tool: ')
 }
 
-function relayChunkParts(text: string | undefined): { label: string; text: string } | null {
+export type RelayChunkParts = { label: string; text: string }
+
+const RELAY_ACTIVITY_STATUSES = new Set<BridgeActivityStatus>(['started', 'chunk', 'tool', 'completed', 'error'])
+
+export function normalizeRelayActivityStatus(status: unknown): BridgeActivityStatus | undefined {
+  if (typeof status !== 'string') return undefined
+
+  const normalized = status.trim().toLowerCase()
+  return RELAY_ACTIVITY_STATUSES.has(normalized as BridgeActivityStatus)
+    ? normalized as BridgeActivityStatus
+    : undefined
+}
+
+export function relayChunkParts(text: string | undefined): RelayChunkParts | null {
   const raw = text?.trim()
   if (!raw) return null
 
@@ -53,7 +66,7 @@ function relayChunkParts(text: string | undefined): { label: string; text: strin
   return { label: 'stream', text: raw }
 }
 
-function appendRelayText(current: string, next: string): string {
+export function appendRelayText(current: string, next: string): string {
   const text = next.replace(/\s+/g, ' ').trim()
   if (!text) return current
   if (!current) return text
@@ -800,34 +813,36 @@ export class ChatOverlay {
   }
 
   handleBridgeActivity(activity: BridgeActivityMessage): void {
-    const title = activity.title ?? this.relayTitle.textContent ?? 'Background browser task'
-    if (activity.status === 'started') {
+    const status = normalizeRelayActivityStatus(activity.status) ?? activity.status
+    const normalizedActivity = status === activity.status ? activity : { ...activity, status }
+    const title = normalizedActivity.title ?? this.relayTitle.textContent ?? 'Background browser task'
+    if (status === 'started') {
       this.relayEvents.innerHTML = ''
       this.relayEventCount = 0
       this.resetRelayStream()
       this.relayTitle.textContent = title
-      this.relayMeta.textContent = activity.tabId != null
-        ? `Active on browser tab ${activity.tabId}`
+      this.relayMeta.textContent = normalizedActivity.tabId != null
+        ? `Active on browser tab ${normalizedActivity.tabId}`
         : 'Active in the MCP sidecar'
       this.setRelayTabState('running')
-    } else if (activity.status === 'completed') {
+    } else if (status === 'completed') {
       this.relayMeta.textContent = 'Completed'
       this.setRelayTabState('attention')
-    } else if (activity.status === 'error') {
+    } else if (status === 'error') {
       this.relayMeta.textContent = 'Needs attention'
       this.setRelayTabState('error')
-    } else if (activity.status === 'tool') {
+    } else if (status === 'tool') {
       this.setRelayTabState('running')
     }
 
-    if (activity.status === 'chunk') {
-      this.appendRelayChunk(activity)
+    if (status === 'chunk') {
+      this.appendRelayChunk(normalizedActivity)
       return
     }
 
-    const eventText = relayEventText(activity)
+    const eventText = relayEventText(normalizedActivity)
     if (eventText) {
-      this.addRelayEvent(activity.status, eventText)
+      this.addRelayEvent(status, eventText)
     }
   }
 

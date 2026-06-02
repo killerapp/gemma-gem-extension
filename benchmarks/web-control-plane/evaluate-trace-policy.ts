@@ -40,8 +40,17 @@ type TraceRecord = {
 }
 
 type ScoredRecord = TraceRecord & {
+  policy: string
   score: number
   reasons: string[]
+}
+
+type PolicyResult = {
+  name: string
+  records: ScoredRecord[]
+  pairwise: number
+  candidatePairwise: number
+  best: { threshold: number; accuracy: number }
 }
 
 function parseArgs(): { input: string; output: string } {
@@ -98,9 +107,28 @@ function overlap(left: Set<string>, right: Set<string>): number {
   return count
 }
 
-function scoreRecord(record: TraceRecord): ScoredRecord {
+function expandedTaskTokens(taskTokens: Set<string>): Set<string> {
+  const result = new Set(taskTokens)
+  if (taskTokens.has('proof') || taskTokens.has('receipt')) {
+    result.add('receipt')
+    result.add('download')
+  }
+  if (taskTokens.has('payment')) {
+    result.add('receipt')
+    result.add('billing')
+  }
+  if (taskTokens.has('profile') || taskTokens.has('fields') || taskTokens.has('transfer')) {
+    result.add('source')
+    result.add('dest')
+    result.add('save')
+  }
+  return result
+}
+
+function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredRecord {
   const taskText = `${record.task.title} ${record.task.id} ${record.task.tool}`
-  const taskTokens = tokens(taskText)
+  const baseTaskTokens = tokens(taskText)
+  const taskTokens = policy === 'semantic_keyword' ? expandedTaskTokens(baseTaskTokens) : baseTaskTokens
   const actionText = `${record.action.toolName ?? ''} ${record.action.selector ?? ''} ${record.action.text ?? ''} ${record.action.title ?? ''}`
   const actionTokens = tokens(actionText)
   const selectorParts = selectorTokens(record.action.selector)
@@ -125,10 +153,26 @@ function scoreRecord(record: TraceRecord): ScoredRecord {
     score -= 0.25
     reasons.push('planning_start')
   }
+
+  if (policy === 'semantic_keyword') {
+    if (record.action.selector?.includes('receipt') && (baseTaskTokens.has('proof') || baseTaskTokens.has('receipt') || baseTaskTokens.has('payment'))) {
+      score += 2
+      reasons.push('receipt_goal_selector')
+    }
+    if ((record.action.selector?.includes('invoice') || record.action.selector?.includes('settings')) && (baseTaskTokens.has('proof') || baseTaskTokens.has('receipt'))) {
+      score -= 1
+      reasons.push('distractor_billing_selector')
+    }
+    if (record.action.selector?.includes('save-profile') && (baseTaskTokens.has('transfer') || baseTaskTokens.has('profile'))) {
+      score += 1.5
+      reasons.push('profile_submit_selector')
+    }
+  }
+
   if (actionOverlap > 0) reasons.push(`task_action_overlap=${actionOverlap}`)
   if (selectorOverlap > 0) reasons.push(`task_selector_overlap=${selectorOverlap}`)
 
-  return { ...record, score, reasons }
+  return { ...record, policy, score, reasons }
 }
 
 function pairwiseAccuracy(records: ScoredRecord[]): number {
@@ -148,6 +192,12 @@ function pairwiseAccuracy(records: ScoredRecord[]): number {
   }
 
   return total ? correct / total : 0
+}
+
+function candidatePairwiseAccuracy(records: ScoredRecord[]): number {
+  return pairwiseAccuracy(records.filter(record =>
+    record.action.toolName === 'click_element' || record.action.toolName === 'type_text'
+  ))
 }
 
 function thresholdAccuracy(records: ScoredRecord[], threshold: number): number {
@@ -179,6 +229,17 @@ function byTask(records: ScoredRecord[]): Map<string, ScoredRecord[]> {
   return result
 }
 
+function evaluatePolicy(name: string, records: TraceRecord[]): PolicyResult {
+  const scored = records.map(record => scoreRecord(record, name))
+  return {
+    name,
+    records: scored,
+    pairwise: pairwiseAccuracy(scored),
+    candidatePairwise: candidatePairwiseAccuracy(scored),
+    best: bestThreshold(scored),
+  }
+}
+
 function tableRow(cells: Array<string | number>): string {
   return `| ${cells.map(cell => String(cell)).join(' | ')} |`
 }
@@ -187,18 +248,24 @@ async function main(): Promise<void> {
   const { input, output } = parseArgs()
   if (!existsSync(input)) throw new Error(`Training trace source not found: ${input}`)
 
-  const records = (await readFile(input, 'utf8'))
+  const traceRecords = (await readFile(input, 'utf8'))
     .split(/\r?\n/)
     .map(line => line.trim())
     .filter(Boolean)
     .map(line => JSON.parse(line) as TraceRecord)
-    .map(scoreRecord)
+  const policyResults = [
+    evaluatePolicy('lexical', traceRecords),
+    evaluatePolicy('semantic_keyword', traceRecords),
+  ]
+  const bestPolicy = [...policyResults].sort((a, b) =>
+    b.candidatePairwise - a.candidatePairwise ||
+    b.pairwise - a.pairwise ||
+    a.name.localeCompare(b.name)
+  )[0]
 
-  const positives = records.filter(record => record.label === 'positive').length
-  const negatives = records.filter(record => record.label === 'negative').length
-  const pairwise = pairwiseAccuracy(records)
-  const best = bestThreshold(records)
-  const grouped = byTask(records)
+  const positives = traceRecords.filter(record => record.label === 'positive').length
+  const negatives = traceRecords.filter(record => record.label === 'negative').length
+  const grouped = byTask(bestPolicy.records)
 
   const lines: string[] = []
   lines.push('# Trace Policy Baseline')
@@ -207,14 +274,28 @@ async function main(): Promise<void> {
   lines.push('')
   lines.push('## Metrics')
   lines.push('')
-  lines.push(`- records: ${records.length}`)
+  lines.push(`- records: ${traceRecords.length}`)
   lines.push(`- positive_records: ${positives}`)
   lines.push(`- negative_records: ${negatives}`)
-  lines.push(`- pairwise_task_accuracy: ${pairwise.toFixed(4)}`)
-  lines.push(`- best_threshold: ${best.threshold.toFixed(3)}`)
-  lines.push(`- best_threshold_accuracy: ${best.accuracy.toFixed(4)}`)
+  lines.push(`- best_policy: ${bestPolicy.name}`)
+  lines.push(`- best_pairwise_task_accuracy: ${bestPolicy.pairwise.toFixed(4)}`)
+  lines.push(`- best_candidate_pairwise_accuracy: ${bestPolicy.candidatePairwise.toFixed(4)}`)
   lines.push('')
-  lines.push('## Task Rankings')
+  lines.push('## Policy Comparison')
+  lines.push('')
+  lines.push(tableRow(['policy', 'pairwise_task_accuracy', 'candidate_pairwise_accuracy', 'best_threshold', 'best_threshold_accuracy']))
+  lines.push(tableRow(['---', '---:', '---:', '---:', '---:']))
+  for (const result of policyResults) {
+    lines.push(tableRow([
+      result.name,
+      result.pairwise.toFixed(4),
+      result.candidatePairwise.toFixed(4),
+      result.best.threshold.toFixed(3),
+      result.best.accuracy.toFixed(4),
+    ]))
+  }
+  lines.push('')
+  lines.push(`## Task Rankings (${bestPolicy.name})`)
   lines.push('')
   lines.push(tableRow(['task', 'label', 'score', 'tool', 'selector', 'reason']))
   lines.push(tableRow(['---', '---', '---:', '---', '---', '---']))
@@ -233,15 +314,19 @@ async function main(): Promise<void> {
   lines.push('')
   lines.push('## Interpretation')
   lines.push('')
-  lines.push('- This is a deterministic lexical baseline, not a learned reranker.')
-  lines.push('- Future selector/action policy experiments should beat `pairwise_task_accuracy` while preserving benchmark task success.')
+  lines.push('- These are deterministic policy baselines, not learned rerankers.')
+  lines.push('- `pairwise_task_accuracy` scores all trace events, including context reads and planning starts.')
+  lines.push('- `candidate_pairwise_accuracy` scores only click/type candidate actions and is the primary selector/action ranking baseline.')
+  lines.push('- Future selector/action policy experiments should beat `candidate_pairwise_accuracy` while preserving benchmark task success.')
 
   await mkdir(dirname(output), { recursive: true })
   await writeFile(output, `${lines.join('\n')}\n`)
 
   console.log(`Wrote trace policy baseline: ${sourcePath(output)}`)
-  console.log(`Pairwise task accuracy: ${pairwise.toFixed(4)}`)
-  console.log(`Best threshold accuracy: ${best.accuracy.toFixed(4)}`)
+  console.log(`Best policy: ${bestPolicy.name}`)
+  console.log(`Pairwise task accuracy: ${bestPolicy.pairwise.toFixed(4)}`)
+  console.log(`Candidate pairwise accuracy: ${bestPolicy.candidatePairwise.toFixed(4)}`)
+  console.log(`Best threshold accuracy: ${bestPolicy.best.accuracy.toFixed(4)}`)
 }
 
 main().catch(error => {

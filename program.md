@@ -345,6 +345,7 @@ Current action-accounting experiment:
 - `benchmark.web.jsonl` task records now include an `actionTrace` array with compact per-task Relay/tool events (`status`, `toolName`, `requestId`, `tabId`, title/text preview, timestamp). This keeps the raw action path available for later selector/action policy analysis without replaying the browser session.
 - `pnpm benchmark:traces` exports normalized action-policy records to `benchmarks/web-control-plane/action-traces.jsonl`. The export omits volatile request IDs, timestamps, tab IDs, durations, and task output previews, then keeps task context, outcome labels, tool names, selector hints, and compact action text.
 - The Relay panel should display streamed thinking as one live `thinking` row per active request. Token-sized `[Thinking]` or `Thinking:` chunks are transport detail, not separate user-visible Relay events.
+- Relay activity statuses are now normalized before rendering, so transport-shaped values like `CHUNK` still enter the coalesced stream path instead of creating one visible row per token-sized thinking chunk.
 - This matters for the future training loop: selector/action traces need a reliable action count before they can become useful policy/reranker data.
 
 Experiment result:
@@ -362,6 +363,7 @@ Experiment result:
 - `pnpm benchmark:traces:training` now combines the positive benchmark-derived trace export with curated counterfactual negatives from `counterfactual-actions.json`. `pnpm benchmark:traces:training:check` requires negative records and currently validates `23` records: `17` positive, `6` negative, `20` selector records, and `6` click records.
 - `pnpm benchmark:traces:policy` now writes `benchmarks/web-control-plane/trace-policy-baseline.md`, a deterministic lexical selector/action baseline. After removing label leakage from counterfactual titles, the current baseline is intentionally weak: `pairwise_task_accuracy 0.2917` and `best_threshold_accuracy 0.7391`. Future selector/action policy work should beat this while preserving benchmark success.
 - `expected-actions.json` now adds a supervised positive candidate for `gemma_observe`'s expected `#download-receipt` action, because raw observe traces only show page reads while the useful policy target is the returned candidate action. The training check now validates `24` records: `18` positive, `6` negative, `21` selector records, and `7` click records. The lexical baseline improved to `pairwise_task_accuracy 0.3462` and `best_threshold_accuracy 0.7500`.
+- `pnpm benchmark:traces:policy` now compares deterministic policy variants and reports `candidate_pairwise_accuracy` over click/type candidate actions separately from whole-trace ranking. A transparent `semantic_keyword` policy is current best: `pairwise_task_accuracy 0.4231`, `candidate_pairwise_accuracy 0.8000`, and `best_threshold_accuracy 0.7917`.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:
