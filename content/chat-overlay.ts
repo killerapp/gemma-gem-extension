@@ -56,6 +56,12 @@ export function normalizeRelayActivityStatus(status: unknown): BridgeActivitySta
     : undefined
 }
 
+export function relayDisplayStatus(status: unknown): string | undefined {
+  const normalized = normalizeRelayActivityStatus(status)
+  if (normalized) return normalized
+  return typeof status === 'string' ? status.trim().toLowerCase() : undefined
+}
+
 export function relayChunkParts(text: string | undefined): RelayChunkParts | null {
   const raw = text?.trim()
   if (!raw) return null
@@ -91,7 +97,7 @@ export function relayActivityChunkParts(activity: { status?: unknown; text?: str
   return relayChunkParts(activity.text)
 }
 
-export function relayRenderableEvent(activity: BridgeActivityMessage): { status: BridgeActivityMessage['status']; text: string } | null {
+export function relayRenderableEvent(activity: BridgeActivityMessage): { status: string; text: string } | null {
   const status = normalizeRelayActivityStatus(activity.status) ?? activity.status
   if (status === 'chunk') return null
 
@@ -932,11 +938,12 @@ export class ChatOverlay {
     const empty = this.relayEvents.querySelector('.relay-empty')
     empty?.remove()
 
+    const displayStatus = relayDisplayStatus(status) ?? 'event'
     const row = document.createElement('div')
-    row.className = `relay-event ${status}`
+    row.className = `relay-event ${displayStatus}`
     const label = document.createElement('div')
     label.className = 'relay-event-status'
-    label.textContent = status
+    label.textContent = displayStatus
     const body = document.createElement('div')
     body.className = 'relay-event-body'
     body.textContent = text
@@ -947,8 +954,11 @@ export class ChatOverlay {
     return row
   }
 
-  private addRelayEvent(status: BridgeActivityMessage['status'], text: string): void {
-    this.createRelayEventRow(status, text)
+  private addRelayEvent(status: unknown, text: string): void {
+    const displayStatus = relayDisplayStatus(status)
+    if (!displayStatus || displayStatus === 'chunk') return
+
+    this.createRelayEventRow(displayStatus, text)
 
     while (this.relayEventCount > 80) {
       const first = this.relayEvents.querySelector('.relay-event')

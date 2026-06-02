@@ -446,6 +446,9 @@ Experiment result:
 - `pnpm benchmark:traces:preferences:policy:check` now locks `semantic_keyword` at `preference_accuracy 1.0000` over `57` pairs with `preference_min_margin 2.000`.
 - `pnpm benchmark:traces:reranker:baseline` now also writes `benchmarks/web-control-plane/action-reranker.weights.json`, a machine-readable pairwise perceptron artifact for later runtime integration.
 - `pnpm benchmark:traces:reranker:weights:check` validates the weights schema, stable feature ordering, required policy metric, and required features (`full_page_read=body`, `full_page_read=narrow`, `read_page_content_selector_role=source`, `read_page_content_selector_role=destination`). Current artifact has `281` nonzero weights and locks `learned_perceptron_loso accuracy 1.0000` with `min_margin 9.000`.
+- The learned reranker feature extraction, scoring, training, and margin computation now live in `benchmarks/web-control-plane/reranker-scoring.ts`, so the evaluator and artifact checker use the same executable scorer instead of duplicate logic.
+- `pnpm benchmark:traces:reranker:weights:check` now recomputes learned margins from `action-reranker.preferences.jsonl` plus `action-reranker.weights.json`, requiring recomputed `learned_perceptron accuracy 1.0000` and `min_margin 9.000`. This makes the weights artifact executable, not only schema-valid.
+- The Relay panel now also canonicalizes status labels at row creation and refuses chunk-like rows there. This keeps token-sized `CHUNK / Thinking: ...` transport payloads out of ordinary Relay event rows even if a future caller bypasses the normal chunk coalescer.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

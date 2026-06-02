@@ -4,6 +4,7 @@ import {
   appendRelayText,
   isRelayChunkActivity,
   normalizeRelayActivityStatus,
+  relayDisplayStatus,
   relayActivityChunkParts,
   relayChunkParts,
   relayRenderableEvent,
@@ -17,6 +18,13 @@ test('Relay chunk helpers normalize transport statuses', () => {
   assert.equal(normalizeRelayActivityStatus('Tool'), 'tool')
   assert.equal(normalizeRelayActivityStatus('bridge:tool_call'), 'tool')
   assert.equal(normalizeRelayActivityStatus('unexpected'), undefined)
+})
+
+test('Relay event row labels canonicalize before display', () => {
+  assert.equal(relayDisplayStatus('CHUNK'), 'chunk')
+  assert.equal(relayDisplayStatus(' Tool '), 'tool')
+  assert.equal(relayDisplayStatus('custom event'), 'custom event')
+  assert.equal(relayDisplayStatus(undefined), undefined)
 })
 
 test('Relay thinking chunks parse as stream parts', () => {

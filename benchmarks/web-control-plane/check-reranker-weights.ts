@@ -2,9 +2,11 @@ import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { learnedMargin, type RerankerPreferenceRecord } from './reranker-scoring'
 
 const REPO_ROOT = resolve(fileURLToPath(import.meta.url), '..', '..', '..')
 const DEFAULT_INPUT = resolve(REPO_ROOT, 'benchmarks', 'web-control-plane', 'action-reranker.weights.json')
+const DEFAULT_PREFERENCES_INPUT = resolve(REPO_ROOT, 'benchmarks', 'web-control-plane', 'action-reranker.preferences.jsonl')
 
 type WeightRecord = {
   feature?: unknown
@@ -43,11 +45,14 @@ type RerankerWeightsArtifact = {
 
 type CheckConfig = {
   input: string
+  preferencesInput: string
   minPairs?: number
   minWeights?: number
   requiredPolicy?: string
   minPolicyAccuracy?: number
   minPolicyMargin?: number
+  minRecomputedAccuracy?: number
+  minRecomputedMargin?: number
   requiredFeatures: string[]
 }
 
@@ -61,11 +66,14 @@ function parseNumber(value: string | undefined, label: string): number {
 function parseArgs(): CheckConfig {
   const args = process.argv.slice(2)
   let input = process.env.GEMMA_GEM_RERANKER_WEIGHTS_OUTPUT ? resolve(process.env.GEMMA_GEM_RERANKER_WEIGHTS_OUTPUT) : DEFAULT_INPUT
+  let preferencesInput = process.env.GEMMA_GEM_RERANKER_PREFERENCES_OUTPUT ? resolve(process.env.GEMMA_GEM_RERANKER_PREFERENCES_OUTPUT) : DEFAULT_PREFERENCES_INPUT
   let minPairs: number | undefined
   let minWeights: number | undefined
   let requiredPolicy: string | undefined
   let minPolicyAccuracy: number | undefined
   let minPolicyMargin: number | undefined
+  let minRecomputedAccuracy: number | undefined
+  let minRecomputedMargin: number | undefined
   const requiredFeatures: string[] = []
 
   for (let i = 0; i < args.length; i += 1) {
@@ -77,6 +85,12 @@ function parseArgs(): CheckConfig {
       i += 1
     } else if (arg.startsWith('--input=')) {
       input = resolve(arg.slice('--input='.length))
+    } else if (arg === '--preferences-input') {
+      if (!value) throw new Error('--preferences-input requires a path')
+      preferencesInput = resolve(value)
+      i += 1
+    } else if (arg.startsWith('--preferences-input=')) {
+      preferencesInput = resolve(arg.slice('--preferences-input='.length))
     } else if (arg === '--min-pairs') {
       minPairs = parseNumber(value, '--min-pairs')
       i += 1
@@ -103,6 +117,16 @@ function parseArgs(): CheckConfig {
       i += 1
     } else if (arg.startsWith('--min-policy-margin=')) {
       minPolicyMargin = parseNumber(arg.slice('--min-policy-margin='.length), '--min-policy-margin')
+    } else if (arg === '--min-recomputed-accuracy') {
+      minRecomputedAccuracy = parseNumber(value, '--min-recomputed-accuracy')
+      i += 1
+    } else if (arg.startsWith('--min-recomputed-accuracy=')) {
+      minRecomputedAccuracy = parseNumber(arg.slice('--min-recomputed-accuracy='.length), '--min-recomputed-accuracy')
+    } else if (arg === '--min-recomputed-margin') {
+      minRecomputedMargin = parseNumber(value, '--min-recomputed-margin')
+      i += 1
+    } else if (arg.startsWith('--min-recomputed-margin=')) {
+      minRecomputedMargin = parseNumber(arg.slice('--min-recomputed-margin='.length), '--min-recomputed-margin')
     } else if (arg === '--require-feature') {
       if (!value) throw new Error('--require-feature requires a feature name')
       requiredFeatures.push(value)
@@ -110,11 +134,11 @@ function parseArgs(): CheckConfig {
     } else if (arg.startsWith('--require-feature=')) {
       requiredFeatures.push(arg.slice('--require-feature='.length))
     } else {
-      throw new Error(`Unknown argument ${arg}. Use --input, --min-pairs, --min-weights, --require-policy, --min-policy-accuracy, --min-policy-margin, and --require-feature.`)
+      throw new Error(`Unknown argument ${arg}. Use --input, --preferences-input, --min-pairs, --min-weights, --require-policy, --min-policy-accuracy, --min-policy-margin, --min-recomputed-accuracy, --min-recomputed-margin, and --require-feature.`)
     }
   }
 
-  return { input, minPairs, minWeights, requiredPolicy, minPolicyAccuracy, minPolicyMargin, requiredFeatures }
+  return { input, preferencesInput, minPairs, minWeights, requiredPolicy, minPolicyAccuracy, minPolicyMargin, minRecomputedAccuracy, minRecomputedMargin, requiredFeatures }
 }
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -134,6 +158,15 @@ function assertString(value: unknown, label: string): string {
 function assertNumber(value: unknown, label: string): number {
   assert(typeof value === 'number' && Number.isFinite(value), `${label} must be a finite number`)
   return value
+}
+
+async function readPreferences(path: string): Promise<RerankerPreferenceRecord[]> {
+  if (!existsSync(path)) throw new Error(`Reranker preference source not found: ${path}`)
+  return (await readFile(path, 'utf8'))
+    .split(/\r?\n/)
+    .map(line => line.trim())
+    .filter(Boolean)
+    .map(line => JSON.parse(line) as RerankerPreferenceRecord)
 }
 
 async function main(): Promise<void> {
@@ -184,9 +217,25 @@ async function main(): Promise<void> {
     assert(seen.has(feature), `required feature not found: ${feature}`)
   }
 
+  const preferences = await readPreferences(check.preferencesInput)
+  assert(preferences.length === pairs, `preference pair count ${preferences.length} does not match weights training.pairs ${pairs}`)
+  const weightMap = new Map(weights.map(weight => [weight.feature as string, weight.weight as number]))
+  const margins = preferences.map(pair => learnedMargin(pair, weightMap).margin)
+  const correct = margins.reduce((sum, margin) => sum + (margin > 0 ? 1 : margin === 0 ? 0.5 : 0), 0)
+  const recomputedAccuracy = margins.length ? correct / margins.length : 0
+  const recomputedMinMargin = margins.length ? Math.min(...margins) : 0
+  assertAtLeast(recomputedAccuracy, check.minRecomputedAccuracy, 'recomputed_accuracy')
+  assertAtLeast(recomputedMinMargin, check.minRecomputedMargin, 'recomputed_min_margin')
+  const learnedPolicy = policies.find(candidate => candidate.name === 'learned_perceptron')
+  if (learnedPolicy) {
+    assert(recomputedAccuracy === learnedPolicy.accuracy, `recomputed accuracy ${recomputedAccuracy} does not match learned_perceptron metric ${learnedPolicy.accuracy}`)
+    assert(recomputedMinMargin === learnedPolicy.minMargin, `recomputed min margin ${recomputedMinMargin} does not match learned_perceptron metric ${learnedPolicy.minMargin}`)
+  }
+
   console.log(`Checked reranker weights: ${check.input.replace(REPO_ROOT, '.').replaceAll('\\', '/')}`)
   console.log(`Training pairs: ${pairs}`)
   console.log(`Weights: ${weights.length}`)
+  console.log(`Recomputed learned_perceptron: accuracy ${recomputedAccuracy.toFixed(4)}, min margin ${recomputedMinMargin.toFixed(3)}`)
   if (check.requiredPolicy && policy) {
     console.log(`${check.requiredPolicy}: accuracy ${(policy.accuracy as number).toFixed(4)}, min margin ${(policy.minMargin as number).toFixed(3)}`)
   }
