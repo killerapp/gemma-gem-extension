@@ -458,6 +458,13 @@ function registerTools(server: McpServer): void {
     inputSchema: {},
   }, async () => asTextResult(await sendBridgeRequest({ type: 'bridge:get_active_tab' })))
 
+  server.registerTool('gemma_model_ready', {
+    description: 'Ensure the local Gemma model is loaded and ready without running a generation. Returns model readiness timing for diagnostics.',
+    inputSchema: {
+      timeoutMs: z.number().int().positive().optional().describe('Optional readiness timeout in milliseconds. Defaults to the bridge agent timeout.'),
+    },
+  }, async ({ timeoutMs }) => asTextResult(await sendBridgeRequest({ type: 'bridge:ensure_model_ready', timeoutMs })))
+
   server.registerTool('gemma_observe', {
     description: 'Discover relevant page actions or extraction targets from natural language. Returns candidate actions that can be passed to gemma_act.',
     inputSchema: {

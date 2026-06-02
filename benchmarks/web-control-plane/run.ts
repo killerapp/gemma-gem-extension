@@ -23,6 +23,7 @@ const BROWSER_MARKER = resolve(REPO_ROOT, '.browsers', 'chrome-for-testing', 'ch
 const DEFAULT_AGENT_PROFILE = resolve(REPO_ROOT, '.browsers', 'gemma-gem-benchmark-profile')
 const MODEL_DRIVEN_TOOLS = new Set(['gemma_agent', 'gemma_observe', 'gemma_extract'])
 const AGENT_TASK_TIMEOUT_MS = positiveIntEnv('GEMMA_GEM_AGENT_TASK_TIMEOUT_MS', 180_000)
+const MODEL_READY_TIMEOUT_MS = positiveIntEnv('GEMMA_GEM_MODEL_READY_TIMEOUT_MS', AGENT_TASK_TIMEOUT_MS)
 
 type BenchmarkTask = {
   id: string
@@ -50,6 +51,16 @@ type TaskResult = {
   toolErrors: number
   outputPreview?: string
   notes: string[]
+}
+
+type ModelReadyPreflight = {
+  status: 'skipped' | 'ready' | 'error'
+  durationMs: number
+  modelId?: string
+  phase?: string
+  progress?: number
+  error?: string
+  outputPreview?: string
 }
 
 type FakeTab = {
@@ -297,6 +308,14 @@ class FakeExtension implements HarnessProbe {
           return this.response(request.requestId, this.tabs)
         case 'bridge:get_active_tab':
           return this.response(request.requestId, this.tabs.find(tab => tab.active))
+        case 'bridge:ensure_model_ready':
+          return this.response(request.requestId, {
+            modelId: 'gemma-4-e2b',
+            status: 'ready',
+            loadMs: 0,
+            phase: 'fake-ready',
+            progress: 100,
+          })
         case 'bridge:run_agent':
           return this.runAgent(request)
         case 'bridge:execute_tool':
@@ -933,6 +952,45 @@ async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   }
 }
 
+async function runModelReadyPreflight(client: Client): Promise<ModelReadyPreflight> {
+  if (!(REAL_MODE && INCLUDE_AGENT_TASKS)) {
+    return { status: 'skipped', durationMs: 0 }
+  }
+
+  const start = performance.now()
+  try {
+    const result = await withTimeout(client.callTool({
+      name: 'gemma_model_ready',
+      arguments: { timeoutMs: MODEL_READY_TIMEOUT_MS },
+    }, undefined, { timeout: MODEL_READY_TIMEOUT_MS }), MODEL_READY_TIMEOUT_MS + 5_000)
+    const text = toolText(result)
+    const parsed = parseJsonText(text) as {
+      modelId?: string
+      status?: string
+      loadMs?: number
+      phase?: string
+      progress?: number
+      error?: string
+    }
+    const status = parsed.status === 'ready' ? 'ready' : 'error'
+    return {
+      status,
+      durationMs: typeof parsed.loadMs === 'number' ? parsed.loadMs : performance.now() - start,
+      modelId: parsed.modelId,
+      phase: parsed.phase,
+      progress: parsed.progress,
+      error: parsed.error,
+      outputPreview: text.slice(0, 1000),
+    }
+  } catch (error) {
+    return {
+      status: 'error',
+      durationMs: performance.now() - start,
+      error: error instanceof Error ? error.message : String(error),
+    }
+  }
+}
+
 async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTask): Promise<TaskResult> {
   const start = performance.now()
   const taskForCall = harness.remapTask(task)
@@ -1086,7 +1144,7 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
     }
 }
 
-function summarize(results: TaskResult[]) {
+function summarize(results: TaskResult[], modelReady: ModelReadyPreflight) {
   const tasks = results.length
   const successes = results.filter(result => result.success).length
   const strict = results.filter(result => result.strict).length
@@ -1119,6 +1177,8 @@ function summarize(results: TaskResult[]) {
     warmModelP50TaskSeconds: percentile(warmModelDurations, 50),
     warmModelP95TaskSeconds: percentile(warmModelDurations, 95),
     deterministicP95TaskSeconds: percentile(deterministicDurations, 95),
+    modelReady,
+    modelLoadSeconds: modelReady.status === 'skipped' ? 0 : modelReady.durationMs / 1000,
     timeoutRate: tasks ? timeouts / tasks : 0,
     toolErrorRate: tasks ? toolErrors / tasks : 0,
   }
@@ -1137,7 +1197,7 @@ async function gitShortHash(): Promise<string> {
 
 async function appendResults(summary: ReturnType<typeof summarize>, mode: string): Promise<void> {
   const file = resolve(REPO_ROOT, 'results.web.tsv')
-  const header = [
+  const columns = [
     'commit',
     'suite',
     'tasks',
@@ -1149,9 +1209,13 @@ async function appendResults(summary: ReturnType<typeof summarize>, mode: string
     'p50_s',
     'p95_s',
     'timeout_rate',
+    'model_load_s',
     'status',
     'description',
-  ].join('\t')
+  ]
+  const header = columns.join('\t')
+  await migrateResultsLedger(file, header)
+
   const requestedStatus = process.env.BENCHMARK_STATUS ?? 'baseline'
   const status = summary.successRate < 1 && requestedStatus === 'keep' ? 'discard' : requestedStatus
   const row = [
@@ -1166,6 +1230,7 @@ async function appendResults(summary: ReturnType<typeof summarize>, mode: string
     summary.p50TaskSeconds.toFixed(3),
     summary.p95TaskSeconds.toFixed(3),
     summary.timeoutRate.toFixed(4),
+    summary.modelLoadSeconds.toFixed(3),
     status,
     process.env.BENCHMARK_DESCRIPTION ?? `${mode} benchmark run`,
   ].join('\t')
@@ -1174,8 +1239,56 @@ async function appendResults(summary: ReturnType<typeof summarize>, mode: string
   await writeFile(file, content, { flag: 'a' })
 }
 
+async function migrateResultsLedger(file: string, currentHeader: string): Promise<void> {
+  if (!existsSync(file)) return
+
+  const text = await readFile(file, 'utf8')
+  const trimmed = text.trimEnd()
+  if (!trimmed) return
+
+  const lines = trimmed.split(/\r?\n/)
+  if (lines[0] === currentHeader) return
+
+  const oldHeader = [
+    'commit',
+    'suite',
+    'tasks',
+    'success_rate',
+    'strict_success_rate',
+    'json_valid_rate',
+    'selector_hit_rate',
+    'actions_per_success',
+    'p50_s',
+    'p95_s',
+    'timeout_rate',
+    'status',
+    'description',
+  ].join('\t')
+  if (lines[0] !== oldHeader) {
+    throw new Error(`Unexpected results.web.tsv header: ${lines[0]}`)
+  }
+
+  const migrated = [
+    currentHeader,
+    ...lines.slice(1).map(line => {
+      const parts = line.split('\t')
+      parts.splice(11, 0, '0.000')
+      return parts.join('\t')
+    }),
+  ].join('\n') + '\n'
+  await writeFile(file, migrated)
+}
+
 async function writeReport(results: TaskResult[], summary: ReturnType<typeof summarize>, mode: string): Promise<void> {
   const reportPath = resolve(BENCH_ROOT, 'report.md')
+  const modelReadyLines = [
+    `- model_ready_status: ${summary.modelReady.status}`,
+    `- model_load_seconds: ${summary.modelLoadSeconds.toFixed(3)}`,
+    ...(summary.modelReady.modelId ? [`- model_ready_model_id: ${summary.modelReady.modelId}`] : []),
+    ...(summary.modelReady.phase ? [`- model_ready_phase: ${summary.modelReady.phase}`] : []),
+    ...(typeof summary.modelReady.progress === 'number' ? [`- model_ready_progress: ${summary.modelReady.progress}`] : []),
+    ...(summary.modelReady.error ? [`- model_ready_error: ${summary.modelReady.error}`] : []),
+  ]
   const lines = [
     '# Web Control Plane Benchmark',
     '',
@@ -1200,6 +1313,7 @@ async function writeReport(results: TaskResult[], summary: ReturnType<typeof sum
     `- warm_model_p50_task_seconds: ${summary.warmModelP50TaskSeconds.toFixed(3)}`,
     `- warm_model_p95_task_seconds: ${summary.warmModelP95TaskSeconds.toFixed(3)}`,
     `- deterministic_p95_task_seconds: ${summary.deterministicP95TaskSeconds.toFixed(3)}`,
+    ...modelReadyLines,
     '',
     '## Tasks',
     '',
@@ -1234,9 +1348,13 @@ async function writeReport(results: TaskResult[], summary: ReturnType<typeof sum
   await writeFile(reportPath, lines.join('\n'))
 }
 
-async function writeJsonl(results: TaskResult[]): Promise<void> {
+async function writeJsonl(results: TaskResult[], modelReady: ModelReadyPreflight): Promise<void> {
   const logPath = resolve(REPO_ROOT, 'benchmark.web.jsonl')
-  const content = results.map(result => JSON.stringify(result)).join('\n') + '\n'
+  const rows = [
+    JSON.stringify({ type: 'model_ready_preflight', ...modelReady }),
+    ...results.map(result => JSON.stringify(result)),
+  ]
+  const content = rows.join('\n') + '\n'
   await writeFile(logPath, content)
 }
 
@@ -1265,6 +1383,12 @@ async function main(): Promise<void> {
     await client.connect(transport)
 
     try {
+      const modelReady = await runModelReadyPreflight(client)
+      if (modelReady.status !== 'skipped') {
+        console.log(`${modelReady.status === 'ready' ? 'PASS' : 'FAIL'} model-ready ${modelReady.durationMs.toFixed(1)}ms`)
+        if (modelReady.error) console.log(`  ${modelReady.error}`)
+      }
+
       const results: TaskResult[] = []
       for (const task of tasks) {
         const result = await runTask(client, harness, task)
@@ -1275,8 +1399,8 @@ async function main(): Promise<void> {
         }
       }
 
-      const summary = summarize(results)
-      await writeJsonl(results)
+      const summary = summarize(results, modelReady)
+      await writeJsonl(results, modelReady)
       await writeReport(results, summary, harness.mode)
       await appendResults(summary, harness.mode)
 
@@ -1292,10 +1416,12 @@ async function main(): Promise<void> {
       console.log(`warm_model_p50_task_seconds: ${summary.warmModelP50TaskSeconds.toFixed(3)}`)
       console.log(`warm_model_p95_task_seconds: ${summary.warmModelP95TaskSeconds.toFixed(3)}`)
       console.log(`deterministic_p95_task_seconds: ${summary.deterministicP95TaskSeconds.toFixed(3)}`)
+      console.log(`model_ready_status: ${summary.modelReady.status}`)
+      console.log(`model_load_seconds: ${summary.modelLoadSeconds.toFixed(3)}`)
       console.log(`timeout_rate: ${summary.timeoutRate.toFixed(4)}`)
       console.log(`tool_error_rate: ${summary.toolErrorRate.toFixed(4)}`)
 
-      if (summary.successRate < 1) {
+      if (summary.successRate < 1 || summary.modelReady.status === 'error') {
         process.exitCode = 1
       }
     } finally {

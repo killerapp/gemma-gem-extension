@@ -1,4 +1,4 @@
-import { ensureOffscreenModel } from './offscreen-manager'
+import { ensureOffscreenModel, ensureOffscreenModelReady } from './offscreen-manager'
 import { log } from '@/shared/logger'
 import { BRIDGE_STORAGE_KEY, DEFAULT_BRIDGE_SETTINGS, type BridgeConnectionStatus, type BridgeSettings } from '@/shared/bridge-settings'
 import type { BridgeEvent, BridgeRequest } from '@/shared/bridge-messages'
@@ -292,6 +292,7 @@ async function dispatchBridgeRequest(request: BridgeRequest): Promise<unknown> {
   switch (request.type) {
     case 'bridge:list_tabs': return listTabs()
     case 'bridge:get_active_tab': return getActiveTabInfo()
+    case 'bridge:ensure_model_ready': return ensureOffscreenModelReady(undefined, request.timeoutMs ?? AGENT_TIMEOUT_MS)
     case 'bridge:run_agent': return runAgentForBridge(request)
     case 'bridge:execute_tool': return executeToolForBridge(request.tabId, request.name, request.arguments)
     case 'bridge:stop':

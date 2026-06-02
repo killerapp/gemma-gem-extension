@@ -257,6 +257,21 @@ pnpm build
 pnpm benchmark:web -- --real --include-agent
 ```
 
+Current model readiness experiment:
+
+- Add a bridge-level `bridge:ensure_model_ready` request and MCP tool `gemma_model_ready`.
+- The request creates/uses the offscreen document, sends `model:load`, waits for `model:status ready`, and returns model id, status, load time, phase, and progress without running a generation.
+- Real-agent benchmark mode now runs this readiness preflight before task timing and records it separately in `benchmark.web.jsonl`, `benchmarks/web-control-plane/report.md`, and `results.web.tsv`.
+- `results.web.tsv` now includes `model_load_s`; historical rows are migrated with `0.000` where no preflight measurement existed.
+
+Experiment result:
+
+- `pnpm benchmark:web` passed with `model_ready_status skipped`.
+- `pnpm benchmark:web -- --real` passed with `model_ready_status skipped`.
+- `pnpm benchmark:web -- --real --include-agent` passed with `model_ready_status ready`, `model_load_seconds 6.662`, `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `p95_task_seconds 17.949`, and `timeout_rate 0.0000`.
+- A warmed rerun passed with `model_load_seconds 1.106`, `task_success_rate 1.0000`, `json_valid_rate 1.0000`, `p95_task_seconds 20.008`, and `timeout_rate 0.0000`.
+- Interpretation: model load is now measured separately from browser task duration without using a generation warmup or weakening frozen task assertions.
+
 Relevant platform constraints:
 
 - Extension service workers are event-driven and can shut down when dormant, so long-running model work should not depend on unstated service-worker liveness.
@@ -320,7 +335,7 @@ If a run exceeds its budget, stop it, mark the result as `timeout`, and move on.
 Use tab-separated `results.web.tsv`:
 
 ```text
-commit	suite	tasks	success_rate	strict_success_rate	json_valid_rate	selector_hit_rate	actions_per_success	p50_s	p95_s	timeout_rate	status	description
+commit	suite	tasks	success_rate	strict_success_rate	json_valid_rate	selector_hit_rate	actions_per_success	p50_s	p95_s	timeout_rate	model_load_s	status	description
 ```
 
 Status values:

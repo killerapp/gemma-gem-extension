@@ -21,6 +21,7 @@ export type ObservedAction = {
 export type BridgeRequest =
   | { type: 'bridge:list_tabs'; requestId: string }
   | { type: 'bridge:get_active_tab'; requestId: string }
+  | { type: 'bridge:ensure_model_ready'; requestId: string; timeoutMs?: number }
   | {
       type: 'bridge:run_agent'
       requestId: string

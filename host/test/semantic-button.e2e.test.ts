@@ -116,6 +116,19 @@ function handleFakeBridgeRequest(request: BridgeRequest): BridgeEvent | BridgeEv
         },
       }
 
+    case 'bridge:ensure_model_ready':
+      return {
+        type: 'bridge:response',
+        requestId: request.requestId,
+        result: {
+          modelId: 'gemma-4-e2b',
+          status: 'ready',
+          loadMs: 0,
+          phase: 'fake-ready',
+          progress: 100,
+        },
+      }
+
     case 'bridge:run_agent': {
       assert.equal(request.tabId, 7)
       assert.match(request.prompt, /collaborating with another AI model over MCP/)
