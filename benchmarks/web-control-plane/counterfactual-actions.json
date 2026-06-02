@@ -418,5 +418,35 @@
       "text": "read_page_content selector=#checkout-email format=text",
       "title": "checkout email input context"
     }
+  },
+  {
+    "task": {
+      "id": "mirror-customer-fields",
+      "suite": "forms-read-supervised",
+      "title": "Mirror customer fields into order form",
+      "tool": "gemma_transfer_fields"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "#order-name",
+      "text": "read_page_content selector=#order-name format=text",
+      "title": "order name input context"
+    }
+  },
+  {
+    "task": {
+      "id": "mirror-customer-fields",
+      "suite": "forms-read-supervised",
+      "title": "Mirror customer fields into order form",
+      "tool": "gemma_transfer_fields"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "#order-email",
+      "text": "read_page_content selector=#order-email format=text",
+      "title": "order email input context"
+    }
   }
 ]

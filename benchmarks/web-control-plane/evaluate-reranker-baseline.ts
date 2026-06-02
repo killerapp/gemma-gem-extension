@@ -208,15 +208,15 @@ function fieldAlignment(selector: string, title: string | null): 'match' | 'mism
 
 function selectorRole(selector: string): 'source' | 'destination' | 'result' | null {
   if (selector.includes('result')) return 'result'
-  if (selector.startsWith('#source-') || selector.startsWith('#shipping-') || selector.startsWith('#contact-')) return 'source'
-  if (selector.startsWith('#dest-') || selector.startsWith('#billing-') || selector.startsWith('#checkout-')) return 'destination'
+  if (selector.startsWith('#source-') || selector.startsWith('#shipping-') || selector.startsWith('#contact-') || selector.startsWith('#customer-')) return 'source'
+  if (selector.startsWith('#dest-') || selector.startsWith('#billing-') || selector.startsWith('#checkout-') || selector.startsWith('#order-')) return 'destination'
   return null
 }
 
 function clickRole(selector: string): 'submit' | 'status' | 'field' | null {
   if (selector.includes('save') && !selector.includes('result')) return 'submit'
   if (selector.includes('result')) return 'status'
-  if (selector.startsWith('#dest-') || selector.startsWith('#billing-') || selector.startsWith('#checkout-')) return 'field'
+  if (selector.startsWith('#dest-') || selector.startsWith('#billing-') || selector.startsWith('#checkout-') || selector.startsWith('#order-')) return 'field'
   return null
 }
 
