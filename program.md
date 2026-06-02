@@ -454,6 +454,10 @@ Experiment result:
 - `pnpm pack --dry-run` now verifies the packaged bridge includes both `shared/action-reranker.ts` and `benchmarks/web-control-plane/action-reranker.weights.json`, so fork installs can load the same scorer and artifact.
 - `gemma_observe` now applies the learned reranker to deterministic multi-candidate observe results before returning them. If the weights are unavailable, it falls back to the deterministic order instead of failing observation.
 - The MCP e2e fixture now deliberately lists `#download-invoice` before `#download-receipt` and calls `gemma_observe` with the ambiguous instruction `download payment document`; the test requires the returned first candidate to be `#download-receipt`. This proves the learned ranker is improving the observe-to-act path, not only a standalone ranking tool.
+- `gemma_act` now executes an explicit `ObservedAction` directly through the deterministic bridge tool for `click`, `type`, `select`, and `scroll` instead of sending that already-grounded action back through model generation. `wait` is handled as a bounded local delay, and unsupported/malformed observed actions fail before execution.
+- The MCP e2e test now runs the reranked `gemma_observe` result through `gemma_act` and asserts the sidecar sends exactly one `click_element` request for `#download-receipt`, while the later `gemma_agent` call remains the only `bridge:run_agent` request.
+- `pnpm test` passed after this direct observed-action execution path was added.
+- `pnpm benchmark:web` passed in local-fake-extension mode with `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 2.43`, `p95_task_seconds 0.009`, and `timeout_rate 0.0000`.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

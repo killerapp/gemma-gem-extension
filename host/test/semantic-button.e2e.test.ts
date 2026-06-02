@@ -165,6 +165,14 @@ function handleFakeBridgeRequest(request: BridgeRequest): BridgeEvent | BridgeEv
           },
         }
       }
+      if (request.name === 'click_element') {
+        assert.equal(request.arguments.selector, '#download-receipt')
+        return {
+          type: 'bridge:response',
+          requestId: request.requestId,
+          result: { clicked: 'button: Receipt PDF' },
+        }
+      }
       return {
         type: 'bridge:response',
         requestId: request.requestId,
@@ -251,9 +259,23 @@ test('HTTP sidecar delegates semantic button task through the bridge', async (t)
       instruction: 'download payment document',
     },
   })
-  const observedActions = JSON.parse(toolText(observeResult)) as Array<{ selector: string; method: string }>
+  const observedActions = JSON.parse(toolText(observeResult)) as Array<{
+    description: string
+    method: string
+    arguments: unknown[]
+    selector: string
+  }>
   assert.equal(observedActions[0].selector, '#download-receipt')
   assert.equal(observedActions[0].method, 'click')
+
+  const actResult = await client.callTool({
+    name: 'gemma_act',
+    arguments: {
+      tabId: 7,
+      action: observedActions[0],
+    },
+  })
+  assert.match(toolText(actResult), /Receipt PDF/)
 
   const rankResult = await client.callTool({
     name: 'gemma_rank_actions',
@@ -305,4 +327,5 @@ test('HTTP sidecar delegates semantic button task through the bridge', async (t)
   assert.match(toolText(result), /#download-receipt/)
   assert.match(toolText(result), /INV-2026-041/)
   assert.equal(fakeExtension.requests.filter(request => request.type === 'bridge:run_agent').length, 1)
+  assert.equal(fakeExtension.requests.filter(request => request.type === 'bridge:execute_tool' && request.name === 'click_element').length, 1)
 })

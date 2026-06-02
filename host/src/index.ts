@@ -8,7 +8,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
 import { WebSocketServer, type WebSocket } from 'ws'
 import * as z from 'zod/v4'
-import type { BridgeEvent, BridgeRequest, ObservedAction } from '../../shared/bridge-messages'
+import type { BridgeEvent, BridgeRequest, BridgeToolName, ObservedAction } from '../../shared/bridge-messages'
 import { BRIDGE_DEFAULT_PORT } from '../../shared/bridge-settings'
 import {
   normalizeObservedAction,
@@ -509,6 +509,91 @@ function rankObservedActions(instruction: string, observedActions: ObservedActio
   }
 }
 
+function observedActionSelector(action: ObservedAction): string {
+  const selector = action.selector ?? (typeof action.arguments[0] === 'string' ? action.arguments[0] : undefined)
+  if (!selector) {
+    throw new Error(`Observed ${action.method} action requires a selector`)
+  }
+  return selector
+}
+
+function observedStringArgument(action: ObservedAction, index: number, name: string): string {
+  const value = action.arguments[index]
+  if (typeof value !== 'string' || value.length === 0) {
+    throw new Error(`Observed ${action.method} action requires ${name}`)
+  }
+  return value
+}
+
+function observedNumberArgument(action: ObservedAction, index: number): number | undefined {
+  const value = action.arguments[index]
+  return typeof value === 'number' && Number.isFinite(value) ? value : undefined
+}
+
+function bridgeToolForObservedAction(action: ObservedAction): { name: BridgeToolName; arguments: Record<string, unknown> } {
+  switch (action.method) {
+    case 'click':
+      return {
+        name: 'click_element',
+        arguments: { selector: observedActionSelector(action) },
+      }
+
+    case 'type':
+      return {
+        name: 'type_text',
+        arguments: {
+          selector: observedActionSelector(action),
+          text: observedStringArgument(action, 1, 'text at arguments[1]'),
+        },
+      }
+
+    case 'select': {
+      const option = observedStringArgument(action, 1, 'option value or label at arguments[1]')
+      return {
+        name: 'select_option',
+        arguments: {
+          selector: observedActionSelector(action),
+          value: option,
+          label: option,
+        },
+      }
+    }
+
+    case 'scroll': {
+      const direction = action.arguments[0] === 'up' ? 'up' : 'down'
+      return {
+        name: 'scroll_page',
+        arguments: {
+          direction,
+          amount: observedNumberArgument(action, 1) ?? 500,
+        },
+      }
+    }
+
+    case 'navigate':
+      throw new Error('Observed navigate actions are not executed by gemma_act; use gemma_agent for navigation workflows')
+
+    case 'wait':
+      throw new Error('Observed wait actions are handled without a bridge tool')
+  }
+}
+
+async function executeObservedAction(action: ObservedAction, tabId: number | undefined): Promise<unknown> {
+  if (action.method === 'wait') {
+    const waitMs = Math.min(Math.max(observedNumberArgument(action, 0) ?? 1000, 0), 10_000)
+    await new Promise(resolve => setTimeout(resolve, waitMs))
+    return { waitedMs: waitMs }
+  }
+
+  const tool = bridgeToolForObservedAction(action)
+  return sendBridgeRequest({
+    type: 'bridge:execute_tool',
+    tabId,
+    name: tool.name,
+    arguments: tool.arguments,
+  })
+}
+
 async function sendJsonAgentRequest(request: BridgeRequestInput): Promise<unknown> {
   const result = await sendBridgeRequest(request)
   const text = textFromAgentResult(result)
@@ -657,6 +742,10 @@ function registerTools(server: McpServer): void {
     if (!instruction && !action) {
       throw new Error('gemma_act requires either instruction or action')
     }
+    if (action) {
+      return asTextResult(await executeObservedAction(action satisfies ObservedAction, tabId))
+    }
+
     const actionText = action ? JSON.stringify(action satisfies ObservedAction, null, 2) : instruction
     const prompt = [
       'You are implementing gemma_act, a Stagehand-style single-action browser primitive.',
