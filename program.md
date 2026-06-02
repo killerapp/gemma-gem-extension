@@ -347,7 +347,8 @@ Current action-accounting experiment:
 Experiment result:
 
 - `pnpm compile`, `pnpm build`, `pnpm test`, `pnpm benchmark:web`, and `pnpm benchmark:web -- --real` passed after the instrumentation change.
-- Expected next evidence is a fresh `pnpm benchmark:web -- --real --include-agent` run with non-zero `actions_per_success` for model-driven real-extension tasks.
+- `pnpm benchmark:web -- --real --include-agent` passed with `model_ready_status ready`, `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `actions_per_success 2.43`, `p95_task_seconds 17.894`, and `timeout_rate 0.0000`.
+- Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, making future selector/action trace comparisons less misleading.
 
 Relevant platform constraints:
 
