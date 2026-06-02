@@ -39,3 +39,6 @@ e75340b	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.024	144
 75bf82d	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.007	0.123	0.0000	baseline	real-chrome-extension-smoke benchmark run
 75bf82d	real-chrome-extension-agent	0	0.0000	0.0000	0.0000	0.0000	0.00	0.000	0.000	1.0000	timeout	load-only model warmup timed out before tasks
 75bf82d	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.009	0.0000	baseline	local-fake-extension benchmark run
+c22ad83	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.006	0.010	0.0000	baseline	local-fake-extension benchmark run
+c22ad83	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.015	0.153	0.0000	baseline	real-chrome-extension-smoke benchmark run
+c22ad83	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.047	250.559	0.0000	keep	capture model status diagnostics on task failure

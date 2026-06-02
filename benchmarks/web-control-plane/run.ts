@@ -67,6 +67,7 @@ type HarnessProbe = {
   requestCount(): number
   requestsSince(start: number): BridgeRequest[]
   toolErrorCount(): number
+  diagnostics(): Promise<Record<string, unknown>> | Record<string, unknown>
   close(): Promise<void> | void
 }
 
@@ -239,6 +240,10 @@ class FakeExtension implements HarnessProbe {
 
   toolErrorCount(): number {
     return this.toolErrors.length
+  }
+
+  diagnostics(): Record<string, unknown> {
+    return { mode: this.mode, bridgeRequests: this.requests.length, toolErrors: this.toolErrors.length }
   }
 
   selectorExists(selector: string): boolean {
@@ -535,6 +540,15 @@ class RealChromeHarness implements HarnessProbe {
     return 0
   }
 
+  async diagnostics(): Promise<Record<string, unknown>> {
+    return {
+      mode: this.mode,
+      bridgeStatus: await this.bridgeStatusForDiagnostics(),
+      modelStatus: await this.modelStatusForDiagnostics(),
+      chromeOutputTail: this.chromeOutput.slice(-1000),
+    }
+  }
+
   async selectorExists(selector: string): Promise<boolean> {
     const session = await this.pageSessionForLogicalTab(101)
     const value = await this.evaluate(session, `!!document.querySelector(${JSON.stringify(selector)})`)
@@ -804,6 +818,19 @@ class RealChromeHarness implements HarnessProbe {
     }
   }
 
+  private async modelStatusForDiagnostics(): Promise<string> {
+    if (!this.extensionWorkerSession) return 'no-worker-session'
+    try {
+      const result = await this.extensionWorkerSession.send('Runtime.evaluate', {
+        expression: 'JSON.stringify(globalThis.__gemmaGemBenchmarkModelStatus?.())',
+        returnByValue: true,
+      })
+      return String(result.result?.value ?? result.exceptionDetails?.text ?? 'unknown')
+    } catch (error) {
+      return error instanceof Error ? error.message : String(error)
+    }
+  }
+
   private async targets(): Promise<ChromeTarget[]> {
     return fetch(`http://127.0.0.1:${this.chromePort}/json/list`).then(r => r.json() as Promise<ChromeTarget[]>)
   }
@@ -1004,6 +1031,11 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
   } catch (error) {
     timeout = error instanceof Error && error.message.includes('timed out')
     notes.push(error instanceof Error ? error.message : String(error))
+    try {
+      notes.push(`diagnostics=${JSON.stringify(await harness.diagnostics())}`)
+    } catch (diagnosticError) {
+      notes.push(`diagnostics_error=${diagnosticError instanceof Error ? diagnosticError.message : String(diagnosticError)}`)
+    }
   }
 
   const durationMs = performance.now() - start

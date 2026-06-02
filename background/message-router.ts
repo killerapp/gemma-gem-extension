@@ -4,6 +4,10 @@ import { getBridgeSettings, getBridgeStatus, handleBridgeRuntimeMessage, updateB
 import { log } from '@/shared/logger'
 import { STORAGE_KEY_MODEL } from '@/shared/models'
 
+type ModelStatusSnapshot = Extract<Message, { type: 'model:status' }> & { timestamp: number }
+
+let latestModelStatus: ModelStatusSnapshot | null = null
+
 function sendToRuntime(message: Message): void {
   chrome.runtime.sendMessage(message).catch(() => {})
 }
@@ -18,6 +22,12 @@ async function sendToActiveTab(message: Message): Promise<void> {
 }
 
 export function setupMessageRouter(): void {
+  if (import.meta.env.DEV) {
+    ;(globalThis as typeof globalThis & {
+      __gemmaGemBenchmarkModelStatus?: () => ModelStatusSnapshot | null
+    }).__gemmaGemBenchmarkModelStatus = () => latestModelStatus
+  }
+
   chrome.runtime.onMessage.addListener((message: Message, sender, sendResponse) => {
     handleMessage(message, sender).then(sendResponse).catch(e => log.error('Message handler error:', e))
     return true
@@ -153,6 +163,7 @@ async function handleMessage(message: Message, sender: chrome.runtime.MessageSen
     }
 
     case 'model:status': {
+      latestModelStatus = { ...message, timestamp: Date.now() }
       log.info('model:status:', message.status, message.progress ?? '', message.error ?? '')
       await sendToActiveTab(message)
       return
