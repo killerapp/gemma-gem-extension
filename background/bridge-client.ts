@@ -282,6 +282,31 @@ function extractToolName(text: string): string | undefined {
   return match?.[1]
 }
 
+function compactToolActivityText(name: string, args: Record<string, unknown>): string {
+  const selector = typeof args.selector === 'string' ? args.selector : undefined
+  const parts = [name]
+
+  if (selector) parts.push(`selector=${selector}`)
+
+  if (name === 'read_page_content' && typeof args.format === 'string') {
+    parts.push(`format=${args.format}`)
+  } else if (name === 'type_text') {
+    const textLength = typeof args.text === 'string' ? args.text.length : 0
+    parts.push(`textLength=${textLength}`)
+  } else if (name === 'select_option') {
+    if (typeof args.value === 'string') parts.push(`value=${args.value}`)
+    if (typeof args.label === 'string') parts.push(`label=${args.label}`)
+  } else if (name === 'scroll_page') {
+    if (typeof args.direction === 'string') parts.push(`direction=${args.direction}`)
+    if (typeof args.amount === 'number') parts.push(`amount=${args.amount}`)
+  } else if (name === 'run_javascript') {
+    const codeLength = typeof args.code === 'string' ? args.code.length : 0
+    parts.push(`codeLength=${codeLength}`)
+  }
+
+  return parts.join(' ')
+}
+
 async function handleBridgeMessage(raw: unknown): Promise<void> {
   const text = typeof raw === 'string' ? raw : await (raw as Blob).text()
   const request = JSON.parse(text) as BridgeRequest
@@ -400,7 +425,7 @@ async function executeToolForBridge(tabIdInput: number | undefined, name: string
     status: 'tool',
     tabId,
     toolName: name,
-    text: `Running ${name}`,
+    text: compactToolActivityText(name, args),
   })
 
   if (name === 'take_screenshot') {

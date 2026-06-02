@@ -35,6 +35,7 @@
     "browser:debug": "tsx scripts/launch-extension-debug.ts",
     "browser:model-ready": "tsx scripts/check-model-ready.ts",
     "benchmark:web": "tsx benchmarks/web-control-plane/run.ts",
+    "benchmark:traces": "tsx benchmarks/web-control-plane/export-traces.ts",
     "compile": "tsc --noEmit",
     "test:e2e": "tsx --test host/test/*.test.ts",
     "test": "pnpm compile && pnpm test:e2e",

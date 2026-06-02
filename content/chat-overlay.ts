@@ -41,8 +41,14 @@ function relayChunkParts(text: string | undefined): { label: string; text: strin
   const thinking = raw.match(/^\[Thinking\]\s*(.*)$/s)
   if (thinking) return { label: 'thinking', text: thinking[1].trim() }
 
+  const normalizedThinking = raw.match(/^Thinking:\s*(.*)$/is)
+  if (normalizedThinking) return { label: 'thinking', text: normalizedThinking[1].trim() }
+
   const tool = raw.match(/^\[Tool\]\s*(.*)$/s)
   if (tool) return { label: 'tool', text: tool[1].trim() }
+
+  const normalizedTool = raw.match(/^Tool:\s*(.*)$/is)
+  if (normalizedTool) return { label: 'tool', text: normalizedTool[1].trim() }
 
   return { label: 'stream', text: raw }
 }
@@ -844,7 +850,12 @@ export class ChatOverlay {
     const chunk = relayChunkParts(activity.text)
     if (!chunk) return
 
-    const requestChanged = activity.requestId && activity.requestId !== this.relayStreamRequestId
+    const requestChanged = Boolean(
+      this.relayStreamRow &&
+      this.relayStreamRequestId &&
+      activity.requestId &&
+      activity.requestId !== this.relayStreamRequestId,
+    )
     const labelChanged = this.relayStreamRow && chunk.label !== this.relayStreamLabel
     if (requestChanged || labelChanged) {
       this.resetRelayStream()
@@ -857,6 +868,8 @@ export class ChatOverlay {
       this.relayStreamRequestId = activity.requestId
       this.relayStreamLabel = chunk.label
       this.relayStreamText = ''
+    } else if (!this.relayStreamRequestId && activity.requestId) {
+      this.relayStreamRequestId = activity.requestId
     }
 
     this.relayStreamText = appendRelayText(this.relayStreamText, chunk.text)
@@ -970,7 +983,7 @@ export class ChatOverlay {
       this.thinkingStreamEl = content
     }
 
-    this.thinkingStreamText += text
+    this.thinkingStreamText = appendRelayText(this.thinkingStreamText, text)
     this.thinkingStreamEl.textContent = this.thinkingStreamText
     this.messagesEl.scrollTop = this.messagesEl.scrollHeight
   }
