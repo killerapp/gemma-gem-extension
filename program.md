@@ -348,7 +348,8 @@ Current action-accounting experiment:
 Experiment result:
 
 - `pnpm compile`, `pnpm build`, `pnpm test`, `pnpm benchmark:web`, and `pnpm benchmark:web -- --real` passed after the instrumentation change.
-- `pnpm benchmark:web -- --real --include-agent` passed with `model_ready_status ready`, `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `actions_per_success 2.43`, `p95_task_seconds 17.894`, and `timeout_rate 0.0000`.
+- `pnpm benchmark:web -- --real --include-agent` passed on `fa86e6b` with `model_ready_status ready`, `model_load_seconds 0.018`, `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `actions_per_success 2.43`, `p95_task_seconds 20.885`, and `timeout_rate 0.0000`.
+- The resulting `benchmark.web.jsonl` includes real-extension `actionTrace` entries such as `read_page_content`, `type_text`, `click_element`, and model-task `started` events with request/tab metadata.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:
