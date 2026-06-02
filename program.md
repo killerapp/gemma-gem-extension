@@ -342,13 +342,14 @@ Current action-accounting experiment:
 - Real extension mode previously reported `actions_per_success: 0.00` even when `gemma_agent` used page tools, because the real harness cannot see nested offscreen-agent tool calls through the host-side bridge request log.
 - The service worker now keeps a bounded dev-only Gemma Relay activity log exposed as `__gemmaGemBenchmarkBridgeActivity()`.
 - The real benchmark harness uses that activity log to count Relay `started` and `tool` events per task, while the fake harness keeps using its direct bridge request log.
+- `benchmark.web.jsonl` task records now include an `actionTrace` array with compact per-task Relay/tool events (`status`, `toolName`, `requestId`, `tabId`, title/text preview, timestamp). This keeps the raw action path available for later selector/action policy analysis without replaying the browser session.
 - This matters for the future training loop: selector/action traces need a reliable action count before they can become useful policy/reranker data.
 
 Experiment result:
 
 - `pnpm compile`, `pnpm build`, `pnpm test`, `pnpm benchmark:web`, and `pnpm benchmark:web -- --real` passed after the instrumentation change.
 - `pnpm benchmark:web -- --real --include-agent` passed with `model_ready_status ready`, `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `actions_per_success 2.43`, `p95_task_seconds 17.894`, and `timeout_rate 0.0000`.
-- Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, making future selector/action trace comparisons less misleading.
+- Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:
 

@@ -10,6 +10,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js'
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js'
 import { WebSocket } from 'ws'
 import type { BridgeEvent, BridgeRequest } from '../../shared/bridge-messages'
+import type { BridgeActivityMessage } from '../../shared/messages'
 
 const REPO_ROOT = resolve(fileURLToPath(import.meta.url), '..', '..', '..')
 const BENCH_ROOT = resolve(REPO_ROOT, 'benchmarks', 'web-control-plane')
@@ -46,11 +47,22 @@ type TaskResult = {
   selectorChecks: number
   selectorHits: number
   actions: number
+  actionTrace: ActionTraceEvent[]
   durationMs: number
   timeout: boolean
   toolErrors: number
   outputPreview?: string
   notes: string[]
+}
+
+type ActionTraceEvent = {
+  status: string
+  toolName?: string
+  requestId?: string
+  tabId?: number
+  title?: string
+  text?: string
+  timestamp?: number
 }
 
 type ModelReadyPreflight = {
@@ -80,6 +92,7 @@ type HarnessProbe = {
   requestCount(): number
   requestsSince(start: number): BridgeRequest[]
   actionCount(): Promise<number> | number
+  actionTraceSince(start: number): Promise<ActionTraceEvent[]> | ActionTraceEvent[]
   toolErrorCount(): number
   diagnostics(): Promise<Record<string, unknown>> | Record<string, unknown>
   close(): Promise<void> | void
@@ -176,6 +189,24 @@ function positiveIntEnv(name: string, fallback: number): number {
   return parsed
 }
 
+function truncateTraceText(text: string | undefined): string | undefined {
+  if (!text) return undefined
+  const normalized = text.replace(/\s+/g, ' ').trim()
+  return normalized.length > 300 ? `${normalized.slice(0, 300)}...(truncated)` : normalized
+}
+
+function sanitizeActionTraceEvent(activity: BridgeActivityMessage): ActionTraceEvent {
+  return {
+    status: activity.status,
+    toolName: activity.toolName,
+    requestId: activity.requestId,
+    tabId: activity.tabId,
+    title: activity.title,
+    text: truncateTraceText(activity.text),
+    timestamp: activity.timestamp,
+  }
+}
+
 async function resolveBrowserExecutable(): Promise<string> {
   if (process.env.CHROME_PATH && existsSync(process.env.CHROME_PATH)) {
     return process.env.CHROME_PATH
@@ -260,6 +291,19 @@ class FakeExtension implements HarnessProbe {
 
   actionCount(): number {
     return this.requests.filter(request => request.type === 'bridge:run_agent' || request.type === 'bridge:execute_tool').length
+  }
+
+  actionTraceSince(start: number): ActionTraceEvent[] {
+    return this.requests
+      .filter(request => request.type === 'bridge:run_agent' || request.type === 'bridge:execute_tool')
+      .slice(start)
+      .map(request => ({
+        status: request.type === 'bridge:run_agent' ? 'started' : 'tool',
+        toolName: request.type === 'bridge:execute_tool' ? request.name : 'gemma_agent',
+        requestId: request.requestId,
+        tabId: 'tabId' in request ? request.tabId : undefined,
+        title: request.type,
+      }))
   }
 
   requestsSince(start: number): BridgeRequest[] {
@@ -586,6 +630,14 @@ class RealChromeHarness implements HarnessProbe {
     return activities.filter(activity => activity.status === 'started' || activity.status === 'tool').length
   }
 
+  async actionTraceSince(start: number): Promise<ActionTraceEvent[]> {
+    const activities = await this.bridgeActivityForDiagnostics()
+    return activities
+      .filter(activity => activity.status === 'started' || activity.status === 'tool')
+      .slice(start)
+      .map(activity => sanitizeActionTraceEvent(activity))
+  }
+
   toolErrorCount(): number {
     return 0
   }
@@ -884,7 +936,7 @@ class RealChromeHarness implements HarnessProbe {
     }
   }
 
-  private async bridgeActivityForDiagnostics(): Promise<Array<{ status?: string; toolName?: string; requestId?: string }>> {
+  private async bridgeActivityForDiagnostics(): Promise<BridgeActivityMessage[]> {
     if (!this.extensionWorkerSession) return []
     try {
       const result = await this.extensionWorkerSession.send('Runtime.evaluate', {
@@ -1154,6 +1206,7 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
     endActionCount - startActionCount,
     requests.filter(request => request.type === 'bridge:run_agent' || request.type === 'bridge:execute_tool').length,
   )
+  const actionTrace = await harness.actionTraceSince(startActionCount)
   const toolErrors = harness.toolErrorCount() - startErrorCount
 
   return {
@@ -1168,6 +1221,7 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
     selectorChecks,
     selectorHits,
     actions,
+    actionTrace,
     durationMs,
       timeout,
       toolErrors,
