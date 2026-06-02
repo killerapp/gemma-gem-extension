@@ -12,6 +12,7 @@ const VOLATILE_KEYS = new Set([
   'durationMs',
   'taskOutputPreview',
 ])
+const LABEL_LEAKAGE_PATTERN = /\b(wrong|negative|counterfactual|positive)\b/i
 
 type TraceRecord = {
   recordType?: unknown
@@ -86,6 +87,12 @@ function assertNumberOrNull(value: unknown, path: string): void {
   assert(value === null || typeof value === 'number', `${path} must be number or null`)
 }
 
+function assertNoLabelLeak(value: unknown, path: string): void {
+  if (value === null || value === undefined) return
+  assert(typeof value === 'string', `${path} must be string or null`)
+  assert(!LABEL_LEAKAGE_PATTERN.test(value), `${path} must not contain label leakage terms`)
+}
+
 function hasVolatileKeys(value: unknown, path = '$'): string[] {
   if (!value || typeof value !== 'object') return []
   const hits: string[] = []
@@ -123,6 +130,8 @@ function validateRecord(record: TraceRecord, lineNumber: number): { hasSelector:
   assertNullableString(record.action.selector, `${prefix}: action.selector`)
   assertNullableString(record.action.text, `${prefix}: action.text`)
   assertNullableString(record.action.title, `${prefix}: action.title`)
+  assertNoLabelLeak(record.action.text, `${prefix}: action.text`)
+  assertNoLabelLeak(record.action.title, `${prefix}: action.title`)
 
   assert(record.label === 'positive' || record.label === 'negative', `${prefix}: label must be positive or negative`)
 

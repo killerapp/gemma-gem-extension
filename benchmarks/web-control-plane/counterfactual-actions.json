@@ -11,7 +11,7 @@
       "toolName": "click_element",
       "selector": "#download-invoice",
       "text": "click_element selector=#download-invoice",
-      "title": "wrong invoice document control"
+      "title": "invoice document control"
     }
   },
   {
@@ -26,7 +26,7 @@
       "toolName": "click_element",
       "selector": "#payment-settings",
       "text": "click_element selector=#payment-settings",
-      "title": "wrong payment settings control"
+      "title": "payment settings control"
     }
   },
   {
@@ -41,7 +41,7 @@
       "toolName": "click_element",
       "selector": "#download-invoice",
       "text": "click_element selector=#download-invoice",
-      "title": "wrong observed invoice action"
+      "title": "observed invoice action"
     }
   },
   {
@@ -56,7 +56,7 @@
       "toolName": "click_element",
       "selector": "#payment-settings",
       "text": "click_element selector=#payment-settings",
-      "title": "wrong observed settings action"
+      "title": "observed settings action"
     }
   },
   {
@@ -71,7 +71,7 @@
       "toolName": "type_text",
       "selector": "#dest-email",
       "text": "type_text selector=#dest-email textLength=12",
-      "title": "wrong destination for full name"
+      "title": "destination for full name"
     }
   },
   {
@@ -86,7 +86,7 @@
       "toolName": "type_text",
       "selector": "#dest-name",
       "text": "type_text selector=#dest-name textLength=16",
-      "title": "wrong destination for email"
+      "title": "destination for email"
     }
   }
 ]
