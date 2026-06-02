@@ -243,7 +243,7 @@ function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredRecord {
       reasons.push('receipt_goal_selector')
     }
     if ((record.action.selector?.includes('invoice') || record.action.selector?.includes('settings')) && (baseTaskTokens.has('proof') || baseTaskTokens.has('receipt'))) {
-      score -= 1
+      score -= 5
       reasons.push('distractor_billing_selector')
     }
     if (record.action.selector?.includes('settings') && (baseTaskTokens.has('proof') || baseTaskTokens.has('receipt'))) {
@@ -255,7 +255,7 @@ function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredRecord {
       reasons.push('profile_submit_selector')
     }
     if (record.task.id === 'transfer-profile-fields' && record.action.toolName === 'click_element' && !record.action.selector?.includes('save-profile')) {
-      score -= 2
+      score -= 4
       reasons.push('transfer_click_distractor')
     }
     if (record.task.id === 'transfer-profile-fields' && record.action.toolName === 'type_text') {
@@ -264,7 +264,7 @@ function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredRecord {
         score += 2
         reasons.push('field_title_selector_match')
       } else if (alignment === 'mismatch') {
-        score -= 2
+        score -= 4
         reasons.push('field_title_selector_mismatch')
       }
     }
