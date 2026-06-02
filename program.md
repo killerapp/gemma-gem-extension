@@ -359,6 +359,7 @@ Experiment result:
 - The trace exporter was tightened after that run so `action-traces.jsonl` keeps stable action-policy records and drops volatile duration/output-preview fields.
 - `pnpm benchmark:traces:check` now validates the normalized trace contract. It fails if volatile fields reappear or if the export loses positive, selector-bearing, or click-action records. Current check result: `17` records, `17` positive, `14` selector records, and `2` click records.
 - `pnpm benchmark:traces:summary` now writes `benchmarks/web-control-plane/action-traces.summary.md` so the loop can see training coverage at a glance. Current summary: `17` records across `6` tasks, `14` selector records, `2` click records, and `0` negative records. The next data gap is explicit: add failure traces before training a selector/action reranker.
+- `pnpm benchmark:traces:training` now combines the positive benchmark-derived trace export with curated counterfactual negatives from `counterfactual-actions.json`. `pnpm benchmark:traces:training:check` requires negative records and currently validates `23` records: `17` positive, `6` negative, `20` selector records, and `6` click records.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

@@ -41,9 +41,10 @@ type TraceRecord = {
   label?: unknown
 }
 
-function parseArgs(): { input: string } {
+function parseArgs(): { input: string; requireNegative: boolean } {
   const args = process.argv.slice(2)
   let input = process.env.GEMMA_GEM_TRACE_OUTPUT ? resolve(process.env.GEMMA_GEM_TRACE_OUTPUT) : DEFAULT_INPUT
+  let requireNegative = false
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i]
@@ -54,12 +55,14 @@ function parseArgs(): { input: string } {
       i += 1
     } else if (arg.startsWith('--input=')) {
       input = resolve(arg.slice('--input='.length))
+    } else if (arg === '--require-negative') {
+      requireNegative = true
     } else {
-      throw new Error(`Unknown argument ${arg}. Use --input <path>.`)
+      throw new Error(`Unknown argument ${arg}. Use --input <path> and --require-negative.`)
     }
   }
 
-  return { input }
+  return { input, requireNegative }
 }
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -134,7 +137,7 @@ function validateRecord(record: TraceRecord, lineNumber: number): { hasSelector:
 }
 
 async function main(): Promise<void> {
-  const { input } = parseArgs()
+  const { input, requireNegative } = parseArgs()
   if (!existsSync(input)) throw new Error(`Trace export not found: ${input}`)
 
   const lines = (await readFile(input, 'utf8'))
@@ -147,20 +150,26 @@ async function main(): Promise<void> {
   let selectors = 0
   let clicks = 0
   let positives = 0
+  let negatives = 0
   for (let i = 0; i < lines.length; i += 1) {
     const parsed = JSON.parse(lines[i]) as TraceRecord
     const result = validateRecord(parsed, i + 1)
     if (result.hasSelector) selectors += 1
     if (result.hasClick) clicks += 1
     if (result.label === 'positive') positives += 1
+    if (result.label === 'negative') negatives += 1
   }
 
   assert(positives > 0, 'trace export must contain at least one positive record')
+  if (requireNegative) {
+    assert(negatives > 0, 'trace export must contain at least one negative record')
+  }
   assert(selectors > 0, 'trace export must contain at least one selector-bearing action')
   assert(clicks > 0, 'trace export must contain at least one click action')
 
   console.log(`Checked ${lines.length} action trace records`)
   console.log(`Positive records: ${positives}`)
+  console.log(`Negative records: ${negatives}`)
   console.log(`Selector records: ${selectors}`)
   console.log(`Click records: ${clicks}`)
 }
