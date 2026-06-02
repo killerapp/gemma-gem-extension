@@ -37,6 +37,7 @@
     "benchmark:web": "tsx benchmarks/web-control-plane/run.ts",
     "benchmark:traces": "tsx benchmarks/web-control-plane/export-traces.ts",
     "benchmark:traces:check": "tsx benchmarks/web-control-plane/check-traces.ts",
+    "benchmark:traces:summary": "tsx benchmarks/web-control-plane/summarize-traces.ts",
     "compile": "tsc --noEmit",
     "test:e2e": "tsx --test host/test/*.test.ts",
     "test": "pnpm compile && pnpm test:e2e",

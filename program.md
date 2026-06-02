@@ -358,6 +358,7 @@ Experiment result:
 - The current full real-agent suite passed on `e10d1d7` with `model_ready_status ready`, `model_load_seconds 0.577`, `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `actions_per_success 2.43`, `p95_task_seconds 20.726`, and `timeout_rate 0.0000`.
 - The trace exporter was tightened after that run so `action-traces.jsonl` keeps stable action-policy records and drops volatile duration/output-preview fields.
 - `pnpm benchmark:traces:check` now validates the normalized trace contract. It fails if volatile fields reappear or if the export loses positive, selector-bearing, or click-action records. Current check result: `17` records, `17` positive, `14` selector records, and `2` click records.
+- `pnpm benchmark:traces:summary` now writes `benchmarks/web-control-plane/action-traces.summary.md` so the loop can see training coverage at a glance. Current summary: `17` records across `6` tasks, `14` selector records, `2` click records, and `0` negative records. The next data gap is explicit: add failure traces before training a selector/action reranker.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:
