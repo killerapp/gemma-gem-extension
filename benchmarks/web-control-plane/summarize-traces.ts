@@ -44,6 +44,11 @@ type TaskSummary = {
   actions: Set<string>
 }
 
+type CandidateBucket = {
+  positive: number
+  negative: number
+}
+
 function parseArgs(): { input: string; output: string } {
   const args = process.argv.slice(2)
   let input = process.env.GEMMA_GEM_TRACE_OUTPUT ? resolve(process.env.GEMMA_GEM_TRACE_OUTPUT) : DEFAULT_INPUT
@@ -103,6 +108,7 @@ async function main(): Promise<void> {
   const byTool = new Map<string, number>()
   const bySelector = new Map<string, number>()
   const byActionStatus = new Map<string, number>()
+  const candidateBuckets = new Map<string, CandidateBucket>()
 
   let positives = 0
   let negatives = 0
@@ -122,6 +128,13 @@ async function main(): Promise<void> {
     }
     if (record.action.toolName === 'click_element' || String(record.action.text ?? '').includes('click_element')) {
       clickRecords += 1
+    }
+    if (record.action.toolName === 'click_element' || record.action.toolName === 'type_text') {
+      const key = `${record.task.id}:${record.action.toolName}`
+      const bucket = candidateBuckets.get(key) ?? { positive: 0, negative: 0 }
+      if (record.label === 'positive') bucket.positive += 1
+      if (record.label === 'negative') bucket.negative += 1
+      candidateBuckets.set(key, bucket)
     }
 
     const task = byTask.get(record.task.id) ?? {
@@ -154,6 +167,9 @@ async function main(): Promise<void> {
   lines.push(`- selector_records: ${selectorRecords}`)
   lines.push(`- click_records: ${clickRecords}`)
   lines.push(`- task_count: ${byTask.size}`)
+  lines.push(`- candidate_buckets: ${candidateBuckets.size}`)
+  lines.push(`- paired_candidate_buckets: ${[...candidateBuckets.values()].filter(bucket => bucket.positive > 0 && bucket.negative > 0).length}`)
+  lines.push(`- unpaired_negative_candidate_buckets: ${[...candidateBuckets.values()].filter(bucket => bucket.negative > 0 && bucket.positive === 0).length}`)
   lines.push('')
   lines.push('## Task Coverage')
   lines.push('')
@@ -188,6 +204,19 @@ async function main(): Promise<void> {
     lines.push(tableRow([selector, count]))
   }
   lines.push('')
+  lines.push('## Candidate Pair Coverage')
+  lines.push('')
+  lines.push(tableRow(['task_tool', 'positive', 'negative', 'paired']))
+  lines.push(tableRow(['---', '---:', '---:', '---']))
+  for (const [key, bucket] of [...candidateBuckets.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
+    lines.push(tableRow([
+      key,
+      bucket.positive,
+      bucket.negative,
+      bucket.positive > 0 && bucket.negative > 0 ? 'yes' : 'no',
+    ]))
+  }
+  lines.push('')
   lines.push('## Data Gaps')
   lines.push('')
   if (negatives === 0) {
@@ -203,6 +232,14 @@ async function main(): Promise<void> {
   }
   if (negatives > 0 && clickRecords > 0 && selectorRecords > 0) {
     lines.push('- Basic positive/negative, click, and selector coverage is present.')
+  }
+  const unpairedNegativeBuckets = [...candidateBuckets.entries()]
+    .filter(([, bucket]) => bucket.negative > 0 && bucket.positive === 0)
+    .map(([key]) => key)
+  if (unpairedNegativeBuckets.length > 0) {
+    lines.push(`- Negative click/type candidates lack same-task same-tool positives for: ${unpairedNegativeBuckets.join(', ')}.`)
+  } else if ([...candidateBuckets.values()].some(bucket => bucket.positive > 0 && bucket.negative > 0)) {
+    lines.push('- Click/type negative candidates are paired with same-task same-tool positives.')
   }
 
   await mkdir(dirname(output), { recursive: true })

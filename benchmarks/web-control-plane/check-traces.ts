@@ -162,6 +162,10 @@ function assertPairedCandidates(candidateLabels: Map<string, Set<string>>): void
   assert([...candidateLabels.values()].some(labels => labels.has('positive') && labels.has('negative')), 'trace export must contain at least one positive/negative candidate pair')
 }
 
+function pairedCandidateBuckets(candidateLabels: Map<string, Set<string>>): number {
+  return [...candidateLabels.values()].filter(labels => labels.has('positive') && labels.has('negative')).length
+}
+
 async function main(): Promise<void> {
   const { input, requireNegative, requireCandidatePairs } = parseArgs()
   if (!existsSync(input)) throw new Error(`Trace export not found: ${input}`)
@@ -207,7 +211,10 @@ async function main(): Promise<void> {
   console.log(`Negative records: ${negatives}`)
   console.log(`Selector records: ${selectors}`)
   console.log(`Click records: ${clicks}`)
-  if (requireCandidatePairs) console.log(`Candidate pair buckets: ${candidateLabels.size}`)
+  if (requireCandidatePairs) {
+    console.log(`Candidate buckets: ${candidateLabels.size}`)
+    console.log(`Paired candidate buckets: ${pairedCandidateBuckets(candidateLabels)}`)
+  }
 }
 
 main().catch(error => {
