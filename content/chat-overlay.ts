@@ -37,11 +37,20 @@ function relayEventText(activity: BridgeActivityMessage): string {
 export type RelayChunkParts = { label: string; text: string }
 
 const RELAY_ACTIVITY_STATUSES = new Set<BridgeActivityStatus>(['started', 'chunk', 'tool', 'completed', 'error'])
+const RELAY_ACTIVITY_STATUS_ALIASES: Record<string, BridgeActivityStatus> = {
+  'agent:chunk': 'chunk',
+  'bridge:chunk': 'chunk',
+  'bridge:tool_call': 'tool',
+  tool_call: 'tool',
+}
 
 export function normalizeRelayActivityStatus(status: unknown): BridgeActivityStatus | undefined {
   if (typeof status !== 'string') return undefined
 
   const normalized = status.trim().toLowerCase()
+  const alias = RELAY_ACTIVITY_STATUS_ALIASES[normalized]
+  if (alias) return alias
+
   return RELAY_ACTIVITY_STATUSES.has(normalized as BridgeActivityStatus)
     ? normalized as BridgeActivityStatus
     : undefined
