@@ -34,6 +34,28 @@ function relayEventText(activity: BridgeActivityMessage): string {
     .replace(/^\[Tool\]\s*/, 'Tool: ')
 }
 
+function relayChunkParts(text: string | undefined): { label: string; text: string } | null {
+  const raw = text?.trim()
+  if (!raw) return null
+
+  const thinking = raw.match(/^\[Thinking\]\s*(.*)$/s)
+  if (thinking) return { label: 'thinking', text: thinking[1].trim() }
+
+  const tool = raw.match(/^\[Tool\]\s*(.*)$/s)
+  if (tool) return { label: 'tool', text: tool[1].trim() }
+
+  return { label: 'stream', text: raw }
+}
+
+function appendRelayText(current: string, next: string): string {
+  const text = next.replace(/\s+/g, ' ').trim()
+  if (!text) return current
+  if (!current) return text
+  if (/^[,.;:!?)}\]]/.test(text)) return `${current}${text}`
+  if (/[(\[{]$/.test(current)) return `${current}${text}`
+  return `${current} ${text}`
+}
+
 const STYLES = `
   :host {
     all: initial;
@@ -407,6 +429,10 @@ const STYLES = `
     font-size: 12px;
     line-height: 1.35;
   }
+  .relay-event.stream {
+    padding: 10px 0 12px;
+    border-bottom-color: rgba(45, 212, 191, 0.2);
+  }
   .relay-event:last-child { border-bottom: none; }
   .relay-event-status {
     color: #94a3b8;
@@ -414,9 +440,15 @@ const STYLES = `
     font-size: 10px;
     text-transform: uppercase;
   }
+  .relay-event.stream .relay-event-status {
+    color: #2dd4bf;
+  }
   .relay-event-body {
     overflow-wrap: anywhere;
     white-space: pre-wrap;
+  }
+  .relay-event.stream .relay-event-body {
+    color: #dbeafe;
   }
   .relay-event.started .relay-event-status,
   .relay-event.chunk .relay-event-status { color: #2dd4bf; }
@@ -460,6 +492,12 @@ export class ChatOverlay {
   private relayTitle: HTMLElement
   private relayMeta: HTMLElement
   private relayEvents: HTMLElement
+  private relayStreamRow: HTMLElement | null = null
+  private relayStreamStatus: HTMLElement | null = null
+  private relayStreamBody: HTMLElement | null = null
+  private relayStreamRequestId: string | undefined
+  private relayStreamLabel = 'stream'
+  private relayStreamText = ''
   private activeView: OverlayView = 'chat'
   private relayEventCount = 0
   private typingEl: HTMLElement | null = null
@@ -760,6 +798,7 @@ export class ChatOverlay {
     if (activity.status === 'started') {
       this.relayEvents.innerHTML = ''
       this.relayEventCount = 0
+      this.resetRelayStream()
       this.relayTitle.textContent = title
       this.relayMeta.textContent = activity.tabId != null
         ? `Active on browser tab ${activity.tabId}`
@@ -775,6 +814,11 @@ export class ChatOverlay {
       this.setRelayTabState('running')
     }
 
+    if (activity.status === 'chunk') {
+      this.appendRelayChunk(activity)
+      return
+    }
+
     const eventText = relayEventText(activity)
     if (eventText) {
       this.addRelayEvent(activity.status, eventText)
@@ -787,7 +831,41 @@ export class ChatOverlay {
     this.relayTab.classList.toggle('relay-error', state === 'error')
   }
 
-  private addRelayEvent(status: BridgeActivityMessage['status'], text: string): void {
+  private resetRelayStream(): void {
+    this.relayStreamRow = null
+    this.relayStreamStatus = null
+    this.relayStreamBody = null
+    this.relayStreamRequestId = undefined
+    this.relayStreamLabel = 'stream'
+    this.relayStreamText = ''
+  }
+
+  private appendRelayChunk(activity: BridgeActivityMessage): void {
+    const chunk = relayChunkParts(activity.text)
+    if (!chunk) return
+
+    const requestChanged = activity.requestId && activity.requestId !== this.relayStreamRequestId
+    const labelChanged = this.relayStreamRow && chunk.label !== this.relayStreamLabel
+    if (requestChanged || labelChanged) {
+      this.resetRelayStream()
+    }
+
+    if (!this.relayStreamRow) {
+      this.relayStreamRow = this.createRelayEventRow('stream', chunk.label)
+      this.relayStreamStatus = this.relayStreamRow.querySelector('.relay-event-status')
+      this.relayStreamBody = this.relayStreamRow.querySelector('.relay-event-body')
+      this.relayStreamRequestId = activity.requestId
+      this.relayStreamLabel = chunk.label
+      this.relayStreamText = ''
+    }
+
+    this.relayStreamText = appendRelayText(this.relayStreamText, chunk.text)
+    if (this.relayStreamStatus) this.relayStreamStatus.textContent = chunk.label
+    if (this.relayStreamBody) this.relayStreamBody.textContent = this.relayStreamText
+    this.relayEvents.scrollTop = this.relayEvents.scrollHeight
+  }
+
+  private createRelayEventRow(status: string, text: string): HTMLElement {
     const empty = this.relayEvents.querySelector('.relay-empty')
     empty?.remove()
 
@@ -803,10 +881,16 @@ export class ChatOverlay {
     row.appendChild(body)
     this.relayEvents.appendChild(row)
     this.relayEventCount += 1
+    return row
+  }
+
+  private addRelayEvent(status: BridgeActivityMessage['status'], text: string): void {
+    this.createRelayEventRow(status, text)
 
     while (this.relayEventCount > 80) {
       const first = this.relayEvents.querySelector('.relay-event')
       if (!first) break
+      if (first === this.relayStreamRow) this.resetRelayStream()
       first.remove()
       this.relayEventCount -= 1
     }
