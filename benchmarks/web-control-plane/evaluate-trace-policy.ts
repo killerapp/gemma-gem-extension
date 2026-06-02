@@ -289,6 +289,14 @@ function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredRecord {
       score -= 2
       reasons.push('narrow_context_read')
     }
+    if (
+      record.task.id === 'transfer-profile-fields' &&
+      record.action.toolName === 'read_page_content' &&
+      record.action.selector?.startsWith('#dest-')
+    ) {
+      score -= 4
+      reasons.push('transfer_destination_read_distractor')
+    }
     if (record.task.id === 'transfer-profile-fields' && record.action.toolName === 'type_text') {
       const alignment = fieldAlignment(record.action.selector, record.action.title)
       if (alignment === 'match') {
