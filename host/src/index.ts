@@ -492,6 +492,23 @@ function actionForRankCandidate(candidate: RankableActionCandidate): RerankerAct
   })
 }
 
+function rankObservedActions(instruction: string, observedActions: ObservedAction[]): ObservedAction[] {
+  if (observedActions.length < 2) return observedActions
+
+  try {
+    const loaded = loadActionRerankerWeights()
+    return rankActionCandidates(
+      { title: instruction, tool: 'gemma_observe' },
+      observedActions,
+      loaded.weights,
+      normalizeObservedAction,
+    ).map(item => item.candidate)
+  } catch (error) {
+    console.error('Gemma Gem action reranker unavailable for gemma_observe:', error)
+    return observedActions
+  }
+}
+
 async function sendJsonAgentRequest(request: BridgeRequestInput): Promise<unknown> {
   const result = await sendBridgeRequest(request)
   const text = textFromAgentResult(result)
@@ -545,7 +562,7 @@ function registerTools(server: McpServer): void {
     const pageSnapshot = await pageContextFor(tabId)
     const observedActions = deterministicObservedActions(instruction, pageSnapshot)
     if (observedActions.length > 0) {
-      return asTextResult(JSON.stringify(observedActions))
+      return asTextResult(JSON.stringify(rankObservedActions(instruction, observedActions)))
     }
 
     const prompt = [

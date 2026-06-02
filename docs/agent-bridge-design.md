@@ -156,7 +156,7 @@ type ObservedAction = {
 }
 ```
 
-`gemma_rank_actions` should sit between observe/planning and act. It accepts a task context plus candidate actions, normalizes observed actions to tool actions, and returns ranked scores with feature contributions so caller models can choose selectors without guessing.
+`gemma_rank_actions` should sit between observe/planning and act. It accepts a task context plus candidate actions, normalizes observed actions to tool actions, and returns ranked scores with feature contributions so caller models can choose selectors without guessing. `gemma_observe` may also use the same scorer internally to order deterministic multi-candidate observations before returning them.
 
 `gemma_act` should be single-step. If a caller asks for multiple actions, return a clear validation error telling it to use `gemma_agent`.
 

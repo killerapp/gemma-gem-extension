@@ -158,8 +158,8 @@ function handleFakeBridgeRequest(request: BridgeRequest): BridgeEvent | BridgeEv
             content: [
               'Invoice INV-2026-041',
               'Last payment: paid',
-              '<button id="download-receipt">Receipt PDF</button>',
               '<button id="download-invoice">Invoice PDF</button>',
+              '<button id="download-receipt">Receipt PDF</button>',
               '<button id="payment-settings">Payment settings</button>',
             ].join('\n'),
           },
@@ -244,6 +244,17 @@ test('HTTP sidecar delegates semantic button task through the bridge', async (t)
   })
 
   await client.connect(transport)
+  const observeResult = await client.callTool({
+    name: 'gemma_observe',
+    arguments: {
+      tabId: 7,
+      instruction: 'download payment document',
+    },
+  })
+  const observedActions = JSON.parse(toolText(observeResult)) as Array<{ selector: string; method: string }>
+  assert.equal(observedActions[0].selector, '#download-receipt')
+  assert.equal(observedActions[0].method, 'click')
+
   const rankResult = await client.callTool({
     name: 'gemma_rank_actions',
     arguments: {
