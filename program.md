@@ -353,6 +353,8 @@ Experiment result:
 - `pnpm benchmark:web -- --real --include-agent` passed on `fa86e6b` with `model_ready_status ready`, `model_load_seconds 0.018`, `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `actions_per_success 2.43`, `p95_task_seconds 20.885`, and `timeout_rate 0.0000`.
 - The resulting `benchmark.web.jsonl` includes real-extension `actionTrace` entries such as `read_page_content`, `type_text`, `click_element`, and model-task `started` events with request/tab metadata.
 - Local fake-mode `pnpm benchmark:web` passed after selector-summary enrichment with `actions_per_success 2.43`; `pnpm benchmark:traces` exported `17` positive records from `6` tasks.
+- A visible debug run on `c8abed8` used `pnpm browser:model-ready -- --profile .browsers\gemma-gem-benchmark-profile --fixture semantic-buttons --run-tool gemma_agent --keep-open`. Cached readiness returned `status ready`, `load seconds 2.890`, then `gemma_agent` completed in `94.739` seconds with selector `#download-receipt` and invoice `INV-2026-041`.
+- The same visible run held DevTools on `http://127.0.0.1:2998` and MCP on `http://127.0.0.1:2999/mcp`. The worker activity hook recorded `324` raw chunks, including `286` `[Thinking]` chunks, but the Relay panel rendered them as coalesced stream/thinking rows plus normal tool/completed rows instead of token-sized `CHUNK` spam.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:
