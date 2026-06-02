@@ -49,6 +49,7 @@ type PairwiseStats = {
   correct: number
   total: number
   accuracy: number
+  minMargin: number
 }
 
 type PolicyResult = {
@@ -65,6 +66,8 @@ type PolicyCheckConfig = {
   minCandidatePairwise?: number
   minPairwisePairs?: number
   minCandidatePairs?: number
+  minPairwiseMargin?: number
+  minCandidateMargin?: number
   minThresholdAccuracy?: number
   checkOnly: boolean
 }
@@ -86,6 +89,8 @@ function parseArgs(): { input: string; output: string; check: PolicyCheckConfig 
     minCandidatePairwise: process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE, 'GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE') : undefined,
     minPairwisePairs: process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_PAIRS ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_PAIRS, 'GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_PAIRS') : undefined,
     minCandidatePairs: process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRS ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRS, 'GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRS') : undefined,
+    minPairwiseMargin: process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_MARGIN ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_MARGIN, 'GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_MARGIN') : undefined,
+    minCandidateMargin: process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_MARGIN ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_MARGIN, 'GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_MARGIN') : undefined,
     minThresholdAccuracy: process.env.GEMMA_GEM_TRACE_POLICY_MIN_THRESHOLD_ACCURACY ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_THRESHOLD_ACCURACY, 'GEMMA_GEM_TRACE_POLICY_MIN_THRESHOLD_ACCURACY') : undefined,
     checkOnly: false,
   }
@@ -133,6 +138,16 @@ function parseArgs(): { input: string; output: string; check: PolicyCheckConfig 
       i += 1
     } else if (arg.startsWith('--min-candidate-pairs=')) {
       check.minCandidatePairs = parseNumber(arg.slice('--min-candidate-pairs='.length), '--min-candidate-pairs')
+    } else if (arg === '--min-pairwise-margin') {
+      check.minPairwiseMargin = parseNumber(value, '--min-pairwise-margin')
+      i += 1
+    } else if (arg.startsWith('--min-pairwise-margin=')) {
+      check.minPairwiseMargin = parseNumber(arg.slice('--min-pairwise-margin='.length), '--min-pairwise-margin')
+    } else if (arg === '--min-candidate-margin') {
+      check.minCandidateMargin = parseNumber(value, '--min-candidate-margin')
+      i += 1
+    } else if (arg.startsWith('--min-candidate-margin=')) {
+      check.minCandidateMargin = parseNumber(arg.slice('--min-candidate-margin='.length), '--min-candidate-margin')
     } else if (arg === '--min-threshold-accuracy') {
       check.minThresholdAccuracy = parseNumber(value, '--min-threshold-accuracy')
       i += 1
@@ -279,20 +294,23 @@ function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredRecord {
 function pairwiseStats(records: ScoredRecord[]): PairwiseStats {
   const positives = records.filter(record => record.label === 'positive')
   const negatives = records.filter(record => record.label === 'negative')
-  if (positives.length === 0 || negatives.length === 0) return { correct: 0, total: 0, accuracy: 0 }
+  if (positives.length === 0 || negatives.length === 0) return { correct: 0, total: 0, accuracy: 0, minMargin: 0 }
 
   let correct = 0
   let total = 0
+  let minMargin = Number.POSITIVE_INFINITY
   for (const positive of positives) {
     for (const negative of negatives) {
       if (positive.task.id !== negative.task.id) continue
       total += 1
-      if (positive.score > negative.score) correct += 1
-      else if (positive.score === negative.score) correct += 0.5
+      const margin = positive.score - negative.score
+      minMargin = Math.min(minMargin, margin)
+      if (margin > 0) correct += 1
+      else if (margin === 0) correct += 0.5
     }
   }
 
-  return { correct, total, accuracy: total ? correct / total : 0 }
+  return { correct, total, accuracy: total ? correct / total : 0, minMargin: total ? minMargin : 0 }
 }
 
 function candidatePairwiseStats(records: ScoredRecord[]): PairwiseStats {
@@ -356,6 +374,8 @@ function checkPolicyResult(bestPolicy: PolicyResult, check: PolicyCheckConfig): 
   assertAtLeast(bestPolicy.candidatePairwise.accuracy, check.minCandidatePairwise, 'candidate_pairwise_accuracy')
   assertAtLeast(bestPolicy.pairwise.total, check.minPairwisePairs, 'pairwise_task_pairs')
   assertAtLeast(bestPolicy.candidatePairwise.total, check.minCandidatePairs, 'candidate_pairwise_pairs')
+  assertAtLeast(bestPolicy.pairwise.minMargin, check.minPairwiseMargin, 'pairwise_min_margin')
+  assertAtLeast(bestPolicy.candidatePairwise.minMargin, check.minCandidateMargin, 'candidate_min_margin')
   assertAtLeast(bestPolicy.best.accuracy, check.minThresholdAccuracy, 'best_threshold_accuracy')
 }
 
@@ -399,20 +419,24 @@ async function main(): Promise<void> {
   lines.push(`- best_policy: ${bestPolicy.name}`)
   lines.push(`- best_pairwise_task_accuracy: ${bestPolicy.pairwise.accuracy.toFixed(4)}`)
   lines.push(`- best_pairwise_task_pairs: ${bestPolicy.pairwise.total}`)
+  lines.push(`- best_pairwise_min_margin: ${bestPolicy.pairwise.minMargin.toFixed(3)}`)
   lines.push(`- best_candidate_pairwise_accuracy: ${bestPolicy.candidatePairwise.accuracy.toFixed(4)}`)
   lines.push(`- best_candidate_pairwise_pairs: ${bestPolicy.candidatePairwise.total}`)
+  lines.push(`- best_candidate_min_margin: ${bestPolicy.candidatePairwise.minMargin.toFixed(3)}`)
   lines.push('')
   lines.push('## Policy Comparison')
   lines.push('')
-  lines.push(tableRow(['policy', 'pairwise_task_accuracy', 'pairwise_pairs', 'candidate_pairwise_accuracy', 'candidate_pairs', 'best_threshold', 'best_threshold_accuracy']))
-  lines.push(tableRow(['---', '---:', '---:', '---:', '---:', '---:', '---:']))
+  lines.push(tableRow(['policy', 'pairwise_task_accuracy', 'pairwise_pairs', 'pairwise_min_margin', 'candidate_pairwise_accuracy', 'candidate_pairs', 'candidate_min_margin', 'best_threshold', 'best_threshold_accuracy']))
+  lines.push(tableRow(['---', '---:', '---:', '---:', '---:', '---:', '---:', '---:', '---:']))
   for (const result of policyResults) {
     lines.push(tableRow([
       result.name,
       result.pairwise.accuracy.toFixed(4),
       result.pairwise.total,
+      result.pairwise.minMargin.toFixed(3),
       result.candidatePairwise.accuracy.toFixed(4),
       result.candidatePairwise.total,
+      result.candidatePairwise.minMargin.toFixed(3),
       result.best.threshold.toFixed(3),
       result.best.accuracy.toFixed(4),
     ]))
@@ -452,7 +476,9 @@ async function main(): Promise<void> {
   if (!check.checkOnly) console.log(`Wrote trace policy baseline: ${sourcePath(output)}`)
   console.log(`Best policy: ${bestPolicy.name}`)
   console.log(`Pairwise task accuracy: ${bestPolicy.pairwise.accuracy.toFixed(4)} (${bestPolicy.pairwise.total} pairs)`)
+  console.log(`Pairwise min margin: ${bestPolicy.pairwise.minMargin.toFixed(3)}`)
   console.log(`Candidate pairwise accuracy: ${bestPolicy.candidatePairwise.accuracy.toFixed(4)} (${bestPolicy.candidatePairwise.total} pairs)`)
+  console.log(`Candidate min margin: ${bestPolicy.candidatePairwise.minMargin.toFixed(3)}`)
   console.log(`Best threshold accuracy: ${bestPolicy.best.accuracy.toFixed(4)}`)
   if (check.checkOnly) console.log('Trace policy gates passed')
 }

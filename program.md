@@ -376,6 +376,7 @@ Experiment result:
 - The `semantic_keyword` policy now applies stronger transparent penalties for wrong billing document/panel selectors, transfer-field/status clicks when submit is required, and swapped transfer field writes. This keeps the current deterministic policy separable after the harder negative set.
 - `pnpm benchmark:traces:training:check` now locks the expanded training coverage floors: `29` records, `20` positive, `9` negative, `26` selector records, `10` click records, `4` candidate buckets, and `4` paired candidate buckets.
 - `pnpm benchmark:traces:policy:check` now locks the expanded policy floor: `semantic_keyword`, `pairwise_task_accuracy 1.0000` over `54` pairs, `candidate_pairwise_accuracy 1.0000` over `29` candidate pairs, and `best_threshold_accuracy 1.0000`.
+- `pnpm benchmark:traces:policy` now reports pairwise score margins, and `pnpm benchmark:traces:policy:check` requires the current separation floors: `pairwise_min_margin 0.500` and `candidate_min_margin 3.750`. This prevents future policy changes from passing on fragile score ties while still preserving the same candidate accuracy gates.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:
