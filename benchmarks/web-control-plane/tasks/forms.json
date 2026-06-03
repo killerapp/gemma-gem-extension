@@ -63,6 +63,35 @@
     }
   },
   {
+    "id": "read-destination-body-html-initial",
+    "suite": "forms",
+    "title": "Read initial destination form body HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "body",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["id=\"dest-name\"", "id=\"dest-email\"", "id=\"dest-role\"", "id=\"dest-updates\"", "id=\"dest-priority-low\"", "id=\"dest-priority-high\"", "id=\"dest-notes\"", "id=\"save-profile\"", "id=\"save-result\""]
+      },
+      "jsonFieldExcludes": {
+        "content": ["source-name", "data-plan", "download-receipt"]
+      },
+      "contains": ["dest-name", "dest-email", "dest-role", "dest-updates", "dest-priority-low", "dest-priority-high", "dest-notes", "save-profile", "save-result"],
+      "notContains": ["source-name", "data-plan", "download-receipt"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "type-text-recover-selector",
     "suite": "forms",
     "title": "Recover a name text-like type selector",

@@ -1207,6 +1207,14 @@ June 3, 2026 extraction pricing HTML read coverage result:
 - Real smoke passed 73/73 with `actions_per_success 1.25`, `p95_task_seconds 0.088`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 83/83 with `actions_per_success 1.42`, `p95_task_seconds 4.209`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 118 raw positive records from 71 tasks and 187 training records from 80 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 forms destination initial HTML read coverage result:
+
+- Added frozen `forms/read-destination-body-html-initial`, proving direct `gemma_read_page` HTML readback captures the initial destination form controls before stateful typing, selecting, clicking, and transfer tasks mutate the page.
+- The task complements destination page-brief control extraction by freezing raw form markup for `#dest-name`, `#dest-email`, `#dest-role`, checkbox/radio controls, `#dest-notes`, `#save-profile`, and `#save-result`, while excluding source/pricing/billing-control markup.
+- Baseline local before the task stayed green at 83/83 with `actions_per_success 1.40` and `p95_task_seconds 0.007`; after adding the HTML read task, local passed 84/84 with `actions_per_success 1.39` and `p95_task_seconds 0.005`.
+- Real smoke passed 74/74 with `actions_per_success 1.24`, `p95_task_seconds 0.104`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 84/84 with `actions_per_success 1.42`, `p95_task_seconds 4.137`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 119 raw positive records from 72 tasks and 188 training records from 81 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
