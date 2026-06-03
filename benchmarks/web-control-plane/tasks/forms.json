@@ -32,8 +32,8 @@
       "destinationValues": {
         "#dest-name": "Grace Hopper"
       },
-      "bridgeExecuteTool": "type_text",
-      "bridgeExecuteSelector": "#dest-name",
+      "bridgeExecuteTools": ["read_page_content", "type_text"],
+      "bridgeExecuteSelectors": ["body", "#dest-name"],
       "bridgeRunAgent": false
     }
   },

@@ -111,8 +111,8 @@
       "contains": ["recoveredSelector", "#download-receipt", "Receipt PDF"],
       "selector": "#download-receipt",
       "clicked": "#download-receipt",
-      "bridgeExecuteTool": "click_element",
-      "bridgeExecuteSelector": "#download-receipt",
+      "bridgeExecuteTools": ["read_page_content", "click_element"],
+      "bridgeExecuteSelectors": ["body", "#download-receipt"],
       "bridgeRunAgent": false
     }
   },
