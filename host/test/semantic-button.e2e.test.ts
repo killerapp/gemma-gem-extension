@@ -13,6 +13,8 @@ import type { BridgeEvent, BridgeRequest } from '../../shared/bridge-messages'
 const REPO_ROOT = resolve(fileURLToPath(import.meta.url), '..', '..', '..')
 const TOKEN = 'test-token-semantic-button'
 let fakeExtractAttempts = 0
+let fakeAgentRuntimeError = false
+let fakeAgentRuntimeErrorAfterClick = false
 
 async function getFreePort(): Promise<number> {
   const server = createServer()
@@ -158,6 +160,33 @@ function handleFakeBridgeRequest(request: BridgeRequest): BridgeEvent | BridgeEv
 
       assert.match(request.prompt, /collaborating with another AI model over MCP/)
       assert.match(request.prompt, /get proof of last payment/i)
+      if (fakeAgentRuntimeError) {
+        fakeAgentRuntimeError = false
+        return {
+          type: 'bridge:response',
+          requestId: request.requestId,
+          result: {
+            text: 'Something went wrong: operation does not support unaligned accesses',
+          },
+        }
+      }
+      if (fakeAgentRuntimeErrorAfterClick) {
+        fakeAgentRuntimeErrorAfterClick = false
+        return [
+          {
+            type: 'bridge:chunk',
+            requestId: request.requestId,
+            text: '[Tool] click_element({"selector":"#download-receipt"})',
+          },
+          {
+            type: 'bridge:response',
+            requestId: request.requestId,
+            result: {
+              text: 'Something went wrong: operation does not support unaligned accesses',
+            },
+          },
+        ]
+      }
       return [
         {
           type: 'bridge:chunk',
@@ -223,6 +252,8 @@ function toolText(result: Awaited<ReturnType<Client['callTool']>>): string {
 
 test('HTTP sidecar delegates semantic button task through the bridge', async (t) => {
   fakeExtractAttempts = 0
+  fakeAgentRuntimeError = false
+  fakeAgentRuntimeErrorAfterClick = false
   const port = await getFreePort()
   const child = spawn(process.execPath, ['--import', 'tsx', 'host/src/index.ts', '--http'], {
     cwd: REPO_ROOT,
@@ -394,4 +425,40 @@ test('HTTP sidecar delegates semantic button task through the bridge', async (t)
   assert.equal(fakeExtension.requests.filter(request => request.type === 'bridge:run_agent').length, 3)
   assert.equal(fakeExtension.requests.filter(request => request.type === 'bridge:run_agent' && request.prompt.includes('collaborating with another AI model over MCP')).length, 1)
   assert.equal(fakeExtension.requests.filter(request => request.type === 'bridge:execute_tool' && request.name === 'click_element').length, 1)
+
+  fakeAgentRuntimeError = true
+  const recoveredResult = await client.callTool({
+    name: 'gemma_agent',
+    arguments: {
+      tabId: 7,
+      task: 'get proof of last payment',
+      thinking: false,
+      maxIterations: 3,
+    },
+  })
+
+  assert.match(toolText(recoveredResult), /Recovered from transient model runtime error/)
+  assert.match(toolText(recoveredResult), /#download-receipt/)
+  assert.match(toolText(recoveredResult), /INV-2026-041/)
+  assert.equal(fakeExtension.requests.filter(request => request.type === 'bridge:run_agent').length, 4)
+  assert.equal(fakeExtension.requests.filter(request => request.type === 'bridge:run_agent' && request.prompt.includes('collaborating with another AI model over MCP')).length, 2)
+  assert.equal(fakeExtension.requests.filter(request => request.type === 'bridge:execute_tool' && request.name === 'click_element').length, 2)
+
+  fakeAgentRuntimeErrorAfterClick = true
+  const recoveredAfterClickResult = await client.callTool({
+    name: 'gemma_agent',
+    arguments: {
+      tabId: 7,
+      task: 'get proof of last payment',
+      thinking: false,
+      maxIterations: 3,
+    },
+  })
+
+  assert.match(toolText(recoveredAfterClickResult), /already executed/)
+  assert.match(toolText(recoveredAfterClickResult), /#download-receipt/)
+  assert.match(toolText(recoveredAfterClickResult), /INV-2026-041/)
+  assert.equal(fakeExtension.requests.filter(request => request.type === 'bridge:run_agent').length, 5)
+  assert.equal(fakeExtension.requests.filter(request => request.type === 'bridge:run_agent' && request.prompt.includes('collaborating with another AI model over MCP')).length, 3)
+  assert.equal(fakeExtension.requests.filter(request => request.type === 'bridge:execute_tool' && request.name === 'click_element').length, 2)
 })

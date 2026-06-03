@@ -36,6 +36,8 @@ type PendingRequest = {
   resolve: (result: unknown) => void
   reject: (error: Error) => void
   timeout: NodeJS.Timeout
+  requestType: BridgeRequest['type']
+  chunks: string[]
 }
 
 type BridgeRequestInput = BridgeRequest extends infer Request
@@ -78,7 +80,7 @@ function sendBridgeRequest(request: BridgeRequestInput): Promise<unknown> {
       reject(new Error(`Bridge request timed out after ${REQUEST_TIMEOUT_MS}ms`))
     }, REQUEST_TIMEOUT_MS)
 
-    pending.set(requestId, { resolve, reject, timeout })
+    pending.set(requestId, { resolve, reject, timeout, requestType: payload.type, chunks: [] })
     socket.send(JSON.stringify(payload), (error) => {
       if (error) {
         clearTimeout(timeout)
@@ -90,7 +92,13 @@ function sendBridgeRequest(request: BridgeRequestInput): Promise<unknown> {
 }
 
 function handleBridgeEvent(event: BridgeEvent): void {
-  if (event.type === 'bridge:chunk' || event.type === 'bridge:tool_call') {
+  if (event.type === 'bridge:chunk') {
+    pending.get(event.requestId)?.chunks.push(event.text)
+    return
+  }
+
+  if (event.type === 'bridge:tool_call') {
+    pending.get(event.requestId)?.chunks.push(`[Tool] ${event.name}(${JSON.stringify(event.arguments)})`)
     return
   }
 
@@ -103,7 +111,20 @@ function handleBridgeEvent(event: BridgeEvent): void {
   if (event.error) {
     entry.reject(new Error(event.error))
   } else {
-    entry.resolve(event.result)
+    entry.resolve(enrichBridgeResult(event.result, entry))
+  }
+}
+
+function enrichBridgeResult(result: unknown, entry: PendingRequest): unknown {
+  if (entry.requestType !== 'bridge:run_agent') return result
+  if (!result || typeof result !== 'object' || !('text' in result) || typeof result.text !== 'string') return result
+  if (!isTransientModelRuntimeError(result.text)) return result
+
+  const selector = lastClickSelectorFromBridgeChunks(entry.chunks)
+  if (!selector || result.text.includes(selector)) return result
+  return {
+    ...result,
+    text: `${result.text}\nLast bridge tool selector: ${selector}`,
   }
 }
 
@@ -446,7 +467,22 @@ function withVisiblePageIdentifiers(text: string, pageSnapshot: string): string 
 
 function isTransientModelRuntimeError(text: string): boolean {
   return text.startsWith('Something went wrong:')
-    && /(OrtRun|onnxruntime|WebGPU|GPUBuffer|mapAsync|Failed to download data from buffer)/i.test(text)
+    && /(OrtRun|onnxruntime|WebGPU|GPUBuffer|mapAsync|Failed to download data from buffer|operation does not support unaligned accesses)/i.test(text)
+}
+
+function lastClickSelectorFromBridgeChunks(chunks: string[]): string | undefined {
+  for (const chunk of chunks.slice().reverse()) {
+    const jsonSelector = chunk.match(/\[Tool\]\s+click_element\(\{"selector":"([^"]+)"/)
+    if (jsonSelector) return jsonSelector[1]
+
+    const compactSelector = chunk.match(/\bclick_element\s+selector=([^\s]+)/)
+    if (compactSelector) return compactSelector[1]
+  }
+  return undefined
+}
+
+function lastBridgeToolSelectorFromText(text: string): string | undefined {
+  return text.match(/^Last bridge tool selector:\s*(\S+)/m)?.[1]
 }
 
 function deterministicObservedActions(instruction: string, pageSnapshot: string): ObservedAction[] {
@@ -1140,12 +1176,17 @@ function registerTools(server: McpServer): void {
     })
     let text = textFromAgentResult(result)
     if (isTransientModelRuntimeError(text)) {
-      const fallbackAction = rankObservedActions(task, deterministicObservedActions(task, pageSnapshot))
-        .find(action => action.method === 'click' && (action.selector || typeof action.arguments[0] === 'string'))
-      if (fallbackAction) {
-        const fallbackResult = await executeObservedAction(fallbackAction, tabId)
-        const selector = fallbackAction.selector ?? String(fallbackAction.arguments[0])
-        text = `Recovered from transient model runtime error by executing ${selector}.\nResult: ${textFromAgentResult(fallbackResult)}`
+      const alreadyClickedSelector = lastBridgeToolSelectorFromText(text)
+      if (alreadyClickedSelector) {
+        text = `Recovered from transient model runtime error after ${alreadyClickedSelector} was already executed.\n${text}`
+      } else {
+        const fallbackAction = rankObservedActions(task, deterministicObservedActions(task, pageSnapshot))
+          .find(action => action.method === 'click' && (action.selector || typeof action.arguments[0] === 'string'))
+        if (fallbackAction) {
+          const fallbackResult = await executeObservedAction(fallbackAction, tabId)
+          const selector = fallbackAction.selector ?? String(fallbackAction.arguments[0])
+          text = `Recovered from transient model runtime error by executing ${selector}.\nResult: ${textFromAgentResult(fallbackResult)}`
+        }
       }
     }
     return asTextResult(withVisiblePageIdentifiers(text, pageSnapshot))

@@ -589,3 +589,13 @@ ed19166	real-chrome-extension-agent	96	1.0000	1.0000	1.0000	1.0000	1.32	0.007	4.
 7dc0fcb	real-chrome-extension-smoke	90	1.0000	1.0000	1.0000	1.0000	1.16	0.008	0.532	0.0000	0.000	keep	isolated navigation body text real smoke
 7dc0fcb	real-chrome-extension-agent	100	0.9800	0.9800	1.0000	1.0000	1.26	0.008	0.572	0.0000	0.333	discard	isolated navigation body text real agent
 7dc0fcb	real-chrome-extension-agent	100	1.0000	1.0000	1.0000	1.0000	1.31	0.008	4.429	0.0000	0.093	keep	isolated navigation body text real agent retry
+28eb4f0	local-fake-extension	100	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	baseline	billing body text baseline local
+28eb4f0	local-fake-extension	101	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.006	0.0000	0.000	keep	billing body text local
+28eb4f0	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.010	0.546	0.0000	0.000	keep	billing body text real smoke
+28eb4f0	real-chrome-extension-agent	101	0.9802	0.9802	1.0000	1.0000	1.25	0.008	0.570	0.0000	0.002	discard	billing body text real agent
+28eb4f0	real-chrome-extension-agent	101	0.9802	0.9802	1.0000	1.0000	1.25	0.007	0.584	0.0000	0.001	discard	billing body text real agent retry
+28eb4f0	real-chrome-extension-agent	101	0.9802	0.9802	1.0000	1.0000	1.25	0.009	0.566	0.0000	143.389	discard	billing body text real agent clean profile
+28eb4f0	local-fake-extension	101	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	keep	billing body text local with unaligned runtime fallback
+28eb4f0	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.008	0.531	0.0000	0.000	keep	billing body text real smoke with unaligned runtime fallback
+28eb4f0	real-chrome-extension-agent	101	0.9901	0.9901	1.0000	1.0000	1.28	0.010	0.567	0.0000	0.001	discard	billing body text real agent with unaligned runtime fallback
+28eb4f0	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.007	0.566	0.0000	0.001	keep	billing body text real agent with deduplicated unaligned runtime fallback

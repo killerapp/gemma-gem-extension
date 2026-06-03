@@ -1352,6 +1352,16 @@ June 3, 2026 isolated navigation body-text read coverage result:
 - The real-agent retry passed 100/100 with `actions_per_success 1.31`, `p95_task_seconds 4.429`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 131 raw positive records from 84 tasks and 200 training records from 93 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 billing body-text read and runtime fallback result:
+
+- Added frozen `semantic-buttons/read-billing-body-text`, proving exact `gemma_read_page` body text reads on logical tab 101 expose the invoice id, last-payment text, and three billing control labels without leaking HTML ids or unrelated fixture identifiers.
+- The task complements the billing page brief, body HTML read, exact button reads, observed acts, text-like selector recovery, reranker checks, and model-backed semantic agent tasks with a one-action full-page text contract.
+- Baseline local before the task stayed green at 100/100 with `actions_per_success 1.29` and `p95_task_seconds 0.005`; after adding the task, local passed 101/101 and real smoke passed 91/91 while preserving `selector_hit_rate 1.0000` and `timeout_rate 0.0000`.
+- The first real-agent attempts discarded at 99/101 after `operation does not support unaligned accesses` model runtime errors in semantic invoice/settings tasks; the new billing body-text task and all deterministic billing read/act/recovery contracts passed in those runs.
+- Extended the existing transient model runtime fallback to classify the unaligned-access ORT/WebGPU error, capture agent tool chunks, avoid duplicate fallback clicks when the model already emitted a `click_element` tool, and keep the bridge loopback-only with no new public tool surface.
+- Post-fallback local passed 101/101 with `p95_task_seconds 0.005`, real smoke passed 91/91 with `p95_task_seconds 0.531`, and real agent passed 101/101 with `actions_per_success 1.31`, `p95_task_seconds 0.566`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 132 raw positive records from 85 tasks and 201 training records from 94 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
