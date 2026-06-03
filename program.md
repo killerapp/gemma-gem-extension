@@ -1011,6 +1011,14 @@ June 3, 2026 transfer save-result readback coverage result:
 - Real smoke passed 52/52 with `actions_per_success 1.37`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 58/58 with `actions_per_success 1.48`, `p95_task_seconds 4.817`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 86 raw positive records from 52 tasks and 148 training records from 60 tasks, while candidate buckets rose to 68 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 transfer body readback coverage result:
+
+- Added frozen `forms/read-destination-body-after-transfer`, proving page-level `gemma_read_page` on `body` observes the submitted transfer result alongside the destination form context.
+- This complements the exact field/result transfer readbacks with a full-page post-submit state read, preserving broad context coverage after the workflow mutates the destination page.
+- Baseline local before the task stayed green at 58/58 with `actions_per_success 1.48` and `p95_task_seconds 0.007`; after adding the task, local passed 59/59 with `actions_per_success 1.47` and `p95_task_seconds 0.006`.
+- Real smoke passed 53/53 with `actions_per_success 1.36`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 59/59 with `actions_per_success 1.47`, `p95_task_seconds 4.825`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 87 raw positive records from 53 tasks and 149 training records from 61 tasks, while candidate buckets rose to 69 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
