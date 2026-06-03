@@ -25,6 +25,10 @@ type PolicyResult = {
 
 type PolicyCheckConfig = {
   requireBestPolicy?: string
+  minRecords?: number
+  minPositive?: number
+  minNegative?: number
+  minTasks?: number
   minPairwise?: number
   minCandidatePairwise?: number
   minPairwisePairs?: number
@@ -51,6 +55,10 @@ function parseArgs(): { input: string; output: string; check: PolicyCheckConfig 
   let output = process.env.GEMMA_GEM_TRACE_POLICY_OUTPUT ? resolve(process.env.GEMMA_GEM_TRACE_POLICY_OUTPUT) : DEFAULT_OUTPUT
   const check: PolicyCheckConfig = {
     requireBestPolicy: process.env.GEMMA_GEM_TRACE_POLICY_REQUIRE_BEST,
+    minRecords: process.env.GEMMA_GEM_TRACE_POLICY_MIN_RECORDS ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_RECORDS, 'GEMMA_GEM_TRACE_POLICY_MIN_RECORDS') : undefined,
+    minPositive: process.env.GEMMA_GEM_TRACE_POLICY_MIN_POSITIVE ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_POSITIVE, 'GEMMA_GEM_TRACE_POLICY_MIN_POSITIVE') : undefined,
+    minNegative: process.env.GEMMA_GEM_TRACE_POLICY_MIN_NEGATIVE ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_NEGATIVE, 'GEMMA_GEM_TRACE_POLICY_MIN_NEGATIVE') : undefined,
+    minTasks: process.env.GEMMA_GEM_TRACE_POLICY_MIN_TASKS ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_TASKS, 'GEMMA_GEM_TRACE_POLICY_MIN_TASKS') : undefined,
     minPairwise: process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE, 'GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE') : undefined,
     minCandidatePairwise: process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE, 'GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE') : undefined,
     minPairwisePairs: process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_PAIRS ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_PAIRS, 'GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_PAIRS') : undefined,
@@ -87,6 +95,26 @@ function parseArgs(): { input: string; output: string; check: PolicyCheckConfig 
       i += 1
     } else if (arg.startsWith('--require-best-policy=')) {
       check.requireBestPolicy = arg.slice('--require-best-policy='.length)
+    } else if (arg === '--min-records') {
+      check.minRecords = parseNumber(value, '--min-records')
+      i += 1
+    } else if (arg.startsWith('--min-records=')) {
+      check.minRecords = parseNumber(arg.slice('--min-records='.length), '--min-records')
+    } else if (arg === '--min-positive') {
+      check.minPositive = parseNumber(value, '--min-positive')
+      i += 1
+    } else if (arg.startsWith('--min-positive=')) {
+      check.minPositive = parseNumber(arg.slice('--min-positive='.length), '--min-positive')
+    } else if (arg === '--min-negative') {
+      check.minNegative = parseNumber(value, '--min-negative')
+      i += 1
+    } else if (arg.startsWith('--min-negative=')) {
+      check.minNegative = parseNumber(arg.slice('--min-negative='.length), '--min-negative')
+    } else if (arg === '--min-tasks') {
+      check.minTasks = parseNumber(value, '--min-tasks')
+      i += 1
+    } else if (arg.startsWith('--min-tasks=')) {
+      check.minTasks = parseNumber(arg.slice('--min-tasks='.length), '--min-tasks')
     } else if (arg === '--min-pairwise') {
       check.minPairwise = parseNumber(value, '--min-pairwise')
       i += 1
@@ -235,10 +263,19 @@ function assertAtLeast(actual: number, minimum: number | undefined, label: strin
   }
 }
 
-function checkPolicyResult(bestPolicy: PolicyResult, check: PolicyCheckConfig): void {
+function checkPolicyResult(bestPolicy: PolicyResult, check: PolicyCheckConfig, coverage: {
+  records: number
+  positives: number
+  negatives: number
+  tasks: number
+}): void {
   if (check.requireBestPolicy && bestPolicy.name !== check.requireBestPolicy) {
     throw new Error(`best_policy ${bestPolicy.name} does not match required policy ${check.requireBestPolicy}`)
   }
+  assertAtLeast(coverage.records, check.minRecords, 'records')
+  assertAtLeast(coverage.positives, check.minPositive, 'positive_records')
+  assertAtLeast(coverage.negatives, check.minNegative, 'negative_records')
+  assertAtLeast(coverage.tasks, check.minTasks, 'trace_tasks')
   assertAtLeast(bestPolicy.pairwise.accuracy, check.minPairwise, 'pairwise_task_accuracy')
   assertAtLeast(bestPolicy.candidatePairwise.accuracy, check.minCandidatePairwise, 'candidate_pairwise_accuracy')
   assertAtLeast(bestPolicy.pairwise.total, check.minPairwisePairs, 'pairwise_task_pairs')
@@ -277,6 +314,7 @@ async function main(): Promise<void> {
 
   const positives = traceRecords.filter(record => record.label === 'positive').length
   const negatives = traceRecords.filter(record => record.label === 'negative').length
+  const tasks = new Set(traceRecords.map(record => record.task.id))
   const grouped = byTask(bestPolicy.records)
 
   const lines: string[] = []
@@ -289,6 +327,7 @@ async function main(): Promise<void> {
   lines.push(`- records: ${traceRecords.length}`)
   lines.push(`- positive_records: ${positives}`)
   lines.push(`- negative_records: ${negatives}`)
+  lines.push(`- trace_tasks: ${tasks.size}`)
   lines.push(`- best_policy: ${bestPolicy.name}`)
   lines.push(`- best_pairwise_task_accuracy: ${bestPolicy.pairwise.accuracy.toFixed(4)}`)
   lines.push(`- best_pairwise_task_pairs: ${bestPolicy.pairwise.total}`)
@@ -343,7 +382,12 @@ async function main(): Promise<void> {
   lines.push('- `candidate_pairwise_accuracy` scores selector-bearing read/click/type candidate actions and is the primary selector/action ranking baseline.')
   lines.push('- Future selector/action policy experiments should beat `candidate_pairwise_accuracy` while preserving benchmark task success.')
 
-  checkPolicyResult(bestPolicy, check)
+  checkPolicyResult(bestPolicy, check, {
+    records: traceRecords.length,
+    positives,
+    negatives,
+    tasks: tasks.size,
+  })
 
   if (!check.checkOnly) {
     await mkdir(dirname(output), { recursive: true })
@@ -352,6 +396,10 @@ async function main(): Promise<void> {
 
   if (!check.checkOnly) console.log(`Wrote trace policy baseline: ${sourcePath(output)}`)
   console.log(`Best policy: ${bestPolicy.name}`)
+  console.log(`Records: ${traceRecords.length}`)
+  console.log(`Positive records: ${positives}`)
+  console.log(`Negative records: ${negatives}`)
+  console.log(`Trace tasks: ${tasks.size}`)
   console.log(`Pairwise task accuracy: ${bestPolicy.pairwise.accuracy.toFixed(4)} (${bestPolicy.pairwise.total} pairs)`)
   console.log(`Pairwise min margin: ${bestPolicy.pairwise.minMargin.toFixed(3)}`)
   console.log(`Candidate pairwise accuracy: ${bestPolicy.candidatePairwise.accuracy.toFixed(4)} (${bestPolicy.candidatePairwise.total} pairs)`)

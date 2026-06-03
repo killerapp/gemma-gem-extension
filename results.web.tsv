@@ -231,3 +231,4 @@ c173380	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0
 0c4d2e9	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	reranker weight coverage gates local benchmark
 c3d814f	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	target selector preference policy gates local benchmark
 3e686fb	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.011	0.0000	0.000	keep	preference policy coverage gates local benchmark
+06459d0	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	trace policy coverage gates local benchmark

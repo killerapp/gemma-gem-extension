@@ -686,6 +686,8 @@ Experiment result:
 - `pnpm benchmark:web` passes after adding scoped preference-policy target selector floors with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
 - `pnpm benchmark:traces:preferences:policy:check` now also locks preference-policy coverage at `71` pairs, `25` task/tool buckets, and `19` tasks, so the policy quality gate cannot pass on a collapsed preference artifact.
 - `pnpm benchmark:web` passes after adding preference-policy coverage gates with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.011`, and `timeout_rate 0.0000`.
+- `pnpm benchmark:traces:policy:check` now locks trace-policy input coverage at `94` records, `53` positives, `41` negatives, and `22` trace tasks before checking pairwise policy quality. The generated `trace-policy-baseline.md` now reports `trace_tasks` directly.
+- `pnpm benchmark:web` passes after adding trace-policy coverage gates with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:
