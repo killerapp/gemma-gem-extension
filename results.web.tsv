@@ -376,3 +376,7 @@ aa90f83	local-fake-extension	54	1.0000	1.0000	1.0000	1.0000	1.52	0.003	0.006	0.0
 aa90f83	local-fake-extension	55	1.0000	1.0000	1.0000	1.0000	1.51	0.003	0.006	0.0000	0.000	keep	navigation settings link read local
 aa90f83	real-chrome-extension-smoke	49	1.0000	1.0000	1.0000	1.0000	1.39	0.007	0.017	0.0000	0.000	keep	navigation settings link read real smoke
 aa90f83	real-chrome-extension-agent	55	1.0000	1.0000	1.0000	1.0000	1.51	0.007	4.822	0.0000	0.001	keep	navigation settings link read real agent
+d19ceba	local-fake-extension	55	1.0000	1.0000	1.0000	1.0000	1.51	0.003	0.006	0.0000	0.000	baseline	transfer email readback baseline local
+d19ceba	local-fake-extension	56	1.0000	1.0000	1.0000	1.0000	1.50	0.003	0.006	0.0000	0.000	keep	transfer email readback local
+d19ceba	real-chrome-extension-smoke	50	1.0000	1.0000	1.0000	1.0000	1.38	0.007	0.016	0.0000	0.000	keep	transfer email readback real smoke
+d19ceba	real-chrome-extension-agent	56	1.0000	1.0000	1.0000	1.0000	1.50	0.007	4.844	0.0000	0.001	keep	transfer email readback real agent
