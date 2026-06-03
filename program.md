@@ -837,6 +837,15 @@ June 3, 2026 destination name readback coverage result:
 - Real smoke passed 24/24 after the input-value read fix with `actions_per_success 1.29`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 29/29 after identifier preservation with `p95_task_seconds 6.483`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 43 raw positive records from 23 tasks and 105 training records from 31 tasks, while candidate buckets rose to 34 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 checkbox readback coverage result:
+
+- Added frozen `forms/click-destination-updates-checkbox` and `forms/read-destination-updates-after-click`, proving a clicked checkbox can be read back by exact selector as current boolean state.
+- Extended the destination fixture and page-brief expectations with `#dest-updates`, keeping the control list compact and explicit while preserving the existing source/destination profile workflow.
+- `read_page_content` now reports checkbox and radio inputs as `checked` or `unchecked` for exact text reads, avoiding the misleading static `value` attribute path used by ordinary text inputs.
+- Baseline local before the task stayed green at 29/29 with `actions_per_success 1.48` and `p95_task_seconds 0.010`; after adding the tasks, local passed 31/31 with `actions_per_success 1.45` and `p95_task_seconds 0.010`.
+- Real smoke passed 26/26 with `actions_per_success 1.27`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 31/31 with `actions_per_success 1.45`, `p95_task_seconds 6.852`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 45 raw positive records from 25 tasks and 107 training records from 33 tasks, while candidate buckets rose to 36 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

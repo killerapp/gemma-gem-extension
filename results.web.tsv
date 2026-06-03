@@ -301,3 +301,7 @@ a5e43b9	real-chrome-extension-agent	29	0.9655	0.9655	1.0000	1.0000	1.39	0.008	6.
 a5e43b9	real-chrome-extension-agent	29	0.9655	0.9655	1.0000	1.0000	1.39	0.007	6.545	0.0000	0.001	discard	destination name readback real agent identifier prompt
 a5e43b9	real-chrome-extension-agent	29	0.9655	0.9655	1.0000	1.0000	1.39	0.008	6.509	0.0000	0.001	discard	destination name readback real agent receipt prompt
 a5e43b9	real-chrome-extension-agent	29	1.0000	1.0000	1.0000	1.0000	1.48	0.007	6.483	0.0000	0.001	keep	destination name readback real agent identifier append
+0ac5423	local-fake-extension	29	1.0000	1.0000	1.0000	1.0000	1.48	0.003	0.010	0.0000	0.000	baseline	checkbox readback baseline local
+0ac5423	local-fake-extension	31	1.0000	1.0000	1.0000	1.0000	1.45	0.004	0.010	0.0000	0.000	keep	checkbox readback local
+0ac5423	real-chrome-extension-smoke	26	1.0000	1.0000	1.0000	1.0000	1.27	0.007	0.022	0.0000	0.000	keep	checkbox readback real smoke
+0ac5423	real-chrome-extension-agent	31	1.0000	1.0000	1.0000	1.0000	1.45	0.007	6.852	0.0000	0.002	keep	checkbox readback real agent

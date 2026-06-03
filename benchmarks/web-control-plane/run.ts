@@ -362,6 +362,7 @@ class FakeExtension implements HarnessProbe {
     this.values.set('104:#dest-name', '')
     this.values.set('104:#dest-email', '')
     this.values.set('104:#dest-role', '')
+    this.values.set('104:#dest-updates', 'unchecked')
     this.values.set('104:#save-result', '')
   }
 
@@ -432,6 +433,7 @@ class FakeExtension implements HarnessProbe {
       '#dest-name',
       '#dest-email',
       '#dest-role',
+      '#dest-updates',
       '#save-profile',
       '#save-result',
       '#settings-link',
@@ -565,6 +567,9 @@ class FakeExtension implements HarnessProbe {
           const email = this.value(104, '#dest-email')
           this.values.set('104:#save-result', `Saved ${name} <${email}>`)
         }
+        if (selector === '#dest-updates') {
+          this.values.set('104:#dest-updates', this.value(104, '#dest-updates') === 'checked' ? 'unchecked' : 'checked')
+        }
         if (selector === '#settings-link') {
           const tab = this.tabs.find(item => item.id === tabId)
           if (tab) tab.url = 'http://127.0.0.1:4173/settings'
@@ -573,6 +578,8 @@ class FakeExtension implements HarnessProbe {
           ? 'button: Receipt PDF'
           : selector === '#settings-link'
             ? 'a: Settings'
+            : selector === '#dest-updates'
+              ? 'input: '
             : selector
         return this.response(request.requestId, { clicked: label, selector })
       }
@@ -646,6 +653,7 @@ class FakeExtension implements HarnessProbe {
           '<label>Name <input id="dest-name" name="name"></label>',
           '<label>Email <input id="dest-email" name="email"></label>',
           '<label>Role <select id="dest-role" name="role"><option value="">Choose role</option><option value="admin">Administrator</option><option value="reviewer">Reviewer</option></select></label>',
+          '<label><input id="dest-updates" name="updates" type="checkbox" value="subscribe"> Subscribe updates</label>',
           '<button id="save-profile">Save profile</button>',
           '<p id="save-result"></p>',
           '</main>',
@@ -659,6 +667,7 @@ class FakeExtension implements HarnessProbe {
           'Choose role',
           'Administrator',
           'Reviewer',
+          'Subscribe updates',
           'Save profile',
           this.value(104, '#save-result'),
         ].filter(Boolean).join('\n')

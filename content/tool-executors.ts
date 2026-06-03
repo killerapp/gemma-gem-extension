@@ -20,6 +20,9 @@ function readPageContent(args: Record<string, unknown>): ToolResponse {
 }
 
 function textContentForRead(element: Element): string {
+  if (element instanceof HTMLInputElement && (element.type === 'checkbox' || element.type === 'radio')) {
+    return element.checked ? 'checked' : 'unchecked'
+  }
   if (element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement) {
     return element.value
   }
