@@ -33,6 +33,7 @@
       "jsonFieldItemCount": {
         "interactiveControls": 4
       },
+      "actions": 2,
       "contains": ["interactiveControls", "\"selector\": \"#dest-name\"", "\"label\": \"Name\"", "\"tag\": \"input\"", "\"name\": \"name\"", "\"selector\": \"#save-profile\""],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",
@@ -61,6 +62,7 @@
       "destinationValues": {
         "#dest-name": "Grace Hopper"
       },
+      "actions": 3,
       "bridgeExecuteTools": ["read_page_content", "type_text"],
       "bridgeExecuteSelectors": ["body", "#dest-name"],
       "bridgeRunAgent": false
@@ -87,6 +89,7 @@
       "destinationValues": {
         "#dest-role": "reviewer"
       },
+      "actions": 1,
       "bridgeExecuteTool": "select_option",
       "bridgeExecuteSelector": "#dest-role",
       "bridgeRunAgent": false
@@ -145,6 +148,7 @@
         "#dest-email": "ada@example.test"
       },
       "clicked": "#save-profile",
+      "actions": 6,
       "bridgeExecuteTools": ["read_page_content", "type_text", "click_element"],
       "bridgeExecuteSelectors": ["#source-name", "#source-email", "#dest-name", "#dest-email", "#save-profile", "#save-result"],
       "bridgeRunAgent": false

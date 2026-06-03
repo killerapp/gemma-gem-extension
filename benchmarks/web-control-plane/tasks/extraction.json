@@ -103,6 +103,7 @@
       "jsonFieldExcludes": {
         "content": ["Starter", "$19"]
       },
+      "actions": 1,
       "contains": ["Team", "$49"],
       "notContains": ["Starter", "$19"],
       "bridgeExecuteTool": "read_page_content",

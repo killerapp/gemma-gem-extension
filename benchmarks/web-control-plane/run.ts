@@ -207,6 +207,20 @@ function stringArray(value: unknown): string[] {
   return typeof value === 'string' ? [value] : []
 }
 
+function modeExpectationValue(
+  expect: Record<string, unknown>,
+  baseKey: string,
+  modeKey: string,
+  mode: string,
+): unknown {
+  const modeValues = expect[modeKey]
+  if (modeValues && typeof modeValues === 'object' && !Array.isArray(modeValues)) {
+    const byMode = modeValues as Record<string, unknown>
+    if (Object.prototype.hasOwnProperty.call(byMode, mode)) return byMode[mode]
+  }
+  return expect[baseKey]
+}
+
 function percentile(values: number[], p: number): number {
   if (values.length === 0) return 0
   const sorted = [...values].sort((a, b) => a - b)
@@ -1544,6 +1558,12 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
     endActionCount - startActionCount,
     requests.filter(request => request.type === 'bridge:run_agent' || request.type === 'bridge:execute_tool' || request.type === 'bridge:stop').length,
   )
+  const expectedActions = modeExpectationValue(task.expect, 'actions', 'actionsByMode', harness.mode)
+  if (typeof expectedActions === 'number' && Number.isFinite(expectedActions) && actions !== expectedActions) {
+    notes.push(`expected ${expectedActions} actions, got ${actions}`)
+    success = false
+    strict = false
+  }
   const actionTrace = await harness.actionTraceSince(startActionCount)
   const toolErrors = harness.toolErrorCount() - startErrorCount
 

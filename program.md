@@ -608,6 +608,12 @@ Experiment result:
 - `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.030`, and `timeout_rate 0.0000`.
 - `pnpm benchmark:web -- --real --include-agent` passes with `20` real-extension agent tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 6.530`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace floors remain unchanged after adding exact nested item-count assertions because the checks validate fixed JSON result shape without changing browser action traces.
+- The benchmark evaluator now supports exact per-task `actions` assertions, with `actionsByMode` overlays available for mode-specific counts. Mismatches fail task success/strict success without changing JSON validity metrics.
+- The kept action-count contracts freeze deterministic helper action budgets for scoped reads, page briefs, selector recovery, transfer fields, screenshot, scroll, observe, and observed single-action execution.
+- `pnpm benchmark:web` passes with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
+- `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.142`, and `timeout_rate 0.0000`.
+- `pnpm benchmark:web -- --real --include-agent` passes with `20` real-extension agent tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 6.501`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace floors remain unchanged after adding exact action-count assertions because the checks constrain existing action traces rather than adding new browser actions.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

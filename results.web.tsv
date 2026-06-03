@@ -170,3 +170,8 @@ cf1a004	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0
 005d9f0	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.030	0.0000	0.000	keep	exact count real smoke
 005d9f0	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.530	0.0000	0.001	keep	exact count real agent
 005d9f0	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final exact count artifacts
+a9fa4fa	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.009	0.0000	0.000	baseline	action count local baseline
+a9fa4fa	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.009	0.0000	0.000	keep	action count local benchmark
+a9fa4fa	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.142	0.0000	0.000	keep	action count real smoke
+a9fa4fa	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.007	6.501	0.0000	0.001	keep	action count real agent
+a9fa4fa	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final action count artifacts
