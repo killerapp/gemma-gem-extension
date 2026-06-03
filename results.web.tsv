@@ -255,3 +255,4 @@ f719e1c	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0
 f719e1c	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	report followups local
 ee50d80	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	report artifacts baseline local
 ee50d80	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.005	0.010	0.0000	0.000	keep	report artifacts local
+aff1d45	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.072	0.0000	0.000	keep	current real smoke refresh after report artifacts
