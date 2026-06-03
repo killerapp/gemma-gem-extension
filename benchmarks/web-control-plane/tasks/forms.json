@@ -369,6 +369,36 @@
     }
   },
   {
+    "id": "select-role-recover-selector",
+    "suite": "forms",
+    "title": "Select role after recovering text selector",
+    "tool": "gemma_select_option",
+    "arguments": {
+      "tabId": 104,
+      "selector": "text=Role",
+      "label": "Reviewer"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "recovered": true,
+        "recoveredSelector": "#dest-role",
+        "result.selected": "Reviewer",
+        "result.value": "reviewer"
+      },
+      "contains": ["recoveredSelector", "#dest-role", "Reviewer", "reviewer"],
+      "destinationValues": {
+        "#dest-role": "reviewer"
+      },
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "select_option"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "selector=#dest-role label=Reviewer"],
+      "bridgeExecuteTools": ["read_page_content", "select_option"],
+      "bridgeExecuteSelectors": ["body", "#dest-role"],
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "click-destination-updates-checkbox",
     "suite": "forms",
     "title": "Click destination updates checkbox",

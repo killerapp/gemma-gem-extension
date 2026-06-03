@@ -355,3 +355,7 @@ f735b80	real-chrome-extension-agent	47	1.0000	1.0000	1.0000	1.0000	1.51	0.008	4.
 11f2644	local-fake-extension	50	1.0000	1.0000	1.0000	1.0000	1.52	0.003	0.006	0.0000	0.000	keep	select selected readback local
 11f2644	real-chrome-extension-smoke	44	1.0000	1.0000	1.0000	1.0000	1.39	0.007	0.015	0.0000	0.000	keep	select selected readback real smoke
 11f2644	real-chrome-extension-agent	50	1.0000	1.0000	1.0000	1.0000	1.52	0.007	4.903	0.0000	0.001	keep	select selected readback real agent
+e8a1f21	local-fake-extension	50	1.0000	1.0000	1.0000	1.0000	1.52	0.003	0.006	0.0000	0.000	baseline	select recovery baseline local
+e8a1f21	local-fake-extension	51	1.0000	1.0000	1.0000	1.0000	1.55	0.003	0.006	0.0000	0.000	keep	select recovery local
+e8a1f21	real-chrome-extension-smoke	45	1.0000	1.0000	1.0000	1.0000	1.42	0.006	0.014	0.0000	0.000	keep	select recovery real smoke
+e8a1f21	real-chrome-extension-agent	51	1.0000	1.0000	1.0000	1.0000	1.55	0.007	4.873	0.0000	0.001	keep	select recovery real agent

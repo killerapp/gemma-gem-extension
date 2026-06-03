@@ -773,6 +773,67 @@ async function typeTextWithSelectorRecovery(tabId: number | undefined, selector:
   }
 }
 
+async function selectOptionWithSelectorRecovery(
+  tabId: number | undefined,
+  selector: string,
+  value: string | undefined,
+  label: string | undefined,
+): Promise<unknown> {
+  const preflightRecovery = looksLikeTextSelector(selector)
+    ? await recoverClickSelector(tabId, selector)
+    : undefined
+  const optionArguments = { value, label }
+  if (preflightRecovery?.selector) {
+    const result = await sendBridgeRequest({
+      type: 'bridge:execute_tool',
+      tabId,
+      name: 'select_option',
+      arguments: { selector: preflightRecovery.selector, ...optionArguments },
+    })
+    return {
+      recovered: true,
+      originalSelector: selector,
+      recoveredSelector: preflightRecovery.selector,
+      recoveryDescription: preflightRecovery.description,
+      result,
+    }
+  }
+
+  const firstResult = await sendBridgeRequest({
+    type: 'bridge:execute_tool',
+    tabId,
+    name: 'select_option',
+    arguments: { selector, ...optionArguments },
+  })
+  const error = toolResultError(firstResult)
+  if (!error) return firstResult
+
+  const recovered = await recoverClickSelector(tabId, selector)
+  if (!recovered?.selector) {
+    return {
+      error,
+      selector,
+      recovered: false,
+      message: 'Select selector failed and no matching select control was found.',
+    }
+  }
+
+  const retryResult = await sendBridgeRequest({
+    type: 'bridge:execute_tool',
+    tabId,
+    name: 'select_option',
+    arguments: { selector: recovered.selector, ...optionArguments },
+  })
+  return {
+    recovered: true,
+    originalSelector: selector,
+    recoveredSelector: recovered.selector,
+    recoveryDescription: recovered.description,
+    firstError: error,
+    result: retryResult,
+  }
+}
+
 const MULTI_ACTION_SEQUENCER_PATTERN = /\b(?:and\s+then|then|after\s+that|next|followed\s+by)\b/i
 const ACTION_VERBS = new Set([
   'click',
@@ -1146,12 +1207,7 @@ function registerTools(server: McpServer): void {
     if (!value && !label) {
       throw new Error('gemma_select_option requires either value or label')
     }
-    return asTextResult(await sendBridgeRequest({
-      type: 'bridge:execute_tool',
-      tabId,
-      name: 'select_option',
-      arguments: { selector, value, label },
-    }))
+    return asTextResult(await selectOptionWithSelectorRecovery(tabId, selector, value, label))
   })
 
   server.registerTool('gemma_scroll', {
