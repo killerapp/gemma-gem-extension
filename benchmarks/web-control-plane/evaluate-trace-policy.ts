@@ -29,6 +29,9 @@ type PolicyCheckConfig = {
   minCandidatePairwise?: number
   minPairwisePairs?: number
   minCandidatePairs?: number
+  minTargetSelectorCandidatePairwise?: number
+  minTargetSelectorCandidatePairs?: number
+  minTargetSelectorCandidateMargin?: number
   minPairwiseMargin?: number
   minCandidateMargin?: number
   minThresholdAccuracy?: number
@@ -52,6 +55,9 @@ function parseArgs(): { input: string; output: string; check: PolicyCheckConfig 
     minCandidatePairwise: process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE, 'GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE') : undefined,
     minPairwisePairs: process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_PAIRS ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_PAIRS, 'GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_PAIRS') : undefined,
     minCandidatePairs: process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRS ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRS, 'GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRS') : undefined,
+    minTargetSelectorCandidatePairwise: process.env.GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_PAIRWISE ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_PAIRWISE, 'GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_PAIRWISE') : undefined,
+    minTargetSelectorCandidatePairs: process.env.GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_PAIRS ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_PAIRS, 'GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_PAIRS') : undefined,
+    minTargetSelectorCandidateMargin: process.env.GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_MARGIN ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_MARGIN, 'GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_MARGIN') : undefined,
     minPairwiseMargin: process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_MARGIN ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_MARGIN, 'GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_MARGIN') : undefined,
     minCandidateMargin: process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_MARGIN ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_MARGIN, 'GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_MARGIN') : undefined,
     minThresholdAccuracy: process.env.GEMMA_GEM_TRACE_POLICY_MIN_THRESHOLD_ACCURACY ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_THRESHOLD_ACCURACY, 'GEMMA_GEM_TRACE_POLICY_MIN_THRESHOLD_ACCURACY') : undefined,
@@ -101,6 +107,21 @@ function parseArgs(): { input: string; output: string; check: PolicyCheckConfig 
       i += 1
     } else if (arg.startsWith('--min-candidate-pairs=')) {
       check.minCandidatePairs = parseNumber(arg.slice('--min-candidate-pairs='.length), '--min-candidate-pairs')
+    } else if (arg === '--min-target-selector-candidate-pairwise') {
+      check.minTargetSelectorCandidatePairwise = parseNumber(value, '--min-target-selector-candidate-pairwise')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-candidate-pairwise=')) {
+      check.minTargetSelectorCandidatePairwise = parseNumber(arg.slice('--min-target-selector-candidate-pairwise='.length), '--min-target-selector-candidate-pairwise')
+    } else if (arg === '--min-target-selector-candidate-pairs') {
+      check.minTargetSelectorCandidatePairs = parseNumber(value, '--min-target-selector-candidate-pairs')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-candidate-pairs=')) {
+      check.minTargetSelectorCandidatePairs = parseNumber(arg.slice('--min-target-selector-candidate-pairs='.length), '--min-target-selector-candidate-pairs')
+    } else if (arg === '--min-target-selector-candidate-margin') {
+      check.minTargetSelectorCandidateMargin = parseNumber(value, '--min-target-selector-candidate-margin')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-candidate-margin=')) {
+      check.minTargetSelectorCandidateMargin = parseNumber(arg.slice('--min-target-selector-candidate-margin='.length), '--min-target-selector-candidate-margin')
     } else if (arg === '--min-pairwise-margin') {
       check.minPairwiseMargin = parseNumber(value, '--min-pairwise-margin')
       i += 1
@@ -153,6 +174,17 @@ function pairwiseStats(records: ScoredRecord[]): PairwiseStats {
 function candidatePairwiseStats(records: ScoredRecord[]): PairwiseStats {
   return pairwiseStats(records.filter(record =>
     Boolean(record.action.selector && record.action.toolName && CANDIDATE_TOOL_NAMES.has(record.action.toolName))
+  ))
+}
+
+function targetSelectorCandidatePairwiseStats(records: ScoredRecord[]): PairwiseStats {
+  return pairwiseStats(records.filter(record =>
+    Boolean(
+      record.task.targetSelector &&
+      record.action.selector &&
+      record.action.toolName &&
+      CANDIDATE_TOOL_NAMES.has(record.action.toolName),
+    )
   ))
 }
 
@@ -211,6 +243,10 @@ function checkPolicyResult(bestPolicy: PolicyResult, check: PolicyCheckConfig): 
   assertAtLeast(bestPolicy.candidatePairwise.accuracy, check.minCandidatePairwise, 'candidate_pairwise_accuracy')
   assertAtLeast(bestPolicy.pairwise.total, check.minPairwisePairs, 'pairwise_task_pairs')
   assertAtLeast(bestPolicy.candidatePairwise.total, check.minCandidatePairs, 'candidate_pairwise_pairs')
+  const targetSelectorCandidatePairwise = targetSelectorCandidatePairwiseStats(bestPolicy.records)
+  assertAtLeast(targetSelectorCandidatePairwise.accuracy, check.minTargetSelectorCandidatePairwise, 'target_selector_candidate_pairwise_accuracy')
+  assertAtLeast(targetSelectorCandidatePairwise.total, check.minTargetSelectorCandidatePairs, 'target_selector_candidate_pairwise_pairs')
+  assertAtLeast(targetSelectorCandidatePairwise.minMargin, check.minTargetSelectorCandidateMargin, 'target_selector_candidate_min_margin')
   assertAtLeast(bestPolicy.pairwise.minMargin, check.minPairwiseMargin, 'pairwise_min_margin')
   assertAtLeast(bestPolicy.candidatePairwise.minMargin, check.minCandidateMargin, 'candidate_min_margin')
   assertAtLeast(bestPolicy.best.accuracy, check.minThresholdAccuracy, 'best_threshold_accuracy')
@@ -260,6 +296,10 @@ async function main(): Promise<void> {
   lines.push(`- best_candidate_pairwise_accuracy: ${bestPolicy.candidatePairwise.accuracy.toFixed(4)}`)
   lines.push(`- best_candidate_pairwise_pairs: ${bestPolicy.candidatePairwise.total}`)
   lines.push(`- best_candidate_min_margin: ${bestPolicy.candidatePairwise.minMargin.toFixed(3)}`)
+  const targetSelectorCandidatePairwise = targetSelectorCandidatePairwiseStats(bestPolicy.records)
+  lines.push(`- best_target_selector_candidate_pairwise_accuracy: ${targetSelectorCandidatePairwise.accuracy.toFixed(4)}`)
+  lines.push(`- best_target_selector_candidate_pairwise_pairs: ${targetSelectorCandidatePairwise.total}`)
+  lines.push(`- best_target_selector_candidate_min_margin: ${targetSelectorCandidatePairwise.minMargin.toFixed(3)}`)
   lines.push('')
   lines.push('## Policy Comparison')
   lines.push('')
@@ -316,6 +356,8 @@ async function main(): Promise<void> {
   console.log(`Pairwise min margin: ${bestPolicy.pairwise.minMargin.toFixed(3)}`)
   console.log(`Candidate pairwise accuracy: ${bestPolicy.candidatePairwise.accuracy.toFixed(4)} (${bestPolicy.candidatePairwise.total} pairs)`)
   console.log(`Candidate min margin: ${bestPolicy.candidatePairwise.minMargin.toFixed(3)}`)
+  console.log(`Target selector candidate pairwise accuracy: ${targetSelectorCandidatePairwise.accuracy.toFixed(4)} (${targetSelectorCandidatePairwise.total} pairs)`)
+  console.log(`Target selector candidate min margin: ${targetSelectorCandidatePairwise.minMargin.toFixed(3)}`)
   console.log(`Best threshold accuracy: ${bestPolicy.best.accuracy.toFixed(4)}`)
   if (check.checkOnly) console.log('Trace policy gates passed')
 }
