@@ -458,3 +458,11 @@ acf1e9d	real-chrome-extension-agent	69	1.0000	1.0000	1.0000	1.0000	1.43	0.007	4.
 288857f	local-fake-extension	72	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.006	0.0000	0.000	keep	semantic settings invoice-id rank local
 288857f	real-chrome-extension-smoke	62	1.0000	1.0000	1.0000	1.0000	1.29	0.007	0.013	0.0000	0.000	keep	semantic settings invoice-id rank real smoke
 288857f	real-chrome-extension-agent	72	1.0000	1.0000	1.0000	1.0000	1.49	0.007	4.924	0.0000	0.001	keep	semantic settings invoice-id rank real agent
+ba8a167	local-fake-extension	72	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.006	0.0000	0.000	baseline	navigation billing click baseline local
+ba8a167	local-fake-extension	73	1.0000	1.0000	1.0000	1.0000	1.45	0.003	0.005	0.0000	0.000	keep	navigation billing click local
+ba8a167	real-chrome-extension-smoke	63	0.9841	0.9841	1.0000	1.0000	1.29	0.007	0.017	0.0000	0.000	discard	navigation billing click real smoke
+ba8a167	local-fake-extension	73	1.0000	1.0000	1.0000	1.0000	1.45	0.003	0.006	0.0000	0.000	keep	navigation billing click isolated local
+ba8a167	real-chrome-extension-smoke	63	0.9841	0.9841	1.0000	1.0000	1.29	0.007	0.016	0.0000	0.000	discard	navigation billing click isolated real smoke
+ba8a167	local-fake-extension	73	1.0000	1.0000	1.0000	1.0000	1.45	0.003	0.006	0.0000	0.000	keep	navigation billing click unique tab local
+ba8a167	real-chrome-extension-smoke	63	1.0000	1.0000	1.0000	1.0000	1.29	0.007	0.015	0.0000	0.000	keep	navigation billing click unique tab real smoke
+ba8a167	real-chrome-extension-agent	73	1.0000	1.0000	1.0000	1.0000	1.48	0.007	4.813	0.0000	0.001	keep	navigation billing click unique tab real agent

@@ -1125,6 +1125,15 @@ June 3, 2026 semantic settings invoice-id rank coverage result:
 - Real smoke passed 62/62 with `actions_per_success 1.29`, `p95_task_seconds 0.013`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 72/72 with `actions_per_success 1.49`, `p95_task_seconds 4.924`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts remain at 107 raw positive records from 63 tasks and 176 training records from 72 tasks because the new rank task emits no browser actions; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 navigation billing click coverage result:
+
+- Added frozen `navigation/click-billing-link`, proving deterministic `gemma_click` on `#billing-link` changes a navigation fixture URL to `/billing`.
+- The first two real-smoke attempts were discarded at 62/63 because the new task reused tab state after `click-settings-link`; the kept design uses a distinct `navigation-billing.html` fixture on logical tab 106 so settings and billing link-click assertions are independent.
+- The fake harness now mirrors billing-link navigation alongside settings-link navigation and maps tab 106 to the duplicate billing-click fixture.
+- Baseline local before the task stayed green at 72/72 with `actions_per_success 1.46` and `p95_task_seconds 0.006`; after isolating the new task, local passed 73/73 with `actions_per_success 1.45` and `p95_task_seconds 0.006`.
+- Real smoke passed 63/63 with `actions_per_success 1.29`, `p95_task_seconds 0.015`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 73/73 with `actions_per_success 1.48`, `p95_task_seconds 4.813`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 108 raw positive records from 64 tasks and 177 training records from 73 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

@@ -299,5 +299,31 @@
       "bridgeExecuteSelector": "#settings-link",
       "bridgeRunAgent": false
     }
+  },
+  {
+    "id": "click-billing-link",
+    "suite": "navigation",
+    "title": "Click billing navigation link changes page URL",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 106,
+      "selector": "#billing-link"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "clicked": "a: Billing",
+        "selector": "#billing-link"
+      },
+      "contains": ["a: Billing", "#billing-link"],
+      "clicked": "#billing-link",
+      "urlPath": "/billing",
+      "actions": 1,
+      "actionTraceTools": ["click_element"],
+      "actionTraceTextIncludes": ["selector=#billing-link"],
+      "bridgeExecuteTool": "click_element",
+      "bridgeExecuteSelector": "#billing-link",
+      "bridgeRunAgent": false
+    }
   }
 ]

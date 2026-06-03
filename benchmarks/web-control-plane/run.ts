@@ -355,6 +355,7 @@ class FakeExtension implements HarnessProbe {
     { id: 103, active: false, title: 'Profile source', url: 'http://127.0.0.1:4173/forms-source.html' },
     { id: 104, active: false, title: 'Profile destination', url: 'http://127.0.0.1:4173/forms-destination.html' },
     { id: 105, active: false, title: 'Navigation sandbox', url: 'http://127.0.0.1:4173/navigation.html' },
+    { id: 106, active: false, title: 'Navigation sandbox', url: 'http://127.0.0.1:4173/navigation-billing.html' },
   ]
 
   constructor(private readonly port: number) {
@@ -593,19 +594,21 @@ class FakeExtension implements HarnessProbe {
           this.values.set('104:#dest-priority-low', selector === '#dest-priority-low' ? 'checked' : 'unchecked')
           this.values.set('104:#dest-priority-high', selector === '#dest-priority-high' ? 'checked' : 'unchecked')
         }
-        if (selector === '#settings-link') {
+        if (selector === '#settings-link' || selector === '#billing-link') {
           const tab = this.tabs.find(item => item.id === tabId)
-          if (tab) tab.url = 'http://127.0.0.1:4173/settings'
+          if (tab) tab.url = `http://127.0.0.1:4173/${selector === '#settings-link' ? 'settings' : 'billing'}`
         }
         const label = selector === '#download-receipt'
           ? 'button: Receipt PDF'
           : selector === '#settings-link'
             ? 'a: Settings'
-            : selector === '#dest-updates'
-              ? 'input: '
-              : selector === '#dest-priority-low' || selector === '#dest-priority-high'
+            : selector === '#billing-link'
+              ? 'a: Billing'
+              : selector === '#dest-updates'
                 ? 'input: '
-            : selector
+                : selector === '#dest-priority-low' || selector === '#dest-priority-high'
+                  ? 'input: '
+                  : selector
         return this.response(request.requestId, { clicked: label, selector })
       }
       case 'select_option': {
@@ -731,7 +734,7 @@ class FakeExtension implements HarnessProbe {
       }
       return this.value(104, selector)
     }
-    if (tabId === 105) {
+    if (tabId === 105 || tabId === 106) {
       if (selector === 'body' && format === 'html') {
         return [
           '<main>',
@@ -1045,6 +1048,7 @@ class RealChromeHarness implements HarnessProbe {
       [103, 'forms-source.html'],
       [104, 'forms-destination.html'],
       [105, 'navigation.html'],
+      [106, 'navigation-billing.html'],
     ]
 
     for (const [logicalId, page] of pages) {
