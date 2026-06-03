@@ -282,6 +282,7 @@ class FakeExtension implements HarnessProbe {
     this.values.set('103:#source-email', 'ada@example.test')
     this.values.set('104:#dest-name', '')
     this.values.set('104:#dest-email', '')
+    this.values.set('104:#dest-role', '')
     this.values.set('104:#save-result', '')
   }
 
@@ -351,6 +352,7 @@ class FakeExtension implements HarnessProbe {
       '#source-email',
       '#dest-name',
       '#dest-email',
+      '#dest-role',
       '#save-profile',
       '#save-result',
       'body',
@@ -476,8 +478,17 @@ class FakeExtension implements HarnessProbe {
         const label = selector === '#download-receipt' ? 'button: Receipt PDF' : selector
         return this.response(request.requestId, { clicked: label, selector })
       }
-      case 'select_option':
-        return this.response(request.requestId, { selected: args.value ?? args.label })
+      case 'select_option': {
+        const selector = String(args.selector)
+        if (!this.selectorExists(selector)) {
+          return this.response(request.requestId, { error: `No select element found for selector: ${selector}` })
+        }
+        const selected = args.value === 'reviewer' || args.label === 'Reviewer'
+          ? { label: 'Reviewer', value: 'reviewer' }
+          : { label: String(args.label ?? args.value ?? ''), value: String(args.value ?? args.label ?? '') }
+        this.values.set(`${tabId}:${selector}`, selected.value)
+        return this.response(request.requestId, { selected: selected.label, value: selected.value, selector })
+      }
       case 'scroll_page':
         return this.response(request.requestId, { scrolled: `${args.direction} ${args.amount ?? 500}px` })
       case 'take_screenshot':
@@ -522,6 +533,7 @@ class FakeExtension implements HarnessProbe {
           '<main>',
           '<label>Name <input id="dest-name" name="name"></label>',
           '<label>Email <input id="dest-email" name="email"></label>',
+          '<label>Role <select id="dest-role" name="role"><option value="">Choose role</option><option value="admin">Administrator</option><option value="reviewer">Reviewer</option></select></label>',
           '<button id="save-profile">Save profile</button>',
           '<p id="save-result"></p>',
           '</main>',
@@ -531,6 +543,10 @@ class FakeExtension implements HarnessProbe {
         return [
           'Name',
           'Email',
+          'Role',
+          'Choose role',
+          'Administrator',
+          'Reviewer',
           'Save profile',
           this.value(104, '#save-result'),
         ].filter(Boolean).join('\n')

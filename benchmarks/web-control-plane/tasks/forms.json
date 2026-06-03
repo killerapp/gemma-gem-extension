@@ -38,6 +38,26 @@
     }
   },
   {
+    "id": "select-role-label",
+    "suite": "forms",
+    "title": "Select a role option by visible label",
+    "tool": "gemma_select_option",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "label": "Reviewer"
+    },
+    "expect": {
+      "contains": ["Reviewer", "reviewer", "#dest-role"],
+      "destinationValues": {
+        "#dest-role": "reviewer"
+      },
+      "bridgeExecuteTool": "select_option",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "transfer-profile-fields",
     "suite": "forms",
     "title": "Transfer account fields between tabs",
