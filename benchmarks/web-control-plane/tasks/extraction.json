@@ -63,5 +63,23 @@
       "schemaValid": true,
       "bridgeExecuteSelector": ".plan[data-plan=\"team\"]"
     }
+  },
+  {
+    "id": "read-scoped-plan",
+    "suite": "extraction",
+    "title": "Read only a selector-scoped pricing plan",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 102,
+      "selector": ".plan[data-plan=\"team\"]",
+      "format": "text"
+    },
+    "expect": {
+      "contains": ["Team", "$49"],
+      "notContains": ["Starter", "$19"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": ".plan[data-plan=\"team\"]",
+      "bridgeRunAgent": false
+    }
   }
 ]
