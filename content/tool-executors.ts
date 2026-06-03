@@ -87,9 +87,9 @@ function scrollPage(args: Record<string, unknown>): ToolResponse {
   const amount = (args.amount as number) || 500
   const pixels = direction === 'up' ? -amount : amount
 
-  window.scrollBy({ top: pixels, behavior: 'smooth' })
+  window.scrollBy({ top: pixels, behavior: 'auto' })
 
-  return { name: 'scroll_page', result: { scrolled: `${direction} ${amount}px` } }
+  return { name: 'scroll_page', result: { scrolled: `${direction} ${amount}px`, scrollY: window.scrollY } }
 }
 
 export function executeContentTool(call: ToolCall): ToolResponse | null {

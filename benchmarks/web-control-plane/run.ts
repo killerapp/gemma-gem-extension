@@ -90,6 +90,7 @@ type HarnessProbe = {
   selectorExists(selector: string): Promise<boolean> | boolean
   value(logicalTabId: number, selector: string): Promise<string> | string
   clicked(selector: string): Promise<boolean> | boolean
+  scrollY(logicalTabId: number): Promise<number> | number
   requestCount(): number
   requestsSince(start: number): BridgeRequest[]
   actionCount(): Promise<number> | number
@@ -270,11 +271,13 @@ class FakeExtension implements HarnessProbe {
   readonly clickedSelectors: string[] = []
   private ws: WebSocket | null = null
   private readonly values = new Map<string, string>()
+  private readonly scrollPositions = new Map<number, number>()
   private readonly tabs: FakeTab[] = [
     { id: 101, active: true, title: 'Billing sandbox', url: 'http://127.0.0.1:4173/semantic-buttons.html' },
     { id: 102, active: false, title: 'Pricing sandbox', url: 'http://127.0.0.1:4173/extraction.html' },
     { id: 103, active: false, title: 'Profile source', url: 'http://127.0.0.1:4173/forms-source.html' },
     { id: 104, active: false, title: 'Profile destination', url: 'http://127.0.0.1:4173/forms-destination.html' },
+    { id: 105, active: false, title: 'Navigation sandbox', url: 'http://127.0.0.1:4173/navigation.html' },
   ]
 
   constructor(private readonly port: number) {
@@ -355,6 +358,7 @@ class FakeExtension implements HarnessProbe {
       '#dest-role',
       '#save-profile',
       '#save-result',
+      '#scroll-target',
       'body',
     ])
     return knownSelectors.has(selector)
@@ -366,6 +370,10 @@ class FakeExtension implements HarnessProbe {
 
   clicked(selector: string): boolean {
     return this.clickedSelectors.includes(selector)
+  }
+
+  scrollY(tabId: number): number {
+    return this.scrollPositions.get(tabId) ?? 0
   }
 
   private send(event: BridgeEvent | BridgeEvent[]): void {
@@ -490,7 +498,11 @@ class FakeExtension implements HarnessProbe {
         return this.response(request.requestId, { selected: selected.label, value: selected.value, selector })
       }
       case 'scroll_page':
-        return this.response(request.requestId, { scrolled: `${args.direction} ${args.amount ?? 500}px` })
+        const amount = Number(args.amount ?? 500)
+        const delta = args.direction === 'up' ? -amount : amount
+        const nextScrollY = Math.max(0, this.scrollY(tabId) + delta)
+        this.scrollPositions.set(tabId, nextScrollY)
+        return this.response(request.requestId, { scrolled: `${args.direction} ${amount}px`, scrollY: nextScrollY })
       case 'take_screenshot':
         return this.response(request.requestId, {
           screenshot: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/p9sAAAAASUVORK5CYII=',
@@ -769,6 +781,13 @@ class RealChromeHarness implements HarnessProbe {
     )
   }
 
+  async scrollY(logicalTabId: number): Promise<number> {
+    const session = await this.pageSessionForLogicalTab(logicalTabId)
+    const value = await this.evaluate(session, 'window.scrollY')
+    session.close()
+    return typeof value === 'number' ? value : Number(value ?? 0)
+  }
+
   async close(): Promise<void> {
     this.extensionWorkerSession?.close()
     this.browserSession?.close()
@@ -831,6 +850,7 @@ class RealChromeHarness implements HarnessProbe {
       [102, 'extraction.html'],
       [103, 'forms-source.html'],
       [104, 'forms-destination.html'],
+      [105, 'navigation.html'],
     ]
 
     for (const [logicalId, page] of pages) {
@@ -1297,6 +1317,14 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
         : expect.activeTabId
       const activeOk = text.includes(`"id": ${expectedActiveTabId}`) || text.includes(`"id":${expectedActiveTabId}`)
       if (!activeOk) notes.push(`expected active tab id ${expect.activeTabId}`)
+    }
+
+    if (typeof expect.scrollYAtLeast === 'number') {
+      const targetTabId = typeof task.arguments.tabId === 'number' ? task.arguments.tabId : 101
+      const scrollY = await harness.scrollY(targetTabId)
+      if (scrollY < expect.scrollYAtLeast) {
+        notes.push(`expected scrollY at least ${expect.scrollYAtLeast}, got ${scrollY}`)
+      }
     }
 
     if (typeof expect.image === 'string' && !hasImage(result, expect.image)) {

@@ -35,5 +35,21 @@
       "bridgeStop": true,
       "bridgeRunAgent": false
     }
+  },
+  {
+    "id": "scroll-contract",
+    "suite": "navigation",
+    "title": "Scroll page changes viewport position",
+    "tool": "gemma_scroll",
+    "arguments": {
+      "tabId": 105,
+      "amount": 700
+    },
+    "expect": {
+      "contains": ["down 700px", "scrollY"],
+      "scrollYAtLeast": 650,
+      "bridgeExecuteTool": "scroll_page",
+      "bridgeRunAgent": false
+    }
   }
 ]
