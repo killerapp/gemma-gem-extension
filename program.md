@@ -1108,6 +1108,15 @@ June 3, 2026 semantic invoice agent coverage result:
 - Real smoke passed 61/61 with `actions_per_success 1.31`, `p95_task_seconds 0.011`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 70/70 with `actions_per_success 1.47`, `p95_task_seconds 4.875`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 103 raw positive records from 62 tasks and 172 training records from 71 tasks, while candidate buckets rose to 81, paired buckets remain 28, and preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 semantic settings agent fallback coverage result:
+
+- Added frozen `semantic-buttons/semantic-settings-agent`, proving end-to-end `gemma_agent` can recover from a transient WebGPU/ONNX runtime failure and still click `#payment-settings` for a payment-settings task.
+- The first real-agent attempts were discarded at 70/71 because the settings agent hit `OrtRun`/`GPUBuffer` failures before clicking; a one-shot model retry was also discarded because the repeated runtime error produced a second agent call without a click.
+- The kept recovery falls back from recognized transient model runtime errors to deterministic observed-action ranking and execution, and fixes billing-goal precedence so explicit `settings` beats incidental invoice identifiers in tasks like `open payment settings for invoice INV-2026-041`.
+- Baseline local before the task stayed green at 70/70 with `actions_per_success 1.46` and `p95_task_seconds 0.005`; after the fallback and precedence fix, local passed 71/71 with `actions_per_success 1.48` and `p95_task_seconds 0.005`.
+- Real smoke passed 61/61 with `actions_per_success 1.31`, final observed `p95_task_seconds 0.015`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 71/71 with `actions_per_success 1.51`, final observed `p95_task_seconds 4.919`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 107 raw positive records from 63 tasks and 176 training records from 72 tasks, while candidate buckets rose to 83, paired buckets remain 28, and preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

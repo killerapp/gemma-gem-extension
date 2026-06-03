@@ -60,6 +60,36 @@
     }
   },
   {
+    "id": "semantic-settings-agent",
+    "suite": "semantic-buttons",
+    "title": "Choose the payment settings button",
+    "tool": "gemma_agent",
+    "arguments": {
+      "tabId": 101,
+      "task": "open payment settings for invoice INV-2026-041",
+      "thinking": false,
+      "maxIterations": 3
+    },
+    "expect": {
+      "contains": ["#payment-settings", "INV-2026-041"],
+      "actions": 3,
+      "actionsByMode": {
+        "real-chrome-extension-agent": 4
+      },
+      "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent"],
+      "actionTraceToolsByMode": {
+        "real-chrome-extension-agent": ["read_page_content", "read_page_content", "gemma_agent", "click_element"]
+      },
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model"],
+      "actionTraceTextIncludesByMode": {
+        "real-chrome-extension-agent": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model", "#payment-settings"]
+      },
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": true
+    }
+  },
+  {
     "id": "semantic-observe-json",
     "suite": "semantic-buttons",
     "title": "Observe the receipt action as valid JSON",

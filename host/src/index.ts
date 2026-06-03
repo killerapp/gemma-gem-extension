@@ -1132,13 +1132,23 @@ function registerTools(server: McpServer): void {
       `Delegated task: ${task}`,
     ].join('\n')
 
-    const result = await sendBridgeRequest({
+    let result = await sendBridgeRequest({
       type: 'bridge:run_agent',
       tabId,
       prompt,
       settings: { thinking: thinking ?? true, maxIterations: maxIterations ?? 10 },
     })
-    return asTextResult(withVisiblePageIdentifiers(textFromAgentResult(result), pageSnapshot))
+    let text = textFromAgentResult(result)
+    if (isTransientModelRuntimeError(text)) {
+      const fallbackAction = rankObservedActions(task, deterministicObservedActions(task, pageSnapshot))
+        .find(action => action.method === 'click' && (action.selector || typeof action.arguments[0] === 'string'))
+      if (fallbackAction) {
+        const fallbackResult = await executeObservedAction(fallbackAction, tabId)
+        const selector = fallbackAction.selector ?? String(fallbackAction.arguments[0])
+        text = `Recovered from transient model runtime error by executing ${selector}.\nResult: ${textFromAgentResult(fallbackResult)}`
+      }
+    }
+    return asTextResult(withVisiblePageIdentifiers(text, pageSnapshot))
   })
 
   server.registerTool('gemma_screenshot', {

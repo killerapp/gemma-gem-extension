@@ -114,8 +114,8 @@ function fieldKind(selector: string): 'name' | 'email' | null {
 
 function billingGoal(taskTokens: string[]): 'receipt' | 'invoice' | 'settings' | null {
   const tokenSet = new Set(taskTokens)
-  if (tokenSet.has('invoice')) return 'invoice'
   if (tokenSet.has('settings')) return 'settings'
+  if (tokenSet.has('invoice')) return 'invoice'
   if (tokenSet.has('receipt') || tokenSet.has('proof')) return 'receipt'
   return null
 }
