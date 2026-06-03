@@ -363,3 +363,8 @@ e8a1f21	real-chrome-extension-agent	51	1.0000	1.0000	1.0000	1.0000	1.55	0.007	4.
 90c6287	local-fake-extension	52	1.0000	1.0000	1.0000	1.0000	1.54	0.003	0.005	0.0000	0.000	keep	select recovered readback local
 90c6287	real-chrome-extension-smoke	46	1.0000	1.0000	1.0000	1.0000	1.41	0.007	0.016	0.0000	0.000	keep	select recovered readback real smoke
 90c6287	real-chrome-extension-agent	52	1.0000	1.0000	1.0000	1.0000	1.54	0.007	4.881	0.0000	0.001	keep	select recovered readback real agent
+7a0754f	local-fake-extension	52	1.0000	1.0000	1.0000	1.0000	1.54	0.003	0.005	0.0000	0.000	baseline	navigation scroll target read baseline local
+7a0754f	local-fake-extension	53	1.0000	1.0000	1.0000	1.0000	1.53	0.003	0.006	0.0000	0.000	keep	navigation scroll target read local
+7a0754f	real-chrome-extension-smoke	47	1.0000	1.0000	1.0000	1.0000	1.40	0.007	0.018	0.0000	0.000	keep	navigation scroll target read real smoke
+7a0754f	real-chrome-extension-agent	53	0.9811	0.9811	1.0000	1.0000	1.48	0.007	4.866	0.0000	0.001	discard	navigation scroll target read real agent
+7a0754f	real-chrome-extension-agent	53	1.0000	1.0000	1.0000	1.0000	1.53	0.006	4.850	0.0000	0.001	keep	navigation scroll target read real agent retry

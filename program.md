@@ -962,6 +962,15 @@ June 3, 2026 select recovered-readback coverage result:
 - Real smoke passed 46/46 with `actions_per_success 1.41`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 52/52 with `actions_per_success 1.54`, `p95_task_seconds 4.881`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 80 raw positive records from 46 tasks and 142 training records from 54 tasks, while candidate buckets rose to 62 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 navigation scroll-target read coverage result:
+
+- Added frozen `navigation/read-scroll-target-after-scroll`, proving exact `gemma_read_page` can read `#scroll-target` after the navigation fixture has been scrolled down and partially back up.
+- The task freezes selector-scoped readback for the scroll target while excluding neighboring navigation link text, complementing the existing scroll position assertions.
+- Baseline local before the task stayed green at 52/52 with `actions_per_success 1.54` and `p95_task_seconds 0.005`; after adding the task, local passed 53/53 with `actions_per_success 1.53` and `p95_task_seconds 0.006`.
+- Real smoke passed 47/47 with `actions_per_success 1.40`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; the first real-agent attempt was recorded as `discard` after existing `semantic-buttons/semantic-receipt-agent` over-clicked `#download-invoice`, while the new scroll-target read passed.
+- Real agent retry passed 53/53 with `actions_per_success 1.53`, `p95_task_seconds 4.850`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 81 raw positive records from 47 tasks and 143 training records from 55 tasks, while candidate buckets rose to 63 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
