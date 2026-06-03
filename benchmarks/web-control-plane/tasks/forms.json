@@ -844,5 +844,31 @@
       "bridgeExecuteSelector": "#dest-email",
       "bridgeRunAgent": false
     }
+  },
+  {
+    "id": "read-destination-name-after-transfer",
+    "suite": "forms",
+    "title": "Read transferred destination name by selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-name",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Ada Lovelace"]
+      },
+      "contains": ["Ada Lovelace"],
+      "notContains": ["ada@example.test", "Saved", "Save profile"],
+      "selector": "#dest-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-name format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-name",
+      "bridgeRunAgent": false
+    }
   }
 ]

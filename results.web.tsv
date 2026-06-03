@@ -380,3 +380,7 @@ d19ceba	local-fake-extension	55	1.0000	1.0000	1.0000	1.0000	1.51	0.003	0.006	0.0
 d19ceba	local-fake-extension	56	1.0000	1.0000	1.0000	1.0000	1.50	0.003	0.006	0.0000	0.000	keep	transfer email readback local
 d19ceba	real-chrome-extension-smoke	50	1.0000	1.0000	1.0000	1.0000	1.38	0.007	0.016	0.0000	0.000	keep	transfer email readback real smoke
 d19ceba	real-chrome-extension-agent	56	1.0000	1.0000	1.0000	1.0000	1.50	0.007	4.844	0.0000	0.001	keep	transfer email readback real agent
+693b575	local-fake-extension	56	1.0000	1.0000	1.0000	1.0000	1.50	0.003	0.007	0.0000	0.000	baseline	transfer name readback baseline local
+693b575	local-fake-extension	57	1.0000	1.0000	1.0000	1.0000	1.49	0.003	0.006	0.0000	0.000	keep	transfer name readback local
+693b575	real-chrome-extension-smoke	51	1.0000	1.0000	1.0000	1.0000	1.37	0.007	0.017	0.0000	0.000	keep	transfer name readback real smoke
+693b575	real-chrome-extension-agent	57	1.0000	1.0000	1.0000	1.0000	1.49	0.006	4.833	0.0000	0.001	keep	transfer name readback real agent
