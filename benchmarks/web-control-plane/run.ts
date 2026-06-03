@@ -1265,6 +1265,14 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
       const sawRunAgent = harness.requestsSince(startRequestCount).some(request => request.type === 'bridge:run_agent')
       if (sawRunAgent) notes.push('unexpected bridge:run_agent request')
     }
+    if (expect.bridgeStop === true && harness.supportsBridgeRequestLog) {
+      const sawStop = harness.requestsSince(startRequestCount).some(request => request.type === 'bridge:stop')
+      if (!sawStop) notes.push('expected bridge:stop request')
+    }
+    if (expect.bridgeStop === false && harness.supportsBridgeRequestLog) {
+      const sawStop = harness.requestsSince(startRequestCount).some(request => request.type === 'bridge:stop')
+      if (sawStop) notes.push('unexpected bridge:stop request')
+    }
 
     if (typeof expect.activeTabId === 'number') {
       const mappedActiveTask = harness.remapTask({ ...task, arguments: { tabId: expect.activeTabId } })
@@ -1308,7 +1316,7 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
   const actions = Math.max(
     0,
     endActionCount - startActionCount,
-    requests.filter(request => request.type === 'bridge:run_agent' || request.type === 'bridge:execute_tool').length,
+    requests.filter(request => request.type === 'bridge:run_agent' || request.type === 'bridge:execute_tool' || request.type === 'bridge:stop').length,
   )
   const actionTrace = await harness.actionTraceSince(startActionCount)
   const toolErrors = harness.toolErrorCount() - startErrorCount

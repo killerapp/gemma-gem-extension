@@ -21,5 +21,19 @@
     "expect": {
       "image": "image/png"
     }
+  },
+  {
+    "id": "stop-contract",
+    "suite": "navigation",
+    "title": "Stop active browser task returns a bounded acknowledgement",
+    "tool": "gemma_stop",
+    "arguments": {
+      "runId": "benchmark-stop"
+    },
+    "expect": {
+      "contains": ["stopped", "true", "benchmark-stop"],
+      "bridgeStop": true,
+      "bridgeRunAgent": false
+    }
   }
 ]

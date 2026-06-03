@@ -92,3 +92,6 @@ f6a1373	local-fake-extension	11	1.0000	1.0000	1.0000	1.0000	2.09	0.005	0.014	0.0
 a4636af	local-fake-extension	13	1.0000	1.0000	1.0000	1.0000	2.23	0.006	0.011	0.0000	0.000	keep	page brief controls local benchmark
 a4636af	real-chrome-extension-smoke	9	1.0000	1.0000	1.0000	1.0000	2.00	0.011	0.128	0.0000	0.000	keep	real smoke page brief controls
 a4636af	local-fake-extension	13	1.0000	1.0000	1.0000	1.0000	2.23	0.005	0.010	0.0000	0.000	keep	final page brief controls artifacts
+3e7d549	local-fake-extension	14	1.0000	1.0000	1.0000	1.0000	2.14	0.005	0.010	0.0000	0.000	keep	stop contract local benchmark
+3e7d549	real-chrome-extension-smoke	10	1.0000	1.0000	1.0000	1.0000	1.80	0.011	0.120	0.0000	0.000	keep	real smoke stop contract
+3e7d549	local-fake-extension	14	1.0000	1.0000	1.0000	1.0000	2.14	0.006	0.014	0.0000	0.000	keep	final stop contract artifacts
