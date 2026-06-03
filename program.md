@@ -1307,6 +1307,15 @@ June 3, 2026 pricing active-tab coverage result:
 - Real smoke passed 85/85 with `actions_per_success 1.16`, `p95_task_seconds 0.504`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 95/95 with `actions_per_success 1.33`, `p95_task_seconds 4.158`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Because this task records browser metadata instead of a content action, trace artifacts remain at 126 raw positive records from 79 tasks and 195 training records from 88 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 source body-text read coverage result:
+
+- Added frozen `forms/read-source-body-text`, proving exact `gemma_read_page` body text reads on logical tab 103 expose source profile labels and values without leaking destination controls or pricing markup.
+- The task complements the existing source page brief, body HTML read, and exact field reads with a one-action text-only content contract.
+- Baseline local before the task stayed green at 95/95 with `actions_per_success 1.31` and `p95_task_seconds 0.005`; after adding the content-read task, local passed 96/96 with `actions_per_success 1.30` and `p95_task_seconds 0.005`.
+- Real smoke passed 86/86 with `actions_per_success 1.16`, `p95_task_seconds 0.502`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; the first real-agent run discarded at 94/96 after model-backed semantic invoice/settings misses while the new source body-text contract passed.
+- The real-agent retry passed 96/96 with `actions_per_success 1.32`, `p95_task_seconds 4.189`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 127 raw positive records from 80 tasks and 196 training records from 89 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

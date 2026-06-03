@@ -561,3 +561,8 @@ f0d435f	local-fake-extension	94	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.006	0.0
 f0d435f	local-fake-extension	95	1.0000	1.0000	1.0000	1.0000	1.31	0.002	0.005	0.0000	0.000	keep	pricing active tab local
 f0d435f	real-chrome-extension-smoke	85	1.0000	1.0000	1.0000	1.0000	1.16	0.007	0.504	0.0000	0.000	keep	pricing active tab real smoke
 f0d435f	real-chrome-extension-agent	95	1.0000	1.0000	1.0000	1.0000	1.33	0.008	4.158	0.0000	0.001	keep	pricing active tab real agent
+ed19166	local-fake-extension	95	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.005	0.0000	0.000	baseline	source body text baseline local
+ed19166	local-fake-extension	96	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	keep	source body text local
+ed19166	real-chrome-extension-smoke	86	1.0000	1.0000	1.0000	1.0000	1.16	0.007	0.502	0.0000	0.000	keep	source body text real smoke
+ed19166	real-chrome-extension-agent	96	0.9792	0.9792	1.0000	1.0000	1.27	0.007	4.119	0.0000	0.001	discard	source body text real agent
+ed19166	real-chrome-extension-agent	96	1.0000	1.0000	1.0000	1.0000	1.32	0.007	4.189	0.0000	0.001	keep	source body text real agent retry
