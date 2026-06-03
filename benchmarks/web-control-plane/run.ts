@@ -581,9 +581,11 @@ class FakeExtension implements HarnessProbe {
         if (!this.selectorExists(selector)) {
           return this.response(request.requestId, { error: `No select element found for selector: ${selector}` })
         }
-        const selected = args.value === 'reviewer' || args.label === 'Reviewer'
-          ? { label: 'Reviewer', value: 'reviewer' }
-          : { label: String(args.label ?? args.value ?? ''), value: String(args.value ?? args.label ?? '') }
+        const selected = args.value === 'admin' || args.label === 'Administrator'
+          ? { label: 'Administrator', value: 'admin' }
+          : args.value === 'reviewer' || args.label === 'Reviewer'
+            ? { label: 'Reviewer', value: 'reviewer' }
+            : { label: String(args.label ?? args.value ?? ''), value: String(args.value ?? args.label ?? '') }
         this.values.set(`${tabId}:${selector}`, selected.value)
         return this.response(request.requestId, { selected: selected.label, value: selected.value, selector })
       }

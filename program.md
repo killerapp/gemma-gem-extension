@@ -820,6 +820,14 @@ June 3, 2026 navigation link click coverage result:
 - Real smoke passed 22/22 with `selector_hit_rate 1.0000`, `actions_per_success 1.32`, and `timeout_rate 0.0000`; real agent passed 27/27 with `p95_task_seconds 6.539`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 41 raw positive records from 21 tasks and 103 training records from 29 tasks, with click records up to 5 raw and 25 training while preference and reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 select-by-value coverage result:
+
+- Added frozen `forms/select-role-value`, a one-action `gemma_select_option` task that selects `#dest-role` by `value: "admin"` and asserts the returned visible label is `Administrator`.
+- The fake harness now maps the `admin` option value to the same label/value pair as the real content script, keeping local and real select-option semantics aligned.
+- Baseline local before the task stayed green at 27/27 with `p95_task_seconds 0.010`; after adding the task, local passed 28/28 with `actions_per_success 1.50` and `p95_task_seconds 0.010`.
+- Real smoke passed 23/23 with `selector_hit_rate 1.0000`, `actions_per_success 1.30`, and `timeout_rate 0.0000`; real agent passed 28/28 with `p95_task_seconds 6.614`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 42 raw positive records from 22 tasks and 104 training records from 30 tasks, while preference and reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

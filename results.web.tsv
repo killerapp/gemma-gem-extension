@@ -288,3 +288,7 @@ e4d5902	local-fake-extension	26	1.0000	1.0000	1.0000	1.0000	1.54	0.004	0.010	0.0
 e4d5902	local-fake-extension	27	1.0000	1.0000	1.0000	1.0000	1.52	0.004	0.010	0.0000	0.000	keep	navigation link click local
 e4d5902	real-chrome-extension-smoke	22	1.0000	1.0000	1.0000	1.0000	1.32	0.007	0.019	0.0000	0.000	keep	navigation link click real smoke
 e4d5902	real-chrome-extension-agent	27	1.0000	1.0000	1.0000	1.0000	1.52	0.007	6.539	0.0000	0.001	keep	navigation link click real agent
+b03be1e	local-fake-extension	27	1.0000	1.0000	1.0000	1.0000	1.52	0.004	0.010	0.0000	0.000	baseline	select role value baseline local
+b03be1e	local-fake-extension	28	1.0000	1.0000	1.0000	1.0000	1.50	0.004	0.010	0.0000	0.000	keep	select role value local
+b03be1e	real-chrome-extension-smoke	23	1.0000	1.0000	1.0000	1.0000	1.30	0.008	0.027	0.0000	0.000	keep	select role value real smoke
+b03be1e	real-chrome-extension-agent	28	1.0000	1.0000	1.0000	1.0000	1.50	0.008	6.614	0.0000	0.001	keep	select role value real agent

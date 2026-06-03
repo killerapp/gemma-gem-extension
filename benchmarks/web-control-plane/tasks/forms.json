@@ -102,6 +102,35 @@
     }
   },
   {
+    "id": "select-role-value",
+    "suite": "forms",
+    "title": "Select a role option by value",
+    "tool": "gemma_select_option",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "value": "admin"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "selected": "Administrator",
+        "value": "admin",
+        "selector": "#dest-role"
+      },
+      "contains": ["Administrator", "admin", "#dest-role"],
+      "destinationValues": {
+        "#dest-role": "admin"
+      },
+      "actions": 1,
+      "actionTraceTools": ["select_option"],
+      "actionTraceTextIncludes": ["selector=#dest-role value=admin"],
+      "bridgeExecuteTool": "select_option",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "read-destination-role-options",
     "suite": "forms",
     "title": "Read destination role options by selector",
