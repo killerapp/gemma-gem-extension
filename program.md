@@ -1371,6 +1371,15 @@ June 3, 2026 local runtime-fallback benchmark coverage result:
 - The first real-agent run discarded at 99/101 after an existing semantic invoice model timeout; the retry passed 101/101 with `actions_per_success 1.31`, `p95_task_seconds 0.565`, `model_ready_status ready`, and `timeout_rate 0.0000`, proving the local-only task did not enter real-agent coverage.
 - Trace artifacts remained at 132 raw positive records from 85 tasks and 201 training records from 94 tasks because the latest trace export follows the real-agent JSONL, where the local-only synthetic task is excluded; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 pre-click runtime-fallback benchmark coverage result:
+
+- Added frozen local-only `semantic-buttons/semantic-receipt-agent-runtime-error-before-click`, completing deterministic benchmark coverage for the other unaligned-access recovery branch.
+- The fake extension now can return `Something went wrong: operation does not support unaligned accesses` before emitting any internal click chunk, proving the sidecar ranks the receipt control from the page snapshot and issues exactly one fallback `click_element` request for `#download-receipt`.
+- Baseline local before the task stayed green at 102/102 with `actions_per_success 1.30` and `p95_task_seconds 0.006`; after adding the task, local passed 103/103 with `actions_per_success 1.33`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke remained 91/91 with `actions_per_success 1.15`, `p95_task_seconds 0.532`, and `timeout_rate 0.0000`, proving the local-only synthetic runtime task still does not affect deterministic real-extension coverage.
+- Real agent passed 101/101 on the first run with `actions_per_success 1.31`, `p95_task_seconds 0.564`, `model_ready_status ready`, and `timeout_rate 0.0000`, proving the local-only task did not enter model-backed real-extension coverage.
+- Trace artifacts remained at 132 raw positive records from 85 tasks and 201 training records from 94 tasks because the latest trace export follows the real-agent JSONL, where both local-only synthetic runtime tasks are excluded; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

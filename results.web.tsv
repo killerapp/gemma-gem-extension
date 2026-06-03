@@ -604,3 +604,7 @@ ed19166	real-chrome-extension-agent	96	1.0000	1.0000	1.0000	1.0000	1.32	0.007	4.
 43deab4	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.007	0.548	0.0000	0.000	keep	agent runtime fallback benchmark real smoke
 43deab4	real-chrome-extension-agent	101	0.9802	0.9802	1.0000	1.0000	1.25	0.008	0.566	0.0099	0.001	discard	agent runtime fallback benchmark real agent
 43deab4	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.010	0.565	0.0000	0.001	keep	agent runtime fallback benchmark real agent retry
+9563e43	local-fake-extension	102	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.006	0.0000	0.000	baseline	preclick runtime fallback benchmark baseline local
+9563e43	local-fake-extension	103	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	keep	preclick runtime fallback benchmark local
+9563e43	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.008	0.532	0.0000	0.000	keep	preclick runtime fallback benchmark real smoke
+9563e43	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.007	0.564	0.0000	0.001	keep	preclick runtime fallback benchmark real agent
