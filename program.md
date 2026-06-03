@@ -1362,6 +1362,15 @@ June 3, 2026 billing body-text read and runtime fallback result:
 - Post-fallback local passed 101/101 with `p95_task_seconds 0.005`, real smoke passed 91/91 with `p95_task_seconds 0.531`, and real agent passed 101/101 with `actions_per_success 1.31`, `p95_task_seconds 0.566`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 132 raw positive records from 85 tasks and 201 training records from 94 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 local runtime-fallback benchmark coverage result:
+
+- Added optional per-mode task filtering to the benchmark runner and a frozen local-only `semantic-buttons/semantic-receipt-agent-runtime-error-after-click` task.
+- The fake extension now deterministically emits a `click_element({"selector":"#download-receipt"})` agent chunk followed by `Something went wrong: operation does not support unaligned accesses`, proving the sidecar reports the already-executed selector without issuing a duplicate fallback `click_element` bridge request.
+- Baseline local before the task stayed green at 101/101 with `actions_per_success 1.29` and `p95_task_seconds 0.005`; after adding the local-only task, local passed 102/102 with `actions_per_success 1.30`, `p95_task_seconds 0.006`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke remained 91/91 with `actions_per_success 1.15`, `p95_task_seconds 0.548`, and `timeout_rate 0.0000`, proving the local-only mode gate did not change deterministic real-extension coverage.
+- The first real-agent run discarded at 99/101 after an existing semantic invoice model timeout; the retry passed 101/101 with `actions_per_success 1.31`, `p95_task_seconds 0.565`, `model_ready_status ready`, and `timeout_rate 0.0000`, proving the local-only task did not enter real-agent coverage.
+- Trace artifacts remained at 132 raw positive records from 85 tasks and 201 training records from 94 tasks because the latest trace export follows the real-agent JSONL, where the local-only synthetic task is excluded; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

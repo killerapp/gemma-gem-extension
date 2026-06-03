@@ -35,6 +35,8 @@ type BenchmarkTask = {
   tool: string
   arguments: Record<string, unknown>
   expect: Record<string, unknown>
+  modes?: string[]
+  skipModes?: string[]
 }
 
 type TaskResult = {
@@ -244,6 +246,12 @@ function modeExpectationValue(
     if (Object.prototype.hasOwnProperty.call(byMode, mode)) return byMode[mode]
   }
   return expect[baseKey]
+}
+
+function taskEnabledForMode(task: BenchmarkTask, mode: string): boolean {
+  if (Array.isArray(task.modes) && task.modes.length > 0 && !task.modes.includes(mode)) return false
+  if (Array.isArray(task.skipModes) && task.skipModes.includes(mode)) return false
+  return true
 }
 
 function percentile(values: number[], p: number): number {
@@ -554,6 +562,18 @@ class FakeExtension implements HarnessProbe {
     const wantsInvoice = /download the invoice PDF/i.test(request.prompt)
     const targetSelector = wantsSettings ? '#payment-settings' : wantsInvoice ? '#download-invoice' : '#download-receipt'
     const targetKind = wantsSettings ? 'payment settings' : wantsInvoice ? 'invoice' : 'receipt'
+    if (/simulate transient runtime error after clicking receipt/i.test(request.prompt)) {
+      return [
+        {
+          type: 'bridge:chunk',
+          requestId: request.requestId,
+          text: '[Tool] click_element({"selector":"#download-receipt"})',
+        },
+        this.response(request.requestId, {
+          text: 'Something went wrong: operation does not support unaligned accesses',
+        }),
+      ]
+    }
 
     return [
       {
@@ -2282,9 +2302,12 @@ async function writeJsonl(results: TaskResult[], modelReady: ModelReadyPreflight
 async function main(): Promise<void> {
   await mkdir(dirname(resolve(BENCH_ROOT, 'report.md')), { recursive: true })
   const allTasks = await readTasks()
-  const tasks = REAL_MODE && !INCLUDE_AGENT_TASKS
-    ? allTasks.filter(task => !REAL_SMOKE_EXCLUDED_TOOLS.has(task.tool))
-    : allTasks
+  const mode = REAL_MODE
+    ? INCLUDE_AGENT_TASKS ? 'real-chrome-extension-agent' : 'real-chrome-extension-smoke'
+    : 'local-fake-extension'
+  const tasks = allTasks
+    .filter(task => taskEnabledForMode(task, mode))
+    .filter(task => !(REAL_MODE && !INCLUDE_AGENT_TASKS && REAL_SMOKE_EXCLUDED_TOOLS.has(task.tool)))
   const port = await getFreePort()
   const child = await startSidecar(port)
   const harness: HarnessProbe = REAL_MODE ? await RealChromeHarness.launch(port) : new FakeExtension(port)
