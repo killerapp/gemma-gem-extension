@@ -21,6 +21,7 @@ export type TraceRecord = {
     suite: string
     title: string
     tool: string
+    targetSelector?: string
   }
   action: {
     status: string
@@ -123,6 +124,10 @@ function isStatusOrFieldClickSelector(selector: string | null): boolean {
   return Boolean(selector?.includes('result') || selector?.startsWith('#dest-') || selector?.startsWith('#billing-') || selector?.startsWith('#checkout-') || selector?.startsWith('#order-'))
 }
 
+function isScopedReadCandidate(record: TraceRecord): boolean {
+  return record.action.toolName === 'read_page_content' && Boolean(record.task.targetSelector)
+}
+
 export function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredRecord {
   const taskText = `${record.task.title} ${record.task.id} ${record.task.tool}`
   const baseTaskTokens = tokens(taskText)
@@ -188,6 +193,15 @@ export function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredReco
     ) {
       score -= 4
       reasons.push('transfer_destination_read_distractor')
+    }
+    if (isScopedReadCandidate(record)) {
+      if (record.action.selector === record.task.targetSelector) {
+        score += 4
+        reasons.push('scoped_target_selector_match')
+      } else {
+        score -= 7
+        reasons.push('scoped_target_selector_mismatch')
+      }
     }
     if (record.action.toolName === 'type_text') {
       const alignment = fieldAlignment(record.action.selector, record.action.title)

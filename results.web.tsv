@@ -215,3 +215,7 @@ ed98fe8	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0
 1651dad	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.026	0.0000	0.000	keep	deterministic trace text real smoke
 1651dad	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.473	0.0000	0.002	keep	deterministic trace text real agent
 1651dad	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final deterministic trace text artifacts
+e393b2d	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	scoped target trace data local benchmark
+e393b2d	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.065	0.0000	0.000	keep	scoped target trace data real smoke
+e393b2d	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.640	0.0000	0.001	keep	scoped target trace data real agent
+e393b2d	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final scoped target trace data artifacts

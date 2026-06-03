@@ -40,6 +40,7 @@ type ExportRecord = {
     suite: string
     title: string
     tool: string
+    targetSelector?: string
   }
   outcome: {
     success: boolean
@@ -119,6 +120,12 @@ function selectorHitRate(task: TaskTrace): number | null {
 function taskRecords(task: TaskTrace, sourceFile: string): ExportRecord[] {
   const actions = Array.isArray(task.actionTrace) ? task.actionTrace : []
   if (actions.length === 0) return []
+  const scopedTaskText = `${task.id ?? ''} ${task.title ?? ''}`.toLowerCase()
+  const targetSelector = scopedTaskText.includes('scoped')
+    ? actions
+      .map(action => selectorFromText(action.text))
+      .find(selector => selector && selector !== 'body') ?? undefined
+    : undefined
 
   return actions.map((action, index) => ({
     recordType: 'web-control-action',
@@ -128,6 +135,7 @@ function taskRecords(task: TaskTrace, sourceFile: string): ExportRecord[] {
       suite: task.suite ?? 'unknown',
       title: task.title ?? 'unknown',
       tool: task.tool ?? 'unknown',
+      ...(targetSelector ? { targetSelector } : {}),
     },
     outcome: {
       success: task.success === true,

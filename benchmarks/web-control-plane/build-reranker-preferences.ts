@@ -32,6 +32,7 @@ type PreferenceRecord = {
     suite: string
     title: string
     tool: string
+    targetSelector?: string
   }
   preferred: PreferenceAction
   rejected: PreferenceAction
@@ -106,6 +107,7 @@ function buildPrompt(pair: PreferenceRecord, first: RerankerCandidate, second: R
     `suite: ${pair.task.suite}`,
     `task_title: ${pair.task.title}`,
     `caller_tool: ${pair.task.tool}`,
+    ...(pair.task.targetSelector ? [`target_selector: ${pair.task.targetSelector}`] : []),
     `candidate_tool: ${pair.bucket.toolName}`,
     '',
     `${first.id}:`,

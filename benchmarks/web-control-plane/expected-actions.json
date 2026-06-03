@@ -181,6 +181,54 @@
   },
   {
     "task": {
+      "id": "semantic-scoped-receipt-read",
+      "suite": "semantic-buttons-supervised",
+      "title": "Read only the receipt proof button",
+      "tool": "gemma_read_page",
+      "targetSelector": "#download-receipt"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "#download-receipt",
+      "text": "read_page_content selector=#download-receipt format=text",
+      "title": "receipt proof button context"
+    }
+  },
+  {
+    "task": {
+      "id": "scoped-plan-card-read",
+      "suite": "pricing-supervised",
+      "title": "Read only the selector-scoped plan card",
+      "tool": "gemma_read_page",
+      "targetSelector": ".plan[data-plan=\"team\"]"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": ".plan[data-plan=\"team\"]",
+      "text": "read_page_content selector=.plan[data-plan=\"team\"] format=text",
+      "title": "team plan section"
+    }
+  },
+  {
+    "task": {
+      "id": "scoped-plan-summary-read",
+      "suite": "pricing-read-supervised",
+      "title": "Read only the scoped pricing summary",
+      "tool": "gemma_read_page",
+      "targetSelector": ".plan[data-plan=\"team\"]"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": ".plan[data-plan=\"team\"]",
+      "text": "read_page_content selector=.plan[data-plan=\"team\"] format=text",
+      "title": "team plan summary"
+    }
+  },
+  {
+    "task": {
       "id": "sync-contact-fields",
       "suite": "forms-supervised",
       "title": "Sync customer contact fields into checkout form",

@@ -166,6 +166,38 @@
   },
   {
     "task": {
+      "id": "extract-scoped-plan-json",
+      "suite": "extraction",
+      "title": "Extract a selector-scoped pricing plan",
+      "tool": "gemma_extract",
+      "targetSelector": ".plan[data-plan=\"team\"]"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "[data-plan=starter]",
+      "text": "read_page_content selector=[data-plan=starter] format=text",
+      "title": "starter plan section"
+    }
+  },
+  {
+    "task": {
+      "id": "read-scoped-plan",
+      "suite": "extraction",
+      "title": "Read only a selector-scoped pricing plan",
+      "tool": "gemma_read_page",
+      "targetSelector": ".plan[data-plan=\"team\"]"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "[data-plan=starter]",
+      "text": "read_page_content selector=[data-plan=starter] format=text",
+      "title": "starter plan section"
+    }
+  },
+  {
+    "task": {
       "id": "semantic-page-brief",
       "suite": "semantic-buttons",
       "title": "Brief exposes meaningful billing controls",
@@ -477,6 +509,54 @@
       "selector": "#download-invoice",
       "text": "read_page_content selector=#download-invoice format=text",
       "title": "invoice button context"
+    }
+  },
+  {
+    "task": {
+      "id": "semantic-scoped-receipt-read",
+      "suite": "semantic-buttons-supervised",
+      "title": "Read only the receipt proof button",
+      "tool": "gemma_read_page",
+      "targetSelector": "#download-receipt"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "#download-invoice",
+      "text": "read_page_content selector=#download-invoice format=text",
+      "title": "invoice button context"
+    }
+  },
+  {
+    "task": {
+      "id": "scoped-plan-card-read",
+      "suite": "pricing-supervised",
+      "title": "Read only the selector-scoped plan card",
+      "tool": "gemma_read_page",
+      "targetSelector": ".plan[data-plan=\"team\"]"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "[data-plan=starter]",
+      "text": "read_page_content selector=[data-plan=starter] format=text",
+      "title": "starter plan section"
+    }
+  },
+  {
+    "task": {
+      "id": "scoped-plan-summary-read",
+      "suite": "pricing-read-supervised",
+      "title": "Read only the scoped pricing summary",
+      "tool": "gemma_read_page",
+      "targetSelector": ".plan[data-plan=\"team\"]"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "[data-plan=starter]",
+      "text": "read_page_content selector=[data-plan=starter] format=text",
+      "title": "starter plan summary"
     }
   },
   {

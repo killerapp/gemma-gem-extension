@@ -17,6 +17,7 @@ type TrainingRecord = {
     suite: string
     title: string
     tool: string
+    targetSelector?: string
   }
   outcome: {
     success: boolean

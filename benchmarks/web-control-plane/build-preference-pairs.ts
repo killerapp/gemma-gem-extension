@@ -16,6 +16,7 @@ type TraceRecord = {
     suite: string
     title: string
     tool: string
+    targetSelector?: string
   }
   action: {
     index: number

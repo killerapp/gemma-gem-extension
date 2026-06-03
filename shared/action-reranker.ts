@@ -5,6 +5,7 @@ export type ActionRerankerTask = {
   suite?: string
   title?: string
   tool?: string
+  targetSelector?: string
 }
 
 export type RerankerActionInput = {
@@ -56,6 +57,8 @@ export type RerankerWeightsArtifact = {
   metrics?: unknown
   weights?: Array<{ feature?: unknown; weight?: unknown }>
 }
+
+const MIN_TRAINING_MARGIN = 10
 
 export function tokens(text: string | null | undefined): string[] {
   const result = new Set<string>()
@@ -171,6 +174,9 @@ export function actionFeatures(task: ActionRerankerTask, input: RerankerActionIn
   if (action.selector.includes('save')) addFeature(features, 'selector_contains=save')
   if (action.text?.includes('format=html')) addFeature(features, 'read_format=html')
   if (action.text?.includes('format=text')) addFeature(features, 'read_format=text')
+  if (action.toolName === 'read_page_content' && task.targetSelector) {
+    addFeature(features, action.selector === task.targetSelector ? 'scoped_target_selector=match' : 'scoped_target_selector=mismatch', 6)
+  }
 
   const alignment = fieldAlignment(action.selector, action.title)
   if (alignment) addFeature(features, `field_title_selector=${alignment}`, 3)
@@ -230,7 +236,7 @@ export function trainPerceptron(pairs: RerankerTrainingPair[], epochs: number): 
     for (const pair of pairs) {
       const chosenFeatures = actionFeatures(pair.task, pair.chosen)
       const rejectedFeatures = actionFeatures(pair.task, pair.rejected)
-      if (dot(weights, chosenFeatures) <= dot(weights, rejectedFeatures)) {
+      if (dot(weights, chosenFeatures) - dot(weights, rejectedFeatures) < MIN_TRAINING_MARGIN) {
         updateWeights(weights, chosenFeatures, 1)
         updateWeights(weights, rejectedFeatures, -1)
         mistakes += 1
