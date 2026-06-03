@@ -54,6 +54,24 @@
     }
   },
   {
+    "id": "semantic-click-recover-selector",
+    "suite": "semantic-buttons",
+    "title": "Recover a receipt text-like click selector",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 101,
+      "selector": "button:has-text(\"Receipt PDF\")"
+    },
+    "expect": {
+      "contains": ["recoveredSelector", "#download-receipt", "Receipt PDF"],
+      "selector": "#download-receipt",
+      "clicked": "#download-receipt",
+      "bridgeExecuteTool": "click_element",
+      "bridgeExecuteSelector": "#download-receipt",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "semantic-act-multi-reject",
     "suite": "semantic-buttons",
     "title": "Reject multi-step action prompt",

@@ -591,6 +591,76 @@ async function executeObservedAction(action: ObservedAction, tabId: number | und
   })
 }
 
+function toolResultError(value: unknown): string | undefined {
+  const parsed = parseToolResult(value)
+  return typeof parsed.error === 'string' && parsed.error.length > 0 ? parsed.error : undefined
+}
+
+function looksLikeTextSelector(selector: string): boolean {
+  return /:has-text\(|(?:^|\s)text\s*=/.test(selector)
+}
+
+async function recoverClickSelector(tabId: number | undefined, selector: string): Promise<ObservedAction | undefined> {
+  const pageSnapshot = await pageContextFor(tabId)
+  return deterministicObservedActions(selector, pageSnapshot)
+    .find(action => action.method === 'click' && action.selector && action.selector !== selector)
+}
+
+async function clickWithSelectorRecovery(tabId: number | undefined, selector: string): Promise<unknown> {
+  const preflightRecovery = looksLikeTextSelector(selector)
+    ? await recoverClickSelector(tabId, selector)
+    : undefined
+  if (preflightRecovery?.selector) {
+    const result = await sendBridgeRequest({
+      type: 'bridge:execute_tool',
+      tabId,
+      name: 'click_element',
+      arguments: { selector: preflightRecovery.selector },
+    })
+    return {
+      recovered: true,
+      originalSelector: selector,
+      recoveredSelector: preflightRecovery.selector,
+      recoveryDescription: preflightRecovery.description,
+      result,
+    }
+  }
+
+  const firstResult = await sendBridgeRequest({
+    type: 'bridge:execute_tool',
+    tabId,
+    name: 'click_element',
+    arguments: { selector },
+  })
+  const error = toolResultError(firstResult)
+  if (!error) return firstResult
+
+  const recovered = await recoverClickSelector(tabId, selector)
+  if (!recovered?.selector) {
+    return {
+      error,
+      selector,
+      recovered: false,
+      message: 'Click selector failed and no matching interactive control was found.',
+    }
+  }
+
+  const retryResult = await sendBridgeRequest({
+    type: 'bridge:execute_tool',
+    tabId,
+    name: 'click_element',
+    arguments: { selector: recovered.selector },
+  })
+  return {
+    recovered: true,
+    originalSelector: selector,
+    recoveredSelector: recovered.selector,
+    recoveryDescription: recovered.description,
+    firstError: error,
+    result: retryResult,
+  }
+}
+
 const MULTI_ACTION_SEQUENCER_PATTERN = /\b(?:and\s+then|then|after\s+that|next|followed\s+by)\b/i
 const ACTION_VERBS = new Set([
   'click',
@@ -940,12 +1010,7 @@ function registerTools(server: McpServer): void {
       tabId: z.number().int().optional().describe('Optional target tab id from gemma_tabs. Defaults to the active tab.'),
       selector: z.string().describe('CSS selector for the element to click.'),
     },
-  }, async ({ tabId, selector }) => asTextResult(await sendBridgeRequest({
-    type: 'bridge:execute_tool',
-    tabId,
-    name: 'click_element',
-    arguments: { selector },
-  })))
+  }, async ({ tabId, selector }) => asTextResult(await clickWithSelectorRecovery(tabId, selector)))
 
   server.registerTool('gemma_type_text', {
     description: 'Type text into an input or textarea in the target browser tab by CSS selector.',

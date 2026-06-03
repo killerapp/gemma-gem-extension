@@ -91,6 +91,36 @@
   },
   {
     "task": {
+      "id": "semantic-click-recover-selector",
+      "suite": "semantic-buttons",
+      "title": "Recover a receipt text-like click selector",
+      "tool": "gemma_click"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#download-invoice",
+      "text": "click_element selector=#download-invoice",
+      "title": "recovered invoice action"
+    }
+  },
+  {
+    "task": {
+      "id": "semantic-click-recover-selector",
+      "suite": "semantic-buttons",
+      "title": "Recover a receipt text-like click selector",
+      "tool": "gemma_click"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#payment-settings",
+      "text": "click_element selector=#payment-settings",
+      "title": "recovered settings action"
+    }
+  },
+  {
+    "task": {
       "id": "extract-pricing-json",
       "suite": "extraction",
       "title": "Extract pricing cards as strict JSON",

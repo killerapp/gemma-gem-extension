@@ -452,7 +452,7 @@ class FakeExtension implements HarnessProbe {
     const args = request.arguments
     switch (request.name) {
       case 'read_page_content':
-        return this.response(request.requestId, { content: this.read(tabId, String(args.selector ?? 'body')) })
+        return this.response(request.requestId, { content: this.read(tabId, String(args.selector ?? 'body'), String(args.format ?? 'text')) })
       case 'type_text': {
         const selector = String(args.selector)
         const text = String(args.text ?? '')
@@ -461,6 +461,9 @@ class FakeExtension implements HarnessProbe {
       }
       case 'click_element': {
         const selector = String(args.selector)
+        if (!this.selectorExists(selector)) {
+          return this.response(request.requestId, { error: `No element found for selector: ${selector}` })
+        }
         this.clickedSelectors.push(selector)
         if (selector === '#save-profile') {
           const name = this.value(104, '#dest-name')
@@ -483,9 +486,18 @@ class FakeExtension implements HarnessProbe {
     }
   }
 
-  private read(tabId: number, selector: string): string {
+  private read(tabId: number, selector: string, format = 'text'): string {
     if (tabId === 101) {
       if (selector === '#download-receipt') return 'Receipt PDF'
+      if (format === 'html') {
+        return [
+          '<h1>Invoice INV-2026-041</h1>',
+          '<p>Last payment: paid on May 20, 2026.</p>',
+          '<button id="download-receipt">Receipt PDF</button>',
+          '<button id="download-invoice">Invoice PDF</button>',
+          '<button id="payment-settings">Payment settings</button>',
+        ].join('\n')
+      }
       return [
         'Invoice INV-2026-041',
         'Last payment: paid on May 20, 2026.',

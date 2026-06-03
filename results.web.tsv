@@ -81,3 +81,8 @@ c0875d3	local-fake-extension	8	1.0000	1.0000	1.0000	1.0000	2.25	0.004	0.010	0.00
 2bccaa8	local-fake-extension	10	1.0000	1.0000	1.0000	1.0000	2.10	0.005	0.010	0.0000	0.000	keep	observed-act paired trace rerun
 2bccaa8	real-chrome-extension-smoke	6	1.0000	1.0000	1.0000	1.0000	1.50	0.010	0.120	0.0000	0.000	keep	real smoke observed-act paired traces
 2bccaa8	local-fake-extension	10	1.0000	1.0000	1.0000	1.0000	2.10	0.005	0.011	0.0000	0.000	keep	final observed-act paired artifacts
+f6a1373	local-fake-extension	11	1.0000	1.0000	1.0000	1.0000	2.18	0.005	0.014	0.0000	0.000	keep	selector recovery local prep
+f6a1373	local-fake-extension	11	1.0000	1.0000	1.0000	1.0000	2.09	0.005	0.012	0.0000	0.000	keep	selector recovery local benchmark
+f6a1373	local-fake-extension	11	1.0000	1.0000	1.0000	1.0000	2.09	0.005	0.014	0.0000	0.000	keep	selector recovery trace prep
+f6a1373	real-chrome-extension-smoke	7	1.0000	1.0000	1.0000	1.0000	1.71	0.010	0.151	0.0000	0.000	keep	real smoke selector recovery
+f6a1373	local-fake-extension	11	1.0000	1.0000	1.0000	1.0000	2.09	0.005	0.014	0.0000	0.000	keep	final selector recovery artifacts
