@@ -33,6 +33,7 @@ type PreferenceRecord = {
 type PairScore = {
   pairIndex: number
   taskId: string
+  targetSelector?: string
   toolName: string
   preferredSelector: string
   rejectedSelector: string
@@ -56,6 +57,9 @@ type PreferencePolicyCheckConfig = {
   minAccuracy?: number
   minPairs?: number
   minMargin?: number
+  minTargetSelectorAccuracy?: number
+  minTargetSelectorPairs?: number
+  minTargetSelectorMargin?: number
   checkOnly: boolean
 }
 
@@ -75,6 +79,9 @@ function parseArgs(): { input: string; output: string; check: PreferencePolicyCh
     minAccuracy: process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_ACCURACY ? parseNumber(process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_ACCURACY, 'GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_ACCURACY') : undefined,
     minPairs: process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_PAIRS ? parseNumber(process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_PAIRS, 'GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_PAIRS') : undefined,
     minMargin: process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_MARGIN ? parseNumber(process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_MARGIN, 'GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_MARGIN') : undefined,
+    minTargetSelectorAccuracy: process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TARGET_SELECTOR_ACCURACY ? parseNumber(process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TARGET_SELECTOR_ACCURACY, 'GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TARGET_SELECTOR_ACCURACY') : undefined,
+    minTargetSelectorPairs: process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TARGET_SELECTOR_PAIRS ? parseNumber(process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TARGET_SELECTOR_PAIRS, 'GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TARGET_SELECTOR_PAIRS') : undefined,
+    minTargetSelectorMargin: process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TARGET_SELECTOR_MARGIN ? parseNumber(process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TARGET_SELECTOR_MARGIN, 'GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TARGET_SELECTOR_MARGIN') : undefined,
     checkOnly: false,
   }
 
@@ -116,6 +123,21 @@ function parseArgs(): { input: string; output: string; check: PreferencePolicyCh
       i += 1
     } else if (arg.startsWith('--min-margin=')) {
       check.minMargin = parseNumber(arg.slice('--min-margin='.length), '--min-margin')
+    } else if (arg === '--min-target-selector-accuracy') {
+      check.minTargetSelectorAccuracy = parseNumber(value, '--min-target-selector-accuracy')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-accuracy=')) {
+      check.minTargetSelectorAccuracy = parseNumber(arg.slice('--min-target-selector-accuracy='.length), '--min-target-selector-accuracy')
+    } else if (arg === '--min-target-selector-pairs') {
+      check.minTargetSelectorPairs = parseNumber(value, '--min-target-selector-pairs')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-pairs=')) {
+      check.minTargetSelectorPairs = parseNumber(arg.slice('--min-target-selector-pairs='.length), '--min-target-selector-pairs')
+    } else if (arg === '--min-target-selector-margin') {
+      check.minTargetSelectorMargin = parseNumber(value, '--min-target-selector-margin')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-margin=')) {
+      check.minTargetSelectorMargin = parseNumber(arg.slice('--min-target-selector-margin='.length), '--min-target-selector-margin')
     } else {
       throw new Error(`Unknown argument ${arg}. Use --input <path>, --output <path>, --check-only, and metric threshold options.`)
     }
@@ -150,6 +172,7 @@ function evaluatePolicy(name: string, preferences: PreferenceRecord[]): Preferen
     return {
       pairIndex: pair.pairIndex,
       taskId: pair.bucket.taskId,
+      targetSelector: pair.task.targetSelector,
       toolName: pair.bucket.toolName,
       preferredSelector: pair.preferred.selector,
       rejectedSelector: pair.rejected.selector,
@@ -170,6 +193,20 @@ function evaluatePolicy(name: string, preferences: PreferenceRecord[]): Preferen
   }
 }
 
+function resultForPairs(name: string, pairs: PairScore[]): PreferencePolicyResult {
+  const correct = pairs.reduce((sum, pair) => sum + pair.correct, 0)
+  return {
+    name,
+    pairs,
+    accuracy: pairs.length ? correct / pairs.length : 0,
+    minMargin: pairs.length ? Math.min(...pairs.map(pair => pair.margin)) : 0,
+  }
+}
+
+function targetSelectorResult(result: PreferencePolicyResult): PreferencePolicyResult {
+  return resultForPairs(result.name, result.pairs.filter(pair => Boolean(pair.targetSelector)))
+}
+
 function assertAtLeast(actual: number, minimum: number | undefined, label: string): void {
   if (minimum === undefined) return
   if (actual + Number.EPSILON < minimum) {
@@ -184,6 +221,10 @@ function checkPolicyResult(bestPolicy: PreferencePolicyResult, check: Preference
   assertAtLeast(bestPolicy.accuracy, check.minAccuracy, 'preference_accuracy')
   assertAtLeast(bestPolicy.pairs.length, check.minPairs, 'preference_pairs')
   assertAtLeast(bestPolicy.minMargin, check.minMargin, 'preference_min_margin')
+  const targetSelectorPolicy = targetSelectorResult(bestPolicy)
+  assertAtLeast(targetSelectorPolicy.accuracy, check.minTargetSelectorAccuracy, 'target_selector_preference_accuracy')
+  assertAtLeast(targetSelectorPolicy.pairs.length, check.minTargetSelectorPairs, 'target_selector_preference_pairs')
+  assertAtLeast(targetSelectorPolicy.minMargin, check.minTargetSelectorMargin, 'target_selector_preference_min_margin')
 }
 
 function tableRow(cells: Array<string | number>): string {
@@ -211,6 +252,8 @@ async function main(): Promise<void> {
 
   const buckets = new Set(preferences.map(pair => `${pair.bucket.taskId}:${pair.bucket.toolName}`))
   const tasks = new Set(preferences.map(pair => pair.bucket.taskId))
+  const targetSelectorPolicyResults = policyResults.map(targetSelectorResult)
+  const bestTargetSelectorPolicy = targetSelectorResult(bestPolicy)
 
   const lines: string[] = []
   lines.push('# Preference Policy Baseline')
@@ -225,12 +268,28 @@ async function main(): Promise<void> {
   lines.push(`- best_policy: ${bestPolicy.name}`)
   lines.push(`- best_preference_accuracy: ${bestPolicy.accuracy.toFixed(4)}`)
   lines.push(`- best_preference_min_margin: ${bestPolicy.minMargin.toFixed(3)}`)
+  lines.push(`- target_selector_preference_pairs: ${bestTargetSelectorPolicy.pairs.length}`)
+  lines.push(`- best_target_selector_preference_accuracy: ${bestTargetSelectorPolicy.accuracy.toFixed(4)}`)
+  lines.push(`- best_target_selector_preference_min_margin: ${bestTargetSelectorPolicy.minMargin.toFixed(3)}`)
   lines.push('')
   lines.push('## Policy Comparison')
   lines.push('')
   lines.push(tableRow(['policy', 'preference_accuracy', 'preference_pairs', 'preference_min_margin']))
   lines.push(tableRow(['---', '---:', '---:', '---:']))
   for (const result of policyResults) {
+    lines.push(tableRow([
+      result.name,
+      result.accuracy.toFixed(4),
+      result.pairs.length,
+      result.minMargin.toFixed(3),
+    ]))
+  }
+  lines.push('')
+  lines.push('## Target Selector Policy Comparison')
+  lines.push('')
+  lines.push(tableRow(['policy', 'preference_accuracy', 'preference_pairs', 'preference_min_margin']))
+  lines.push(tableRow(['---', '---:', '---:', '---:']))
+  for (const result of targetSelectorPolicyResults) {
     lines.push(tableRow([
       result.name,
       result.accuracy.toFixed(4),
@@ -273,6 +332,8 @@ async function main(): Promise<void> {
   console.log(`Best policy: ${bestPolicy.name}`)
   console.log(`Preference accuracy: ${bestPolicy.accuracy.toFixed(4)} (${bestPolicy.pairs.length} pairs)`)
   console.log(`Preference min margin: ${bestPolicy.minMargin.toFixed(3)}`)
+  console.log(`Target selector preference accuracy: ${bestTargetSelectorPolicy.accuracy.toFixed(4)} (${bestTargetSelectorPolicy.pairs.length} pairs)`)
+  console.log(`Target selector preference min margin: ${bestTargetSelectorPolicy.minMargin.toFixed(3)}`)
   if (check.checkOnly) console.log('Preference policy gates passed')
 }
 

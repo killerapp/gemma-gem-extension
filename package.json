@@ -47,7 +47,7 @@
     "benchmark:traces:preferences": "tsx benchmarks/web-control-plane/build-preference-pairs.ts",
     "benchmark:traces:preferences:check": "tsx benchmarks/web-control-plane/check-preferences.ts --min-pairs 71 --min-buckets 25 --min-tasks 19 --min-read-pairs 42 --min-click-pairs 16 --min-type-pairs 13 --min-target-selector-pairs 6 --min-target-selector-values 2 --min-target-selector-buckets 5",
     "benchmark:traces:preferences:policy": "tsx benchmarks/web-control-plane/evaluate-preference-policy.ts",
-    "benchmark:traces:preferences:policy:check": "tsx benchmarks/web-control-plane/evaluate-preference-policy.ts --check-only --require-best-policy semantic_keyword --min-accuracy 1 --min-pairs 71 --min-margin 3",
+    "benchmark:traces:preferences:policy:check": "tsx benchmarks/web-control-plane/evaluate-preference-policy.ts --check-only --require-best-policy semantic_keyword --min-accuracy 1 --min-pairs 71 --min-margin 3 --min-target-selector-accuracy 1 --min-target-selector-pairs 6 --min-target-selector-margin 10",
     "benchmark:traces:reranker": "tsx benchmarks/web-control-plane/build-reranker-preferences.ts",
     "benchmark:traces:reranker:check": "tsx benchmarks/web-control-plane/check-reranker-preferences.ts --min-pairs 71 --min-buckets 25 --min-tasks 19 --min-chosen-a 36 --min-chosen-b 35 --min-target-selector-pairs 6 --min-target-selector-values 2 --min-target-selector-buckets 5",
     "benchmark:traces:reranker:baseline": "tsx benchmarks/web-control-plane/evaluate-reranker-baseline.ts",
