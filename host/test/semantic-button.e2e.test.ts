@@ -12,6 +12,7 @@ import type { BridgeEvent, BridgeRequest } from '../../shared/bridge-messages'
 
 const REPO_ROOT = resolve(fileURLToPath(import.meta.url), '..', '..', '..')
 const TOKEN = 'test-token-semantic-button'
+let fakeExtractAttempts = 0
 
 async function getFreePort(): Promise<number> {
   const server = createServer()
@@ -131,6 +132,30 @@ function handleFakeBridgeRequest(request: BridgeRequest): BridgeEvent | BridgeEv
 
     case 'bridge:run_agent': {
       assert.equal(request.tabId, 7)
+      if (request.prompt.includes('gemma_extract')) {
+        fakeExtractAttempts += 1
+        assert.match(request.prompt, /Requested schema:/)
+        if (fakeExtractAttempts === 1) {
+          return {
+            type: 'bridge:response',
+            requestId: request.requestId,
+            result: {
+              text: '{"plans":[{"name":"Starter"},{"name":"Team","price":"$49/month"}]}',
+            },
+          }
+        }
+
+        assert.match(request.prompt, /failed the requested schema validation/)
+        assert.match(request.prompt, /\$\.plans\[0\]\.price is required/)
+        return {
+          type: 'bridge:response',
+          requestId: request.requestId,
+          result: {
+            text: '{"plans":[{"name":"Starter","price":"$19/month"},{"name":"Team","price":"$49/month"}]}',
+          },
+        }
+      }
+
       assert.match(request.prompt, /collaborating with another AI model over MCP/)
       assert.match(request.prompt, /get proof of last payment/i)
       return [
@@ -197,6 +222,7 @@ function toolText(result: Awaited<ReturnType<Client['callTool']>>): string {
 }
 
 test('HTTP sidecar delegates semantic button task through the bridge', async (t) => {
+  fakeExtractAttempts = 0
   const port = await getFreePort()
   const child = spawn(process.execPath, ['--import', 'tsx', 'host/src/index.ts', '--http'], {
     cwd: REPO_ROOT,
@@ -314,6 +340,35 @@ test('HTTP sidecar delegates semantic button task through the bridge', async (t)
   assert.equal(rankPayload.best.candidate.selector, '#download-receipt')
   assert.ok(rankPayload.ranked[0].score > rankPayload.ranked[1].score)
 
+  const extractResult = await client.callTool({
+    name: 'gemma_extract',
+    arguments: {
+      tabId: 7,
+      instruction: 'extract pricing plans',
+      schema: {
+        type: 'object',
+        properties: {
+          plans: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                name: { type: 'string' },
+                price: { type: 'string' },
+              },
+              required: ['name', 'price'],
+            },
+          },
+        },
+        required: ['plans'],
+      },
+    },
+  })
+  const extractPayload = JSON.parse(toolText(extractResult)) as { plans: Array<{ name: string; price: string }> }
+  assert.equal(fakeExtractAttempts, 2)
+  assert.equal(extractPayload.plans[0].price, '$19/month')
+  assert.equal(extractPayload.plans[1].price, '$49/month')
+
   const result = await client.callTool({
     name: 'gemma_agent',
     arguments: {
@@ -326,6 +381,7 @@ test('HTTP sidecar delegates semantic button task through the bridge', async (t)
 
   assert.match(toolText(result), /#download-receipt/)
   assert.match(toolText(result), /INV-2026-041/)
-  assert.equal(fakeExtension.requests.filter(request => request.type === 'bridge:run_agent').length, 1)
+  assert.equal(fakeExtension.requests.filter(request => request.type === 'bridge:run_agent').length, 3)
+  assert.equal(fakeExtension.requests.filter(request => request.type === 'bridge:run_agent' && request.prompt.includes('collaborating with another AI model over MCP')).length, 1)
   assert.equal(fakeExtension.requests.filter(request => request.type === 'bridge:execute_tool' && request.name === 'click_element').length, 1)
 })

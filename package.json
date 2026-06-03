@@ -17,6 +17,7 @@
     "shared/action-reranker.ts",
     "shared/bridge-messages.ts",
     "shared/bridge-settings.ts",
+    "shared/json-schema.ts",
     "shared/messages.ts",
     "shared/models.ts",
     "README.md",

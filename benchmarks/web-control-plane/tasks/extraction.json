@@ -28,6 +28,7 @@
     "expect": {
       "json": "object",
       "contains": ["Starter", "$19", "Team", "$49"],
+      "schemaValid": true,
       "minPlans": 2
     }
   }

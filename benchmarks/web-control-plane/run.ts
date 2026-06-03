@@ -11,6 +11,7 @@ import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/
 import { WebSocket } from 'ws'
 import type { BridgeEvent, BridgeRequest } from '../../shared/bridge-messages'
 import type { BridgeActivityMessage } from '../../shared/messages'
+import { jsonSchemaErrors, parseJsonText } from '../../shared/json-schema'
 
 const REPO_ROOT = resolve(fileURLToPath(import.meta.url), '..', '..', '..')
 const BENCH_ROOT = resolve(REPO_ROOT, 'benchmarks', 'web-control-plane')
@@ -165,11 +166,6 @@ function toolText(result: any): string {
 function hasImage(result: any, mimeType: string): boolean {
   const content = Array.isArray(result?.content) ? result.content : []
   return content.some((item: any) => item.type === 'image' && item.mimeType === mimeType)
-}
-
-function parseJsonText(text: string): unknown {
-  const trimmed = text.trim()
-  return JSON.parse(trimmed)
 }
 
 function percentile(values: number[], p: number): number {
@@ -1169,6 +1165,20 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
     if (typeof expect.minPlans === 'number' && parsedJson?.plans?.length < expect.minPlans) {
       notes.push(`expected at least ${expect.minPlans} plans`)
       jsonOk = false
+    }
+
+    if (expect.schemaValid === true) {
+      const schema = taskForCall.arguments.schema
+      if (!schema || typeof schema !== 'object' || Array.isArray(schema)) {
+        notes.push('schemaValid expectation requires task arguments.schema')
+        jsonOk = false
+      } else {
+        const schemaErrors = jsonSchemaErrors(text, schema as Record<string, unknown>)
+        if (schemaErrors.length > 0) {
+          notes.push(`schema validation failed: ${schemaErrors.slice(0, 4).join('; ')}`)
+          jsonOk = false
+        }
+      }
     }
 
     if (expect.destinationValues && typeof expect.destinationValues === 'object') {

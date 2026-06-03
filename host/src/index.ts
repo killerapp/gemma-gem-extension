@@ -18,6 +18,7 @@ import {
   type RerankerActionInput,
   type RerankerWeightsArtifact,
 } from '../../shared/action-reranker'
+import { jsonSchemaErrors, normalizeJsonText } from '../../shared/json-schema'
 
 const BRIDGE_TOKEN = process.env.GEMMA_GEM_BRIDGE_TOKEN
 const BRIDGE_PORT = parsePort(process.env.GEMMA_GEM_BRIDGE_PORT)
@@ -377,17 +378,6 @@ function textFromAgentResult(result: unknown): string {
     return result.text
   }
   return typeof result === 'string' ? result : JSON.stringify(result, null, 2)
-}
-
-function normalizeJsonText(text: string): string {
-  const trimmed = text.trim()
-  const fenced = trimmed.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/i)
-  const candidate = fenced ? fenced[1].trim() : trimmed
-  try {
-    return JSON.stringify(JSON.parse(candidate))
-  } catch {
-    return trimmed
-  }
 }
 
 function isTransientModelRuntimeError(text: string): boolean {
@@ -792,7 +782,30 @@ function registerTools(server: McpServer): void {
       prompt,
       settings: { thinking: false, maxIterations: 6 },
     })
-    return asTextResult(normalizeJsonText(textFromAgentResult(result)))
+    let normalized = normalizeJsonText(textFromAgentResult(result))
+
+    if (schema) {
+      const errors = jsonSchemaErrors(normalized, schema)
+      if (errors.length > 0) {
+        const retryPrompt = [
+          prompt,
+          '',
+          'The previous extraction JSON failed the requested schema validation.',
+          'Return ONLY corrected valid JSON for the same extraction request.',
+          'Validation errors:',
+          ...errors.slice(0, 12).map(error => `- ${error}`),
+        ].join('\n')
+        const retryResult = await sendJsonAgentRequest({
+          type: 'bridge:run_agent',
+          tabId,
+          prompt: retryPrompt,
+          settings: { thinking: false, maxIterations: 4 },
+        })
+        normalized = normalizeJsonText(textFromAgentResult(retryResult))
+      }
+    }
+
+    return asTextResult(normalized)
   })
 
   server.registerTool('gemma_agent', {
