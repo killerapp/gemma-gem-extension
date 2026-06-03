@@ -61,6 +61,36 @@
   },
   {
     "task": {
+      "id": "semantic-observed-act",
+      "suite": "semantic-buttons",
+      "title": "Execute observed receipt action without generation",
+      "tool": "gemma_act"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#download-invoice",
+      "text": "click_element selector=#download-invoice",
+      "title": "observed invoice action"
+    }
+  },
+  {
+    "task": {
+      "id": "semantic-observed-act",
+      "suite": "semantic-buttons",
+      "title": "Execute observed receipt action without generation",
+      "tool": "gemma_act"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#payment-settings",
+      "text": "click_element selector=#payment-settings",
+      "title": "observed settings action"
+    }
+  },
+  {
+    "task": {
       "id": "extract-pricing-json",
       "suite": "extraction",
       "title": "Extract pricing cards as strict JSON",

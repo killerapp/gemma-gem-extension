@@ -157,7 +157,7 @@ export function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredReco
       reasons.push('receipt_goal_selector')
     }
     if ((record.action.selector?.includes('invoice') || record.action.selector?.includes('settings')) && (baseTaskTokens.has('proof') || baseTaskTokens.has('receipt'))) {
-      score -= 5
+      score -= 6
       reasons.push('distractor_billing_selector')
     }
     if (record.action.selector?.includes('settings') && (baseTaskTokens.has('proof') || baseTaskTokens.has('receipt'))) {

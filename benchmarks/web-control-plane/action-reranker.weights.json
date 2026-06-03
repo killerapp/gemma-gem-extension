@@ -9,9 +9,9 @@
     "epochs": 40
   },
   "training": {
-    "pairs": 57,
-    "buckets": 16,
-    "tasks": 10,
+    "pairs": 59,
+    "buckets": 17,
+    "tasks": 11,
     "suites": 6
   },
   "metrics": {
@@ -20,25 +20,25 @@
       {
         "name": "semantic_keyword",
         "accuracy": 1,
-        "pairs": 57,
+        "pairs": 59,
         "minMargin": 2
       },
       {
         "name": "learned_perceptron",
         "accuracy": 1,
-        "pairs": 57,
+        "pairs": 59,
         "minMargin": 14
       },
       {
         "name": "learned_perceptron_loto",
         "accuracy": 1,
-        "pairs": 57,
+        "pairs": 59,
         "minMargin": 10
       },
       {
         "name": "learned_perceptron_loso",
         "accuracy": 1,
-        "pairs": 57,
+        "pairs": 59,
         "minMargin": 10
       }
     ]
