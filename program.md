@@ -1343,6 +1343,15 @@ June 3, 2026 navigation body-text read coverage result:
 - The default real-agent run on the recreated persistent profile passed 99/99 with `actions_per_success 1.31`, `p95_task_seconds 4.906`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 130 raw positive records from 83 tasks and 199 training records from 92 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 isolated navigation body-text read coverage result:
+
+- Added frozen `navigation/read-isolated-navigation-body-text`, proving exact `gemma_read_page` body text reads on logical tab 106 expose isolated navigation link text and the scroll target without leaking HTML ids or unrelated fixture identifiers.
+- The task complements the isolated navigation page brief, body HTML read, exact isolated billing-link read, isolated active-tab and screenshot contracts, and the main navigation body-text read with a one-action full-page text contract.
+- Baseline local before the task stayed green at 99/99 with `actions_per_success 1.29` and `p95_task_seconds 0.006`; after adding the content-read task, local passed 100/100 with `actions_per_success 1.29` and `p95_task_seconds 0.005`.
+- Real smoke passed 90/90 with `actions_per_success 1.16`, `p95_task_seconds 0.532`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; the first real-agent run discarded at 98/100 after existing semantic invoice/settings agent misses while the new isolated body-text contract and all deterministic tasks passed.
+- The real-agent retry passed 100/100 with `actions_per_success 1.31`, `p95_task_seconds 4.429`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 131 raw positive records from 84 tasks and 200 training records from 93 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

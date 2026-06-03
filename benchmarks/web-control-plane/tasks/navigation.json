@@ -511,6 +511,35 @@
     }
   },
   {
+    "id": "read-isolated-navigation-body-text",
+    "suite": "navigation",
+    "title": "Read isolated navigation body text",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 106,
+      "selector": "body",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Settings", "Billing", "Scroll target reached"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["settings-link", "billing-link", "scroll-target", "download-receipt", "dest-name", "data-plan"]
+      },
+      "contains": ["Settings", "Billing", "Scroll target reached"],
+      "notContains": ["settings-link", "billing-link", "scroll-target", "download-receipt", "dest-name", "data-plan"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "scroll-contract",
     "suite": "navigation",
     "title": "Scroll page changes viewport position",

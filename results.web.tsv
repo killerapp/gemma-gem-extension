@@ -584,3 +584,8 @@ ed19166	real-chrome-extension-agent	96	1.0000	1.0000	1.0000	1.0000	1.32	0.007	4.
 6fa0757	real-chrome-extension-agent	99	0.9495	0.9495	1.0000	1.0000	1.33	0.008	4.318	0.0000	0.127	discard	navigation body text screenshot retry real agent
 6fa0757	real-chrome-extension-agent	99	1.0000	1.0000	1.0000	1.0000	1.31	0.008	4.297	0.0000	178.834	discard	navigation body text fresh profile diagnostic
 6fa0757	real-chrome-extension-agent	99	1.0000	1.0000	1.0000	1.0000	1.31	0.009	4.906	0.0000	148.459	keep	navigation body text real agent clean profile
+7dc0fcb	local-fake-extension	99	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.006	0.0000	0.000	baseline	isolated navigation body text baseline local
+7dc0fcb	local-fake-extension	100	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	keep	isolated navigation body text local
+7dc0fcb	real-chrome-extension-smoke	90	1.0000	1.0000	1.0000	1.0000	1.16	0.008	0.532	0.0000	0.000	keep	isolated navigation body text real smoke
+7dc0fcb	real-chrome-extension-agent	100	0.9800	0.9800	1.0000	1.0000	1.26	0.008	0.572	0.0000	0.333	discard	isolated navigation body text real agent
+7dc0fcb	real-chrome-extension-agent	100	1.0000	1.0000	1.0000	1.0000	1.31	0.008	4.429	0.0000	0.093	keep	isolated navigation body text real agent retry
