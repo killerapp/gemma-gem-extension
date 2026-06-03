@@ -194,7 +194,7 @@ export function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredReco
         score += 2
         reasons.push('field_title_selector_match')
       } else if (alignment === 'mismatch') {
-        score -= 4
+        score -= 6
         reasons.push('field_title_selector_mismatch')
       }
     }

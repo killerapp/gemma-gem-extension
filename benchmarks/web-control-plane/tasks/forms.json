@@ -1,5 +1,25 @@
 [
   {
+    "id": "type-text-recover-selector",
+    "suite": "forms",
+    "title": "Recover a name text-like type selector",
+    "tool": "gemma_type_text",
+    "arguments": {
+      "tabId": 104,
+      "selector": "text=Name",
+      "text": "Grace Hopper"
+    },
+    "expect": {
+      "contains": ["recoveredSelector", "#dest-name", "Grace Hopper"],
+      "destinationValues": {
+        "#dest-name": "Grace Hopper"
+      },
+      "bridgeExecuteTool": "type_text",
+      "bridgeExecuteSelector": "#dest-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "transfer-profile-fields",
     "suite": "forms",
     "title": "Transfer account fields between tabs",

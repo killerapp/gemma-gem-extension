@@ -661,6 +661,61 @@ async function clickWithSelectorRecovery(tabId: number | undefined, selector: st
   }
 }
 
+async function typeTextWithSelectorRecovery(tabId: number | undefined, selector: string, text: string, clear: boolean): Promise<unknown> {
+  const preflightRecovery = looksLikeTextSelector(selector)
+    ? await recoverClickSelector(tabId, selector)
+    : undefined
+  if (preflightRecovery?.selector) {
+    const result = await sendBridgeRequest({
+      type: 'bridge:execute_tool',
+      tabId,
+      name: 'type_text',
+      arguments: { selector: preflightRecovery.selector, text, clear },
+    })
+    return {
+      recovered: true,
+      originalSelector: selector,
+      recoveredSelector: preflightRecovery.selector,
+      recoveryDescription: preflightRecovery.description,
+      result,
+    }
+  }
+
+  const firstResult = await sendBridgeRequest({
+    type: 'bridge:execute_tool',
+    tabId,
+    name: 'type_text',
+    arguments: { selector, text, clear },
+  })
+  const error = toolResultError(firstResult)
+  if (!error) return firstResult
+
+  const recovered = await recoverClickSelector(tabId, selector)
+  if (!recovered?.selector) {
+    return {
+      error,
+      selector,
+      recovered: false,
+      message: 'Type selector failed and no matching form control was found.',
+    }
+  }
+
+  const retryResult = await sendBridgeRequest({
+    type: 'bridge:execute_tool',
+    tabId,
+    name: 'type_text',
+    arguments: { selector: recovered.selector, text, clear },
+  })
+  return {
+    recovered: true,
+    originalSelector: selector,
+    recoveredSelector: recovered.selector,
+    recoveryDescription: recovered.description,
+    firstError: error,
+    result: retryResult,
+  }
+}
+
 const MULTI_ACTION_SEQUENCER_PATTERN = /\b(?:and\s+then|then|after\s+that|next|followed\s+by)\b/i
 const ACTION_VERBS = new Set([
   'click',
@@ -1020,12 +1075,7 @@ function registerTools(server: McpServer): void {
       text: z.string().describe('Text to type.'),
       clear: z.boolean().optional().describe('Clear the existing field value before typing. Defaults to true.'),
     },
-  }, async ({ tabId, selector, text, clear }) => asTextResult(await sendBridgeRequest({
-    type: 'bridge:execute_tool',
-    tabId,
-    name: 'type_text',
-    arguments: { selector, text, clear: clear ?? true },
-  })))
+  }, async ({ tabId, selector, text, clear }) => asTextResult(await typeTextWithSelectorRecovery(tabId, selector, text, clear ?? true)))
 
   server.registerTool('gemma_select_option', {
     description: 'Select an option from a dropdown in the target browser tab by option value or visible label.',

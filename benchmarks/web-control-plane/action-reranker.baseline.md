@@ -5,9 +5,9 @@ The machine-readable learned weights are written to `./benchmarks/web-control-pl
 
 ## Metrics
 
-- reranker_pairs: 61
-- reranker_buckets: 18
-- reranker_tasks: 12
+- reranker_pairs: 62
+- reranker_buckets: 19
+- reranker_tasks: 13
 - epochs: 40
 - best_policy: learned_perceptron
 - best_accuracy: 1.0000
@@ -17,10 +17,10 @@ The machine-readable learned weights are written to `./benchmarks/web-control-pl
 
 | policy | accuracy | pairs | min_margin |
 | --- | ---: | ---: | ---: |
-| semantic_keyword | 1.0000 | 61 | 2.000 |
-| learned_perceptron | 1.0000 | 61 | 14.000 |
-| learned_perceptron_loto | 1.0000 | 61 | 10.000 |
-| learned_perceptron_loso | 1.0000 | 61 | 10.000 |
+| semantic_keyword | 1.0000 | 62 | 2.000 |
+| learned_perceptron | 1.0000 | 62 | 14.000 |
+| learned_perceptron_loto | 1.0000 | 62 | 10.000 |
+| learned_perceptron_loso | 1.0000 | 62 | 10.000 |
 
 ## Learned Weights
 
@@ -116,6 +116,7 @@ The machine-readable learned weights are written to `./benchmarks/web-control-pl
 | 58 | forms | transfer-profile-fields | type_text | candidate_a:#dest-name | candidate_b:#dest-name | 35.000 |
 | 59 | forms | transfer-profile-fields | type_text | candidate_b:#dest-email | candidate_a:#dest-email | 31.000 |
 | 60 | forms | transfer-profile-fields | type_text | candidate_a:#dest-email | candidate_b:#dest-name | 27.000 |
+| 61 | forms | type-text-recover-selector | type_text | candidate_b:#dest-name | candidate_a:#dest-email | 32.000 |
 
 ## Pair Rankings (learned_perceptron_loso)
 
@@ -182,6 +183,7 @@ The machine-readable learned weights are written to `./benchmarks/web-control-pl
 | 58 | forms | transfer-profile-fields | type_text | candidate_a:#dest-name | candidate_b:#dest-name | 35.000 |
 | 59 | forms | transfer-profile-fields | type_text | candidate_b:#dest-email | candidate_a:#dest-email | 31.000 |
 | 60 | forms | transfer-profile-fields | type_text | candidate_a:#dest-email | candidate_b:#dest-name | 27.000 |
+| 61 | forms | type-text-recover-selector | type_text | candidate_b:#dest-name | candidate_a:#dest-email | 32.000 |
 
 ## Interpretation
 

@@ -456,6 +456,9 @@ class FakeExtension implements HarnessProbe {
       case 'type_text': {
         const selector = String(args.selector)
         const text = String(args.text ?? '')
+        if (!this.selectorExists(selector)) {
+          return this.response(request.requestId, { error: `No element found for selector: ${selector}` })
+        }
         this.values.set(`${tabId}:${selector}`, text)
         return this.response(request.requestId, { typed: text, into: selector })
       }
@@ -514,6 +517,24 @@ class FakeExtension implements HarnessProbe {
       return this.value(103, selector)
     }
     if (tabId === 104) {
+      if (selector === 'body' && format === 'html') {
+        return [
+          '<main>',
+          '<label>Name <input id="dest-name" name="name"></label>',
+          '<label>Email <input id="dest-email" name="email"></label>',
+          '<button id="save-profile">Save profile</button>',
+          '<p id="save-result"></p>',
+          '</main>',
+        ].join('\n')
+      }
+      if (selector === 'body') {
+        return [
+          'Name',
+          'Email',
+          'Save profile',
+          this.value(104, '#save-result'),
+        ].filter(Boolean).join('\n')
+      }
       return this.value(104, selector)
     }
     return ''

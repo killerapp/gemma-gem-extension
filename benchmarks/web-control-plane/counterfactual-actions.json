@@ -121,6 +121,21 @@
   },
   {
     "task": {
+      "id": "type-text-recover-selector",
+      "suite": "forms",
+      "title": "Recover a name text-like type selector",
+      "tool": "gemma_type_text"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "type_text",
+      "selector": "#dest-email",
+      "text": "type_text selector=#dest-email textLength=12",
+      "title": "destination for name field"
+    }
+  },
+  {
+    "task": {
       "id": "extract-pricing-json",
       "suite": "extraction",
       "title": "Extract pricing cards as strict JSON",
