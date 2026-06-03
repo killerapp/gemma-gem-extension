@@ -1,6 +1,21 @@
 [
   {
     "task": {
+      "id": "semantic-receipt-agent",
+      "suite": "semantic-buttons",
+      "title": "Choose the receipt proof button",
+      "tool": "gemma_agent"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#download-receipt",
+      "text": "click_element selector=#download-receipt",
+      "title": "receipt proof button"
+    }
+  },
+  {
+    "task": {
       "id": "semantic-observe-json",
       "suite": "semantic-buttons",
       "title": "Observe the receipt action as valid JSON",

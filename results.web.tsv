@@ -67,3 +67,7 @@ fa86e6b	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	2.43	0.023	20.
 5c1b693	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.008	0.0000	0.000	baseline	local-fake-extension benchmark run
 e10d1d7	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	2.43	0.026	20.726	0.0000	0.577	baseline	real-chrome-extension-agent benchmark run
 ebaf6f0	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.006	0.009	0.0000	0.000	keep	direct observed-action act path
+c0b024b	local-fake-extension	8	1.0000	1.0000	1.0000	1.0000	2.25	0.005	0.010	0.0000	0.000	keep	benchmarked observed-action act contract
+c0b024b	real-chrome-extension-smoke	5	0.8000	0.8000	1.0000	1.0000	2.00	0.010	0.061	0.0000	0.000	discard	real click activity matcher missed compact selector
+c0b024b	real-chrome-extension-smoke	5	1.0000	1.0000	1.0000	1.0000	1.80	0.012	0.064	0.0000	0.000	keep	real smoke observed-action act contract
+c0b024b	local-fake-extension	8	1.0000	1.0000	1.0000	1.0000	2.25	0.004	0.009	0.0000	0.000	keep	benchmarked observed-action act contract

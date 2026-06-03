@@ -27,19 +27,19 @@
         "name": "learned_perceptron",
         "accuracy": 1,
         "pairs": 57,
-        "minMargin": 9
+        "minMargin": 14
       },
       {
         "name": "learned_perceptron_loto",
         "accuracy": 1,
         "pairs": 57,
-        "minMargin": 9
+        "minMargin": 10
       },
       {
         "name": "learned_perceptron_loso",
         "accuracy": 1,
         "pairs": 57,
-        "minMargin": 9
+        "minMargin": 10
       }
     ]
   },
@@ -50,6 +50,10 @@
     },
     {
       "feature": "action_token=body",
+      "weight": 1
+    },
+    {
+      "feature": "action_token=bridge",
       "weight": 1
     },
     {
@@ -67,6 +71,10 @@
     {
       "feature": "action_token=email",
       "weight": -2
+    },
+    {
+      "feature": "action_token=execute",
+      "weight": 1
     },
     {
       "feature": "action_token=field",
@@ -110,6 +118,10 @@
     },
     {
       "feature": "action_token=submit",
+      "weight": 1
+    },
+    {
+      "feature": "action_token=tool",
       "weight": 1
     },
     {
@@ -237,8 +249,16 @@
       "weight": 1
     },
     {
+      "feature": "task_action=as:bridge",
+      "weight": 1
+    },
+    {
       "feature": "task_action=as:data",
       "weight": -1
+    },
+    {
+      "feature": "task_action=as:execute",
+      "weight": 1
     },
     {
       "feature": "task_action=as:invoice",
@@ -263,6 +283,10 @@
     {
       "feature": "task_action=as:starter",
       "weight": -1
+    },
+    {
+      "feature": "task_action=as:tool",
+      "weight": 1
     },
     {
       "feature": "task_action=billing:billing",
@@ -305,8 +329,16 @@
       "weight": 1
     },
     {
+      "feature": "task_action=cards:bridge",
+      "weight": 1
+    },
+    {
       "feature": "task_action=cards:data",
       "weight": -1
+    },
+    {
+      "feature": "task_action=cards:execute",
+      "weight": 1
     },
     {
       "feature": "task_action=cards:plan",
@@ -323,6 +355,10 @@
     {
       "feature": "task_action=cards:starter",
       "weight": -1
+    },
+    {
+      "feature": "task_action=cards:tool",
+      "weight": 1
     },
     {
       "feature": "task_action=checkout:billing",
@@ -437,8 +473,16 @@
       "weight": 1
     },
     {
+      "feature": "task_action=extract:bridge",
+      "weight": 1
+    },
+    {
       "feature": "task_action=extract:data",
       "weight": -1
+    },
+    {
+      "feature": "task_action=extract:execute",
+      "weight": 1
     },
     {
       "feature": "task_action=extract:plan",
@@ -455,6 +499,10 @@
     {
       "feature": "task_action=extract:starter",
       "weight": -1
+    },
+    {
+      "feature": "task_action=extract:tool",
+      "weight": 1
     },
     {
       "feature": "task_action=fields:billing",
@@ -537,6 +585,10 @@
       "weight": 1
     },
     {
+      "feature": "task_action=gemma:bridge",
+      "weight": 1
+    },
+    {
       "feature": "task_action=gemma:button",
       "weight": 1
     },
@@ -551,6 +603,10 @@
     {
       "feature": "task_action=gemma:email",
       "weight": -2
+    },
+    {
+      "feature": "task_action=gemma:execute",
+      "weight": 1
     },
     {
       "feature": "task_action=gemma:field",
@@ -597,6 +653,10 @@
       "weight": 1
     },
     {
+      "feature": "task_action=gemma:tool",
+      "weight": 1
+    },
+    {
       "feature": "task_action=into:billing",
       "weight": -1
     },
@@ -637,8 +697,16 @@
       "weight": 1
     },
     {
+      "feature": "task_action=json:bridge",
+      "weight": 1
+    },
+    {
       "feature": "task_action=json:data",
       "weight": -1
+    },
+    {
+      "feature": "task_action=json:execute",
+      "weight": 1
     },
     {
       "feature": "task_action=json:invoice",
@@ -665,6 +733,10 @@
       "weight": -1
     },
     {
+      "feature": "task_action=json:tool",
+      "weight": 1
+    },
+    {
       "feature": "task_action=observe:invoice",
       "weight": -1
     },
@@ -677,8 +749,16 @@
       "weight": 1
     },
     {
+      "feature": "task_action=pricing:bridge",
+      "weight": 1
+    },
+    {
       "feature": "task_action=pricing:data",
       "weight": -1
+    },
+    {
+      "feature": "task_action=pricing:execute",
+      "weight": 1
     },
     {
       "feature": "task_action=pricing:plan",
@@ -695,6 +775,10 @@
     {
       "feature": "task_action=pricing:starter",
       "weight": -1
+    },
+    {
+      "feature": "task_action=pricing:tool",
+      "weight": 1
     },
     {
       "feature": "task_action=receipt:invoice",
@@ -753,8 +837,16 @@
       "weight": 1
     },
     {
+      "feature": "task_action=strict:bridge",
+      "weight": 1
+    },
+    {
       "feature": "task_action=strict:data",
       "weight": -1
+    },
+    {
+      "feature": "task_action=strict:execute",
+      "weight": 1
     },
     {
       "feature": "task_action=strict:plan",
@@ -771,6 +863,10 @@
     {
       "feature": "task_action=strict:starter",
       "weight": -1
+    },
+    {
+      "feature": "task_action=strict:tool",
+      "weight": 1
     },
     {
       "feature": "task_action=the:invoice",

@@ -32,7 +32,7 @@ function clickElement(args: Record<string, unknown>): ToolResponse {
   element.click()
   const tag = element.tagName.toLowerCase()
   const text = element.textContent?.slice(0, 50) || ''
-  return { name: 'click_element', result: { clicked: `${tag}: ${text}` } }
+  return { name: 'click_element', result: { clicked: `${tag}: ${text}`, selector } }
 }
 
 function typeText(args: Record<string, unknown>): ToolResponse {

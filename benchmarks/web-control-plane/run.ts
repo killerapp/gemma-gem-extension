@@ -465,7 +465,8 @@ class FakeExtension implements HarnessProbe {
           const email = this.value(104, '#dest-email')
           this.values.set('104:#save-result', `Saved ${name} <${email}>`)
         }
-        return this.response(request.requestId, { clicked: selector })
+        const label = selector === '#download-receipt' ? 'button: Receipt PDF' : selector
+        return this.response(request.requestId, { clicked: label, selector })
       }
       case 'select_option':
         return this.response(request.requestId, { selected: args.value ?? args.label })
@@ -707,7 +708,13 @@ class RealChromeHarness implements HarnessProbe {
     if (selector === '#save-profile') {
       return (await this.value(104, '#save-result')).includes('Saved')
     }
-    return false
+    const activities = await this.bridgeActivityForDiagnostics()
+    return activities.some(activity =>
+      activity.status === 'tool' &&
+      activity.toolName === 'click_element' &&
+      typeof activity.text === 'string' &&
+      (activity.text.includes(`"selector":"${selector}"`) || activity.text.includes(`selector=${selector}`))
+    )
   }
 
   async close(): Promise<void> {
@@ -1188,6 +1195,10 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
     if (expect.bridgeRunAgent === true && harness.supportsBridgeRequestLog) {
       const sawRunAgent = harness.requestsSince(startRequestCount).some(request => request.type === 'bridge:run_agent')
       if (!sawRunAgent) notes.push('expected bridge:run_agent request')
+    }
+    if (expect.bridgeRunAgent === false && harness.supportsBridgeRequestLog) {
+      const sawRunAgent = harness.requestsSince(startRequestCount).some(request => request.type === 'bridge:run_agent')
+      if (sawRunAgent) notes.push('unexpected bridge:run_agent request')
     }
 
     if (typeof expect.activeTabId === 'number') {

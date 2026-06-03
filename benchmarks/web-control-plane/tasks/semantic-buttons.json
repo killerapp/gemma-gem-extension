@@ -31,6 +31,29 @@
     }
   },
   {
+    "id": "semantic-observed-act",
+    "suite": "semantic-buttons",
+    "title": "Execute observed receipt action without generation",
+    "tool": "gemma_act",
+    "arguments": {
+      "tabId": 101,
+      "action": {
+        "description": "Receipt PDF (#download-receipt)",
+        "method": "click",
+        "arguments": ["#download-receipt"],
+        "selector": "#download-receipt",
+        "confidence": 0.97
+      }
+    },
+    "expect": {
+      "contains": ["#download-receipt", "Receipt PDF"],
+      "selector": "#download-receipt",
+      "clicked": "#download-receipt",
+      "bridgeExecuteTool": "click_element",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "semantic-page-brief",
     "suite": "semantic-buttons",
     "title": "Brief exposes meaningful billing controls",
