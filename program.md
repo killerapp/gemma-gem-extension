@@ -1175,6 +1175,14 @@ June 3, 2026 navigation isolated page-brief coverage result:
 - Real smoke passed 69/69 with `actions_per_success 1.23`, `p95_task_seconds 0.052`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 79/79 with `actions_per_success 1.42`, `p95_task_seconds 4.920`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 112 raw positive records from 67 tasks and 181 training records from 76 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 extraction page-brief no-controls coverage result:
+
+- Added frozen `extraction/pricing-page-brief-no-controls`, proving `gemma_page_brief` reads pricing fixture content on logical tab 102 while returning zero interactive controls.
+- The task complements scoped extraction/read coverage by freezing body-level text+HTML readback for a non-interactive page, catching false positive control extraction from plain pricing content.
+- Baseline local before the task stayed green at 79/79 with `actions_per_success 1.39` and `p95_task_seconds 0.005`; after adding the page-brief task, local passed 80/80 with `actions_per_success 1.40` and `p95_task_seconds 0.005`.
+- Real smoke passed 70/70 with `actions_per_success 1.24`, `p95_task_seconds 0.037`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 80/80 with `actions_per_success 1.43`, `p95_task_seconds 4.172`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 114 raw positive records from 68 tasks and 183 training records from 77 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
