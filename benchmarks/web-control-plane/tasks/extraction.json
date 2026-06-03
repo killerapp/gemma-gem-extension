@@ -44,6 +44,7 @@
       "minPlans": 2,
       "actions": 3,
       "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "gemma_extract"],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",
       "bridgeRunAgent": true
@@ -84,6 +85,7 @@
       "schemaValid": true,
       "actions": 3,
       "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent"],
+      "actionTraceTextIncludes": ["selector=.plan[data-plan=\"team\"] format=text", "selector=.plan[data-plan=\"team\"] format=html", "Scope selector: .plan[data-plan=\"team\"]"],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": ".plan[data-plan=\"team\"]",
       "bridgeRunAgent": true

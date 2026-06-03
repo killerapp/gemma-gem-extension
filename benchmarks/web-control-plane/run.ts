@@ -1590,6 +1590,17 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
       strict = false
     }
   }
+  const expectedActionTraceTextIncludes = stringArray(modeExpectationValue(task.expect, 'actionTraceTextIncludes', 'actionTraceTextIncludesByMode', harness.mode))
+  if (expectedActionTraceTextIncludes.length > 0) {
+    for (const [index, expectedText] of expectedActionTraceTextIncludes.entries()) {
+      const actualText = actionTrace[index]?.text ?? ''
+      if (!actualText.includes(expectedText)) {
+        notes.push(`expected action trace ${index} text to include ${JSON.stringify(expectedText)}, got ${JSON.stringify(actualText)}`)
+        success = false
+        strict = false
+      }
+    }
+  }
   const toolErrors = harness.toolErrorCount() - startErrorCount
 
   return {

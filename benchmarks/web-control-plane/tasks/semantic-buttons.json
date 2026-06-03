@@ -20,6 +20,10 @@
       "actionTraceToolsByMode": {
         "real-chrome-extension-agent": ["read_page_content", "read_page_content", "gemma_agent", "click_element"]
       },
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model"],
+      "actionTraceTextIncludesByMode": {
+        "real-chrome-extension-agent": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model", "#download-receipt"]
+      },
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",
       "bridgeRunAgent": true
