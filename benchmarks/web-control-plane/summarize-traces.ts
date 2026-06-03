@@ -15,6 +15,7 @@ type TraceRecord = {
     suite: string
     title: string
     tool: string
+    targetSelector?: string
   }
   outcome: {
     success: boolean
@@ -42,6 +43,7 @@ type TaskSummary = {
   positive: number
   negative: number
   selectors: Set<string>
+  targetSelectors: Set<string>
   actions: Set<string>
 }
 
@@ -113,12 +115,14 @@ async function main(): Promise<void> {
   const byTask = new Map<string, TaskSummary>()
   const byTool = new Map<string, number>()
   const bySelector = new Map<string, number>()
+  const byTargetSelector = new Map<string, number>()
   const byActionStatus = new Map<string, number>()
   const candidateBuckets = new Map<string, CandidateBucket>()
 
   let positives = 0
   let negatives = 0
   let selectorRecords = 0
+  let targetSelectorRecords = 0
   let clickRecords = 0
   for (const record of records) {
     if (record.label === 'positive') positives += 1
@@ -131,6 +135,10 @@ async function main(): Promise<void> {
     if (record.action.selector) {
       selectorRecords += 1
       increment(bySelector, record.action.selector)
+    }
+    if (record.task.targetSelector) {
+      targetSelectorRecords += 1
+      increment(byTargetSelector, record.task.targetSelector)
     }
     if (record.action.toolName === 'click_element' || String(record.action.text ?? '').includes('click_element')) {
       clickRecords += 1
@@ -150,12 +158,14 @@ async function main(): Promise<void> {
       positive: 0,
       negative: 0,
       selectors: new Set<string>(),
+      targetSelectors: new Set<string>(),
       actions: new Set<string>(),
     }
     task.records += 1
     if (record.label === 'positive') task.positive += 1
     if (record.label === 'negative') task.negative += 1
     if (record.action.selector) task.selectors.add(record.action.selector)
+    if (record.task.targetSelector) task.targetSelectors.add(record.task.targetSelector)
     task.actions.add(actionName)
     byTask.set(record.task.id, task)
   }
@@ -171,6 +181,7 @@ async function main(): Promise<void> {
   lines.push(`- positive_records: ${positives}`)
   lines.push(`- negative_records: ${negatives}`)
   lines.push(`- selector_records: ${selectorRecords}`)
+  lines.push(`- target_selector_records: ${targetSelectorRecords}`)
   lines.push(`- click_records: ${clickRecords}`)
   lines.push(`- task_count: ${byTask.size}`)
   lines.push(`- candidate_buckets: ${candidateBuckets.size}`)
@@ -179,8 +190,8 @@ async function main(): Promise<void> {
   lines.push('')
   lines.push('## Task Coverage')
   lines.push('')
-  lines.push(tableRow(['task', 'suite', 'tool', 'records', 'positive', 'negative', 'selectors', 'actions']))
-  lines.push(tableRow(['---', '---', '---', '---:', '---:', '---:', '---:', '---']))
+  lines.push(tableRow(['task', 'suite', 'tool', 'records', 'positive', 'negative', 'selectors', 'target_selectors', 'actions']))
+  lines.push(tableRow(['---', '---', '---', '---:', '---:', '---:', '---:', '---', '---']))
   for (const [taskId, task] of [...byTask.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
     lines.push(tableRow([
       taskId,
@@ -190,6 +201,7 @@ async function main(): Promise<void> {
       task.positive,
       task.negative,
       task.selectors.size,
+      [...task.targetSelectors].sort().join(', '),
       [...task.actions].sort().join(', '),
     ]))
   }
@@ -208,6 +220,14 @@ async function main(): Promise<void> {
   lines.push(tableRow(['---', '---:']))
   for (const [selector, count] of sortedEntries(bySelector)) {
     lines.push(tableRow([selector, count]))
+  }
+  lines.push('')
+  lines.push('## Target Selector Coverage')
+  lines.push('')
+  lines.push(tableRow(['target_selector', 'records']))
+  lines.push(tableRow(['---', '---:']))
+  for (const [targetSelector, count] of sortedEntries(byTargetSelector)) {
+    lines.push(tableRow([targetSelector, count]))
   }
   lines.push('')
   lines.push('## Candidate Pair Coverage')
@@ -236,6 +256,9 @@ async function main(): Promise<void> {
   } else if (selectorRecords === 0) {
     lines.push('- No selector-bearing records are represented. Selector-grounding training is not possible from this export yet.')
   }
+  if (targetSelectorRecords === 0) {
+    lines.push('- No scoped target selectors are represented. Scoped selector/reranker training cannot verify requested target context.')
+  }
   if (negatives > 0 && clickRecords > 0 && selectorRecords > 0) {
     lines.push('- Basic positive/negative, click, and selector coverage is present.')
   }
@@ -254,6 +277,7 @@ async function main(): Promise<void> {
   console.log(`Records: ${records.length}`)
   console.log(`Tasks: ${byTask.size}`)
   console.log(`Selectors: ${selectorRecords}`)
+  console.log(`Target selectors: ${targetSelectorRecords}`)
   console.log(`Clicks: ${clickRecords}`)
 }
 
