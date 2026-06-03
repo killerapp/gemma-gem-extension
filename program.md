@@ -1067,6 +1067,15 @@ June 3, 2026 semantic invoice recovery coverage result:
 - Real smoke passed 59/59 with `actions_per_success 1.36`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 65/65 with `actions_per_success 1.46`, `p95_task_seconds 4.150`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 95 raw positive records from 59 tasks and 157 training records from 67 tasks, while candidate buckets rose to 76 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 semantic invoice rerank coverage result:
+
+- Added frozen `semantic-buttons/rank-invoice-actions`, proving runtime `gemma_rank_actions` ranks `#download-invoice` above receipt and payment-settings billing distractors for an invoice download request.
+- The first local run was discarded at 65/66 because the checked weights still preferred `#download-receipt`; the kept fix adds invoice-positive billing-control training pairs and a shared `billing_control_goal` match/mismatch reranker feature rather than weakening the benchmark assertion.
+- Updated the deterministic trace policy baseline with symmetric invoice/settings billing-control rules and updated the reranker weights gate to require the new billing match/mismatch features while keeping policy accuracy and margin floors intact.
+- Baseline local before the task stayed green at 65/65 with `actions_per_success 1.46` and `p95_task_seconds 0.005`; after the reranker fix, local passed 66/66 with `actions_per_success 1.44` and `p95_task_seconds 0.006`.
+- Real smoke passed 60/60 with `actions_per_success 1.33`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 66/66 with `actions_per_success 1.44`, `p95_task_seconds 4.111`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Raw action traces remain at 95 positive records from 59 tasks because the new rank task is zero-action; training traces now cover 164 records from 68 tasks, 117 positive and 47 negative records, 77 candidate buckets, 28 paired buckets, and 77 preference/reranker pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

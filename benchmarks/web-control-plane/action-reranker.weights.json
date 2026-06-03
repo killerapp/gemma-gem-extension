@@ -9,9 +9,9 @@
     "epochs": 40
   },
   "training": {
-    "pairs": 71,
-    "buckets": 25,
-    "tasks": 19,
+    "pairs": 77,
+    "buckets": 28,
+    "tasks": 22,
     "suites": 8
   },
   "metrics": {
@@ -20,25 +20,25 @@
       {
         "name": "semantic_keyword",
         "accuracy": 1,
-        "pairs": 71,
+        "pairs": 77,
         "minMargin": 3
       },
       {
         "name": "learned_perceptron",
         "accuracy": 1,
-        "pairs": 71,
+        "pairs": 77,
         "minMargin": 14
       },
       {
         "name": "learned_perceptron_loto",
         "accuracy": 1,
-        "pairs": 71,
+        "pairs": 77,
         "minMargin": 12
       },
       {
         "name": "learned_perceptron_loso",
         "accuracy": 1,
-        "pairs": 71,
+        "pairs": 77,
         "minMargin": 10
       }
     ],
@@ -53,13 +53,13 @@
         "name": "learned_perceptron",
         "accuracy": 1,
         "pairs": 6,
-        "minMargin": 101
+        "minMargin": 110
       },
       {
         "name": "learned_perceptron_loto",
         "accuracy": 1,
         "pairs": 6,
-        "minMargin": 101
+        "minMargin": 108
       },
       {
         "name": "learned_perceptron_loso",
@@ -99,10 +99,6 @@
       "weight": -1
     },
     {
-      "feature": "action_token=download",
-      "weight": 1
-    },
-    {
       "feature": "action_token=email",
       "weight": -1
     },
@@ -123,16 +119,12 @@
       "weight": -2
     },
     {
-      "feature": "action_token=payment",
-      "weight": -1
-    },
-    {
       "feature": "action_token=plan",
       "weight": -1
     },
     {
       "feature": "action_token=receipt",
-      "weight": 2
+      "weight": 1
     },
     {
       "feature": "action_token=recovered",
@@ -144,10 +136,6 @@
     },
     {
       "feature": "action_token=section",
-      "weight": -1
-    },
-    {
-      "feature": "action_token=settings",
       "weight": -1
     },
     {
@@ -173,6 +161,14 @@
     {
       "feature": "action_token=tool",
       "weight": 2
+    },
+    {
+      "feature": "billing_control_goal=match",
+      "weight": 8
+    },
+    {
+      "feature": "billing_control_goal=mismatch",
+      "weight": -8
     },
     {
       "feature": "click_element_selector_role=destination",
@@ -240,18 +236,10 @@
     },
     {
       "feature": "selector_contains=receipt",
-      "weight": 2
-    },
-    {
-      "feature": "selector_contains=save",
       "weight": 1
     },
     {
-      "feature": "selector_contains=settings",
-      "weight": -1
-    },
-    {
-      "feature": "selector_prefix=download",
+      "feature": "selector_contains=save",
       "weight": 1
     },
     {
@@ -275,10 +263,6 @@
       "weight": -1
     },
     {
-      "feature": "selector_token=download",
-      "weight": 1
-    },
-    {
       "feature": "selector_token=invoice",
       "weight": -1
     },
@@ -287,24 +271,16 @@
       "weight": -1
     },
     {
-      "feature": "selector_token=payment",
-      "weight": -1
-    },
-    {
       "feature": "selector_token=plan",
       "weight": -1
     },
     {
       "feature": "selector_token=receipt",
-      "weight": 2
+      "weight": 1
     },
     {
       "feature": "selector_token=save",
       "weight": 1
-    },
-    {
-      "feature": "selector_token=settings",
-      "weight": -1
     },
     {
       "feature": "selector_token=shipping",
@@ -319,22 +295,6 @@
       "weight": 1
     },
     {
-      "feature": "task_action=action:download",
-      "weight": 1
-    },
-    {
-      "feature": "task_action=action:payment",
-      "weight": -1
-    },
-    {
-      "feature": "task_action=action:receipt",
-      "weight": 1
-    },
-    {
-      "feature": "task_action=action:settings",
-      "weight": -1
-    },
-    {
       "feature": "task_action=as:body",
       "weight": 1
     },
@@ -347,31 +307,15 @@
       "weight": -1
     },
     {
-      "feature": "task_action=as:download",
-      "weight": 1
-    },
-    {
       "feature": "task_action=as:execute",
       "weight": 1
-    },
-    {
-      "feature": "task_action=as:payment",
-      "weight": -1
     },
     {
       "feature": "task_action=as:plan",
       "weight": -1
     },
     {
-      "feature": "task_action=as:receipt",
-      "weight": 1
-    },
-    {
       "feature": "task_action=as:section",
-      "weight": -1
-    },
-    {
-      "feature": "task_action=as:settings",
       "weight": -1
     },
     {
@@ -739,10 +683,6 @@
       "weight": -1
     },
     {
-      "feature": "task_action=gemma:download",
-      "weight": 1
-    },
-    {
       "feature": "task_action=gemma:email",
       "weight": -1
     },
@@ -763,16 +703,12 @@
       "weight": -2
     },
     {
-      "feature": "task_action=gemma:payment",
-      "weight": -1
-    },
-    {
       "feature": "task_action=gemma:plan",
       "weight": -1
     },
     {
       "feature": "task_action=gemma:receipt",
-      "weight": 2
+      "weight": 1
     },
     {
       "feature": "task_action=gemma:recovered",
@@ -784,10 +720,6 @@
     },
     {
       "feature": "task_action=gemma:section",
-      "weight": -1
-    },
-    {
-      "feature": "task_action=gemma:settings",
       "weight": -1
     },
     {
@@ -863,31 +795,15 @@
       "weight": -1
     },
     {
-      "feature": "task_action=json:download",
-      "weight": 1
-    },
-    {
       "feature": "task_action=json:execute",
       "weight": 1
-    },
-    {
-      "feature": "task_action=json:payment",
-      "weight": -1
     },
     {
       "feature": "task_action=json:plan",
       "weight": -1
     },
     {
-      "feature": "task_action=json:receipt",
-      "weight": 1
-    },
-    {
       "feature": "task_action=json:section",
-      "weight": -1
-    },
-    {
-      "feature": "task_action=json:settings",
       "weight": -1
     },
     {
@@ -929,22 +845,6 @@
     {
       "feature": "task_action=like:tool",
       "weight": 1
-    },
-    {
-      "feature": "task_action=observe:download",
-      "weight": 1
-    },
-    {
-      "feature": "task_action=observe:payment",
-      "weight": -1
-    },
-    {
-      "feature": "task_action=observe:receipt",
-      "weight": 1
-    },
-    {
-      "feature": "task_action=observe:settings",
-      "weight": -1
     },
     {
       "feature": "task_action=only:starter",
@@ -1023,10 +923,6 @@
       "weight": 1
     },
     {
-      "feature": "task_action=receipt:download",
-      "weight": 1
-    },
-    {
       "feature": "task_action=receipt:execute",
       "weight": 1
     },
@@ -1035,19 +931,11 @@
       "weight": -1
     },
     {
-      "feature": "task_action=receipt:payment",
-      "weight": -1
-    },
-    {
       "feature": "task_action=receipt:receipt",
-      "weight": 2
+      "weight": 1
     },
     {
       "feature": "task_action=receipt:recovered",
-      "weight": -1
-    },
-    {
-      "feature": "task_action=receipt:settings",
       "weight": -1
     },
     {
@@ -1135,10 +1023,6 @@
       "weight": 1
     },
     {
-      "feature": "task_action=semantic:download",
-      "weight": 1
-    },
-    {
       "feature": "task_action=semantic:execute",
       "weight": 1
     },
@@ -1147,19 +1031,11 @@
       "weight": -1
     },
     {
-      "feature": "task_action=semantic:payment",
-      "weight": -1
-    },
-    {
       "feature": "task_action=semantic:receipt",
-      "weight": 2
+      "weight": 1
     },
     {
       "feature": "task_action=semantic:recovered",
-      "weight": -1
-    },
-    {
-      "feature": "task_action=semantic:settings",
       "weight": -1
     },
     {
@@ -1267,22 +1143,6 @@
       "weight": 1
     },
     {
-      "feature": "task_action=the:download",
-      "weight": 1
-    },
-    {
-      "feature": "task_action=the:payment",
-      "weight": -1
-    },
-    {
-      "feature": "task_action=the:receipt",
-      "weight": 1
-    },
-    {
-      "feature": "task_action=the:settings",
-      "weight": -1
-    },
-    {
       "feature": "task_action=the:starter",
       "weight": -1
     },
@@ -1327,38 +1187,6 @@
       "weight": 1
     },
     {
-      "feature": "task_action=valid:download",
-      "weight": 1
-    },
-    {
-      "feature": "task_action=valid:payment",
-      "weight": -1
-    },
-    {
-      "feature": "task_action=valid:receipt",
-      "weight": 1
-    },
-    {
-      "feature": "task_action=valid:settings",
-      "weight": -1
-    },
-    {
-      "feature": "task_selector=action:download",
-      "weight": 1
-    },
-    {
-      "feature": "task_selector=action:payment",
-      "weight": -1
-    },
-    {
-      "feature": "task_selector=action:receipt",
-      "weight": 1
-    },
-    {
-      "feature": "task_selector=action:settings",
-      "weight": -1
-    },
-    {
       "feature": "task_selector=as:body",
       "weight": 1
     },
@@ -1367,23 +1195,7 @@
       "weight": -1
     },
     {
-      "feature": "task_selector=as:download",
-      "weight": 1
-    },
-    {
-      "feature": "task_selector=as:payment",
-      "weight": -1
-    },
-    {
       "feature": "task_selector=as:plan",
-      "weight": -1
-    },
-    {
-      "feature": "task_selector=as:receipt",
-      "weight": 1
-    },
-    {
-      "feature": "task_selector=as:settings",
       "weight": -1
     },
     {
@@ -1547,10 +1359,6 @@
       "weight": -1
     },
     {
-      "feature": "task_selector=gemma:download",
-      "weight": 1
-    },
-    {
       "feature": "task_selector=gemma:invoice",
       "weight": -1
     },
@@ -1559,24 +1367,16 @@
       "weight": -1
     },
     {
-      "feature": "task_selector=gemma:payment",
-      "weight": -1
-    },
-    {
       "feature": "task_selector=gemma:plan",
       "weight": -1
     },
     {
       "feature": "task_selector=gemma:receipt",
-      "weight": 2
+      "weight": 1
     },
     {
       "feature": "task_selector=gemma:save",
       "weight": 1
-    },
-    {
-      "feature": "task_selector=gemma:settings",
-      "weight": -1
     },
     {
       "feature": "task_selector=gemma:shipping",
@@ -1615,23 +1415,7 @@
       "weight": -1
     },
     {
-      "feature": "task_selector=json:download",
-      "weight": 1
-    },
-    {
-      "feature": "task_selector=json:payment",
-      "weight": -1
-    },
-    {
       "feature": "task_selector=json:plan",
-      "weight": -1
-    },
-    {
-      "feature": "task_selector=json:receipt",
-      "weight": 1
-    },
-    {
-      "feature": "task_selector=json:settings",
       "weight": -1
     },
     {
@@ -1645,22 +1429,6 @@
     {
       "feature": "task_selector=like:receipt",
       "weight": 1
-    },
-    {
-      "feature": "task_selector=observe:download",
-      "weight": 1
-    },
-    {
-      "feature": "task_selector=observe:payment",
-      "weight": -1
-    },
-    {
-      "feature": "task_selector=observe:receipt",
-      "weight": 1
-    },
-    {
-      "feature": "task_selector=observe:settings",
-      "weight": -1
     },
     {
       "feature": "task_selector=only:starter",
@@ -1711,24 +1479,12 @@
       "weight": 1
     },
     {
-      "feature": "task_selector=receipt:download",
-      "weight": 1
-    },
-    {
       "feature": "task_selector=receipt:invoice",
       "weight": -1
     },
     {
-      "feature": "task_selector=receipt:payment",
-      "weight": -1
-    },
-    {
       "feature": "task_selector=receipt:receipt",
-      "weight": 2
-    },
-    {
-      "feature": "task_selector=receipt:settings",
-      "weight": -1
+      "weight": 1
     },
     {
       "feature": "task_selector=recover:invoice",
@@ -1763,24 +1519,12 @@
       "weight": 1
     },
     {
-      "feature": "task_selector=semantic:download",
-      "weight": 1
-    },
-    {
       "feature": "task_selector=semantic:invoice",
       "weight": -1
     },
     {
-      "feature": "task_selector=semantic:payment",
-      "weight": -1
-    },
-    {
       "feature": "task_selector=semantic:receipt",
-      "weight": 2
-    },
-    {
-      "feature": "task_selector=semantic:settings",
-      "weight": -1
+      "weight": 1
     },
     {
       "feature": "task_selector=shipping:billing",
@@ -1823,22 +1567,6 @@
       "weight": 1
     },
     {
-      "feature": "task_selector=the:download",
-      "weight": 1
-    },
-    {
-      "feature": "task_selector=the:payment",
-      "weight": -1
-    },
-    {
-      "feature": "task_selector=the:receipt",
-      "weight": 1
-    },
-    {
-      "feature": "task_selector=the:settings",
-      "weight": -1
-    },
-    {
       "feature": "task_selector=the:starter",
       "weight": -1
     },
@@ -1861,22 +1589,6 @@
     {
       "feature": "task_selector=transfer:shipping",
       "weight": 1
-    },
-    {
-      "feature": "task_selector=valid:download",
-      "weight": 1
-    },
-    {
-      "feature": "task_selector=valid:payment",
-      "weight": -1
-    },
-    {
-      "feature": "task_selector=valid:receipt",
-      "weight": 1
-    },
-    {
-      "feature": "task_selector=valid:settings",
-      "weight": -1
     }
   ]
 }

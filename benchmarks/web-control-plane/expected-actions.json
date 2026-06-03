@@ -166,6 +166,21 @@
   },
   {
     "task": {
+      "id": "semantic-invoice-observe-supervised",
+      "suite": "semantic-buttons-supervised",
+      "title": "Observe the invoice download action as JSON",
+      "tool": "gemma_observe"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#download-invoice",
+      "text": "click_element selector=#download-invoice",
+      "title": "observed invoice download action"
+    }
+  },
+  {
+    "task": {
       "id": "semantic-context-read",
       "suite": "semantic-buttons-supervised",
       "title": "Read full payment proof page context",

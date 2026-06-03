@@ -104,6 +104,51 @@
     }
   },
   {
+    "id": "rank-invoice-actions",
+    "suite": "semantic-buttons",
+    "title": "Rank invoice action above billing distractors",
+    "tool": "gemma_rank_actions",
+    "arguments": {
+      "task": {
+        "id": "rank-invoice-actions",
+        "suite": "semantic-buttons",
+        "title": "find the control that downloads the invoice PDF",
+        "tool": "gemma_observe"
+      },
+      "candidates": [
+        {
+          "description": "Receipt PDF (#download-receipt)",
+          "method": "click",
+          "arguments": ["#download-receipt"],
+          "selector": "#download-receipt"
+        },
+        {
+          "description": "Payment settings (#payment-settings)",
+          "method": "click",
+          "arguments": ["#payment-settings"],
+          "selector": "#payment-settings"
+        },
+        {
+          "description": "Invoice PDF (#download-invoice)",
+          "method": "click",
+          "arguments": ["#download-invoice"],
+          "selector": "#download-invoice"
+        }
+      ]
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "best.candidate.selector": "#download-invoice",
+        "model.type": "pairwise_perceptron"
+      },
+      "contains": ["pairwise_perceptron", "action-reranker.weights.json", "#download-invoice"],
+      "bestSelector": "#download-invoice",
+      "actions": 0,
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "read-receipt-button-before-act",
     "suite": "semantic-buttons",
     "title": "Read receipt button by exact selector before act",

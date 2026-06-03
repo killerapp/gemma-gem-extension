@@ -418,3 +418,8 @@ abb6b42	local-fake-extension	64	1.0000	1.0000	1.0000	1.0000	1.44	0.003	0.005	0.0
 abb6b42	local-fake-extension	65	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.007	0.0000	0.000	keep	semantic invoice recovery local
 abb6b42	real-chrome-extension-smoke	59	1.0000	1.0000	1.0000	1.0000	1.36	0.006	0.016	0.0000	0.000	keep	semantic invoice recovery real smoke
 abb6b42	real-chrome-extension-agent	65	1.0000	1.0000	1.0000	1.0000	1.46	0.007	4.150	0.0000	0.001	keep	semantic invoice recovery real agent
+b148f96	local-fake-extension	65	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.005	0.0000	0.000	baseline	semantic invoice rerank baseline local
+b148f96	local-fake-extension	66	0.9848	0.9848	1.0000	1.0000	1.46	0.003	0.006	0.0000	0.000	discard	semantic invoice rerank local
+b148f96	local-fake-extension	66	1.0000	1.0000	1.0000	1.0000	1.44	0.003	0.006	0.0000	0.000	keep	semantic invoice rerank local
+b148f96	real-chrome-extension-smoke	60	1.0000	1.0000	1.0000	1.0000	1.33	0.006	0.011	0.0000	0.000	keep	semantic invoice rerank real smoke
+b148f96	real-chrome-extension-agent	66	1.0000	1.0000	1.0000	1.0000	1.44	0.007	4.111	0.0000	0.001	keep	semantic invoice rerank real agent

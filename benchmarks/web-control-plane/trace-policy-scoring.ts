@@ -162,7 +162,23 @@ export function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredReco
       score += 2
       reasons.push('receipt_goal_selector')
     }
+    if (record.action.selector?.includes('invoice') && baseTaskTokens.has('invoice')) {
+      score += 2
+      reasons.push('invoice_goal_selector')
+    }
+    if (record.action.selector?.includes('settings') && baseTaskTokens.has('settings')) {
+      score += 2
+      reasons.push('settings_goal_selector')
+    }
     if ((record.action.selector?.includes('invoice') || record.action.selector?.includes('settings')) && (baseTaskTokens.has('proof') || baseTaskTokens.has('receipt'))) {
+      score -= 6
+      reasons.push('distractor_billing_selector')
+    }
+    if ((record.action.selector?.includes('receipt') || record.action.selector?.includes('settings')) && baseTaskTokens.has('invoice')) {
+      score -= 6
+      reasons.push('distractor_billing_selector')
+    }
+    if ((record.action.selector?.includes('receipt') || record.action.selector?.includes('invoice')) && baseTaskTokens.has('settings')) {
       score -= 6
       reasons.push('distractor_billing_selector')
     }

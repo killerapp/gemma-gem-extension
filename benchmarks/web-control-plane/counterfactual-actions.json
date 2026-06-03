@@ -106,6 +106,36 @@
   },
   {
     "task": {
+      "id": "semantic-invoice-observed-act",
+      "suite": "semantic-buttons",
+      "title": "Execute observed invoice action without generation",
+      "tool": "gemma_act"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#download-receipt",
+      "text": "click_element selector=#download-receipt",
+      "title": "observed receipt action"
+    }
+  },
+  {
+    "task": {
+      "id": "semantic-invoice-observed-act",
+      "suite": "semantic-buttons",
+      "title": "Execute observed invoice action without generation",
+      "tool": "gemma_act"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#payment-settings",
+      "text": "click_element selector=#payment-settings",
+      "title": "observed settings action"
+    }
+  },
+  {
+    "task": {
       "id": "semantic-click-recover-selector",
       "suite": "semantic-buttons",
       "title": "Recover a receipt text-like click selector",
@@ -124,6 +154,36 @@
       "id": "semantic-click-recover-selector",
       "suite": "semantic-buttons",
       "title": "Recover a receipt text-like click selector",
+      "tool": "gemma_click"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#payment-settings",
+      "text": "click_element selector=#payment-settings",
+      "title": "recovered settings action"
+    }
+  },
+  {
+    "task": {
+      "id": "semantic-invoice-recover-selector",
+      "suite": "semantic-buttons",
+      "title": "Recover an invoice text-like click selector",
+      "tool": "gemma_click"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#download-receipt",
+      "text": "click_element selector=#download-receipt",
+      "title": "recovered receipt action"
+    }
+  },
+  {
+    "task": {
+      "id": "semantic-invoice-recover-selector",
+      "suite": "semantic-buttons",
+      "title": "Recover an invoice text-like click selector",
       "tool": "gemma_click"
     },
     "action": {
@@ -471,6 +531,36 @@
       "id": "semantic-proof-observe",
       "suite": "semantic-buttons-supervised",
       "title": "Observe the payment proof receipt action as JSON",
+      "tool": "gemma_observe"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#payment-settings",
+      "text": "click_element selector=#payment-settings",
+      "title": "observed payment settings action"
+    }
+  },
+  {
+    "task": {
+      "id": "semantic-invoice-observe-supervised",
+      "suite": "semantic-buttons-supervised",
+      "title": "Observe the invoice download action as JSON",
+      "tool": "gemma_observe"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "click_element",
+      "selector": "#download-receipt",
+      "text": "click_element selector=#download-receipt",
+      "title": "observed receipt proof action"
+    }
+  },
+  {
+    "task": {
+      "id": "semantic-invoice-observe-supervised",
+      "suite": "semantic-buttons-supervised",
+      "title": "Observe the invoice download action as JSON",
       "tool": "gemma_observe"
     },
     "action": {

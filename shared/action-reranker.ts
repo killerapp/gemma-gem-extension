@@ -112,6 +112,21 @@ function fieldKind(selector: string): 'name' | 'email' | null {
   return null
 }
 
+function billingGoal(taskTokens: string[]): 'receipt' | 'invoice' | 'settings' | null {
+  const tokenSet = new Set(taskTokens)
+  if (tokenSet.has('invoice')) return 'invoice'
+  if (tokenSet.has('settings')) return 'settings'
+  if (tokenSet.has('receipt') || tokenSet.has('proof')) return 'receipt'
+  return null
+}
+
+function billingSelector(selector: string): 'receipt' | 'invoice' | 'settings' | null {
+  if (selector.includes('invoice')) return 'invoice'
+  if (selector.includes('settings')) return 'settings'
+  if (selector.includes('receipt')) return 'receipt'
+  return null
+}
+
 function expectsFullPageRead(task: ActionRerankerTask): boolean {
   return task.tool === 'gemma_extract' ||
     task.tool === 'gemma_page_brief' ||
@@ -196,6 +211,11 @@ export function actionFeatures(task: ActionRerankerTask, input: RerankerActionIn
   if (action.toolName === 'click_element') {
     const role = clickRole(action.selector)
     if (role) addFeature(features, `click_role=${role}`, 3)
+  }
+  const billingTaskGoal = billingGoal(taskTokens)
+  const billingActionSelector = billingSelector(action.selector)
+  if (billingTaskGoal && billingActionSelector) {
+    addFeature(features, billingTaskGoal === billingActionSelector ? 'billing_control_goal=match' : 'billing_control_goal=mismatch', 8)
   }
   if (action.toolName === 'read_page_content' && expectsFullPageRead(task)) {
     addFeature(features, action.selector === 'body' ? 'full_page_read=body' : 'full_page_read=narrow', 5)
