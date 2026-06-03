@@ -175,3 +175,10 @@ a9fa4fa	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.009	0.0
 a9fa4fa	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.142	0.0000	0.000	keep	action count real smoke
 a9fa4fa	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.007	6.501	0.0000	0.001	keep	action count real agent
 a9fa4fa	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final action count artifacts
+0095b48	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	zero action local baseline
+0095b48	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.009	0.0000	0.000	keep	zero action local benchmark
+0095b48	real-chrome-extension-smoke	15	0.9333	0.9333	1.0000	1.0000	1.50	0.009	0.069	0.0000	0.000	discard	stop action real mismatch
+0095b48	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.009	0.0000	0.000	keep	narrowed zero action local benchmark
+0095b48	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.069	0.0000	0.000	keep	zero action real smoke
+0095b48	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.457	0.0000	0.001	keep	zero action real agent
+0095b48	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final zero action artifacts

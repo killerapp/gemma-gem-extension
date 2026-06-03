@@ -9,6 +9,7 @@
       "json": "array",
       "minItems": 5,
       "contains": ["Billing sandbox", "Pricing sandbox", "Profile source", "Profile destination", "Navigation sandbox"],
+      "actions": 0,
       "bridgeListTabs": true,
       "bridgeRunAgent": false
     }
@@ -29,6 +30,7 @@
       },
       "contains": ["Billing sandbox", "semantic-buttons.html"],
       "activeTabId": 101,
+      "actions": 0,
       "bridgeGetActiveTab": true,
       "bridgeRunAgent": false
     }
@@ -61,6 +63,7 @@
         "local-fake-extension": ["fake-ready"],
         "real-chrome-extension-agent": ["already-loaded"]
       },
+      "actions": 0,
       "bridgeEnsureModelReady": true,
       "bridgeRunAgent": false
     }

@@ -84,6 +84,7 @@
       },
       "contains": ["pairwise_perceptron", "action-reranker.weights.json", "#download-receipt"],
       "bestSelector": "#download-receipt",
+      "actions": 0,
       "bridgeRunAgent": false
     }
   },
@@ -159,6 +160,7 @@
         "instruction": "click the receipt button and then open payment settings"
       },
       "contains": ["ERROR_MULTIPLE_ACTIONS", "gemma_agent"],
+      "actions": 0,
       "bridgeRunAgent": false
     }
   },
