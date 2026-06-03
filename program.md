@@ -581,6 +581,10 @@ Experiment result:
 - `pnpm benchmark:web` passes with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
 - `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.072`, and `timeout_rate 0.0000`.
 - Trace floors remain unchanged after hardening page-brief control fields because the new assertions lock structured metadata in existing page-read traces.
+- The frozen model-shaped JSON tasks now use exact `jsonFields` checks for local fake-extension outputs: `extract-pricing-json` asserts Starter and Team plan names/prices, `extract-scoped-plan-json` asserts the scoped Team plan fields, and `semantic-observe-json` asserts the first two observed click candidates.
+- `pnpm benchmark:web` passes with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
+- `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.074`, and `timeout_rate 0.0000`; default real smoke continues to exclude model-backed extraction and observe tasks.
+- Trace floors remain unchanged after hardening model-shaped JSON fields because the assertions verify output structure without changing browser action traces.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

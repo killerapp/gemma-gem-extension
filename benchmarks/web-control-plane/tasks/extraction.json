@@ -27,6 +27,12 @@
     },
     "expect": {
       "json": "object",
+      "jsonFields": {
+        "plans.0.name": "Starter",
+        "plans.0.price": "$19/month",
+        "plans.1.name": "Team",
+        "plans.1.price": "$49/month"
+      },
       "contains": ["Starter", "$19", "Team", "$49"],
       "schemaValid": true,
       "minPlans": 2,
@@ -61,6 +67,10 @@
     },
     "expect": {
       "json": "object",
+      "jsonFields": {
+        "plan.name": "Team",
+        "plan.price": "$49/month"
+      },
       "contains": ["Team", "$49"],
       "notContains": ["Starter", "$19"],
       "schemaValid": true,

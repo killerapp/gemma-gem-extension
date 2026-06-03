@@ -147,3 +147,6 @@ d986494	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.009	0.0
 b70acbd	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.011	0.0000	0.000	keep	page brief fields local benchmark
 b70acbd	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.072	0.0000	0.000	keep	real smoke page brief fields
 b70acbd	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final page brief field artifacts
+48774af	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	model json fields local benchmark
+48774af	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.007	0.074	0.0000	0.000	keep	real smoke model json fields
+48774af	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.005	0.010	0.0000	0.000	keep	final model json field artifacts

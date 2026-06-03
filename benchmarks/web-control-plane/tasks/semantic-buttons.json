@@ -28,6 +28,12 @@
     },
     "expect": {
       "json": "array",
+      "jsonFields": {
+        "0.selector": "#download-receipt",
+        "0.method": "click",
+        "1.selector": "#payment-settings",
+        "1.method": "click"
+      },
       "selector": "#download-receipt",
       "method": "click",
       "bridgeExecuteTool": "read_page_content",
