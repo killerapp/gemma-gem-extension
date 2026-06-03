@@ -268,6 +268,35 @@
     }
   },
   {
+    "id": "read-navigation-body-html",
+    "suite": "navigation",
+    "title": "Read navigation body HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 105,
+      "selector": "body",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["id=\"settings-link\"", "Settings", "id=\"billing-link\"", "Billing", "id=\"scroll-target\"", "Scroll target reached"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["download-receipt", "dest-name", "data-plan"]
+      },
+      "contains": ["settings-link", "Settings", "billing-link", "Billing", "scroll-target", "Scroll target reached"],
+      "notContains": ["download-receipt", "dest-name", "data-plan"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "read-isolated-navigation-body-html",
     "suite": "navigation",
     "title": "Read isolated navigation body HTML",

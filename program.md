@@ -1231,6 +1231,15 @@ June 3, 2026 navigation isolated HTML read coverage result:
 - Real smoke passed 76/76 with `actions_per_success 1.24`, `p95_task_seconds 0.027`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 86/86 with `actions_per_success 1.41`, `p95_task_seconds 4.133`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 121 raw positive records from 74 tasks and 190 training records from 83 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 navigation primary HTML read coverage result:
+
+- Added frozen `navigation/read-navigation-body-html`, proving direct `gemma_read_page` HTML readback captures the primary navigation fixture before the settings-link click mutates its URL.
+- The task complements page-brief, screenshot, scroll, exact link read, and isolated tab-106 HTML coverage by freezing raw `#settings-link`, `#billing-link`, and `#scroll-target` markup on logical tab 105 while excluding semantic, form, and pricing markup.
+- Baseline local before the task stayed green at 86/86 with `actions_per_success 1.38` and `p95_task_seconds 0.006`; after adding the HTML read task, local passed 87/87 with `actions_per_success 1.38` and `p95_task_seconds 0.006`.
+- Real smoke passed 77/77 with `actions_per_success 1.23`, `p95_task_seconds 0.102`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; the first real-agent attempt was discarded at 85/87 after existing semantic invoice/settings agent tasks missed their expected selectors, while the new navigation read passed.
+- The real-agent retry passed 87/87 with `actions_per_success 1.40`, `p95_task_seconds 4.147`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 122 raw positive records from 75 tasks and 191 training records from 84 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
