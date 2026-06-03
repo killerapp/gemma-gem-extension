@@ -402,3 +402,7 @@ d19ceba	real-chrome-extension-agent	56	1.0000	1.0000	1.0000	1.0000	1.50	0.007	4.
 1b4d700	local-fake-extension	61	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.006	0.0000	0.000	keep	semantic settings read harness parity local
 1b4d700	real-chrome-extension-smoke	55	1.0000	1.0000	1.0000	1.0000	1.35	0.007	0.016	0.0000	0.000	keep	semantic settings read real smoke
 1b4d700	real-chrome-extension-agent	61	1.0000	1.0000	1.0000	1.0000	1.46	0.007	4.179	0.0000	0.001	keep	semantic settings read real agent
+cfb08a8	local-fake-extension	61	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.006	0.0000	0.000	baseline	semantic invoice read baseline local
+cfb08a8	local-fake-extension	62	1.0000	1.0000	1.0000	1.0000	1.45	0.003	0.007	0.0000	0.000	keep	semantic invoice read local
+cfb08a8	real-chrome-extension-smoke	56	1.0000	1.0000	1.0000	1.0000	1.34	0.008	0.016	0.0000	0.000	keep	semantic invoice read real smoke
+cfb08a8	real-chrome-extension-agent	62	1.0000	1.0000	1.0000	1.0000	1.45	0.007	4.164	0.0000	0.001	keep	semantic invoice read real agent
