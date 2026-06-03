@@ -224,3 +224,4 @@ a93c2ee	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.011	0.0
 634f639	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	target selector match summary reporting local benchmark
 02d3cf3	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	target selector match gates local benchmark
 8114fa3	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.005	0.010	0.0000	0.000	keep	target selector bucket gates local benchmark
+6bdc731	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	target selector preference diversity gates local benchmark

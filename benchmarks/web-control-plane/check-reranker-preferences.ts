@@ -61,6 +61,8 @@ type RerankerCheckConfig = {
   minChosenA?: number
   minChosenB?: number
   minTargetSelectorPairs?: number
+  minTargetSelectorValues?: number
+  minTargetSelectorBuckets?: number
 }
 
 function parseNumber(value: string | undefined, label: string): number {
@@ -79,6 +81,8 @@ function parseArgs(): RerankerCheckConfig {
   let minChosenA: number | undefined
   let minChosenB: number | undefined
   let minTargetSelectorPairs: number | undefined
+  let minTargetSelectorValues: number | undefined
+  let minTargetSelectorBuckets: number | undefined
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i]
@@ -119,12 +123,32 @@ function parseArgs(): RerankerCheckConfig {
       i += 1
     } else if (arg.startsWith('--min-target-selector-pairs=')) {
       minTargetSelectorPairs = parseNumber(arg.slice('--min-target-selector-pairs='.length), '--min-target-selector-pairs')
+    } else if (arg === '--min-target-selector-values') {
+      minTargetSelectorValues = parseNumber(value, '--min-target-selector-values')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-values=')) {
+      minTargetSelectorValues = parseNumber(arg.slice('--min-target-selector-values='.length), '--min-target-selector-values')
+    } else if (arg === '--min-target-selector-buckets') {
+      minTargetSelectorBuckets = parseNumber(value, '--min-target-selector-buckets')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-buckets=')) {
+      minTargetSelectorBuckets = parseNumber(arg.slice('--min-target-selector-buckets='.length), '--min-target-selector-buckets')
     } else {
       throw new Error(`Unknown argument ${arg}. Use --input <path> and --min-* coverage options.`)
     }
   }
 
-  return { input, minPairs, minBuckets, minTasks, minChosenA, minChosenB, minTargetSelectorPairs }
+  return {
+    input,
+    minPairs,
+    minBuckets,
+    minTasks,
+    minChosenA,
+    minChosenB,
+    minTargetSelectorPairs,
+    minTargetSelectorValues,
+    minTargetSelectorBuckets,
+  }
 }
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -208,7 +232,17 @@ function assertAtLeast(actual: number, minimum: number | undefined, label: strin
 }
 
 async function main(): Promise<void> {
-  const { input, minPairs, minBuckets, minTasks, minChosenA, minChosenB, minTargetSelectorPairs } = parseArgs()
+  const {
+    input,
+    minPairs,
+    minBuckets,
+    minTasks,
+    minChosenA,
+    minChosenB,
+    minTargetSelectorPairs,
+    minTargetSelectorValues,
+    minTargetSelectorBuckets,
+  } = parseArgs()
   if (!existsSync(input)) throw new Error(`Reranker preference export not found: ${input}`)
 
   const lines = (await readFile(input, 'utf8'))
@@ -222,6 +256,8 @@ async function main(): Promise<void> {
   let chosenA = 0
   let chosenB = 0
   let targetSelectorPairs = 0
+  const targetSelectorValues = new Set<string>()
+  const targetSelectorBuckets = new Set<string>()
 
   for (let i = 0; i < lines.length; i += 1) {
     const record = JSON.parse(lines[i]) as RerankerPreferenceRecord
@@ -279,7 +315,11 @@ async function main(): Promise<void> {
     tasks.add(taskId)
     if (chosen.id === 'candidate_a') chosenA += 1
     if (chosen.id === 'candidate_b') chosenB += 1
-    if (typeof record.task.targetSelector === 'string') targetSelectorPairs += 1
+    if (typeof record.task.targetSelector === 'string') {
+      targetSelectorPairs += 1
+      targetSelectorValues.add(record.task.targetSelector)
+      targetSelectorBuckets.add(`${bucketTaskId}:${bucketToolName}`)
+    }
   }
 
   assertAtLeast(lines.length, minPairs, 'reranker preference pairs')
@@ -288,6 +328,8 @@ async function main(): Promise<void> {
   assertAtLeast(chosenA, minChosenA, 'chosen candidate_a pairs')
   assertAtLeast(chosenB, minChosenB, 'chosen candidate_b pairs')
   assertAtLeast(targetSelectorPairs, minTargetSelectorPairs, 'target selector reranker pairs')
+  assertAtLeast(targetSelectorValues.size, minTargetSelectorValues, 'target selector values')
+  assertAtLeast(targetSelectorBuckets.size, minTargetSelectorBuckets, 'target selector reranker buckets')
 
   console.log(`Checked ${lines.length} reranker preference pairs`)
   console.log(`Reranker buckets: ${buckets.size}`)
@@ -295,6 +337,8 @@ async function main(): Promise<void> {
   console.log(`Chosen candidate_a: ${chosenA}`)
   console.log(`Chosen candidate_b: ${chosenB}`)
   if (minTargetSelectorPairs !== undefined) console.log(`Target selector pairs: ${targetSelectorPairs}`)
+  if (minTargetSelectorValues !== undefined) console.log(`Target selector values: ${targetSelectorValues.size}`)
+  if (minTargetSelectorBuckets !== undefined) console.log(`Target selector buckets: ${targetSelectorBuckets.size}`)
 }
 
 main().catch(error => {
