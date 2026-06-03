@@ -539,3 +539,7 @@ b803408	real-chrome-extension-agent	89	1.0000	1.0000	1.0000	1.0000	1.38	0.007	4.
 673354e	local-fake-extension	90	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	keep	pricing screenshot local
 673354e	real-chrome-extension-smoke	80	1.0000	1.0000	1.0000	1.0000	1.21	0.007	0.122	0.0000	0.000	keep	pricing screenshot real smoke
 673354e	real-chrome-extension-agent	90	1.0000	1.0000	1.0000	1.0000	1.38	0.006	4.158	0.0000	0.001	keep	pricing screenshot real agent
+e1537f7	local-fake-extension	90	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	baseline	source screenshot baseline local
+e1537f7	local-fake-extension	91	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.006	0.0000	0.000	keep	source screenshot local
+e1537f7	real-chrome-extension-smoke	81	1.0000	1.0000	1.0000	1.0000	1.21	0.007	0.124	0.0000	0.000	keep	source screenshot real smoke
+e1537f7	real-chrome-extension-agent	91	1.0000	1.0000	1.0000	1.0000	1.37	0.007	4.221	0.0000	0.001	keep	source screenshot real agent
