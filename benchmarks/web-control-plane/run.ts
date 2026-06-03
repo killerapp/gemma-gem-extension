@@ -1985,6 +1985,17 @@ async function writeReport(results: TaskResult[], summary: ReturnType<typeof sum
       row.description,
     ].map(markdownTableCell).join(' | ')).map(row => `| ${row} |`),
   ]
+  const nextExperimentLines = summary.successRate < 1 || summary.timeoutRate > 0 || summary.modelReady.status === 'error'
+    ? [
+        '1. Classify the latest failed tasks from `benchmark.web.jsonl` and keep the frozen assertions unchanged.',
+        '2. Reproduce the failing mode with the same direct command shown at the top of this report.',
+        '3. Add the smallest diagnostic or recovery path that explains the failure before changing prompts.',
+      ]
+    : [
+        '1. Re-run `pnpm benchmark:web:real` to keep deterministic real-extension smoke current.',
+        '2. Re-run `pnpm benchmark:web:real:agent` to keep model-backed real-extension coverage current.',
+        '3. Add the next frozen task or trace coverage target only after the current local, real-smoke, and real-agent suites stay green.',
+      ]
   const lines = [
     '# Web Control Plane Benchmark',
     '',
@@ -2036,6 +2047,18 @@ async function writeReport(results: TaskResult[], summary: ReturnType<typeof sum
     `Current mode: \`${mode}\`.`,
     '',
     modeDescription,
+    '',
+    '## Recommended Commands',
+    '',
+    `- Reproduce this report: \`${reportCommand}\``,
+    '- Fast sidecar contract suite: `pnpm benchmark:web`',
+    '- Deterministic real-extension smoke: `pnpm benchmark:web:real`',
+    '- Model-backed real-extension suite: `pnpm benchmark:web:real:agent`',
+    '- Standard verification: `pnpm compile && pnpm test`',
+    '',
+    '## Next Experiments',
+    '',
+    ...nextExperimentLines,
     '',
     'Install/update the local browser runtime with `pnpm browser:install`. Launch a persistent manual debug profile with `pnpm browser:debug`.',
     '',
