@@ -39,6 +39,7 @@ type RerankerWeightsArtifact = {
   metrics?: {
     bestPolicy?: unknown
     policies?: unknown
+    targetSelectorPolicies?: unknown
   }
   weights?: unknown
 }
@@ -53,6 +54,12 @@ type CheckConfig = {
   minPolicyMargin?: number
   minRecomputedAccuracy?: number
   minRecomputedMargin?: number
+  requiredTargetSelectorPolicy?: string
+  minTargetSelectorPolicyPairs?: number
+  minTargetSelectorPolicyAccuracy?: number
+  minTargetSelectorPolicyMargin?: number
+  minTargetSelectorRecomputedAccuracy?: number
+  minTargetSelectorRecomputedMargin?: number
   requiredFeatures: string[]
 }
 
@@ -74,6 +81,12 @@ function parseArgs(): CheckConfig {
   let minPolicyMargin: number | undefined
   let minRecomputedAccuracy: number | undefined
   let minRecomputedMargin: number | undefined
+  let requiredTargetSelectorPolicy: string | undefined
+  let minTargetSelectorPolicyPairs: number | undefined
+  let minTargetSelectorPolicyAccuracy: number | undefined
+  let minTargetSelectorPolicyMargin: number | undefined
+  let minTargetSelectorRecomputedAccuracy: number | undefined
+  let minTargetSelectorRecomputedMargin: number | undefined
   const requiredFeatures: string[] = []
 
   for (let i = 0; i < args.length; i += 1) {
@@ -127,6 +140,37 @@ function parseArgs(): CheckConfig {
       i += 1
     } else if (arg.startsWith('--min-recomputed-margin=')) {
       minRecomputedMargin = parseNumber(arg.slice('--min-recomputed-margin='.length), '--min-recomputed-margin')
+    } else if (arg === '--require-target-selector-policy') {
+      if (!value) throw new Error('--require-target-selector-policy requires a policy name')
+      requiredTargetSelectorPolicy = value
+      i += 1
+    } else if (arg.startsWith('--require-target-selector-policy=')) {
+      requiredTargetSelectorPolicy = arg.slice('--require-target-selector-policy='.length)
+    } else if (arg === '--min-target-selector-policy-pairs') {
+      minTargetSelectorPolicyPairs = parseNumber(value, '--min-target-selector-policy-pairs')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-policy-pairs=')) {
+      minTargetSelectorPolicyPairs = parseNumber(arg.slice('--min-target-selector-policy-pairs='.length), '--min-target-selector-policy-pairs')
+    } else if (arg === '--min-target-selector-policy-accuracy') {
+      minTargetSelectorPolicyAccuracy = parseNumber(value, '--min-target-selector-policy-accuracy')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-policy-accuracy=')) {
+      minTargetSelectorPolicyAccuracy = parseNumber(arg.slice('--min-target-selector-policy-accuracy='.length), '--min-target-selector-policy-accuracy')
+    } else if (arg === '--min-target-selector-policy-margin') {
+      minTargetSelectorPolicyMargin = parseNumber(value, '--min-target-selector-policy-margin')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-policy-margin=')) {
+      minTargetSelectorPolicyMargin = parseNumber(arg.slice('--min-target-selector-policy-margin='.length), '--min-target-selector-policy-margin')
+    } else if (arg === '--min-target-selector-recomputed-accuracy') {
+      minTargetSelectorRecomputedAccuracy = parseNumber(value, '--min-target-selector-recomputed-accuracy')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-recomputed-accuracy=')) {
+      minTargetSelectorRecomputedAccuracy = parseNumber(arg.slice('--min-target-selector-recomputed-accuracy='.length), '--min-target-selector-recomputed-accuracy')
+    } else if (arg === '--min-target-selector-recomputed-margin') {
+      minTargetSelectorRecomputedMargin = parseNumber(value, '--min-target-selector-recomputed-margin')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-recomputed-margin=')) {
+      minTargetSelectorRecomputedMargin = parseNumber(arg.slice('--min-target-selector-recomputed-margin='.length), '--min-target-selector-recomputed-margin')
     } else if (arg === '--require-feature') {
       if (!value) throw new Error('--require-feature requires a feature name')
       requiredFeatures.push(value)
@@ -134,11 +178,28 @@ function parseArgs(): CheckConfig {
     } else if (arg.startsWith('--require-feature=')) {
       requiredFeatures.push(arg.slice('--require-feature='.length))
     } else {
-      throw new Error(`Unknown argument ${arg}. Use --input, --preferences-input, --min-pairs, --min-weights, --require-policy, --min-policy-accuracy, --min-policy-margin, --min-recomputed-accuracy, --min-recomputed-margin, and --require-feature.`)
+      throw new Error(`Unknown argument ${arg}. Use --input, --preferences-input, --min-pairs, --min-weights, --require-policy, --min-policy-accuracy, --min-policy-margin, --min-recomputed-accuracy, --min-recomputed-margin, target-selector metric options, and --require-feature.`)
     }
   }
 
-  return { input, preferencesInput, minPairs, minWeights, requiredPolicy, minPolicyAccuracy, minPolicyMargin, minRecomputedAccuracy, minRecomputedMargin, requiredFeatures }
+  return {
+    input,
+    preferencesInput,
+    minPairs,
+    minWeights,
+    requiredPolicy,
+    minPolicyAccuracy,
+    minPolicyMargin,
+    minRecomputedAccuracy,
+    minRecomputedMargin,
+    requiredTargetSelectorPolicy,
+    minTargetSelectorPolicyPairs,
+    minTargetSelectorPolicyAccuracy,
+    minTargetSelectorPolicyMargin,
+    minTargetSelectorRecomputedAccuracy,
+    minTargetSelectorRecomputedMargin,
+    requiredFeatures,
+  }
 }
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -158,6 +219,28 @@ function assertString(value: unknown, label: string): string {
 function assertNumber(value: unknown, label: string): number {
   assert(typeof value === 'number' && Number.isFinite(value), `${label} must be a finite number`)
   return value
+}
+
+function policyMetricLabel(policyName: string | undefined, field: string): string {
+  return policyName ? `${policyName}.${field}` : field
+}
+
+function assertPolicyMetric(policy: PolicyMetric, policyName: string | undefined, check: {
+  minPairs?: number
+  minAccuracy?: number
+  minMargin?: number
+}): void {
+  assertAtLeast(assertNumber(policy.pairs, policyMetricLabel(policyName, 'pairs')), check.minPairs, policyMetricLabel(policyName, 'pairs'))
+  assertAtLeast(assertNumber(policy.accuracy, policyMetricLabel(policyName, 'accuracy')), check.minAccuracy, policyMetricLabel(policyName, 'accuracy'))
+  assertAtLeast(assertNumber(policy.minMargin, policyMetricLabel(policyName, 'minMargin')), check.minMargin, policyMetricLabel(policyName, 'minMargin'))
+}
+
+function accuracyAndMinMargin(margins: number[]): { accuracy: number; minMargin: number } {
+  const correct = margins.reduce((sum, margin) => sum + (margin > 0 ? 1 : margin === 0 ? 0.5 : 0), 0)
+  return {
+    accuracy: margins.length ? correct / margins.length : 0,
+    minMargin: margins.length ? Math.min(...margins) : 0,
+  }
 }
 
 async function readPreferences(path: string): Promise<RerankerPreferenceRecord[]> {
@@ -195,8 +278,24 @@ async function main(): Promise<void> {
     : undefined
   if (check.requiredPolicy) assert(policy, `required policy not found: ${check.requiredPolicy}`)
   if (policy) {
-    assertAtLeast(assertNumber(policy.accuracy, `${check.requiredPolicy}.accuracy`), check.minPolicyAccuracy, `${check.requiredPolicy}.accuracy`)
-    assertAtLeast(assertNumber(policy.minMargin, `${check.requiredPolicy}.minMargin`), check.minPolicyMargin, `${check.requiredPolicy}.minMargin`)
+    assertPolicyMetric(policy, check.requiredPolicy, {
+      minAccuracy: check.minPolicyAccuracy,
+      minMargin: check.minPolicyMargin,
+    })
+  }
+
+  assert(Array.isArray(artifact.metrics?.targetSelectorPolicies), 'metrics.targetSelectorPolicies must be an array')
+  const targetSelectorPolicies = artifact.metrics.targetSelectorPolicies as PolicyMetric[]
+  const targetSelectorPolicy = check.requiredTargetSelectorPolicy
+    ? targetSelectorPolicies.find(candidate => candidate.name === check.requiredTargetSelectorPolicy)
+    : undefined
+  if (check.requiredTargetSelectorPolicy) assert(targetSelectorPolicy, `required target selector policy not found: ${check.requiredTargetSelectorPolicy}`)
+  if (targetSelectorPolicy) {
+    assertPolicyMetric(targetSelectorPolicy, check.requiredTargetSelectorPolicy, {
+      minPairs: check.minTargetSelectorPolicyPairs,
+      minAccuracy: check.minTargetSelectorPolicyAccuracy,
+      minMargin: check.minTargetSelectorPolicyMargin,
+    })
   }
 
   assert(Array.isArray(artifact.weights), 'weights must be an array')
@@ -221,9 +320,7 @@ async function main(): Promise<void> {
   assert(preferences.length === pairs, `preference pair count ${preferences.length} does not match weights training.pairs ${pairs}`)
   const weightMap = new Map(weights.map(weight => [weight.feature as string, weight.weight as number]))
   const margins = preferences.map(pair => learnedMargin(pair, weightMap).margin)
-  const correct = margins.reduce((sum, margin) => sum + (margin > 0 ? 1 : margin === 0 ? 0.5 : 0), 0)
-  const recomputedAccuracy = margins.length ? correct / margins.length : 0
-  const recomputedMinMargin = margins.length ? Math.min(...margins) : 0
+  const { accuracy: recomputedAccuracy, minMargin: recomputedMinMargin } = accuracyAndMinMargin(margins)
   assertAtLeast(recomputedAccuracy, check.minRecomputedAccuracy, 'recomputed_accuracy')
   assertAtLeast(recomputedMinMargin, check.minRecomputedMargin, 'recomputed_min_margin')
   const learnedPolicy = policies.find(candidate => candidate.name === 'learned_perceptron')
@@ -232,12 +329,28 @@ async function main(): Promise<void> {
     assert(recomputedMinMargin === learnedPolicy.minMargin, `recomputed min margin ${recomputedMinMargin} does not match learned_perceptron metric ${learnedPolicy.minMargin}`)
   }
 
+  const targetSelectorPreferences = preferences.filter(pair => Boolean(pair.task.targetSelector))
+  const targetSelectorMargins = targetSelectorPreferences.map(pair => learnedMargin(pair, weightMap).margin)
+  const { accuracy: targetSelectorRecomputedAccuracy, minMargin: targetSelectorRecomputedMinMargin } = accuracyAndMinMargin(targetSelectorMargins)
+  assertAtLeast(targetSelectorRecomputedAccuracy, check.minTargetSelectorRecomputedAccuracy, 'target_selector_recomputed_accuracy')
+  assertAtLeast(targetSelectorRecomputedMinMargin, check.minTargetSelectorRecomputedMargin, 'target_selector_recomputed_min_margin')
+  const learnedTargetSelectorPolicy = targetSelectorPolicies.find(candidate => candidate.name === 'learned_perceptron')
+  if (learnedTargetSelectorPolicy) {
+    assert(targetSelectorPreferences.length === learnedTargetSelectorPolicy.pairs, `target selector preference pair count ${targetSelectorPreferences.length} does not match learned_perceptron target selector metric ${learnedTargetSelectorPolicy.pairs}`)
+    assert(targetSelectorRecomputedAccuracy === learnedTargetSelectorPolicy.accuracy, `target selector recomputed accuracy ${targetSelectorRecomputedAccuracy} does not match learned_perceptron target selector metric ${learnedTargetSelectorPolicy.accuracy}`)
+    assert(targetSelectorRecomputedMinMargin === learnedTargetSelectorPolicy.minMargin, `target selector recomputed min margin ${targetSelectorRecomputedMinMargin} does not match learned_perceptron target selector metric ${learnedTargetSelectorPolicy.minMargin}`)
+  }
+
   console.log(`Checked reranker weights: ${check.input.replace(REPO_ROOT, '.').replaceAll('\\', '/')}`)
   console.log(`Training pairs: ${pairs}`)
   console.log(`Weights: ${weights.length}`)
   console.log(`Recomputed learned_perceptron: accuracy ${recomputedAccuracy.toFixed(4)}, min margin ${recomputedMinMargin.toFixed(3)}`)
+  console.log(`Recomputed target selector learned_perceptron: accuracy ${targetSelectorRecomputedAccuracy.toFixed(4)} (${targetSelectorPreferences.length} pairs), min margin ${targetSelectorRecomputedMinMargin.toFixed(3)}`)
   if (check.requiredPolicy && policy) {
     console.log(`${check.requiredPolicy}: accuracy ${(policy.accuracy as number).toFixed(4)}, min margin ${(policy.minMargin as number).toFixed(3)}`)
+  }
+  if (check.requiredTargetSelectorPolicy && targetSelectorPolicy) {
+    console.log(`target selector ${check.requiredTargetSelectorPolicy}: accuracy ${(targetSelectorPolicy.accuracy as number).toFixed(4)} (${targetSelectorPolicy.pairs as number} pairs), min margin ${(targetSelectorPolicy.minMargin as number).toFixed(3)}`)
   }
 }
 
