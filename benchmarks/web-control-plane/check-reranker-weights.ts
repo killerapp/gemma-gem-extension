@@ -48,8 +48,13 @@ type CheckConfig = {
   input: string
   preferencesInput: string
   minPairs?: number
+  minBuckets?: number
+  minTasks?: number
+  minSuites?: number
   minWeights?: number
+  requiredBestPolicy?: string
   requiredPolicy?: string
+  minPolicyPairs?: number
   minPolicyAccuracy?: number
   minPolicyMargin?: number
   minRecomputedAccuracy?: number
@@ -75,8 +80,13 @@ function parseArgs(): CheckConfig {
   let input = process.env.GEMMA_GEM_RERANKER_WEIGHTS_OUTPUT ? resolve(process.env.GEMMA_GEM_RERANKER_WEIGHTS_OUTPUT) : DEFAULT_INPUT
   let preferencesInput = process.env.GEMMA_GEM_RERANKER_PREFERENCES_OUTPUT ? resolve(process.env.GEMMA_GEM_RERANKER_PREFERENCES_OUTPUT) : DEFAULT_PREFERENCES_INPUT
   let minPairs: number | undefined
+  let minBuckets: number | undefined
+  let minTasks: number | undefined
+  let minSuites: number | undefined
   let minWeights: number | undefined
+  let requiredBestPolicy: string | undefined
   let requiredPolicy: string | undefined
+  let minPolicyPairs: number | undefined
   let minPolicyAccuracy: number | undefined
   let minPolicyMargin: number | undefined
   let minRecomputedAccuracy: number | undefined
@@ -109,17 +119,43 @@ function parseArgs(): CheckConfig {
       i += 1
     } else if (arg.startsWith('--min-pairs=')) {
       minPairs = parseNumber(arg.slice('--min-pairs='.length), '--min-pairs')
+    } else if (arg === '--min-buckets') {
+      minBuckets = parseNumber(value, '--min-buckets')
+      i += 1
+    } else if (arg.startsWith('--min-buckets=')) {
+      minBuckets = parseNumber(arg.slice('--min-buckets='.length), '--min-buckets')
+    } else if (arg === '--min-tasks') {
+      minTasks = parseNumber(value, '--min-tasks')
+      i += 1
+    } else if (arg.startsWith('--min-tasks=')) {
+      minTasks = parseNumber(arg.slice('--min-tasks='.length), '--min-tasks')
+    } else if (arg === '--min-suites') {
+      minSuites = parseNumber(value, '--min-suites')
+      i += 1
+    } else if (arg.startsWith('--min-suites=')) {
+      minSuites = parseNumber(arg.slice('--min-suites='.length), '--min-suites')
     } else if (arg === '--min-weights') {
       minWeights = parseNumber(value, '--min-weights')
       i += 1
     } else if (arg.startsWith('--min-weights=')) {
       minWeights = parseNumber(arg.slice('--min-weights='.length), '--min-weights')
+    } else if (arg === '--require-best-policy') {
+      if (!value) throw new Error('--require-best-policy requires a policy name')
+      requiredBestPolicy = value
+      i += 1
+    } else if (arg.startsWith('--require-best-policy=')) {
+      requiredBestPolicy = arg.slice('--require-best-policy='.length)
     } else if (arg === '--require-policy') {
       if (!value) throw new Error('--require-policy requires a policy name')
       requiredPolicy = value
       i += 1
     } else if (arg.startsWith('--require-policy=')) {
       requiredPolicy = arg.slice('--require-policy='.length)
+    } else if (arg === '--min-policy-pairs') {
+      minPolicyPairs = parseNumber(value, '--min-policy-pairs')
+      i += 1
+    } else if (arg.startsWith('--min-policy-pairs=')) {
+      minPolicyPairs = parseNumber(arg.slice('--min-policy-pairs='.length), '--min-policy-pairs')
     } else if (arg === '--min-policy-accuracy') {
       minPolicyAccuracy = parseNumber(value, '--min-policy-accuracy')
       i += 1
@@ -186,8 +222,13 @@ function parseArgs(): CheckConfig {
     input,
     preferencesInput,
     minPairs,
+    minBuckets,
+    minTasks,
+    minSuites,
     minWeights,
+    requiredBestPolicy,
     requiredPolicy,
+    minPolicyPairs,
     minPolicyAccuracy,
     minPolicyMargin,
     minRecomputedAccuracy,
@@ -266,11 +307,16 @@ async function main(): Promise<void> {
   assertNumber(artifact.model?.epochs, 'model.epochs')
 
   const pairs = assertNumber(artifact.training?.pairs, 'training.pairs')
-  assertNumber(artifact.training?.buckets, 'training.buckets')
-  assertNumber(artifact.training?.tasks, 'training.tasks')
-  assertNumber(artifact.training?.suites, 'training.suites')
+  const buckets = assertNumber(artifact.training?.buckets, 'training.buckets')
+  const tasks = assertNumber(artifact.training?.tasks, 'training.tasks')
+  const suites = assertNumber(artifact.training?.suites, 'training.suites')
   assertAtLeast(pairs, check.minPairs, 'training.pairs')
+  assertAtLeast(buckets, check.minBuckets, 'training.buckets')
+  assertAtLeast(tasks, check.minTasks, 'training.tasks')
+  assertAtLeast(suites, check.minSuites, 'training.suites')
 
+  const bestPolicy = assertString(artifact.metrics?.bestPolicy, 'metrics.bestPolicy')
+  if (check.requiredBestPolicy) assert(bestPolicy === check.requiredBestPolicy, `bestPolicy ${bestPolicy} does not match required policy ${check.requiredBestPolicy}`)
   assert(Array.isArray(artifact.metrics?.policies), 'metrics.policies must be an array')
   const policies = artifact.metrics.policies as PolicyMetric[]
   const policy = check.requiredPolicy
@@ -279,6 +325,7 @@ async function main(): Promise<void> {
   if (check.requiredPolicy) assert(policy, `required policy not found: ${check.requiredPolicy}`)
   if (policy) {
     assertPolicyMetric(policy, check.requiredPolicy, {
+      minPairs: check.minPolicyPairs,
       minAccuracy: check.minPolicyAccuracy,
       minMargin: check.minPolicyMargin,
     })
@@ -343,7 +390,11 @@ async function main(): Promise<void> {
 
   console.log(`Checked reranker weights: ${check.input.replace(REPO_ROOT, '.').replaceAll('\\', '/')}`)
   console.log(`Training pairs: ${pairs}`)
+  console.log(`Training buckets: ${buckets}`)
+  console.log(`Training tasks: ${tasks}`)
+  console.log(`Training suites: ${suites}`)
   console.log(`Weights: ${weights.length}`)
+  console.log(`Best policy: ${bestPolicy}`)
   console.log(`Recomputed learned_perceptron: accuracy ${recomputedAccuracy.toFixed(4)}, min margin ${recomputedMinMargin.toFixed(3)}`)
   console.log(`Recomputed target selector learned_perceptron: accuracy ${targetSelectorRecomputedAccuracy.toFixed(4)} (${targetSelectorPreferences.length} pairs), min margin ${targetSelectorRecomputedMinMargin.toFixed(3)}`)
   if (check.requiredPolicy && policy) {
