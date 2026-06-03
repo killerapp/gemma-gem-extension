@@ -584,6 +584,51 @@ async function executeObservedAction(action: ObservedAction, tabId: number | und
   })
 }
 
+const MULTI_ACTION_SEQUENCER_PATTERN = /\b(?:and\s+then|then|after\s+that|next|followed\s+by)\b/i
+const ACTION_VERBS = new Set([
+  'click',
+  'choose',
+  'download',
+  'enter',
+  'fill',
+  'go',
+  'navigate',
+  'open',
+  'press',
+  'scroll',
+  'select',
+  'submit',
+  'tap',
+  'type',
+])
+
+function clauseHasActionVerb(clause: string): boolean {
+  return clause
+    .split(/[^a-z0-9]+/i)
+    .filter(Boolean)
+    .some(token => ACTION_VERBS.has(token.toLowerCase()))
+}
+
+function looksLikeMultiActionInstruction(instruction: string): boolean {
+  if (MULTI_ACTION_SEQUENCER_PATTERN.test(instruction)) return true
+
+  let actionClauses = 0
+  for (const clause of instruction.split(/\s*(?:;|,|\band\b|\bplus\b)\s*/i)) {
+    if (!clauseHasActionVerb(clause)) continue
+    actionClauses += 1
+    if (actionClauses > 1) return true
+  }
+  return false
+}
+
+function multiActionValidationResult(instruction: string) {
+  return asTextResult({
+    error: 'ERROR_MULTIPLE_ACTIONS',
+    message: 'gemma_act performs exactly one browser action. Use gemma_agent for multi-step workflows.',
+    instruction,
+  })
+}
+
 async function sendJsonAgentRequest(request: BridgeRequestInput): Promise<unknown> {
   const result = await sendBridgeRequest(request)
   const text = textFromAgentResult(result)
@@ -736,7 +781,11 @@ function registerTools(server: McpServer): void {
       return asTextResult(await executeObservedAction(action satisfies ObservedAction, tabId))
     }
 
-    const actionText = action ? JSON.stringify(action satisfies ObservedAction, null, 2) : instruction
+    const actionText = (instruction ?? '').trim()
+    if (looksLikeMultiActionInstruction(actionText)) {
+      return multiActionValidationResult(actionText)
+    }
+
     const prompt = [
       'You are implementing gemma_act, a Stagehand-style single-action browser primitive.',
       'Perform exactly one browser action. Do not perform a multi-step workflow.',

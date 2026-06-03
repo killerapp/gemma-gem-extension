@@ -72,3 +72,5 @@ c0b024b	real-chrome-extension-smoke	5	0.8000	0.8000	1.0000	1.0000	2.00	0.010	0.0
 c0b024b	real-chrome-extension-smoke	5	1.0000	1.0000	1.0000	1.0000	1.80	0.012	0.064	0.0000	0.000	keep	real smoke observed-action act contract
 c0b024b	local-fake-extension	8	1.0000	1.0000	1.0000	1.0000	2.25	0.004	0.009	0.0000	0.000	keep	benchmarked observed-action act contract
 c0875d3	local-fake-extension	8	1.0000	1.0000	1.0000	1.0000	2.25	0.004	0.010	0.0000	0.000	keep	schema-validated extract retry
+5d587a2	local-fake-extension	9	1.0000	1.0000	1.0000	1.0000	2.00	0.006	0.010	0.0000	0.000	keep	multi-action act rejection contract
+5d587a2	real-chrome-extension-smoke	6	1.0000	1.0000	1.0000	1.0000	1.50	0.008	0.066	0.0000	0.000	keep	real smoke multi-action act rejection

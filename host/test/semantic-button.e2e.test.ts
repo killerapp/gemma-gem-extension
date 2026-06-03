@@ -369,6 +369,16 @@ test('HTTP sidecar delegates semantic button task through the bridge', async (t)
   assert.equal(extractPayload.plans[0].price, '$19/month')
   assert.equal(extractPayload.plans[1].price, '$49/month')
 
+  const multiActResult = await client.callTool({
+    name: 'gemma_act',
+    arguments: {
+      tabId: 7,
+      instruction: 'click the receipt button and then open payment settings',
+    },
+  })
+  assert.match(toolText(multiActResult), /ERROR_MULTIPLE_ACTIONS/)
+  assert.match(toolText(multiActResult), /gemma_agent/)
+
   const result = await client.callTool({
     name: 'gemma_agent',
     arguments: {

@@ -54,6 +54,20 @@
     }
   },
   {
+    "id": "semantic-act-multi-reject",
+    "suite": "semantic-buttons",
+    "title": "Reject multi-step action prompt",
+    "tool": "gemma_act",
+    "arguments": {
+      "tabId": 101,
+      "instruction": "click the receipt button and then open payment settings"
+    },
+    "expect": {
+      "contains": ["ERROR_MULTIPLE_ACTIONS", "gemma_agent"],
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "semantic-page-brief",
     "suite": "semantic-buttons",
     "title": "Brief exposes meaningful billing controls",
