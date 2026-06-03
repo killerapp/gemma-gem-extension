@@ -1324,6 +1324,15 @@ June 3, 2026 destination body-text read coverage result:
 - Real smoke passed 87/87 with `actions_per_success 1.16`, `p95_task_seconds 0.548`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 97/97 with `actions_per_success 1.32`, `p95_task_seconds 4.191`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 128 raw positive records from 81 tasks and 197 training records from 90 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 pricing body-text read coverage result:
+
+- Added frozen `extraction/read-pricing-body-text`, proving exact `gemma_read_page` body text reads on logical tab 102 expose full pricing plan names and monthly prices without leaking HTML-only `data-plan` markup or unrelated form/billing controls.
+- The task complements the pricing page brief, full body HTML read, scoped plan text reads, scoped plan HTML reads, and model-backed extraction contracts with a one-action full-page text contract.
+- Baseline local before the task stayed green at 97/97 with `actions_per_success 1.30` and `p95_task_seconds 0.006`; after adding the content-read task, local passed 98/98 with `actions_per_success 1.30` and `p95_task_seconds 0.006`.
+- Real smoke passed 88/88 with `actions_per_success 1.16`, `p95_task_seconds 0.547`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; the first real-agent run discarded at 93/98 after five screenshot tasks failed MCP `image/png` content assertions while the new pricing body-text contract passed.
+- The real-agent retry passed 98/98 with `actions_per_success 1.32`, `p95_task_seconds 4.281`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 129 raw positive records from 82 tasks and 198 training records from 91 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

@@ -570,3 +570,8 @@ ed19166	real-chrome-extension-agent	96	1.0000	1.0000	1.0000	1.0000	1.32	0.007	4.
 804a514	local-fake-extension	97	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.006	0.0000	0.000	keep	destination body text local
 804a514	real-chrome-extension-smoke	87	1.0000	1.0000	1.0000	1.0000	1.16	0.007	0.548	0.0000	0.000	keep	destination body text real smoke
 804a514	real-chrome-extension-agent	97	1.0000	1.0000	1.0000	1.0000	1.32	0.008	4.191	0.0000	0.717	keep	destination body text real agent
+845ecbd	local-fake-extension	97	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.006	0.0000	0.000	baseline	pricing body text baseline local
+845ecbd	local-fake-extension	98	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.006	0.0000	0.000	keep	pricing body text local
+845ecbd	real-chrome-extension-smoke	88	1.0000	1.0000	1.0000	1.0000	1.16	0.008	0.547	0.0000	0.000	keep	pricing body text real smoke
+845ecbd	real-chrome-extension-agent	98	0.9490	0.9490	1.0000	1.0000	1.33	0.009	5.053	0.0000	0.001	discard	pricing body text real agent
+845ecbd	real-chrome-extension-agent	98	1.0000	1.0000	1.0000	1.0000	1.32	0.008	4.281	0.0000	0.001	keep	pricing body text real agent retry
