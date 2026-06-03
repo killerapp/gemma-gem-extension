@@ -700,6 +700,7 @@ Experiment result:
 - Generated benchmark reports now describe `real-chrome-extension-agent` separately from deterministic smoke, including the model-backed `gemma_model_ready`, `gemma_agent`, `gemma_observe`, and `gemma_extract` task coverage.
 - Generated benchmark reports now include a compact Recent Ledger table from `results.web.tsv`, including the just-recorded run, so baseline/keep context is visible without opening the full TSV.
 - Generated benchmark reports now also summarize the best kept row per runner suite, ranked by success, strict success, JSON validity, selector hit rate, timeout rate, p95 latency, and action count.
+- Generated benchmark reports now include a Recent Decisions section that lists recent kept changes and recent discarded, crashed, or timed-out hypotheses from the experiment ledger.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

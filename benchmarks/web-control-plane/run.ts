@@ -1875,8 +1875,24 @@ function bestKeptRowsBySuite(rows: ResultsLedgerRow[]): ResultsLedgerRow[] {
   return [...bestBySuite.values()].sort((a, b) => a.suite.localeCompare(b.suite))
 }
 
+function recentRowsWithStatus(rows: ResultsLedgerRow[], statuses: Set<string>, limit: number): ResultsLedgerRow[] {
+  return rows.filter(row => statuses.has(row.status)).slice(-limit)
+}
+
 function markdownTableCell(value: string): string {
   return value.replace(/\|/g, '/').trim()
+}
+
+function decisionTableRows(rows: ResultsLedgerRow[]): string[] {
+  return rows.map(row => [
+    row.commit,
+    row.suite,
+    row.status,
+    row.successRate,
+    row.p95TaskSeconds,
+    row.timeoutRate,
+    row.description,
+  ].map(markdownTableCell).join(' | ')).map(row => `| ${row} |`)
 }
 
 async function writeReport(results: TaskResult[], summary: ReturnType<typeof summarize>, mode: string, ledgerRow: ResultsLedgerRow): Promise<void> {
@@ -1901,6 +1917,8 @@ async function writeReport(results: TaskResult[], summary: ReturnType<typeof sum
   ]
   const ledgerRows = await readResultsLedgerRows(ledgerRow)
   const bestKeptRows = bestKeptRowsBySuite(ledgerRows)
+  const recentKeptRows = recentRowsWithStatus(ledgerRows, new Set(['keep']), 6)
+  const recentFailedRows = recentRowsWithStatus(ledgerRows, new Set(['discard', 'crash', 'timeout']), 6)
   const bestKeptLines = bestKeptRows.length
     ? [
         '',
@@ -1924,6 +1942,26 @@ async function writeReport(results: TaskResult[], summary: ReturnType<typeof sum
         ].map(markdownTableCell).join(' | ')).map(row => `| ${row} |`),
       ]
     : []
+  const recentDecisionLines = [
+    '',
+    '## Recent Decisions',
+    '',
+    'Recent kept changes:',
+    '',
+    '| commit | suite | status | success | p95_s | timeout | description |',
+    '| --- | --- | --- | ---: | ---: | ---: | --- |',
+    ...decisionTableRows(recentKeptRows),
+    '',
+    'Recent discarded, crashed, or timed-out hypotheses:',
+    '',
+    ...(recentFailedRows.length
+      ? [
+          '| commit | suite | status | success | p95_s | timeout | description |',
+          '| --- | --- | --- | ---: | ---: | ---: | --- |',
+          ...decisionTableRows(recentFailedRows),
+        ]
+      : ['No discarded, crashed, or timed-out hypotheses are present in the latest ledger window.']),
+  ]
   const recentLedger = ledgerRows.slice(-8)
   const recentLedgerLines = [
     '',
@@ -1965,6 +2003,7 @@ async function writeReport(results: TaskResult[], summary: ReturnType<typeof sum
     `- timeout_rate: ${summary.timeoutRate.toFixed(4)}`,
     `- tool_error_rate: ${summary.toolErrorRate.toFixed(4)}`,
     ...bestKeptLines,
+    ...recentDecisionLines,
     ...recentLedgerLines,
     '',
     '## Latency Split',

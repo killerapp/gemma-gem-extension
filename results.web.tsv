@@ -249,3 +249,5 @@ ef57de4	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.
 8fcc210	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	report recent ledger local
 2cb0bbc	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	report best by suite baseline local
 2cb0bbc	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	report best by suite local
+9f8fef6	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	report recent decisions baseline local
+9f8fef6	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.009	0.0000	0.000	keep	report recent decisions local
