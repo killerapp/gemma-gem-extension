@@ -327,3 +327,7 @@ a5e43b9	real-chrome-extension-agent	29	1.0000	1.0000	1.0000	1.0000	1.48	0.007	6.
 20cfb0b	local-fake-extension	40	1.0000	1.0000	1.0000	1.0000	1.45	0.003	0.006	0.0000	0.000	keep	textarea recovery local
 20cfb0b	real-chrome-extension-smoke	35	1.0000	1.0000	1.0000	1.0000	1.31	0.006	0.017	0.0000	0.000	keep	textarea recovery real smoke
 20cfb0b	real-chrome-extension-agent	40	1.0000	1.0000	1.0000	1.0000	1.45	0.008	4.186	0.0000	0.001	keep	textarea recovery real agent
+60c0075	local-fake-extension	40	1.0000	1.0000	1.0000	1.0000	1.45	0.003	0.007	0.0000	0.000	baseline	checkbox recovery baseline local
+60c0075	local-fake-extension	42	1.0000	1.0000	1.0000	1.0000	1.48	0.003	0.006	0.0000	0.000	keep	checkbox recovery local
+60c0075	real-chrome-extension-smoke	37	1.0000	1.0000	1.0000	1.0000	1.35	0.008	0.021	0.0000	0.000	keep	checkbox recovery real smoke
+60c0075	real-chrome-extension-agent	42	1.0000	1.0000	1.0000	1.0000	1.48	0.008	4.220	0.0000	0.002	keep	checkbox recovery real agent

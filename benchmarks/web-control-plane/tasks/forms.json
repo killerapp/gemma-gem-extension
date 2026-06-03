@@ -393,6 +393,58 @@
     }
   },
   {
+    "id": "click-updates-recover-selector",
+    "suite": "forms",
+    "title": "Recover updates checkbox text selector",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 104,
+      "selector": "text=Subscribe updates"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "recovered": true,
+        "recoveredSelector": "#dest-updates",
+        "result.selector": "#dest-updates"
+      },
+      "contains": ["recoveredSelector", "#dest-updates", "Subscribe updates"],
+      "clicked": "#dest-updates",
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "click_element"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "selector=#dest-updates"],
+      "bridgeExecuteTools": ["read_page_content", "click_element"],
+      "bridgeExecuteSelectors": ["body", "#dest-updates"],
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-updates-after-recovered-click",
+    "suite": "forms",
+    "title": "Read unchecked destination updates after recovered click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-updates",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["unchecked"]
+      },
+      "contains": ["unchecked"],
+      "notContains": ["Subscribe updates", "Save profile"],
+      "selector": "#dest-updates",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-updates format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-updates",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "click-destination-priority-high-radio",
     "suite": "forms",
     "title": "Click destination high priority radio",

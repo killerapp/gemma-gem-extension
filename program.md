@@ -889,6 +889,14 @@ June 3, 2026 textarea recovery coverage result:
 - Real smoke passed 35/35 with `actions_per_success 1.31`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 40/40 with `actions_per_success 1.45`, `p95_task_seconds 4.186`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 58 raw positive records from 34 tasks and 120 training records from 42 tasks, while candidate buckets rose to 47 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 checkbox recovery coverage result:
+
+- Added frozen `forms/click-updates-recover-selector`, proving `gemma_click` can recover `text=Subscribe updates` to the checkbox selector `#dest-updates` instead of only recovering button text selectors.
+- Added `forms/read-destination-updates-after-recovered-click` to prove the recovered checkbox click toggles live form state back to `unchecked`, while preserving the compact no-label exact selector read shape.
+- Baseline local before the tasks stayed green at 40/40 with `actions_per_success 1.45` and `p95_task_seconds 0.007`; after adding the tasks, local passed 42/42 with `actions_per_success 1.48` and `p95_task_seconds 0.006`.
+- Real smoke passed 37/37 with `actions_per_success 1.35`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 42/42 with `actions_per_success 1.48`, `p95_task_seconds 4.220`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 62 raw positive records from 36 tasks and 124 training records from 44 tasks, while candidate buckets rose to 50 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
