@@ -575,3 +575,12 @@ ed19166	real-chrome-extension-agent	96	1.0000	1.0000	1.0000	1.0000	1.32	0.007	4.
 845ecbd	real-chrome-extension-smoke	88	1.0000	1.0000	1.0000	1.0000	1.16	0.008	0.547	0.0000	0.000	keep	pricing body text real smoke
 845ecbd	real-chrome-extension-agent	98	0.9490	0.9490	1.0000	1.0000	1.33	0.009	5.053	0.0000	0.001	discard	pricing body text real agent
 845ecbd	real-chrome-extension-agent	98	1.0000	1.0000	1.0000	1.0000	1.32	0.008	4.281	0.0000	0.001	keep	pricing body text real agent retry
+6fa0757	local-fake-extension	98	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.007	0.0000	0.000	baseline	navigation body text baseline local
+6fa0757	local-fake-extension	99	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.006	0.0000	0.000	keep	navigation body text local
+6fa0757	real-chrome-extension-smoke	89	1.0000	1.0000	1.0000	1.0000	1.16	0.008	0.548	0.0000	0.000	keep	navigation body text real smoke
+6fa0757	real-chrome-extension-agent	99	0.9495	0.9495	1.0000	1.0000	1.33	0.009	4.450	0.0000	0.001	discard	navigation body text real agent
+6fa0757	real-chrome-extension-agent	99	0.9495	0.9495	1.0000	1.0000	1.33	0.008	4.236	0.0000	0.001	discard	navigation body text real agent retry
+6fa0757	real-chrome-extension-smoke	89	1.0000	1.0000	1.0000	1.0000	1.16	0.010	0.548	0.0000	0.000	discard	navigation body text screenshot retry real smoke
+6fa0757	real-chrome-extension-agent	99	0.9495	0.9495	1.0000	1.0000	1.33	0.008	4.318	0.0000	0.127	discard	navigation body text screenshot retry real agent
+6fa0757	real-chrome-extension-agent	99	1.0000	1.0000	1.0000	1.0000	1.31	0.008	4.297	0.0000	178.834	discard	navigation body text fresh profile diagnostic
+6fa0757	real-chrome-extension-agent	99	1.0000	1.0000	1.0000	1.0000	1.31	0.009	4.906	0.0000	148.459	keep	navigation body text real agent clean profile

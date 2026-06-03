@@ -1333,6 +1333,16 @@ June 3, 2026 pricing body-text read coverage result:
 - The real-agent retry passed 98/98 with `actions_per_success 1.32`, `p95_task_seconds 4.281`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 129 raw positive records from 82 tasks and 198 training records from 91 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 navigation body-text read coverage result:
+
+- Added frozen `navigation/read-navigation-body-text`, proving exact `gemma_read_page` body text reads on logical tab 105 expose navigation link text and the scroll target without leaking HTML ids or unrelated fixture identifiers.
+- The task complements the navigation page brief, body HTML read, isolated navigation body HTML read, exact link reads, scroll target read, clicks, active-tab, and screenshot contracts with a one-action full-page text contract.
+- Baseline local before the task stayed green at 98/98 with `actions_per_success 1.30` and `p95_task_seconds 0.007`; after adding the content-read task, local passed 99/99 with `actions_per_success 1.29` and `p95_task_seconds 0.006`.
+- Real smoke passed 89/89 with `actions_per_success 1.16`, `p95_task_seconds 0.548`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; the first two default real-agent runs discarded at 94/99 after five switched-tab screenshot tasks returned `image readback failed` while the new navigation body-text contract passed.
+- An uncommitted screenshot retry helper was discarded after it did not resolve the persistent-profile screenshot failures; a fresh-profile diagnostic passed 99/99, so the generated `.browsers/gemma-gem-benchmark-profile` was reset.
+- The default real-agent run on the recreated persistent profile passed 99/99 with `actions_per_success 1.31`, `p95_task_seconds 4.906`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 130 raw positive records from 83 tasks and 199 training records from 92 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
