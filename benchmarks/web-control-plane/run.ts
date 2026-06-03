@@ -1312,6 +1312,16 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
       notes.push(`expected at least ${expect.minItems} JSON array items`)
       jsonOk = false
     }
+    const expectedItemCount = modeExpectationValue(expect, 'itemCount', 'itemCountByMode', harness.mode)
+    if (typeof expectedItemCount === 'number' && Number.isFinite(expectedItemCount)) {
+      if (!Array.isArray(parsedJson)) {
+        notes.push(`expected JSON array with ${expectedItemCount} items, got ${JSON.stringify(parsedJson)}`)
+        jsonOk = false
+      } else if (parsedJson.length !== expectedItemCount) {
+        notes.push(`expected ${expectedItemCount} JSON array items, got ${parsedJson.length}`)
+        jsonOk = false
+      }
+    }
     if (typeof expect.bestSelector === 'string') {
       const bestSelector = parsedJson?.best?.candidate?.selector ?? parsedJson?.best?.action?.selector
       if (bestSelector !== expect.bestSelector) {

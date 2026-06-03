@@ -35,6 +35,7 @@
         "1.method": "click"
       },
       "minItems": 2,
+      "itemCount": 2,
       "selector": "#download-receipt",
       "method": "click",
       "actions": 2,

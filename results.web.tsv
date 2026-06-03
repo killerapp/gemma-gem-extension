@@ -182,3 +182,10 @@ a9fa4fa	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0
 0095b48	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.069	0.0000	0.000	keep	zero action real smoke
 0095b48	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.457	0.0000	0.001	keep	zero action real agent
 0095b48	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final zero action artifacts
+6038b64	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	root count local baseline
+6038b64	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	root count local benchmark
+6038b64	real-chrome-extension-smoke	15	0.9333	0.9333	1.0000	1.0000	1.50	0.008	0.063	0.0000	0.000	discard	tabs root count real extra tabs
+6038b64	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	narrowed root count local benchmark
+6038b64	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.028	0.0000	0.000	keep	root count real smoke
+6038b64	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.009	6.539	0.0000	0.001	keep	root count real agent
+6038b64	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final root count artifacts
