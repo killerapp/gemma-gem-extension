@@ -127,3 +127,6 @@ aa2f894	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0
 32b7ef0	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	extraction context local benchmark
 32b7ef0	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.152	0.0000	0.000	keep	real smoke extraction context
 32b7ef0	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final extraction context artifacts
+436c40e	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	agent context local benchmark
+436c40e	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.011	0.078	0.0000	0.000	keep	real smoke agent context
+436c40e	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.011	0.0000	0.000	keep	final agent context artifacts

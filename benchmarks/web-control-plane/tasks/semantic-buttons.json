@@ -12,6 +12,8 @@
     },
     "expect": {
       "contains": ["#download-receipt", "INV-2026-041"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
       "bridgeRunAgent": true
     }
   },

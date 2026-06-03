@@ -556,6 +556,10 @@ Experiment result:
 - `pnpm benchmark:web` passes with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
 - `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.152`, and `timeout_rate 0.0000`; default real smoke continues to exclude model-backed extraction tasks.
 - Trace floors remain unchanged after hardening extraction context coverage because the assertions freeze existing page-read and model-delegation shape rather than adding new browser action steps.
+- The frozen semantic-buttons suite now hardens `semantic-receipt-agent`, proving `gemma_agent` reads `body` page context before delegating through `bridge:run_agent` for the receipt proof task.
+- `pnpm benchmark:web` passes with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.011`, and `timeout_rate 0.0000`.
+- `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.078`, and `timeout_rate 0.0000`; default real smoke continues to exclude model-backed agent tasks.
+- Trace floors remain unchanged after hardening agent context coverage because the assertion freezes existing page-read and delegation shape rather than adding new browser action steps.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:
