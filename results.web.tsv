@@ -112,3 +112,6 @@ d8b1acb	local-fake-extension	17	1.0000	1.0000	1.0000	1.0000	1.94	0.004	0.010	0.0
 7949cb4	local-fake-extension	19	1.0000	1.0000	1.0000	1.0000	1.74	0.005	0.013	0.0000	0.000	keep	rank actions local benchmark
 7949cb4	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.107	0.0000	0.000	keep	real smoke rank actions
 7949cb4	local-fake-extension	19	1.0000	1.0000	1.0000	1.0000	1.74	0.005	0.011	0.0000	0.000	keep	final rank actions artifacts
+6c4e65a	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.009	0.0000	0.000	keep	model ready local benchmark
+6c4e65a	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.010	0.081	0.0000	0.000	keep	real smoke model ready excluded
+6c4e65a	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final model ready artifacts

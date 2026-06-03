@@ -25,6 +25,21 @@
     }
   },
   {
+    "id": "model-ready-contract",
+    "suite": "navigation",
+    "title": "Model readiness returns bounded diagnostic status",
+    "tool": "gemma_model_ready",
+    "arguments": {
+      "timeoutMs": 1000
+    },
+    "expect": {
+      "json": "object",
+      "contains": ["ready", "gemma-4-e2b", "fake-ready", "progress"],
+      "bridgeEnsureModelReady": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "screenshot-contract",
     "suite": "navigation",
     "title": "Screenshot returns MCP image content",

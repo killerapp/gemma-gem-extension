@@ -24,6 +24,7 @@ const EXTENSION_DIR = resolve(REPO_ROOT, '.output', 'chrome-mv3-dev')
 const BROWSER_MARKER = resolve(REPO_ROOT, '.browsers', 'chrome-for-testing', 'chrome-path.txt')
 const DEFAULT_AGENT_PROFILE = resolve(REPO_ROOT, '.browsers', 'gemma-gem-benchmark-profile')
 const MODEL_DRIVEN_TOOLS = new Set(['gemma_agent', 'gemma_observe', 'gemma_extract'])
+const REAL_SMOKE_EXCLUDED_TOOLS = new Set([...MODEL_DRIVEN_TOOLS, 'gemma_model_ready'])
 const AGENT_TASK_TIMEOUT_MS = positiveIntEnv('GEMMA_GEM_AGENT_TASK_TIMEOUT_MS', 180_000)
 const MODEL_READY_TIMEOUT_MS = positiveIntEnv('GEMMA_GEM_MODEL_READY_TIMEOUT_MS', AGENT_TASK_TIMEOUT_MS)
 
@@ -1328,6 +1329,14 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
       const sawListTabs = harness.requestsSince(startRequestCount).some(request => request.type === 'bridge:list_tabs')
       if (sawListTabs) notes.push('unexpected bridge:list_tabs request')
     }
+    if (expect.bridgeEnsureModelReady === true && harness.supportsBridgeRequestLog) {
+      const sawEnsureModelReady = harness.requestsSince(startRequestCount).some(request => request.type === 'bridge:ensure_model_ready')
+      if (!sawEnsureModelReady) notes.push('expected bridge:ensure_model_ready request')
+    }
+    if (expect.bridgeEnsureModelReady === false && harness.supportsBridgeRequestLog) {
+      const sawEnsureModelReady = harness.requestsSince(startRequestCount).some(request => request.type === 'bridge:ensure_model_ready')
+      if (sawEnsureModelReady) notes.push('unexpected bridge:ensure_model_ready request')
+    }
 
     if (typeof expect.activeTabId === 'number') {
       const mappedActiveTask = harness.remapTask({ ...task, arguments: { tabId: expect.activeTabId } })
@@ -1603,7 +1612,7 @@ async function writeReport(results: TaskResult[], summary: ReturnType<typeof sum
     '',
     'Install/update the local browser runtime with `pnpm browser:install`. Launch a persistent manual debug profile with `pnpm browser:debug`.',
     '',
-    'Run `pnpm benchmark:web -- --real --include-agent` to include model-driven `gemma_agent`, `gemma_observe`, and `gemma_extract` tasks. That mode may spend time loading/running the local Gemma model.',
+    'Run `pnpm benchmark:web -- --real --include-agent` to include model-backed `gemma_model_ready`, `gemma_agent`, `gemma_observe`, and `gemma_extract` tasks. That mode may spend time loading/running the local Gemma model.',
     '',
   ]
   await writeFile(reportPath, lines.join('\n'))
@@ -1623,7 +1632,7 @@ async function main(): Promise<void> {
   await mkdir(dirname(resolve(BENCH_ROOT, 'report.md')), { recursive: true })
   const allTasks = await readTasks()
   const tasks = REAL_MODE && !INCLUDE_AGENT_TASKS
-    ? allTasks.filter(task => !MODEL_DRIVEN_TOOLS.has(task.tool))
+    ? allTasks.filter(task => !REAL_SMOKE_EXCLUDED_TOOLS.has(task.tool))
     : allTasks
   const port = await getFreePort()
   const child = await startSidecar(port)
