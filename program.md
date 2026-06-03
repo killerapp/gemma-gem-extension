@@ -1167,6 +1167,14 @@ June 3, 2026 navigation screenshot coverage result:
 - The first real-agent attempt was discarded at 76/78 after the screenshot task passed but two semantic agent tasks hit the known transient model runtime error path; the retry passed 78/78 with `actions_per_success 1.41`, `p95_task_seconds 4.886`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 110 raw positive records from 66 tasks and 179 training records from 75 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 navigation isolated page-brief coverage result:
+
+- Added frozen `navigation/navigation-billing-page-brief-links`, proving `gemma_page_brief` exposes `#settings-link` and `#billing-link` controls on isolated `navigation-billing.html` logical tab 106.
+- The task complements tabs/read/click/screenshot coverage by freezing text+HTML readback and interactive-control extraction for the duplicate billing navigation fixture.
+- Baseline local before the task stayed green at 78/78 with `actions_per_success 1.38` and `p95_task_seconds 0.005`; after adding the page-brief task, local passed 79/79 with `actions_per_success 1.39` and `p95_task_seconds 0.005`.
+- Real smoke passed 69/69 with `actions_per_success 1.23`, `p95_task_seconds 0.052`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 79/79 with `actions_per_success 1.42`, `p95_task_seconds 4.920`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 112 raw positive records from 67 tasks and 181 training records from 76 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
