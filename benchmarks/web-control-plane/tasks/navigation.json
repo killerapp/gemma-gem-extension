@@ -195,5 +195,31 @@
       "bridgeExecuteTool": "scroll_page",
       "bridgeRunAgent": false
     }
+  },
+  {
+    "id": "click-settings-link",
+    "suite": "navigation",
+    "title": "Click navigation link changes page URL",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 105,
+      "selector": "#settings-link"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "clicked": "a: Settings",
+        "selector": "#settings-link"
+      },
+      "contains": ["a: Settings", "#settings-link"],
+      "clicked": "#settings-link",
+      "urlPath": "/settings",
+      "actions": 1,
+      "actionTraceTools": ["click_element"],
+      "actionTraceTextIncludes": ["selector=#settings-link"],
+      "bridgeExecuteTool": "click_element",
+      "bridgeExecuteSelector": "#settings-link",
+      "bridgeRunAgent": false
+    }
   }
 ]

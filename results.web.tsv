@@ -284,3 +284,7 @@ a1e798c	real-chrome-extension-agent	25	1.0000	1.0000	1.0000	1.0000	1.52	0.007	6.
 340651b	local-fake-extension	26	1.0000	1.0000	1.0000	1.0000	1.54	0.003	0.010	0.0000	0.000	keep	navigation link brief local
 340651b	real-chrome-extension-smoke	21	1.0000	1.0000	1.0000	1.0000	1.33	0.008	0.019	0.0000	0.000	keep	navigation link brief real smoke
 340651b	real-chrome-extension-agent	26	1.0000	1.0000	1.0000	1.0000	1.54	0.007	6.636	0.0000	0.001	keep	navigation link brief real agent
+e4d5902	local-fake-extension	26	1.0000	1.0000	1.0000	1.0000	1.54	0.004	0.010	0.0000	0.000	baseline	navigation link click baseline local
+e4d5902	local-fake-extension	27	1.0000	1.0000	1.0000	1.0000	1.52	0.004	0.010	0.0000	0.000	keep	navigation link click local
+e4d5902	real-chrome-extension-smoke	22	1.0000	1.0000	1.0000	1.0000	1.32	0.007	0.019	0.0000	0.000	keep	navigation link click real smoke
+e4d5902	real-chrome-extension-agent	27	1.0000	1.0000	1.0000	1.0000	1.52	0.007	6.539	0.0000	0.001	keep	navigation link click real agent

@@ -109,6 +109,7 @@ type HarnessProbe = {
   value(logicalTabId: number, selector: string): Promise<string> | string
   clicked(selector: string): Promise<boolean> | boolean
   scrollY(logicalTabId: number): Promise<number> | number
+  urlPath(logicalTabId: number): Promise<string> | string
   requestCount(): number
   requestsSince(start: number): BridgeRequest[]
   actionCount(): Promise<number> | number
@@ -453,6 +454,10 @@ class FakeExtension implements HarnessProbe {
     return this.scrollPositions.get(tabId) ?? 0
   }
 
+  urlPath(tabId: number): string {
+    return new URL(this.tabs.find(tab => tab.id === tabId)?.url ?? 'http://127.0.0.1/').pathname
+  }
+
   private send(event: BridgeEvent | BridgeEvent[]): void {
     if (!this.ws || this.ws.readyState !== WebSocket.OPEN) return
     const events = Array.isArray(event) ? event : [event]
@@ -560,7 +565,15 @@ class FakeExtension implements HarnessProbe {
           const email = this.value(104, '#dest-email')
           this.values.set('104:#save-result', `Saved ${name} <${email}>`)
         }
-        const label = selector === '#download-receipt' ? 'button: Receipt PDF' : selector
+        if (selector === '#settings-link') {
+          const tab = this.tabs.find(item => item.id === tabId)
+          if (tab) tab.url = 'http://127.0.0.1:4173/settings'
+        }
+        const label = selector === '#download-receipt'
+          ? 'button: Receipt PDF'
+          : selector === '#settings-link'
+            ? 'a: Settings'
+            : selector
         return this.response(request.requestId, { clicked: label, selector })
       }
       case 'select_option': {
@@ -899,6 +912,13 @@ class RealChromeHarness implements HarnessProbe {
     const value = await this.evaluate(session, 'window.scrollY')
     session.close()
     return typeof value === 'number' ? value : Number(value ?? 0)
+  }
+
+  async urlPath(logicalTabId: number): Promise<string> {
+    const session = await this.pageSessionForLogicalTab(logicalTabId)
+    const value = await this.evaluate(session, 'location.pathname')
+    session.close()
+    return String(value ?? '')
   }
 
   async close(): Promise<void> {
@@ -1599,6 +1619,18 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
       const scrollY = await harness.scrollY(targetTabId)
       if (scrollY > expect.scrollYAtMost) {
         notes.push(`expected scrollY at most ${expect.scrollYAtMost}, got ${scrollY}`)
+      }
+    }
+    if (typeof expect.urlPath === 'string') {
+      const targetTabId = typeof task.arguments.tabId === 'number' ? task.arguments.tabId : 101
+      let path = await harness.urlPath(targetTabId)
+      const deadline = Date.now() + 2_000
+      while (path !== expect.urlPath && Date.now() < deadline) {
+        await new Promise(resolve => setTimeout(resolve, 50))
+        path = await harness.urlPath(targetTabId)
+      }
+      if (path !== expect.urlPath) {
+        notes.push(`expected URL path ${expect.urlPath}, got ${path}`)
       }
     }
 

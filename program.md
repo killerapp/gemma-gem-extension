@@ -812,6 +812,14 @@ June 3, 2026 navigation link brief coverage result:
 - Real smoke passed 21/21 with `selector_hit_rate 1.0000`, `actions_per_success 1.33`, and `timeout_rate 0.0000`; real agent passed 26/26 with `p95_task_seconds 6.636`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 40 raw positive records from 20 tasks and 102 training records from 28 tasks, while preference and reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 navigation link click coverage result:
+
+- Added frozen `navigation/click-settings-link`, a one-action `gemma_click` task that clicks `#settings-link` at the end of the navigation suite and asserts the browser URL path changes to `/settings`.
+- Added a `urlPath` benchmark assertion with a short real-browser poll, so link-click tests prove navigation state instead of only checking that `click_element` was dispatched.
+- Baseline local before the task stayed green at 26/26 with `p95_task_seconds 0.010`; after adding the task, local passed 27/27 with `actions_per_success 1.52` and `p95_task_seconds 0.010`.
+- Real smoke passed 22/22 with `selector_hit_rate 1.0000`, `actions_per_success 1.32`, and `timeout_rate 0.0000`; real agent passed 27/27 with `p95_task_seconds 6.539`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 41 raw positive records from 21 tasks and 103 training records from 29 tasks, with click records up to 5 raw and 25 training while preference and reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
