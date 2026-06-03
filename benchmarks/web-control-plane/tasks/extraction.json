@@ -36,6 +36,9 @@
       "jsonFieldMinItems": {
         "plans": 2
       },
+      "jsonFieldItemCount": {
+        "plans": 2
+      },
       "contains": ["Starter", "$19", "Team", "$49"],
       "schemaValid": true,
       "minPlans": 2,

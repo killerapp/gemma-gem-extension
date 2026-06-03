@@ -189,6 +189,9 @@
       "jsonFieldMinItems": {
         "interactiveControls": 3
       },
+      "jsonFieldItemCount": {
+        "interactiveControls": 3
+      },
       "contains": ["Receipt PDF", "Payment settings", "INV-2026-041", "\"selector\": \"#download-receipt\"", "\"selector\": \"#payment-settings\""],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",

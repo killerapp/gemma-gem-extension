@@ -1365,6 +1365,25 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
       }
     }
 
+    const jsonFieldItemCount = modeExpectationMap(expect, 'jsonFieldItemCount', 'jsonFieldItemCountByMode', harness.mode)
+    for (const [path, expectedItemCount] of Object.entries(jsonFieldItemCount)) {
+      const actualValue = jsonPathValue(parsedJson, path)
+      if (!Array.isArray(actualValue)) {
+        notes.push(`expected JSON field ${path} to be an array, got ${JSON.stringify(actualValue)}`)
+        jsonOk = false
+        continue
+      }
+      if (typeof expectedItemCount !== 'number' || !Number.isFinite(expectedItemCount)) {
+        notes.push(`expected JSON field ${path} item count must be numeric, got ${JSON.stringify(expectedItemCount)}`)
+        jsonOk = false
+        continue
+      }
+      if (actualValue.length !== expectedItemCount) {
+        notes.push(`expected JSON field ${path} to have ${expectedItemCount} items, got ${actualValue.length}`)
+        jsonOk = false
+      }
+    }
+
     if (expect.schemaValid === true) {
       const schema = taskForCall.arguments.schema
       if (!schema || typeof schema !== 'object' || Array.isArray(schema)) {

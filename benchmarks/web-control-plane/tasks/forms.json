@@ -30,6 +30,9 @@
       "jsonFieldMinItems": {
         "interactiveControls": 4
       },
+      "jsonFieldItemCount": {
+        "interactiveControls": 4
+      },
       "contains": ["interactiveControls", "\"selector\": \"#dest-name\"", "\"label\": \"Name\"", "\"tag\": \"input\"", "\"name\": \"name\"", "\"selector\": \"#save-profile\""],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",
@@ -131,6 +134,9 @@
         "peerSummary.action": "Copied mapped source fields"
       },
       "jsonFieldMinItems": {
+        "copiedFields": 2
+      },
+      "jsonFieldItemCount": {
         "copiedFields": 2
       },
       "contains": ["Ada Lovelace", "ada@example.test", "Copied mapped source fields", "Saved Ada Lovelace"],
