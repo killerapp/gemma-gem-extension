@@ -194,3 +194,9 @@ ed98fe8	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0
 ed98fe8	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.007	0.031	0.0000	0.000	keep	model action real smoke
 ed98fe8	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.007	6.573	0.0000	0.001	keep	model action real agent
 ed98fe8	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final model action artifacts
+091e66e	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	trace tools local baseline
+091e66e	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.009	6.520	0.0000	0.001	baseline	trace tools real-agent baseline
+091e66e	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	trace tools local benchmark
+091e66e	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.154	0.0000	0.000	keep	trace tools real smoke
+091e66e	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.529	0.0000	0.001	keep	trace tools real agent
+091e66e	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final trace tools artifacts

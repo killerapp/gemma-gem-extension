@@ -43,6 +43,7 @@
       "schemaValid": true,
       "minPlans": 2,
       "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent"],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",
       "bridgeRunAgent": true
@@ -82,6 +83,7 @@
       "notContains": ["Starter", "$19"],
       "schemaValid": true,
       "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent"],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": ".plan[data-plan=\"team\"]",
       "bridgeRunAgent": true

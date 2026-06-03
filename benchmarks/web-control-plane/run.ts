@@ -207,6 +207,12 @@ function stringArray(value: unknown): string[] {
   return typeof value === 'string' ? [value] : []
 }
 
+function actionTraceToolName(event: ActionTraceEvent): string {
+  if (event.toolName) return event.toolName
+  if (event.status === 'started') return 'gemma_agent'
+  return event.status
+}
+
 function modeExpectationValue(
   expect: Record<string, unknown>,
   baseKey: string,
@@ -1575,6 +1581,15 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
     strict = false
   }
   const actionTrace = await harness.actionTraceSince(startActionCount)
+  const expectedActionTraceTools = stringArray(modeExpectationValue(task.expect, 'actionTraceTools', 'actionTraceToolsByMode', harness.mode))
+  if (expectedActionTraceTools.length > 0) {
+    const actualActionTraceTools = actionTrace.map(actionTraceToolName)
+    if (JSON.stringify(actualActionTraceTools) !== JSON.stringify(expectedActionTraceTools)) {
+      notes.push(`expected action trace tools ${JSON.stringify(expectedActionTraceTools)}, got ${JSON.stringify(actualActionTraceTools)}`)
+      success = false
+      strict = false
+    }
+  }
   const toolErrors = harness.toolErrorCount() - startErrorCount
 
   return {

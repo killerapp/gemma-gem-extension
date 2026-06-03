@@ -16,6 +16,10 @@
       "actionsByMode": {
         "real-chrome-extension-agent": 4
       },
+      "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent"],
+      "actionTraceToolsByMode": {
+        "real-chrome-extension-agent": ["read_page_content", "read_page_content", "gemma_agent", "click_element"]
+      },
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",
       "bridgeRunAgent": true
