@@ -363,6 +363,8 @@ class FakeExtension implements HarnessProbe {
     this.values.set('104:#dest-email', '')
     this.values.set('104:#dest-role', '')
     this.values.set('104:#dest-updates', 'unchecked')
+    this.values.set('104:#dest-priority-low', 'unchecked')
+    this.values.set('104:#dest-priority-high', 'unchecked')
     this.values.set('104:#save-result', '')
   }
 
@@ -434,6 +436,8 @@ class FakeExtension implements HarnessProbe {
       '#dest-email',
       '#dest-role',
       '#dest-updates',
+      '#dest-priority-low',
+      '#dest-priority-high',
       '#save-profile',
       '#save-result',
       '#settings-link',
@@ -570,6 +574,10 @@ class FakeExtension implements HarnessProbe {
         if (selector === '#dest-updates') {
           this.values.set('104:#dest-updates', this.value(104, '#dest-updates') === 'checked' ? 'unchecked' : 'checked')
         }
+        if (selector === '#dest-priority-low' || selector === '#dest-priority-high') {
+          this.values.set('104:#dest-priority-low', selector === '#dest-priority-low' ? 'checked' : 'unchecked')
+          this.values.set('104:#dest-priority-high', selector === '#dest-priority-high' ? 'checked' : 'unchecked')
+        }
         if (selector === '#settings-link') {
           const tab = this.tabs.find(item => item.id === tabId)
           if (tab) tab.url = 'http://127.0.0.1:4173/settings'
@@ -580,6 +588,8 @@ class FakeExtension implements HarnessProbe {
             ? 'a: Settings'
             : selector === '#dest-updates'
               ? 'input: '
+              : selector === '#dest-priority-low' || selector === '#dest-priority-high'
+                ? 'input: '
             : selector
         return this.response(request.requestId, { clicked: label, selector })
       }
@@ -654,6 +664,8 @@ class FakeExtension implements HarnessProbe {
           '<label>Email <input id="dest-email" name="email"></label>',
           '<label>Role <select id="dest-role" name="role"><option value="">Choose role</option><option value="admin">Administrator</option><option value="reviewer">Reviewer</option></select></label>',
           '<label><input id="dest-updates" name="updates" type="checkbox" value="subscribe"> Subscribe updates</label>',
+          '<label><input id="dest-priority-low" name="priority" type="radio" value="low"> Priority Low</label>',
+          '<label><input id="dest-priority-high" name="priority" type="radio" value="high"> Priority High</label>',
           '<button id="save-profile">Save profile</button>',
           '<p id="save-result"></p>',
           '</main>',
@@ -668,6 +680,8 @@ class FakeExtension implements HarnessProbe {
           'Administrator',
           'Reviewer',
           'Subscribe updates',
+          'Priority Low',
+          'Priority High',
           'Save profile',
           this.value(104, '#save-result'),
         ].filter(Boolean).join('\n')

@@ -846,6 +846,15 @@ June 3, 2026 checkbox readback coverage result:
 - Real smoke passed 26/26 with `actions_per_success 1.27`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 31/31 with `actions_per_success 1.45`, `p95_task_seconds 6.852`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 45 raw positive records from 25 tasks and 107 training records from 33 tasks, while candidate buckets rose to 36 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 radio readback coverage result:
+
+- Added frozen `forms/click-destination-priority-high-radio`, `forms/read-destination-priority-high-after-click`, and `forms/read-destination-priority-low-after-high-click`, proving exact selector reads expose both selected and unselected radio state after a click.
+- Extended the destination fixture and fake harness with `#dest-priority-low` and `#dest-priority-high`, including radio-group exclusivity in the fake click path so local and real Chrome state transitions stay aligned.
+- Page-brief expectations now freeze the radio selectors, labels, shared `priority` name, and option values alongside the existing text, select, checkbox, and save controls.
+- Baseline local before the tasks stayed green at 31/31 with `actions_per_success 1.45` and `p95_task_seconds 0.010`; after adding the tasks, local passed 34/34 with `actions_per_success 1.41` and `p95_task_seconds 0.010`.
+- Real smoke passed 29/29 with `actions_per_success 1.24`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 34/34 with `actions_per_success 1.41`, `p95_task_seconds 6.566`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 48 raw positive records from 28 tasks and 110 training records from 36 tasks, while candidate buckets rose to 39 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

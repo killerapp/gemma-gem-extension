@@ -305,3 +305,7 @@ a5e43b9	real-chrome-extension-agent	29	1.0000	1.0000	1.0000	1.0000	1.48	0.007	6.
 0ac5423	local-fake-extension	31	1.0000	1.0000	1.0000	1.0000	1.45	0.004	0.010	0.0000	0.000	keep	checkbox readback local
 0ac5423	real-chrome-extension-smoke	26	1.0000	1.0000	1.0000	1.0000	1.27	0.007	0.022	0.0000	0.000	keep	checkbox readback real smoke
 0ac5423	real-chrome-extension-agent	31	1.0000	1.0000	1.0000	1.0000	1.45	0.007	6.852	0.0000	0.002	keep	checkbox readback real agent
+31f95dd	local-fake-extension	31	1.0000	1.0000	1.0000	1.0000	1.45	0.004	0.010	0.0000	0.000	baseline	radio readback baseline local
+31f95dd	local-fake-extension	34	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.010	0.0000	0.000	keep	radio readback local
+31f95dd	real-chrome-extension-smoke	29	1.0000	1.0000	1.0000	1.0000	1.24	0.007	0.017	0.0000	0.000	keep	radio readback real smoke
+31f95dd	real-chrome-extension-agent	34	1.0000	1.0000	1.0000	1.0000	1.41	0.007	6.566	0.0000	0.001	keep	radio readback real agent
