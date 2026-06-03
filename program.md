@@ -1117,6 +1117,14 @@ June 3, 2026 semantic settings agent fallback coverage result:
 - Real smoke passed 61/61 with `actions_per_success 1.31`, final observed `p95_task_seconds 0.015`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 71/71 with `actions_per_success 1.51`, final observed `p95_task_seconds 4.919`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 107 raw positive records from 63 tasks and 176 training records from 72 tasks, while candidate buckets rose to 83, paired buckets remain 28, and preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 semantic settings invoice-id rank coverage result:
+
+- Added frozen `semantic-buttons/rank-settings-with-invoice-id-actions`, proving checked `gemma_rank_actions` keeps `#payment-settings` above `#download-invoice` when an invoice identifier is context rather than the action goal.
+- This directly freezes the billing-goal precedence fix from the settings-agent fallback cycle: explicit `settings` must beat incidental `invoice` tokens in task text.
+- Baseline local before the task stayed green at 71/71 with `actions_per_success 1.48` and `p95_task_seconds 0.006`; after adding the zero-action rank task, local passed 72/72 with `actions_per_success 1.46` and `p95_task_seconds 0.006`.
+- Real smoke passed 62/62 with `actions_per_success 1.29`, `p95_task_seconds 0.013`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 72/72 with `actions_per_success 1.49`, `p95_task_seconds 4.924`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts remain at 107 raw positive records from 63 tasks and 176 training records from 72 tasks because the new rank task emits no browser actions; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

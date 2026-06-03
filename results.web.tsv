@@ -454,3 +454,7 @@ acf1e9d	real-chrome-extension-agent	69	1.0000	1.0000	1.0000	1.0000	1.43	0.007	4.
 2386051	real-chrome-extension-agent	71	1.0000	1.0000	1.0000	1.0000	1.51	0.007	4.883	0.0000	0.001	keep	semantic settings agent fallback real agent
 2386051	real-chrome-extension-smoke	61	1.0000	1.0000	1.0000	1.0000	1.31	0.007	0.015	0.0000	0.000	keep	semantic settings agent fallback real smoke
 2386051	real-chrome-extension-agent	71	1.0000	1.0000	1.0000	1.0000	1.51	0.008	4.919	0.0000	0.001	keep	semantic settings agent fallback real agent
+288857f	local-fake-extension	71	1.0000	1.0000	1.0000	1.0000	1.48	0.003	0.006	0.0000	0.000	baseline	semantic settings invoice-id rank baseline local
+288857f	local-fake-extension	72	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.006	0.0000	0.000	keep	semantic settings invoice-id rank local
+288857f	real-chrome-extension-smoke	62	1.0000	1.0000	1.0000	1.0000	1.29	0.007	0.013	0.0000	0.000	keep	semantic settings invoice-id rank real smoke
+288857f	real-chrome-extension-agent	72	1.0000	1.0000	1.0000	1.0000	1.49	0.007	4.924	0.0000	0.001	keep	semantic settings invoice-id rank real agent
