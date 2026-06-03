@@ -1294,6 +1294,14 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
       )
       if (!sawTool) notes.push(`expected bridge tool ${expect.bridgeExecuteTool}`)
     }
+    if (Array.isArray(expect.bridgeExecuteTools) && harness.supportsBridgeRequestLog) {
+      const requests = harness.requestsSince(startRequestCount)
+      for (const tool of expect.bridgeExecuteTools) {
+        if (typeof tool !== 'string') continue
+        const sawTool = requests.some(request => request.type === 'bridge:execute_tool' && request.name === tool)
+        if (!sawTool) notes.push(`expected bridge tool ${tool}`)
+      }
+    }
     if (typeof expect.bridgeExecuteSelector === 'string' && harness.supportsBridgeRequestLog) {
       const sawSelector = harness.requestsSince(startRequestCount).some(request =>
         request.type === 'bridge:execute_tool' &&
@@ -1303,6 +1311,20 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
         request.arguments.selector === expect.bridgeExecuteSelector
       )
       if (!sawSelector) notes.push(`expected bridge selector ${expect.bridgeExecuteSelector}`)
+    }
+    if (Array.isArray(expect.bridgeExecuteSelectors) && harness.supportsBridgeRequestLog) {
+      const requests = harness.requestsSince(startRequestCount)
+      for (const selector of expect.bridgeExecuteSelectors) {
+        if (typeof selector !== 'string') continue
+        const sawSelector = requests.some(request =>
+          request.type === 'bridge:execute_tool' &&
+          request.arguments &&
+          typeof request.arguments === 'object' &&
+          !Array.isArray(request.arguments) &&
+          request.arguments.selector === selector
+        )
+        if (!sawSelector) notes.push(`expected bridge selector ${selector}`)
+      }
     }
 
     if (expect.bridgeRunAgent === true && harness.supportsBridgeRequestLog) {

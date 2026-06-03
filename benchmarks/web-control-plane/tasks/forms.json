@@ -81,12 +81,16 @@
       "resultSelector": "#save-result"
     },
     "expect": {
-      "contains": ["Ada Lovelace", "ada@example.test"],
+      "json": "object",
+      "contains": ["Ada Lovelace", "ada@example.test", "Copied mapped source fields", "Saved Ada Lovelace"],
       "destinationValues": {
         "#dest-name": "Ada Lovelace",
         "#dest-email": "ada@example.test"
       },
-      "clicked": "#save-profile"
+      "clicked": "#save-profile",
+      "bridgeExecuteTools": ["read_page_content", "type_text", "click_element"],
+      "bridgeExecuteSelectors": ["#source-name", "#source-email", "#dest-name", "#dest-email", "#save-profile", "#save-result"],
+      "bridgeRunAgent": false
     }
   }
 ]

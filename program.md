@@ -543,6 +543,11 @@ Experiment result:
 - `pnpm benchmark:web` passes with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
 - `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.094`, and `timeout_rate 0.0000`.
 - Trace floors remain unchanged after hardening active-tab and screenshot coverage because the added assertions cover metadata/image bridge requests, not selector/action trace training data.
+- The frozen forms suite now hardens `transfer-profile-fields`, proving `gemma_transfer_fields` returns valid JSON, reads `#source-name` and `#source-email`, types `#dest-name` and `#dest-email`, clicks `#save-profile`, reads `#save-result`, reports the saved result, and does not use `bridge:run_agent`.
+- The benchmark evaluator now supports `bridgeExecuteTools` and `bridgeExecuteSelectors` arrays for multi-step deterministic helper contracts without requiring brittle request ordering.
+- `pnpm benchmark:web` passes with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
+- `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.104`, and `timeout_rate 0.0000`.
+- Trace floors remain unchanged after hardening transfer coverage because the new assertions freeze the bridge request shape around existing action traces rather than adding new browser actions.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

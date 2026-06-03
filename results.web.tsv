@@ -118,3 +118,6 @@ d8b1acb	local-fake-extension	17	1.0000	1.0000	1.0000	1.0000	1.94	0.004	0.010	0.0
 a30c294	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	active screenshot local benchmark
 a30c294	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.009	0.094	0.0000	0.000	keep	real smoke active screenshot
 a30c294	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final active screenshot artifacts
+690c98f	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.005	0.010	0.0000	0.000	keep	transfer bridge local benchmark
+690c98f	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.009	0.104	0.0000	0.000	keep	real smoke transfer bridge
+690c98f	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final transfer bridge artifacts
