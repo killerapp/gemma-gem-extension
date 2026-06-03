@@ -1251,6 +1251,13 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
       notes.push(`expected at least ${expect.minItems} JSON array items`)
       jsonOk = false
     }
+    if (typeof expect.bestSelector === 'string') {
+      const bestSelector = parsedJson?.best?.candidate?.selector ?? parsedJson?.best?.action?.selector
+      if (bestSelector !== expect.bestSelector) {
+        notes.push(`expected best selector ${expect.bestSelector}, got ${JSON.stringify(bestSelector)}`)
+        jsonOk = false
+      }
+    }
 
     if (expect.schemaValid === true) {
       const schema = taskForCall.arguments.schema

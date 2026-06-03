@@ -31,6 +31,46 @@
     }
   },
   {
+    "id": "rank-receipt-actions",
+    "suite": "semantic-buttons",
+    "title": "Rank receipt action above billing distractors",
+    "tool": "gemma_rank_actions",
+    "arguments": {
+      "task": {
+        "id": "rank-receipt-actions",
+        "suite": "semantic-buttons",
+        "title": "find the control that downloads proof of the last payment",
+        "tool": "gemma_observe"
+      },
+      "candidates": [
+        {
+          "description": "Invoice PDF (#download-invoice)",
+          "method": "click",
+          "arguments": ["#download-invoice"],
+          "selector": "#download-invoice"
+        },
+        {
+          "description": "Payment settings (#payment-settings)",
+          "method": "click",
+          "arguments": ["#payment-settings"],
+          "selector": "#payment-settings"
+        },
+        {
+          "description": "Receipt PDF (#download-receipt)",
+          "method": "click",
+          "arguments": ["#download-receipt"],
+          "selector": "#download-receipt"
+        }
+      ]
+    },
+    "expect": {
+      "json": "object",
+      "contains": ["pairwise_perceptron", "action-reranker.weights.json", "#download-receipt"],
+      "bestSelector": "#download-receipt",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "semantic-observed-act",
     "suite": "semantic-buttons",
     "title": "Execute observed receipt action without generation",
