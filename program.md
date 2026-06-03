@@ -702,6 +702,7 @@ Experiment result:
 - Generated benchmark reports now also summarize the best kept row per runner suite, ranked by success, strict success, JSON validity, selector hit rate, timeout rate, p95 latency, and action count.
 - Generated benchmark reports now include a Recent Decisions section that lists recent kept changes and recent discarded, crashed, or timed-out hypotheses from the experiment ledger.
 - Generated benchmark reports now include Recommended Commands and Next Experiments sections, so the report carries the current suite command and the next three high-value follow-ups.
+- Generated benchmark reports now include an Artifacts section pointing at the report, TSV ledger, latest JSONL task log, raw/training trace logs, and saved reranker weights.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:
