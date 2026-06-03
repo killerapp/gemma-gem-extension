@@ -684,6 +684,8 @@ Experiment result:
 - `pnpm benchmark:traces:preferences:policy` now reports scoped target-selector preference-policy quality separately: `6` target-selector preference pairs, `target_selector_preference_accuracy 1.0000`, and `target_selector_preference_min_margin 11.000` for the best `semantic_keyword` policy.
 - `pnpm benchmark:traces:preferences:policy:check` now locks those scoped preference-policy floors with `--min-target-selector-accuracy 1`, `--min-target-selector-pairs 6`, and `--min-target-selector-margin 10`.
 - `pnpm benchmark:web` passes after adding scoped preference-policy target selector floors with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
+- `pnpm benchmark:traces:preferences:policy:check` now also locks preference-policy coverage at `71` pairs, `25` task/tool buckets, and `19` tasks, so the policy quality gate cannot pass on a collapsed preference artifact.
+- `pnpm benchmark:web` passes after adding preference-policy coverage gates with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.011`, and `timeout_rate 0.0000`.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

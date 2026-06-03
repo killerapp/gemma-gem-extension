@@ -56,6 +56,8 @@ type PreferencePolicyCheckConfig = {
   requireBestPolicy?: string
   minAccuracy?: number
   minPairs?: number
+  minBuckets?: number
+  minTasks?: number
   minMargin?: number
   minTargetSelectorAccuracy?: number
   minTargetSelectorPairs?: number
@@ -78,6 +80,8 @@ function parseArgs(): { input: string; output: string; check: PreferencePolicyCh
     requireBestPolicy: process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_REQUIRE_BEST,
     minAccuracy: process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_ACCURACY ? parseNumber(process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_ACCURACY, 'GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_ACCURACY') : undefined,
     minPairs: process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_PAIRS ? parseNumber(process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_PAIRS, 'GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_PAIRS') : undefined,
+    minBuckets: process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_BUCKETS ? parseNumber(process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_BUCKETS, 'GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_BUCKETS') : undefined,
+    minTasks: process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TASKS ? parseNumber(process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TASKS, 'GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TASKS') : undefined,
     minMargin: process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_MARGIN ? parseNumber(process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_MARGIN, 'GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_MARGIN') : undefined,
     minTargetSelectorAccuracy: process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TARGET_SELECTOR_ACCURACY ? parseNumber(process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TARGET_SELECTOR_ACCURACY, 'GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TARGET_SELECTOR_ACCURACY') : undefined,
     minTargetSelectorPairs: process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TARGET_SELECTOR_PAIRS ? parseNumber(process.env.GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TARGET_SELECTOR_PAIRS, 'GEMMA_GEM_TRACE_PREFERENCES_POLICY_MIN_TARGET_SELECTOR_PAIRS') : undefined,
@@ -118,6 +122,16 @@ function parseArgs(): { input: string; output: string; check: PreferencePolicyCh
       i += 1
     } else if (arg.startsWith('--min-pairs=')) {
       check.minPairs = parseNumber(arg.slice('--min-pairs='.length), '--min-pairs')
+    } else if (arg === '--min-buckets') {
+      check.minBuckets = parseNumber(value, '--min-buckets')
+      i += 1
+    } else if (arg.startsWith('--min-buckets=')) {
+      check.minBuckets = parseNumber(arg.slice('--min-buckets='.length), '--min-buckets')
+    } else if (arg === '--min-tasks') {
+      check.minTasks = parseNumber(value, '--min-tasks')
+      i += 1
+    } else if (arg.startsWith('--min-tasks=')) {
+      check.minTasks = parseNumber(arg.slice('--min-tasks='.length), '--min-tasks')
     } else if (arg === '--min-margin') {
       check.minMargin = parseNumber(value, '--min-margin')
       i += 1
@@ -214,12 +228,14 @@ function assertAtLeast(actual: number, minimum: number | undefined, label: strin
   }
 }
 
-function checkPolicyResult(bestPolicy: PreferencePolicyResult, check: PreferencePolicyCheckConfig): void {
+function checkPolicyResult(bestPolicy: PreferencePolicyResult, check: PreferencePolicyCheckConfig, buckets: number, tasks: number): void {
   if (check.requireBestPolicy && bestPolicy.name !== check.requireBestPolicy) {
     throw new Error(`best_policy ${bestPolicy.name} does not match required policy ${check.requireBestPolicy}`)
   }
   assertAtLeast(bestPolicy.accuracy, check.minAccuracy, 'preference_accuracy')
   assertAtLeast(bestPolicy.pairs.length, check.minPairs, 'preference_pairs')
+  assertAtLeast(buckets, check.minBuckets, 'preference_buckets')
+  assertAtLeast(tasks, check.minTasks, 'preference_tasks')
   assertAtLeast(bestPolicy.minMargin, check.minMargin, 'preference_min_margin')
   const targetSelectorPolicy = targetSelectorResult(bestPolicy)
   assertAtLeast(targetSelectorPolicy.accuracy, check.minTargetSelectorAccuracy, 'target_selector_preference_accuracy')
@@ -321,7 +337,7 @@ async function main(): Promise<void> {
   lines.push('- This is the closest current offline metric to a selector/action reranker objective.')
   lines.push('- Future rerankers should beat this deterministic baseline while preserving benchmark task success.')
 
-  checkPolicyResult(bestPolicy, check)
+  checkPolicyResult(bestPolicy, check, buckets.size, tasks.size)
 
   if (!check.checkOnly) {
     await mkdir(dirname(output), { recursive: true })
@@ -331,6 +347,8 @@ async function main(): Promise<void> {
   if (!check.checkOnly) console.log(`Wrote preference policy baseline: ${sourcePath(output)}`)
   console.log(`Best policy: ${bestPolicy.name}`)
   console.log(`Preference accuracy: ${bestPolicy.accuracy.toFixed(4)} (${bestPolicy.pairs.length} pairs)`)
+  console.log(`Preference buckets: ${buckets.size}`)
+  console.log(`Preference tasks: ${tasks.size}`)
   console.log(`Preference min margin: ${bestPolicy.minMargin.toFixed(3)}`)
   console.log(`Target selector preference accuracy: ${bestTargetSelectorPolicy.accuracy.toFixed(4)} (${bestTargetSelectorPolicy.pairs.length} pairs)`)
   console.log(`Target selector preference min margin: ${bestTargetSelectorPolicy.minMargin.toFixed(3)}`)
