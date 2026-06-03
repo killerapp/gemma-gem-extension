@@ -535,3 +535,7 @@ b803408	local-fake-extension	88	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0
 b803408	local-fake-extension	89	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	keep	navigation isolated active tab local
 b803408	real-chrome-extension-smoke	79	1.0000	1.0000	1.0000	1.0000	1.22	0.006	0.121	0.0000	0.000	keep	navigation isolated active tab real smoke
 b803408	real-chrome-extension-agent	89	1.0000	1.0000	1.0000	1.0000	1.38	0.007	4.249	0.0000	0.001	keep	navigation isolated active tab real agent
+673354e	local-fake-extension	89	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	baseline	pricing screenshot baseline local
+673354e	local-fake-extension	90	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	keep	pricing screenshot local
+673354e	real-chrome-extension-smoke	80	1.0000	1.0000	1.0000	1.0000	1.21	0.007	0.122	0.0000	0.000	keep	pricing screenshot real smoke
+673354e	real-chrome-extension-agent	90	1.0000	1.0000	1.0000	1.0000	1.38	0.006	4.158	0.0000	0.001	keep	pricing screenshot real agent

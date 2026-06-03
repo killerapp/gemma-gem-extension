@@ -167,6 +167,23 @@
     }
   },
   {
+    "id": "screenshot-pricing-tab-contract",
+    "suite": "navigation",
+    "title": "Screenshot returns MCP image content from pricing fixture",
+    "tool": "gemma_screenshot",
+    "arguments": {
+      "tabId": 102
+    },
+    "expect": {
+      "image": "image/png",
+      "actions": 1,
+      "actionTraceTools": ["take_screenshot"],
+      "actionTraceTextIncludes": ["take_screenshot"],
+      "bridgeExecuteTool": "take_screenshot",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "screenshot-navigation-tab-contract",
     "suite": "navigation",
     "title": "Screenshot returns MCP image content from navigation fixture",
