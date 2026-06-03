@@ -104,6 +104,32 @@
     }
   },
   {
+    "id": "read-receipt-button-before-act",
+    "suite": "semantic-buttons",
+    "title": "Read receipt button by exact selector before act",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 101,
+      "selector": "#download-receipt",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Receipt PDF"]
+      },
+      "contains": ["Receipt PDF"],
+      "notContains": ["Invoice PDF", "Payment settings", "INV-2026-041"],
+      "selector": "#download-receipt",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#download-receipt format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#download-receipt",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "semantic-observed-act",
     "suite": "semantic-buttons",
     "title": "Execute observed receipt action without generation",

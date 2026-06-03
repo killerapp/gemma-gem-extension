@@ -1019,6 +1019,14 @@ June 3, 2026 transfer body readback coverage result:
 - Real smoke passed 53/53 with `actions_per_success 1.36`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 59/59 with `actions_per_success 1.47`, `p95_task_seconds 4.825`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 87 raw positive records from 53 tasks and 149 training records from 61 tasks, while candidate buckets rose to 69 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 semantic receipt read coverage result:
+
+- Added frozen `semantic-buttons/read-receipt-button-before-act`, proving exact `gemma_read_page` on `#download-receipt` reads the receipt button label without including invoice, settings, or page heading distractors.
+- This complements the existing semantic observe/rank/act/recovery coverage with a one-action selector-scoped readback for the winning receipt control.
+- Baseline local before the task stayed green at 59/59 with `actions_per_success 1.47` and `p95_task_seconds 0.006`; after adding the task, local passed 60/60 with `actions_per_success 1.47` and `p95_task_seconds 0.006`.
+- Real smoke passed 54/54 with `actions_per_success 1.35`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 60/60 with `actions_per_success 1.47`, `p95_task_seconds 4.097`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 88 raw positive records from 54 tasks and 150 training records from 62 tasks, while candidate buckets rose to 70 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
