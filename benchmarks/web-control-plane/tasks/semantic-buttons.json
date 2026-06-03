@@ -59,6 +59,32 @@
     }
   },
   {
+    "id": "semantic-invoice-observe-json",
+    "suite": "semantic-buttons",
+    "title": "Observe the invoice action as valid JSON",
+    "tool": "gemma_observe",
+    "arguments": {
+      "tabId": 101,
+      "instruction": "find the control that downloads the invoice PDF"
+    },
+    "expect": {
+      "json": "array",
+      "jsonFields": {
+        "0.selector": "#download-invoice",
+        "0.method": "click"
+      },
+      "minItems": 1,
+      "selector": "#download-invoice",
+      "method": "click",
+      "actions": 2,
+      "actionTraceTools": ["read_page_content", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "rank-receipt-actions",
     "suite": "semantic-buttons",
     "title": "Rank receipt action above billing distractors",
