@@ -1027,6 +1027,14 @@ June 3, 2026 semantic receipt read coverage result:
 - Real smoke passed 54/54 with `actions_per_success 1.35`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 60/60 with `actions_per_success 1.47`, `p95_task_seconds 4.097`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 88 raw positive records from 54 tasks and 150 training records from 62 tasks, while candidate buckets rose to 70 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 semantic settings read coverage result:
+
+- Added frozen `semantic-buttons/read-payment-settings-button-before-recovery`, proving exact `gemma_read_page` on `#payment-settings` reads the settings button label without including receipt, invoice, or page heading distractors.
+- The first two local attempts were discarded at 60/61 because the fake harness only special-cased `#download-receipt`; the kept change adds parity for `#download-invoice` and `#payment-settings`, matching the real content script's scoped button text behavior.
+- Baseline local before the task stayed green at 60/60 with `actions_per_success 1.47` and `p95_task_seconds 0.005`; after adding the task and harness parity fix, local passed 61/61 with `actions_per_success 1.46` and `p95_task_seconds 0.006`.
+- Real smoke passed 55/55 with `actions_per_success 1.35`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 61/61 with `actions_per_success 1.46`, `p95_task_seconds 4.179`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 89 raw positive records from 55 tasks and 151 training records from 63 tasks, while candidate buckets rose to 71 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

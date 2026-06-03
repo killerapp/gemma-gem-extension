@@ -130,6 +130,32 @@
     }
   },
   {
+    "id": "read-payment-settings-button-before-recovery",
+    "suite": "semantic-buttons",
+    "title": "Read payment settings button by exact selector before recovery",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 101,
+      "selector": "#payment-settings",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Payment settings"]
+      },
+      "contains": ["Payment settings"],
+      "notContains": ["Receipt PDF", "Invoice PDF", "INV-2026-041"],
+      "selector": "#payment-settings",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#payment-settings format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#payment-settings",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "semantic-observed-act",
     "suite": "semantic-buttons",
     "title": "Execute observed receipt action without generation",

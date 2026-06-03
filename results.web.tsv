@@ -396,3 +396,9 @@ d19ceba	real-chrome-extension-agent	56	1.0000	1.0000	1.0000	1.0000	1.50	0.007	4.
 414b96b	local-fake-extension	60	1.0000	1.0000	1.0000	1.0000	1.47	0.003	0.006	0.0000	0.000	keep	semantic receipt read local
 414b96b	real-chrome-extension-smoke	54	1.0000	1.0000	1.0000	1.0000	1.35	0.007	0.017	0.0000	0.000	keep	semantic receipt read real smoke
 414b96b	real-chrome-extension-agent	60	1.0000	1.0000	1.0000	1.0000	1.47	0.007	4.097	0.0000	0.001	keep	semantic receipt read real agent
+1b4d700	local-fake-extension	60	1.0000	1.0000	1.0000	1.0000	1.47	0.003	0.005	0.0000	0.000	baseline	semantic settings read baseline local
+1b4d700	local-fake-extension	61	0.9836	0.9836	1.0000	1.0000	1.47	0.003	0.007	0.0000	0.000	discard	semantic settings read local
+1b4d700	local-fake-extension	61	0.9836	0.9836	1.0000	1.0000	1.47	0.003	0.006	0.0000	0.000	discard	semantic settings read before click local
+1b4d700	local-fake-extension	61	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.006	0.0000	0.000	keep	semantic settings read harness parity local
+1b4d700	real-chrome-extension-smoke	55	1.0000	1.0000	1.0000	1.0000	1.35	0.007	0.016	0.0000	0.000	keep	semantic settings read real smoke
+1b4d700	real-chrome-extension-agent	61	1.0000	1.0000	1.0000	1.0000	1.46	0.007	4.179	0.0000	0.001	keep	semantic settings read real agent

@@ -634,6 +634,8 @@ class FakeExtension implements HarnessProbe {
   private read(tabId: number, selector: string, format = 'text'): string {
     if (tabId === 101) {
       if (selector === '#download-receipt') return 'Receipt PDF'
+      if (selector === '#download-invoice') return 'Invoice PDF'
+      if (selector === '#payment-settings') return 'Payment settings'
       if (format === 'html') {
         return [
           '<h1>Invoice INV-2026-041</h1>',
