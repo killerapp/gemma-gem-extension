@@ -491,6 +491,32 @@
     }
   },
   {
+    "id": "click-save-profile-recover-selector",
+    "suite": "forms",
+    "title": "Recover save profile button text selector",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 104,
+      "selector": "text=Save profile"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "recovered": true,
+        "recoveredSelector": "#save-profile",
+        "result.selector": "#save-profile"
+      },
+      "contains": ["recoveredSelector", "#save-profile", "Save profile"],
+      "clicked": "#save-profile",
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "click_element"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "selector=#save-profile"],
+      "bridgeExecuteTools": ["read_page_content", "click_element"],
+      "bridgeExecuteSelectors": ["body", "#save-profile"],
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "transfer-profile-fields",
     "suite": "forms",
     "title": "Transfer account fields between tabs",

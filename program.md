@@ -873,6 +873,14 @@ June 3, 2026 textarea type/read coverage result:
 - Real smoke passed 33/33 with `actions_per_success 1.21`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 38/38 with `actions_per_success 1.37`, `p95_task_seconds 6.483`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 52 raw positive records from 32 tasks and 114 training records from 40 tasks, while candidate buckets rose to 43 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 save button recovery coverage result:
+
+- Added frozen `forms/click-save-profile-recover-selector`, proving `gemma_click` can recover `text=Save profile` to `#save-profile` through the deterministic page-brief recovery path.
+- The task freezes the expected three-action recovery trace: page text read, page HTML read, then `click_element` on the recovered save button selector.
+- Baseline local before the task stayed green at 38/38 with `actions_per_success 1.37` and `p95_task_seconds 0.010`; after adding the task, local passed 39/39 with `actions_per_success 1.41` and `p95_task_seconds 0.009`.
+- Real smoke passed 34/34 with `actions_per_success 1.26`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 39/39 with `actions_per_success 1.41`, `p95_task_seconds 6.504`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 55 raw positive records from 33 tasks and 117 training records from 41 tasks, while candidate buckets rose to 45 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

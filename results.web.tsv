@@ -319,3 +319,7 @@ a5e43b9	real-chrome-extension-agent	29	1.0000	1.0000	1.0000	1.0000	1.48	0.007	6.
 4960107	local-fake-extension	38	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.009	0.0000	0.000	keep	textarea type read local metadata label
 4960107	real-chrome-extension-smoke	33	1.0000	1.0000	1.0000	1.0000	1.21	0.007	0.016	0.0000	0.000	keep	textarea type read real smoke
 4960107	real-chrome-extension-agent	38	1.0000	1.0000	1.0000	1.0000	1.37	0.007	6.483	0.0000	0.002	keep	textarea type read real agent
+7f45df4	local-fake-extension	38	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.010	0.0000	0.000	baseline	save button recovery baseline local
+7f45df4	local-fake-extension	39	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.009	0.0000	0.000	keep	save button recovery local
+7f45df4	real-chrome-extension-smoke	34	1.0000	1.0000	1.0000	1.0000	1.26	0.006	0.016	0.0000	0.000	keep	save button recovery real smoke
+7f45df4	real-chrome-extension-agent	39	1.0000	1.0000	1.0000	1.0000	1.41	0.008	6.504	0.0000	0.001	keep	save button recovery real agent
