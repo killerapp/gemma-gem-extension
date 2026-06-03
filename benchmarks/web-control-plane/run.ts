@@ -433,6 +433,8 @@ class FakeExtension implements HarnessProbe {
       '#dest-role',
       '#save-profile',
       '#save-result',
+      '#settings-link',
+      '#billing-link',
       '#scroll-target',
       'body',
     ])
@@ -654,6 +656,27 @@ class FakeExtension implements HarnessProbe {
         ].join('\n')
       }
       return this.value(104, selector)
+    }
+    if (tabId === 105) {
+      if (selector === 'body' && format === 'html') {
+        return [
+          '<main>',
+          '<a id="settings-link" href="/settings">Settings</a>',
+          '<a id="billing-link" href="/billing">Billing</a>',
+          '<p id="scroll-target">Scroll target reached</p>',
+          '</main>',
+        ].join('\n')
+      }
+      if (selector === 'body') {
+        return [
+          'Settings',
+          'Billing',
+          'Scroll target reached',
+        ].join('\n')
+      }
+      if (selector === '#settings-link') return 'Settings'
+      if (selector === '#billing-link') return 'Billing'
+      if (selector === '#scroll-target') return 'Scroll target reached'
     }
     return ''
   }

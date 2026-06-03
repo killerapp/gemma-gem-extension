@@ -804,6 +804,14 @@ June 3, 2026 negative scroll coverage result:
 - Real smoke passed 20/20 with `selector_hit_rate 1.0000`, `actions_per_success 1.30`, and `timeout_rate 0.0000`; real agent passed 25/25 with `p95_task_seconds 6.821`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 38 raw positive records from 19 tasks and 100 training records from 27 tasks, while preference and reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 navigation link brief coverage result:
+
+- Added frozen `navigation/navigation-page-brief-links`, a two-action `gemma_page_brief` task that reads the navigation fixture body as text and HTML, then asserts `#settings-link` and `#billing-link` are exposed as anchor controls.
+- The fake harness now mirrors the real navigation fixture text and link HTML for `tabId 105`, keeping local page-brief control extraction aligned with the real content-script path.
+- Baseline local before the task stayed green at 25/25 with `p95_task_seconds 0.010`; after adding the task, local passed 26/26 with `actions_per_success 1.54` and `p95_task_seconds 0.010`.
+- Real smoke passed 21/21 with `selector_hit_rate 1.0000`, `actions_per_success 1.33`, and `timeout_rate 0.0000`; real agent passed 26/26 with `p95_task_seconds 6.636`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 40 raw positive records from 20 tasks and 102 training records from 28 tasks, while preference and reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

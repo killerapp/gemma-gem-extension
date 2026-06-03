@@ -105,6 +105,49 @@
     }
   },
   {
+    "id": "navigation-page-brief-links",
+    "suite": "navigation",
+    "title": "Brief exposes navigation page links",
+    "tool": "gemma_page_brief",
+    "arguments": {
+      "tabId": 105,
+      "selector": "body",
+      "format": "text",
+      "maxChars": 4000
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "tab.title": "Navigation sandbox",
+        "selector": "body",
+        "format": "text",
+        "interactiveControls.0.selector": "#settings-link",
+        "interactiveControls.0.label": "Settings",
+        "interactiveControls.0.tag": "a",
+        "interactiveControls.1.selector": "#billing-link",
+        "interactiveControls.1.label": "Billing",
+        "interactiveControls.1.tag": "a"
+      },
+      "jsonFieldIncludes": {
+        "content": ["Settings", "Billing", "Scroll target reached"]
+      },
+      "jsonFieldMinItems": {
+        "interactiveControls": 2
+      },
+      "jsonFieldItemCount": {
+        "interactiveControls": 2
+      },
+      "actions": 2,
+      "actionTraceTools": ["read_page_content", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
+      "contains": ["Settings", "Billing", "\"selector\": \"#settings-link\"", "\"selector\": \"#billing-link\"", "\"tag\": \"a\""],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeListTabs": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "scroll-contract",
     "suite": "navigation",
     "title": "Scroll page changes viewport position",

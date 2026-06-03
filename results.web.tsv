@@ -280,3 +280,7 @@ a1e798c	local-fake-extension	24	1.0000	1.0000	1.0000	1.0000	1.54	0.004	0.010	0.0
 a1e798c	local-fake-extension	25	1.0000	1.0000	1.0000	1.0000	1.52	0.004	0.010	0.0000	0.000	keep	negative scroll local
 a1e798c	real-chrome-extension-smoke	20	1.0000	1.0000	1.0000	1.0000	1.30	0.007	0.017	0.0000	0.000	keep	negative scroll real smoke
 a1e798c	real-chrome-extension-agent	25	1.0000	1.0000	1.0000	1.0000	1.52	0.007	6.821	0.0000	0.001	keep	negative scroll real agent
+340651b	local-fake-extension	25	1.0000	1.0000	1.0000	1.0000	1.52	0.004	0.010	0.0000	0.000	baseline	navigation link brief baseline local
+340651b	local-fake-extension	26	1.0000	1.0000	1.0000	1.0000	1.54	0.003	0.010	0.0000	0.000	keep	navigation link brief local
+340651b	real-chrome-extension-smoke	21	1.0000	1.0000	1.0000	1.0000	1.33	0.008	0.019	0.0000	0.000	keep	navigation link brief real smoke
+340651b	real-chrome-extension-agent	26	1.0000	1.0000	1.0000	1.0000	1.54	0.007	6.636	0.0000	0.001	keep	navigation link brief real agent
