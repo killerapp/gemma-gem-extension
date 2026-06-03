@@ -452,7 +452,7 @@ function isTransientModelRuntimeError(text: string): boolean {
 function deterministicObservedActions(instruction: string, pageSnapshot: string): ObservedAction[] {
   const controls = [...pageSnapshot.matchAll(/^- ([^:\n]+): ([^\n]+)/gm)].map(match => ({
     selector: match[1].trim(),
-    label: match[2].trim(),
+    label: match[2].replace(/\s+\([^)]*\)$/, '').trim(),
   }))
   if (controls.length === 0) return []
 

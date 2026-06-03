@@ -864,6 +864,15 @@ June 3, 2026 type append coverage result:
 - Real smoke passed 31/31 after the trace fix with `actions_per_success 1.23`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 36/36 with `actions_per_success 1.39`, `p95_task_seconds 6.656`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 50 raw positive records from 30 tasks and 112 training records from 38 tasks, while candidate buckets rose to 41 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 textarea type/read coverage result:
+
+- Added frozen `forms/type-destination-notes-textarea` and `forms/read-destination-notes-textarea`, proving `gemma_type_text` can type into a textarea and exact selector reads return its current value.
+- Extended the destination fixture, page-brief expectations, and fake harness with `#dest-notes`, keeping textarea coverage in the same compact destination form as the existing input, select, checkbox, radio, and save controls.
+- The first local run was recorded as `discard`: adding a textarea exposed that deterministic selector recovery scored metadata such as `name=notes`, causing `text=Name` recovery to pick `#dest-notes`. Recovery now strips parenthesized metadata before scoring visible labels, preserving page-brief metadata while avoiding text-selector collisions.
+- Baseline local before the tasks stayed green at 36/36 with `actions_per_success 1.39` and `p95_task_seconds 0.010`; after the metadata-label fix, local passed 38/38 with `actions_per_success 1.37` and `p95_task_seconds 0.009`.
+- Real smoke passed 33/33 with `actions_per_success 1.21`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 38/38 with `actions_per_success 1.37`, `p95_task_seconds 6.483`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 52 raw positive records from 32 tasks and 114 training records from 40 tasks, while candidate buckets rose to 43 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

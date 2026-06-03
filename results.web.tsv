@@ -314,3 +314,8 @@ a5e43b9	real-chrome-extension-agent	29	1.0000	1.0000	1.0000	1.0000	1.48	0.007	6.
 47daab9	real-chrome-extension-smoke	31	0.9677	0.9677	1.0000	1.0000	1.23	0.007	0.017	0.0000	0.000	discard	type append real smoke
 47daab9	real-chrome-extension-smoke	31	1.0000	1.0000	1.0000	1.0000	1.23	0.010	0.032	0.0000	0.000	keep	type append real smoke trace clear
 47daab9	real-chrome-extension-agent	36	1.0000	1.0000	1.0000	1.0000	1.39	0.006	6.656	0.0000	0.001	keep	type append real agent
+4960107	local-fake-extension	36	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.010	0.0000	0.000	baseline	textarea type read baseline local
+4960107	local-fake-extension	38	0.8947	0.8947	1.0000	0.8947	1.35	0.003	0.010	0.0000	0.000	discard	textarea type read local
+4960107	local-fake-extension	38	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.009	0.0000	0.000	keep	textarea type read local metadata label
+4960107	real-chrome-extension-smoke	33	1.0000	1.0000	1.0000	1.0000	1.21	0.007	0.016	0.0000	0.000	keep	textarea type read real smoke
+4960107	real-chrome-extension-agent	38	1.0000	1.0000	1.0000	1.0000	1.37	0.007	6.483	0.0000	0.002	keep	textarea type read real agent

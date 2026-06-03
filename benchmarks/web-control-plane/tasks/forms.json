@@ -35,23 +35,27 @@
         "interactiveControls.5.tag": "input",
         "interactiveControls.5.name": "priority",
         "interactiveControls.5.value": "high",
-        "interactiveControls.6.selector": "#save-profile",
-        "interactiveControls.6.label": "Save profile",
-        "interactiveControls.6.tag": "button"
+        "interactiveControls.6.selector": "#dest-notes",
+        "interactiveControls.6.label": "Notes",
+        "interactiveControls.6.tag": "textarea",
+        "interactiveControls.6.name": "notes",
+        "interactiveControls.7.selector": "#save-profile",
+        "interactiveControls.7.label": "Save profile",
+        "interactiveControls.7.tag": "button"
       },
       "jsonFieldIncludes": {
-        "content": ["Name", "Email", "Role", "Subscribe updates", "Priority Low", "Priority High", "Save profile"]
+        "content": ["Name", "Email", "Role", "Subscribe updates", "Priority Low", "Priority High", "Notes", "Save profile"]
       },
       "jsonFieldMinItems": {
-        "interactiveControls": 7
+        "interactiveControls": 8
       },
       "jsonFieldItemCount": {
-        "interactiveControls": 7
+        "interactiveControls": 8
       },
       "actions": 2,
       "actionTraceTools": ["read_page_content", "read_page_content"],
       "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
-      "contains": ["interactiveControls", "\"selector\": \"#dest-name\"", "\"label\": \"Name\"", "\"tag\": \"input\"", "\"name\": \"name\"", "\"selector\": \"#dest-updates\"", "\"selector\": \"#dest-priority-low\"", "\"selector\": \"#dest-priority-high\"", "\"selector\": \"#save-profile\""],
+      "contains": ["interactiveControls", "\"selector\": \"#dest-name\"", "\"label\": \"Name\"", "\"tag\": \"input\"", "\"name\": \"name\"", "\"selector\": \"#dest-updates\"", "\"selector\": \"#dest-priority-low\"", "\"selector\": \"#dest-priority-high\"", "\"selector\": \"#dest-notes\"", "\"selector\": \"#save-profile\""],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",
       "bridgeListTabs": true,
@@ -166,6 +170,61 @@
       "actionTraceTextIncludes": ["selector=#dest-name format=text"],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "#dest-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "type-destination-notes-textarea",
+    "suite": "forms",
+    "title": "Type destination notes textarea",
+    "tool": "gemma_type_text",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-notes",
+      "text": "Coordinate follow-up"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "typed": "Coordinate follow-up",
+        "into": "#dest-notes",
+        "value": "Coordinate follow-up"
+      },
+      "contains": ["Coordinate follow-up", "#dest-notes"],
+      "destinationValues": {
+        "#dest-notes": "Coordinate follow-up"
+      },
+      "actions": 1,
+      "actionTraceTools": ["type_text"],
+      "actionTraceTextIncludes": ["selector=#dest-notes textLength=20"],
+      "bridgeExecuteTool": "type_text",
+      "bridgeExecuteSelector": "#dest-notes",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-notes-textarea",
+    "suite": "forms",
+    "title": "Read destination notes textarea",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-notes",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Coordinate follow-up"]
+      },
+      "contains": ["Coordinate follow-up"],
+      "notContains": ["Save profile", "Grace Hopper"],
+      "selector": "#dest-notes",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-notes format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-notes",
       "bridgeRunAgent": false
     }
   },

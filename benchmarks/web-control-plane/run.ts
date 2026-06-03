@@ -366,6 +366,7 @@ class FakeExtension implements HarnessProbe {
     this.values.set('104:#dest-updates', 'unchecked')
     this.values.set('104:#dest-priority-low', 'unchecked')
     this.values.set('104:#dest-priority-high', 'unchecked')
+    this.values.set('104:#dest-notes', '')
     this.values.set('104:#save-result', '')
   }
 
@@ -439,6 +440,7 @@ class FakeExtension implements HarnessProbe {
       '#dest-updates',
       '#dest-priority-low',
       '#dest-priority-high',
+      '#dest-notes',
       '#save-profile',
       '#save-result',
       '#settings-link',
@@ -668,6 +670,7 @@ class FakeExtension implements HarnessProbe {
           '<label><input id="dest-updates" name="updates" type="checkbox" value="subscribe"> Subscribe updates</label>',
           '<label><input id="dest-priority-low" name="priority" type="radio" value="low"> Priority Low</label>',
           '<label><input id="dest-priority-high" name="priority" type="radio" value="high"> Priority High</label>',
+          '<label>Notes <textarea id="dest-notes" name="notes"></textarea></label>',
           '<button id="save-profile">Save profile</button>',
           '<p id="save-result"></p>',
           '</main>',
@@ -684,6 +687,7 @@ class FakeExtension implements HarnessProbe {
           'Subscribe updates',
           'Priority Low',
           'Priority High',
+          'Notes',
           'Save profile',
           this.value(104, '#save-result'),
         ].filter(Boolean).join('\n')
