@@ -697,6 +697,7 @@ Experiment result:
 - `package.json` now exposes direct real benchmark aliases: `pnpm benchmark:web:real` for deterministic real-extension smoke and `pnpm benchmark:web:real:agent` for the model-backed real-extension agent suite. Both aliases pass on the current branch: real smoke `15/15` with `p95_task_seconds 0.116`, and real agent `20/20` with `p95_task_seconds 6.534`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Generated benchmark reports now point users at `pnpm benchmark:web:real:agent` for model-backed real-extension coverage instead of the older forwarded-argument form.
 - Generated benchmark reports now also identify the mode-specific command that produced them: `pnpm benchmark:web`, `pnpm benchmark:web:real`, or `pnpm benchmark:web:real:agent`.
+- Generated benchmark reports now describe `real-chrome-extension-agent` separately from deterministic smoke, including the model-backed `gemma_model_ready`, `gemma_agent`, `gemma_observe`, and `gemma_extract` task coverage.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

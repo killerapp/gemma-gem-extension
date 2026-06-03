@@ -243,3 +243,5 @@ adb148e	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.
 737b09c	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.151	0.0000	0.000	keep	report footer real agent alias real smoke
 7c6dbc1	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.009	0.146	0.0000	0.000	baseline	report header command baseline real smoke
 7c6dbc1	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.009	0.142	0.0000	0.000	keep	report header real command real smoke
+ef57de4	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.431	0.0000	0.001	baseline	report mode description baseline real agent
+ef57de4	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.415	0.0000	0.001	keep	report mode description real agent

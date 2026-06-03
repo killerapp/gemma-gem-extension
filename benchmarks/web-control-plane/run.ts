@@ -1766,6 +1766,11 @@ async function writeReport(results: TaskResult[], summary: ReturnType<typeof sum
     : mode === 'real-chrome-extension-agent'
       ? 'pnpm benchmark:web:real:agent'
       : 'pnpm benchmark:web:real'
+  const modeDescription = mode === 'local-fake-extension'
+    ? 'This mode uses the real MCP sidecar and a deterministic fake extension WebSocket. It validates sidecar tool contracts, bridge request shape, JSON/tool result handling, and deterministic helper orchestration.'
+    : mode === 'real-chrome-extension-agent'
+      ? 'This mode launches Chrome for Testing with the built Gemma Gem extension, serves fixture pages locally, runs the deterministic task subset through the real extension/content-script path, and includes model-backed `gemma_model_ready`, `gemma_agent`, `gemma_observe`, and `gemma_extract` tasks.'
+      : 'This mode launches Chrome for Testing with the built Gemma Gem extension, serves fixture pages locally, configures the extension bridge through a development-only service-worker hook, and runs the deterministic task subset through the real extension/content-script path.'
   const modelReadyLines = [
     `- model_ready_status: ${summary.modelReady.status}`,
     `- model_load_seconds: ${summary.modelLoadSeconds.toFixed(3)}`,
@@ -1821,9 +1826,7 @@ async function writeReport(results: TaskResult[], summary: ReturnType<typeof sum
     '',
     `Current mode: \`${mode}\`.`,
     '',
-    mode === 'local-fake-extension'
-      ? 'This mode uses the real MCP sidecar and a deterministic fake extension WebSocket. It validates sidecar tool contracts, bridge request shape, JSON/tool result handling, and deterministic helper orchestration.'
-      : 'This mode launches Chrome for Testing with the built Gemma Gem extension, serves fixture pages locally, configures the extension bridge through a development-only service-worker hook, and runs the deterministic task subset through the real extension/content-script path.',
+    modeDescription,
     '',
     'Install/update the local browser runtime with `pnpm browser:install`. Launch a persistent manual debug profile with `pnpm browser:debug`.',
     '',
