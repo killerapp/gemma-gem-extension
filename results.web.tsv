@@ -436,3 +436,8 @@ acf1e9d	local-fake-extension	68	1.0000	1.0000	1.0000	1.0000	1.43	0.003	0.006	0.0
 acf1e9d	local-fake-extension	69	1.0000	1.0000	1.0000	1.0000	1.43	0.003	0.005	0.0000	0.000	keep	semantic settings observe local
 acf1e9d	real-chrome-extension-smoke	61	1.0000	1.0000	1.0000	1.0000	1.31	0.007	0.011	0.0000	0.000	keep	semantic settings observe real smoke
 acf1e9d	real-chrome-extension-agent	69	1.0000	1.0000	1.0000	1.0000	1.43	0.007	4.213	0.0000	0.001	keep	semantic settings observe real agent
+66e51d4	local-fake-extension	69	1.0000	1.0000	1.0000	1.0000	1.43	0.003	0.005	0.0000	0.000	baseline	semantic invoice agent baseline local
+66e51d4	local-fake-extension	70	0.9857	0.9857	1.0000	1.0000	1.43	0.003	0.005	0.0000	0.000	discard	semantic invoice agent local
+66e51d4	local-fake-extension	70	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.006	0.0000	0.000	keep	semantic invoice agent local
+66e51d4	real-chrome-extension-smoke	61	1.0000	1.0000	1.0000	1.0000	1.31	0.007	0.011	0.0000	0.000	keep	semantic invoice agent real smoke
+66e51d4	real-chrome-extension-agent	70	1.0000	1.0000	1.0000	1.0000	1.47	0.007	4.875	0.0000	0.001	keep	semantic invoice agent real agent

@@ -1100,6 +1100,14 @@ June 3, 2026 semantic settings observe coverage result:
 - Real smoke passed 61/61 with `actions_per_success 1.31`, `p95_task_seconds 0.011`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 69/69 with `actions_per_success 1.43`, `p95_task_seconds 4.213`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 99 raw positive records from 61 tasks and 168 training records from 70 tasks, while candidate buckets rose to 79, paired buckets remain 28, and preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 semantic invoice agent coverage result:
+
+- Added frozen `semantic-buttons/semantic-invoice-agent`, proving end-to-end `gemma_agent` can select `#download-invoice` for an invoice download task through the real extension and model-backed agent path.
+- The first local attempt was discarded at 69/70 because the fake bridge classified any prompt containing invoice page text as an invoice task, breaking the existing receipt agent; the kept harness parity fix keys fake invoice selection to the task wording instead.
+- Baseline local before the task stayed green at 69/69 with `actions_per_success 1.43` and `p95_task_seconds 0.005`; after the fake parity fix, local passed 70/70 with `actions_per_success 1.46` and `p95_task_seconds 0.006`.
+- Real smoke passed 61/61 with `actions_per_success 1.31`, `p95_task_seconds 0.011`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 70/70 with `actions_per_success 1.47`, `p95_task_seconds 4.875`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 103 raw positive records from 62 tasks and 172 training records from 71 tasks, while candidate buckets rose to 81, paired buckets remain 28, and preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

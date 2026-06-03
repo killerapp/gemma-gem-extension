@@ -542,14 +542,18 @@ class FakeExtension implements HarnessProbe {
       }))
     }
 
+    const wantsInvoice = /download the invoice PDF/i.test(request.prompt)
+    const targetSelector = wantsInvoice ? '#download-invoice' : '#download-receipt'
+    const targetKind = wantsInvoice ? 'invoice' : 'receipt'
+
     return [
       {
         type: 'bridge:chunk',
         requestId: request.requestId,
-        text: '[Thinking] The receipt download is the proof of last payment.',
+        text: `[Thinking] The ${targetKind} download is the right billing control.`,
       },
       this.response(request.requestId, {
-        text: 'SUCCESS: selected #download-receipt and downloaded receipt for INV-2026-041',
+        text: `SUCCESS: selected ${targetSelector} and downloaded ${targetKind} for INV-2026-041`,
       }),
     ]
   }
