@@ -1249,6 +1249,14 @@ June 3, 2026 navigation isolated screenshot coverage result:
 - The real-agent retry passed 88/88 with `actions_per_success 1.40`, `p95_task_seconds 4.193`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 123 raw positive records from 76 tasks and 192 training records from 85 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 navigation isolated active-tab coverage result:
+
+- Added frozen `navigation/active-isolated-navigation-tab-contract`, proving `gemma_active_tab` reports the isolated `navigation-billing.html` fixture after activating logical tab 106.
+- The task complements tabs, page-brief, exact read, body HTML, click, and screenshot coverage for tab 106, and the existing billing-tab restore keeps later semantic model tasks in their expected tab context.
+- Baseline local before the task stayed green at 88/88 with `actions_per_success 1.38` and `p95_task_seconds 0.005`; after adding the zero-action active-tab task, local passed 89/89 with `actions_per_success 1.36` and `p95_task_seconds 0.005`.
+- Real smoke passed 79/79 with `actions_per_success 1.22`, `p95_task_seconds 0.121`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 89/89 with `actions_per_success 1.38`, `p95_task_seconds 4.249`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Because this task records browser metadata instead of a content action, trace artifacts remain at 123 raw positive records from 76 tasks and 192 training records from 85 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
