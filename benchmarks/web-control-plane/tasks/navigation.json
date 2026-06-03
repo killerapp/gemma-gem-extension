@@ -79,6 +79,7 @@
     "expect": {
       "image": "image/png",
       "actions": 1,
+      "actionTraceTools": ["take_screenshot"],
       "bridgeExecuteTool": "take_screenshot",
       "bridgeRunAgent": false
     }
@@ -120,6 +121,7 @@
       "contains": ["down 700px", "scrollY"],
       "scrollYAtLeast": 650,
       "actions": 1,
+      "actionTraceTools": ["scroll_page"],
       "bridgeExecuteTool": "scroll_page",
       "bridgeRunAgent": false
     }

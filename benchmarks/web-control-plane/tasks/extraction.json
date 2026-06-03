@@ -108,6 +108,7 @@
         "content": ["Starter", "$19"]
       },
       "actions": 1,
+      "actionTraceTools": ["read_page_content"],
       "contains": ["Team", "$49"],
       "notContains": ["Starter", "$19"],
       "bridgeExecuteTool": "read_page_content",

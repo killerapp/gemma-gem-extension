@@ -47,6 +47,7 @@
       "selector": "#download-receipt",
       "method": "click",
       "actions": 2,
+      "actionTraceTools": ["read_page_content", "read_page_content"],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",
       "bridgeRunAgent": false
@@ -124,6 +125,7 @@
       "selector": "#download-receipt",
       "clicked": "#download-receipt",
       "actions": 1,
+      "actionTraceTools": ["click_element"],
       "bridgeExecuteTool": "click_element",
       "bridgeRunAgent": false
     }
@@ -148,6 +150,7 @@
       "selector": "#download-receipt",
       "clicked": "#download-receipt",
       "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "click_element"],
       "bridgeExecuteTools": ["read_page_content", "click_element"],
       "bridgeExecuteSelectors": ["body", "#download-receipt"],
       "bridgeRunAgent": false
@@ -207,6 +210,7 @@
         "interactiveControls": 3
       },
       "actions": 2,
+      "actionTraceTools": ["read_page_content", "read_page_content"],
       "contains": ["Receipt PDF", "Payment settings", "INV-2026-041", "\"selector\": \"#download-receipt\"", "\"selector\": \"#payment-settings\""],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",

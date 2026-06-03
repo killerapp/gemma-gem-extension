@@ -34,6 +34,7 @@
         "interactiveControls": 4
       },
       "actions": 2,
+      "actionTraceTools": ["read_page_content", "read_page_content"],
       "contains": ["interactiveControls", "\"selector\": \"#dest-name\"", "\"label\": \"Name\"", "\"tag\": \"input\"", "\"name\": \"name\"", "\"selector\": \"#save-profile\""],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",
@@ -63,6 +64,7 @@
         "#dest-name": "Grace Hopper"
       },
       "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "type_text"],
       "bridgeExecuteTools": ["read_page_content", "type_text"],
       "bridgeExecuteSelectors": ["body", "#dest-name"],
       "bridgeRunAgent": false
@@ -90,6 +92,7 @@
         "#dest-role": "reviewer"
       },
       "actions": 1,
+      "actionTraceTools": ["select_option"],
       "bridgeExecuteTool": "select_option",
       "bridgeExecuteSelector": "#dest-role",
       "bridgeRunAgent": false
@@ -149,6 +152,7 @@
       },
       "clicked": "#save-profile",
       "actions": 6,
+      "actionTraceTools": ["read_page_content", "type_text", "read_page_content", "type_text", "click_element", "read_page_content"],
       "bridgeExecuteTools": ["read_page_content", "type_text", "click_element"],
       "bridgeExecuteSelectors": ["#source-name", "#source-email", "#dest-name", "#dest-email", "#save-profile", "#save-result"],
       "bridgeRunAgent": false
