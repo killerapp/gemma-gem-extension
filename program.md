@@ -780,6 +780,14 @@ June 3, 2026 source-email read coverage result:
 - Real smoke passed 17/17 with `selector_hit_rate 1.0000`, `actions_per_success 1.35`, and `timeout_rate 0.0000`; real agent passed 22/22 with `p95_task_seconds 6.523`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 35 raw positive records from 16 tasks and 97 training records from 24 tasks, while preference and reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 destination select read coverage result:
+
+- Added frozen `forms/read-destination-role-options`, a one-action `gemma_read_page` task that reads `#dest-role` and asserts the scoped response includes `Choose role`, `Administrator`, and `Reviewer` without leaking adjacent source or save-button text.
+- The fake harness now returns the same option-label text for scoped `#dest-role` reads that the real content script sees from the select element, keeping local and real fixture semantics aligned.
+- Baseline local before the task stayed green at 22/22 with `p95_task_seconds 0.011`; after adding the task, local passed 23/23 with `actions_per_success 1.57` and `p95_task_seconds 0.009`.
+- Real smoke passed 18/18 with `selector_hit_rate 1.0000`, `actions_per_success 1.33`, and `timeout_rate 0.0000`; real agent passed 23/23 with `p95_task_seconds 6.639`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 36 raw positive records from 17 tasks and 98 training records from 25 tasks, while preference and reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

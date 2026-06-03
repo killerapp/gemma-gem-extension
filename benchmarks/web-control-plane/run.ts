@@ -638,6 +638,13 @@ class FakeExtension implements HarnessProbe {
           this.value(104, '#save-result'),
         ].filter(Boolean).join('\n')
       }
+      if (selector === '#dest-role') {
+        return [
+          'Choose role',
+          'Administrator',
+          'Reviewer',
+        ].join('\n')
+      }
       return this.value(104, selector)
     }
     return ''
