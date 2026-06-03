@@ -1329,6 +1329,14 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
       const sawListTabs = harness.requestsSince(startRequestCount).some(request => request.type === 'bridge:list_tabs')
       if (sawListTabs) notes.push('unexpected bridge:list_tabs request')
     }
+    if (expect.bridgeGetActiveTab === true && harness.supportsBridgeRequestLog) {
+      const sawGetActiveTab = harness.requestsSince(startRequestCount).some(request => request.type === 'bridge:get_active_tab')
+      if (!sawGetActiveTab) notes.push('expected bridge:get_active_tab request')
+    }
+    if (expect.bridgeGetActiveTab === false && harness.supportsBridgeRequestLog) {
+      const sawGetActiveTab = harness.requestsSince(startRequestCount).some(request => request.type === 'bridge:get_active_tab')
+      if (sawGetActiveTab) notes.push('unexpected bridge:get_active_tab request')
+    }
     if (expect.bridgeEnsureModelReady === true && harness.supportsBridgeRequestLog) {
       const sawEnsureModelReady = harness.requestsSince(startRequestCount).some(request => request.type === 'bridge:ensure_model_ready')
       if (!sawEnsureModelReady) notes.push('expected bridge:ensure_model_ready request')

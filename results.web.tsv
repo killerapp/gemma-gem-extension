@@ -115,3 +115,6 @@ d8b1acb	local-fake-extension	17	1.0000	1.0000	1.0000	1.0000	1.94	0.004	0.010	0.0
 6c4e65a	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.009	0.0000	0.000	keep	model ready local benchmark
 6c4e65a	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.010	0.081	0.0000	0.000	keep	real smoke model ready excluded
 6c4e65a	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final model ready artifacts
+a30c294	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	active screenshot local benchmark
+a30c294	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.009	0.094	0.0000	0.000	keep	real smoke active screenshot
+a30c294	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final active screenshot artifacts

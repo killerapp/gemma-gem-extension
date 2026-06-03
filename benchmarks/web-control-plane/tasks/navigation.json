@@ -20,8 +20,11 @@
     "tool": "gemma_active_tab",
     "arguments": {},
     "expect": {
+      "json": "object",
       "contains": ["Billing sandbox", "semantic-buttons.html"],
-      "activeTabId": 101
+      "activeTabId": 101,
+      "bridgeGetActiveTab": true,
+      "bridgeRunAgent": false
     }
   },
   {
@@ -48,7 +51,9 @@
       "tabId": 101
     },
     "expect": {
-      "image": "image/png"
+      "image": "image/png",
+      "bridgeExecuteTool": "take_screenshot",
+      "bridgeRunAgent": false
     }
   },
   {
