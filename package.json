@@ -38,6 +38,8 @@
     "browser:debug": "tsx scripts/launch-extension-debug.ts",
     "browser:model-ready": "tsx scripts/check-model-ready.ts",
     "benchmark:web": "tsx benchmarks/web-control-plane/run.ts",
+    "benchmark:web:real": "tsx benchmarks/web-control-plane/run.ts --real",
+    "benchmark:web:real:agent": "tsx benchmarks/web-control-plane/run.ts --real --include-agent",
     "benchmark:traces": "tsx benchmarks/web-control-plane/export-traces.ts",
     "benchmark:traces:check": "tsx benchmarks/web-control-plane/check-traces.ts --min-records 32 --min-positive 32 --min-selectors 27 --min-clicks 3 --min-candidate-buckets 15 --min-target-selector-records 4 --min-target-selector-matches 3 --min-target-selector-no-action-selectors 1 --min-target-selector-buckets 1 --min-target-selector-match-buckets 1 --min-target-selector-no-action-selector-buckets 1",
     "benchmark:traces:summary": "tsx benchmarks/web-control-plane/summarize-traces.ts",

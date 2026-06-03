@@ -254,7 +254,7 @@ Current recommended command:
 ```powershell
 pnpm browser:install -- --channel Stable
 pnpm build
-pnpm benchmark:web -- --real --include-agent
+pnpm benchmark:web:real:agent
 ```
 
 Current model readiness experiment:
@@ -694,6 +694,7 @@ Experiment result:
 - `pnpm benchmark:web` passes after tightening the trace-policy scoped target margin floor with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
 - `pnpm benchmark:web -- --real` passes on the current branch with `15` deterministic real-extension smoke tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.119`, and `timeout_rate 0.0000`.
 - `pnpm benchmark:web -- --real --include-agent` passes on the current branch with `20` real-extension agent tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 6.463`, `model_ready_status ready`, `model_load_seconds 0.002`, and `timeout_rate 0.0000`.
+- `package.json` now exposes direct real benchmark aliases: `pnpm benchmark:web:real` for deterministic real-extension smoke and `pnpm benchmark:web:real:agent` for the model-backed real-extension agent suite. Both aliases pass on the current branch: real smoke `15/15` with `p95_task_seconds 0.116`, and real agent `20/20` with `p95_task_seconds 6.534`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:
