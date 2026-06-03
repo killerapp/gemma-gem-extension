@@ -66,6 +66,17 @@ type TraceCheckConfig = {
   minTargetSelectorMatches?: number
   minTargetSelectorMismatches?: number
   minTargetSelectorNoActionSelectors?: number
+  minTargetSelectorBuckets?: number
+  minTargetSelectorMatchBuckets?: number
+  minTargetSelectorMismatchBuckets?: number
+  minTargetSelectorNoActionSelectorBuckets?: number
+}
+
+type TargetSelectorBucket = {
+  records: number
+  matches: number
+  mismatches: number
+  noActionSelectors: number
 }
 
 function parseArgs(): TraceCheckConfig {
@@ -84,6 +95,10 @@ function parseArgs(): TraceCheckConfig {
   let minTargetSelectorMatches: number | undefined
   let minTargetSelectorMismatches: number | undefined
   let minTargetSelectorNoActionSelectors: number | undefined
+  let minTargetSelectorBuckets: number | undefined
+  let minTargetSelectorMatchBuckets: number | undefined
+  let minTargetSelectorMismatchBuckets: number | undefined
+  let minTargetSelectorNoActionSelectorBuckets: number | undefined
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i]
@@ -153,6 +168,26 @@ function parseArgs(): TraceCheckConfig {
       i += 1
     } else if (arg.startsWith('--min-target-selector-no-action-selectors=')) {
       minTargetSelectorNoActionSelectors = parseNumber(arg.slice('--min-target-selector-no-action-selectors='.length), '--min-target-selector-no-action-selectors')
+    } else if (arg === '--min-target-selector-buckets') {
+      minTargetSelectorBuckets = parseNumber(value, '--min-target-selector-buckets')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-buckets=')) {
+      minTargetSelectorBuckets = parseNumber(arg.slice('--min-target-selector-buckets='.length), '--min-target-selector-buckets')
+    } else if (arg === '--min-target-selector-match-buckets') {
+      minTargetSelectorMatchBuckets = parseNumber(value, '--min-target-selector-match-buckets')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-match-buckets=')) {
+      minTargetSelectorMatchBuckets = parseNumber(arg.slice('--min-target-selector-match-buckets='.length), '--min-target-selector-match-buckets')
+    } else if (arg === '--min-target-selector-mismatch-buckets') {
+      minTargetSelectorMismatchBuckets = parseNumber(value, '--min-target-selector-mismatch-buckets')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-mismatch-buckets=')) {
+      minTargetSelectorMismatchBuckets = parseNumber(arg.slice('--min-target-selector-mismatch-buckets='.length), '--min-target-selector-mismatch-buckets')
+    } else if (arg === '--min-target-selector-no-action-selector-buckets') {
+      minTargetSelectorNoActionSelectorBuckets = parseNumber(value, '--min-target-selector-no-action-selector-buckets')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-no-action-selector-buckets=')) {
+      minTargetSelectorNoActionSelectorBuckets = parseNumber(arg.slice('--min-target-selector-no-action-selector-buckets='.length), '--min-target-selector-no-action-selector-buckets')
     } else {
       throw new Error(`Unknown argument ${arg}. Use --input <path>, --require-negative, --require-candidate-pairs, and --min-* coverage options.`)
     }
@@ -173,6 +208,10 @@ function parseArgs(): TraceCheckConfig {
     minTargetSelectorMatches,
     minTargetSelectorMismatches,
     minTargetSelectorNoActionSelectors,
+    minTargetSelectorBuckets,
+    minTargetSelectorMatchBuckets,
+    minTargetSelectorMismatchBuckets,
+    minTargetSelectorNoActionSelectorBuckets,
   }
 }
 
@@ -303,6 +342,10 @@ async function main(): Promise<void> {
     minTargetSelectorMatches,
     minTargetSelectorMismatches,
     minTargetSelectorNoActionSelectors,
+    minTargetSelectorBuckets,
+    minTargetSelectorMatchBuckets,
+    minTargetSelectorMismatchBuckets,
+    minTargetSelectorNoActionSelectorBuckets,
   } = parseArgs()
   if (!existsSync(input)) throw new Error(`Trace export not found: ${input}`)
 
@@ -322,6 +365,7 @@ async function main(): Promise<void> {
   let targetSelectorMismatches = 0
   let targetSelectorNoActionSelectors = 0
   const candidateLabels = new Map<string, Set<string>>()
+  const targetSelectorBuckets = new Map<string, TargetSelectorBucket>()
   for (let i = 0; i < lines.length; i += 1) {
     const parsed = JSON.parse(lines[i]) as TraceRecord
     const result = validateRecord(parsed, i + 1)
@@ -331,13 +375,24 @@ async function main(): Promise<void> {
     if (result.label === 'negative') negatives += 1
     if (typeof parsed.task?.targetSelector === 'string') {
       targetSelectorRecords += 1
+      const bucket = targetSelectorBuckets.get(parsed.task.targetSelector) ?? {
+        records: 0,
+        matches: 0,
+        mismatches: 0,
+        noActionSelectors: 0,
+      }
+      bucket.records += 1
       if (typeof parsed.action?.selector !== 'string' || parsed.action.selector.length === 0) {
         targetSelectorNoActionSelectors += 1
+        bucket.noActionSelectors += 1
       } else if (parsed.action.selector === parsed.task.targetSelector) {
         targetSelectorMatches += 1
+        bucket.matches += 1
       } else {
         targetSelectorMismatches += 1
+        bucket.mismatches += 1
       }
+      targetSelectorBuckets.set(parsed.task.targetSelector, bucket)
     }
     if (result.candidateKey) {
       const labels = candidateLabels.get(result.candidateKey) ?? new Set<string>()
@@ -367,6 +422,13 @@ async function main(): Promise<void> {
   assertAtLeast(targetSelectorMatches, minTargetSelectorMatches, 'target selector matching records')
   assertAtLeast(targetSelectorMismatches, minTargetSelectorMismatches, 'target selector mismatched records')
   assertAtLeast(targetSelectorNoActionSelectors, minTargetSelectorNoActionSelectors, 'target selector no-action-selector records')
+  const targetSelectorMatchBuckets = [...targetSelectorBuckets.values()].filter(bucket => bucket.matches > 0).length
+  const targetSelectorMismatchBuckets = [...targetSelectorBuckets.values()].filter(bucket => bucket.mismatches > 0).length
+  const targetSelectorNoActionSelectorBuckets = [...targetSelectorBuckets.values()].filter(bucket => bucket.noActionSelectors > 0).length
+  assertAtLeast(targetSelectorBuckets.size, minTargetSelectorBuckets, 'target selector buckets')
+  assertAtLeast(targetSelectorMatchBuckets, minTargetSelectorMatchBuckets, 'target selector match buckets')
+  assertAtLeast(targetSelectorMismatchBuckets, minTargetSelectorMismatchBuckets, 'target selector mismatch buckets')
+  assertAtLeast(targetSelectorNoActionSelectorBuckets, minTargetSelectorNoActionSelectorBuckets, 'target selector no-action-selector buckets')
 
   console.log(`Checked ${lines.length} action trace records`)
   console.log(`Positive records: ${positives}`)
@@ -377,6 +439,10 @@ async function main(): Promise<void> {
   if (minTargetSelectorMatches !== undefined) console.log(`Target selector matching records: ${targetSelectorMatches}`)
   if (minTargetSelectorMismatches !== undefined) console.log(`Target selector mismatched records: ${targetSelectorMismatches}`)
   if (minTargetSelectorNoActionSelectors !== undefined) console.log(`Target selector no-action-selector records: ${targetSelectorNoActionSelectors}`)
+  if (minTargetSelectorBuckets !== undefined) console.log(`Target selector buckets: ${targetSelectorBuckets.size}`)
+  if (minTargetSelectorMatchBuckets !== undefined) console.log(`Target selector match buckets: ${targetSelectorMatchBuckets}`)
+  if (minTargetSelectorMismatchBuckets !== undefined) console.log(`Target selector mismatch buckets: ${targetSelectorMismatchBuckets}`)
+  if (minTargetSelectorNoActionSelectorBuckets !== undefined) console.log(`Target selector no-action-selector buckets: ${targetSelectorNoActionSelectorBuckets}`)
   if (requireCandidatePairs) {
     console.log(`Candidate buckets: ${candidateLabels.size}`)
     console.log(`Paired candidate buckets: ${pairedBuckets}`)
