@@ -29,7 +29,10 @@
       "json": "object",
       "contains": ["Starter", "$19", "Team", "$49"],
       "schemaValid": true,
-      "minPlans": 2
+      "minPlans": 2,
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": true
     }
   },
   {
@@ -61,7 +64,9 @@
       "contains": ["Team", "$49"],
       "notContains": ["Starter", "$19"],
       "schemaValid": true,
-      "bridgeExecuteSelector": ".plan[data-plan=\"team\"]"
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": ".plan[data-plan=\"team\"]",
+      "bridgeRunAgent": true
     }
   },
   {
