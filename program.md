@@ -914,6 +914,14 @@ June 3, 2026 semantic settings recovery coverage result:
 - Real smoke passed 41/41 with `actions_per_success 1.41`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 46/46 with `actions_per_success 1.52`, `p95_task_seconds 4.192`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 70 raw positive records from 40 tasks and 132 training records from 48 tasks, while candidate buckets rose to 56 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 starter scoped read coverage result:
+
+- Added frozen `extraction/read-scoped-starter-plan`, proving exact selector reads can scope to `.plan[data-plan="starter"]` and exclude the neighboring Team card.
+- Added the matching local fake harness scoped pricing response for the Starter plan, keeping fake and real fixture behavior aligned with the existing Team scoped-read coverage.
+- Baseline local before the task stayed green at 46/46 with `actions_per_success 1.52` and `p95_task_seconds 0.007`; after adding the task, local passed 47/47 with `actions_per_success 1.51` and `p95_task_seconds 0.005`.
+- Real smoke passed 42/42 with `actions_per_success 1.40`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 47/47 with `actions_per_success 1.51`, `p95_task_seconds 4.159`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 71 raw positive records from 41 tasks and 133 training records from 49 tasks, with target selector matching records up to 8 while preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

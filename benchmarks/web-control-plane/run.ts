@@ -646,6 +646,15 @@ class FakeExtension implements HarnessProbe {
       ].join('\n')
     }
     if (tabId === 102) {
+      if (selector === '.plan[data-plan="starter"]') {
+        if (format === 'html') {
+          return [
+            '<h2>Starter</h2>',
+            '<p class="price">$19/month</p>',
+          ].join('\n')
+        }
+        return 'Starter $19/month'
+      }
       if (selector === '.plan[data-plan="team"]') {
         if (format === 'html') {
           return [
