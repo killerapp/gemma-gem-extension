@@ -548,6 +548,10 @@ Experiment result:
 - `pnpm benchmark:web` passes with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
 - `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.104`, and `timeout_rate 0.0000`.
 - Trace floors remain unchanged after hardening transfer coverage because the new assertions freeze the bridge request shape around existing action traces rather than adding new browser actions.
+- The frozen semantic-buttons suite now hardens context contracts: `semantic-observe-json` must read `body` page context and avoid `bridge:run_agent` for the deterministic receipt observation path, while `semantic-page-brief` must return valid JSON, list tabs, read `body`, expose `#download-receipt` and `#payment-settings`, and avoid `bridge:run_agent`.
+- `pnpm benchmark:web` passes with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
+- `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.149`, and `timeout_rate 0.0000`.
+- Trace floors remain unchanged after hardening semantic context coverage because the added assertions lock existing page-read/list-tabs behavior rather than adding new browser action steps.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

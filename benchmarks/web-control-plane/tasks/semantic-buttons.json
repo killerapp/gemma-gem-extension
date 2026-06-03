@@ -27,7 +27,10 @@
     "expect": {
       "json": "array",
       "selector": "#download-receipt",
-      "method": "click"
+      "method": "click",
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
     }
   },
   {
@@ -137,8 +140,12 @@
       "maxChars": 4000
     },
     "expect": {
-      "contains": ["Receipt PDF", "Payment settings", "INV-2026-041"],
-      "bridgeExecuteTool": "read_page_content"
+      "json": "object",
+      "contains": ["Receipt PDF", "Payment settings", "INV-2026-041", "\"selector\": \"#download-receipt\"", "\"selector\": \"#payment-settings\""],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeListTabs": true,
+      "bridgeRunAgent": false
     }
   }
 ]
