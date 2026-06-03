@@ -31,6 +31,11 @@
     },
     "expect": {
       "json": "object",
+      "jsonFields": {
+        "recovered": true,
+        "recoveredSelector": "#dest-name",
+        "result.into": "#dest-name"
+      },
       "contains": ["recoveredSelector", "#dest-name", "Grace Hopper"],
       "destinationValues": {
         "#dest-name": "Grace Hopper"
@@ -52,6 +57,11 @@
     },
     "expect": {
       "json": "object",
+      "jsonFields": {
+        "selected": "Reviewer",
+        "value": "reviewer",
+        "selector": "#dest-role"
+      },
       "contains": ["Reviewer", "reviewer", "#dest-role"],
       "destinationValues": {
         "#dest-role": "reviewer"
@@ -86,6 +96,11 @@
     },
     "expect": {
       "json": "object",
+      "jsonFields": {
+        "ok": true,
+        "submitSelector": "#save-profile",
+        "resultSelector": "#save-result"
+      },
       "contains": ["Ada Lovelace", "ada@example.test", "Copied mapped source fields", "Saved Ada Lovelace"],
       "destinationValues": {
         "#dest-name": "Ada Lovelace",

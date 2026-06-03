@@ -572,6 +572,11 @@ Experiment result:
 - `pnpm benchmark:web` passes with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
 - `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.076`, and `timeout_rate 0.0000`.
 - Trace floors remain unchanged after hardening deterministic JSON coverage because the new assertions change output validity expectations, not browser action counts.
+- The benchmark evaluator now supports exact `jsonFields` dot-path assertions for stable structured values. The first draft asserted volatile real-browser fields such as remapped tab ids, ephemeral fixture ports, and whitespace-sensitive scoped text; that local-only pass and real-smoke failure are recorded as `discard`.
+- The kept exact-field contracts check stable JSON fields for recovered selectors, selected option value, transfer submit/result selectors, active-tab title, model readiness diagnostics, stop acknowledgement, scroll result, rank-action best selector, deterministic click result, and multi-action rejection.
+- `pnpm benchmark:web` passes with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.009`, and `timeout_rate 0.0000`.
+- `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.158`, and `timeout_rate 0.0000`.
+- Trace floors remain unchanged after adding exact JSON field checks because the evaluator now verifies richer structured output without changing browser action traces.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

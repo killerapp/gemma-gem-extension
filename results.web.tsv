@@ -139,3 +139,8 @@ cac86e6	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.011	0.0
 f725976	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	deterministic json local benchmark
 f725976	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.009	0.076	0.0000	0.000	keep	real smoke deterministic json
 f725976	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final deterministic json artifacts
+d986494	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	discard	volatile exact fields local only
+d986494	real-chrome-extension-smoke	15	0.8000	0.8000	1.0000	1.0000	1.17	0.007	0.070	0.0000	0.000	discard	volatile exact fields real failure
+d986494	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.005	0.011	0.0000	0.000	keep	stable json fields local benchmark
+d986494	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.158	0.0000	0.000	keep	real smoke stable json fields
+d986494	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.009	0.0000	0.000	keep	final stable json field artifacts

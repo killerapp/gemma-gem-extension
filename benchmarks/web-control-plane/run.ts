@@ -170,6 +170,15 @@ function hasImage(result: any, mimeType: string): boolean {
   return content.some((item: any) => item.type === 'image' && item.mimeType === mimeType)
 }
 
+function jsonPathValue(value: unknown, path: string): unknown {
+  return path.split('.').reduce<unknown>((current, segment) => {
+    if (current == null) return undefined
+    if (/^\d+$/.test(segment) && Array.isArray(current)) return current[Number(segment)]
+    if (typeof current !== 'object') return undefined
+    return (current as Record<string, unknown>)[segment]
+  }, value)
+}
+
 function percentile(values: number[], p: number): number {
   if (values.length === 0) return 0
   const sorted = [...values].sort((a, b) => a - b)
@@ -1257,6 +1266,15 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
       if (bestSelector !== expect.bestSelector) {
         notes.push(`expected best selector ${expect.bestSelector}, got ${JSON.stringify(bestSelector)}`)
         jsonOk = false
+      }
+    }
+    if (expect.jsonFields && typeof expect.jsonFields === 'object' && !Array.isArray(expect.jsonFields)) {
+      for (const [path, expectedValue] of Object.entries(expect.jsonFields as Record<string, unknown>)) {
+        const actualValue = jsonPathValue(parsedJson, path)
+        if (JSON.stringify(actualValue) !== JSON.stringify(expectedValue)) {
+          notes.push(`expected JSON field ${path}=${JSON.stringify(expectedValue)}, got ${JSON.stringify(actualValue)}`)
+          jsonOk = false
+        }
       }
     }
 

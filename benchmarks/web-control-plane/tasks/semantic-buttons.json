@@ -70,6 +70,10 @@
     },
     "expect": {
       "json": "object",
+      "jsonFields": {
+        "best.candidate.selector": "#download-receipt",
+        "model.type": "pairwise_perceptron"
+      },
       "contains": ["pairwise_perceptron", "action-reranker.weights.json", "#download-receipt"],
       "bestSelector": "#download-receipt",
       "bridgeRunAgent": false
@@ -92,6 +96,9 @@
     },
     "expect": {
       "json": "object",
+      "jsonFields": {
+        "selector": "#download-receipt"
+      },
       "contains": ["#download-receipt", "Receipt PDF"],
       "selector": "#download-receipt",
       "clicked": "#download-receipt",
@@ -110,6 +117,11 @@
     },
     "expect": {
       "json": "object",
+      "jsonFields": {
+        "recovered": true,
+        "recoveredSelector": "#download-receipt",
+        "result.selector": "#download-receipt"
+      },
       "contains": ["recoveredSelector", "#download-receipt", "Receipt PDF"],
       "selector": "#download-receipt",
       "clicked": "#download-receipt",
@@ -129,6 +141,10 @@
     },
     "expect": {
       "json": "object",
+      "jsonFields": {
+        "error": "ERROR_MULTIPLE_ACTIONS",
+        "instruction": "click the receipt button and then open payment settings"
+      },
       "contains": ["ERROR_MULTIPLE_ACTIONS", "gemma_agent"],
       "bridgeRunAgent": false
     }
