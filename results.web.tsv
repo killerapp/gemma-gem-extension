@@ -414,3 +414,7 @@ c65cdee	local-fake-extension	63	1.0000	1.0000	1.0000	1.0000	1.44	0.003	0.005	0.0
 c65cdee	local-fake-extension	64	1.0000	1.0000	1.0000	1.0000	1.44	0.003	0.006	0.0000	0.000	keep	semantic invoice act local
 c65cdee	real-chrome-extension-smoke	58	1.0000	1.0000	1.0000	1.0000	1.33	0.007	0.016	0.0000	0.000	keep	semantic invoice act real smoke
 c65cdee	real-chrome-extension-agent	64	1.0000	1.0000	1.0000	1.0000	1.44	0.007	4.148	0.0000	0.001	keep	semantic invoice act real agent
+abb6b42	local-fake-extension	64	1.0000	1.0000	1.0000	1.0000	1.44	0.003	0.005	0.0000	0.000	baseline	semantic invoice recovery baseline local
+abb6b42	local-fake-extension	65	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.007	0.0000	0.000	keep	semantic invoice recovery local
+abb6b42	real-chrome-extension-smoke	59	1.0000	1.0000	1.0000	1.0000	1.36	0.006	0.016	0.0000	0.000	keep	semantic invoice recovery real smoke
+abb6b42	real-chrome-extension-agent	65	1.0000	1.0000	1.0000	1.0000	1.46	0.007	4.150	0.0000	0.001	keep	semantic invoice recovery real agent

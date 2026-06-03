@@ -1059,6 +1059,14 @@ June 3, 2026 semantic invoice act coverage result:
 - Real smoke passed 58/58 with `actions_per_success 1.33`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 64/64 with `actions_per_success 1.44`, `p95_task_seconds 4.148`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 92 raw positive records from 58 tasks and 154 training records from 66 tasks, while candidate buckets rose to 74 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 semantic invoice recovery coverage result:
+
+- Added frozen `semantic-buttons/semantic-invoice-recover-selector`, proving `gemma_click` recovers `button:has-text("Invoice PDF")` to `#download-invoice` and clicks it through the bounded text-selector recovery path.
+- This completes text-like click selector recovery coverage for all three billing controls: receipt, payment settings, and invoice.
+- Baseline local before the task stayed green at 64/64 with `actions_per_success 1.44` and `p95_task_seconds 0.005`; after adding the task, local passed 65/65 with `actions_per_success 1.46` and `p95_task_seconds 0.007`.
+- Real smoke passed 59/59 with `actions_per_success 1.36`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 65/65 with `actions_per_success 1.46`, `p95_task_seconds 4.150`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 95 raw positive records from 59 tasks and 157 training records from 67 tasks, while candidate buckets rose to 76 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

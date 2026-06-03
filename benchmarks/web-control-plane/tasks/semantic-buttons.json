@@ -302,6 +302,33 @@
     }
   },
   {
+    "id": "semantic-invoice-recover-selector",
+    "suite": "semantic-buttons",
+    "title": "Recover an invoice text-like click selector",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 101,
+      "selector": "button:has-text(\"Invoice PDF\")"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "recovered": true,
+        "recoveredSelector": "#download-invoice",
+        "result.selector": "#download-invoice"
+      },
+      "contains": ["recoveredSelector", "#download-invoice", "Invoice PDF"],
+      "selector": "#download-invoice",
+      "clicked": "#download-invoice",
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "click_element"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "selector=#download-invoice"],
+      "bridgeExecuteTools": ["read_page_content", "click_element"],
+      "bridgeExecuteSelectors": ["body", "#download-invoice"],
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "semantic-settings-recover-selector",
     "suite": "semantic-buttons",
     "title": "Recover a payment settings text-like click selector",
