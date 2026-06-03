@@ -104,6 +104,28 @@
     }
   },
   {
+    "id": "semantic-settings-agent-runtime-error-after-click",
+    "suite": "semantic-buttons",
+    "title": "Recover settings agent runtime error after internal click",
+    "tool": "gemma_agent",
+    "modes": ["local-fake-extension"],
+    "arguments": {
+      "tabId": 101,
+      "task": "simulate transient runtime error after clicking settings",
+      "thinking": false,
+      "maxIterations": 3
+    },
+    "expect": {
+      "contains": ["Recovered from transient model runtime error", "#payment-settings", "already executed", "INV-2026-041"],
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": true
+    }
+  },
+  {
     "id": "semantic-receipt-agent-runtime-error-before-click",
     "suite": "semantic-buttons",
     "title": "Recover receipt agent runtime error before internal click",
