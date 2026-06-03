@@ -568,6 +568,10 @@ Experiment result:
 - `pnpm benchmark:web` passes with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
 - `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.024`, and `timeout_rate 0.0000`.
 - Trace floors remain unchanged after hardening form brief JSON/tab coverage because the new assertions freeze existing metadata and bridge-request shape rather than adding browser action steps.
+- The frozen deterministic helper tasks now harden JSON object contracts for `read-scoped-plan`, `type-text-recover-selector`, `select-role-label`, `stop-contract`, `scroll-contract`, `semantic-observed-act`, `semantic-click-recover-selector`, and `semantic-act-multi-reject`.
+- `pnpm benchmark:web` passes with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
+- `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.076`, and `timeout_rate 0.0000`.
+- Trace floors remain unchanged after hardening deterministic JSON coverage because the new assertions change output validity expectations, not browser action counts.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

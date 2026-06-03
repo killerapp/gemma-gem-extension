@@ -65,6 +65,7 @@
       "runId": "benchmark-stop"
     },
     "expect": {
+      "json": "object",
       "contains": ["stopped", "true", "benchmark-stop"],
       "bridgeStop": true,
       "bridgeRunAgent": false
@@ -80,6 +81,7 @@
       "amount": 700
     },
     "expect": {
+      "json": "object",
       "contains": ["down 700px", "scrollY"],
       "scrollYAtLeast": 650,
       "bridgeExecuteTool": "scroll_page",

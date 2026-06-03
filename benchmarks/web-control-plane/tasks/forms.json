@@ -30,6 +30,7 @@
       "text": "Grace Hopper"
     },
     "expect": {
+      "json": "object",
       "contains": ["recoveredSelector", "#dest-name", "Grace Hopper"],
       "destinationValues": {
         "#dest-name": "Grace Hopper"
@@ -50,6 +51,7 @@
       "label": "Reviewer"
     },
     "expect": {
+      "json": "object",
       "contains": ["Reviewer", "reviewer", "#dest-role"],
       "destinationValues": {
         "#dest-role": "reviewer"

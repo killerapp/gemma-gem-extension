@@ -91,6 +91,7 @@
       }
     },
     "expect": {
+      "json": "object",
       "contains": ["#download-receipt", "Receipt PDF"],
       "selector": "#download-receipt",
       "clicked": "#download-receipt",
@@ -108,6 +109,7 @@
       "selector": "button:has-text(\"Receipt PDF\")"
     },
     "expect": {
+      "json": "object",
       "contains": ["recoveredSelector", "#download-receipt", "Receipt PDF"],
       "selector": "#download-receipt",
       "clicked": "#download-receipt",
@@ -126,6 +128,7 @@
       "instruction": "click the receipt button and then open payment settings"
     },
     "expect": {
+      "json": "object",
       "contains": ["ERROR_MULTIPLE_ACTIONS", "gemma_agent"],
       "bridgeRunAgent": false
     }

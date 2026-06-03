@@ -80,6 +80,7 @@
       "format": "text"
     },
     "expect": {
+      "json": "object",
       "contains": ["Team", "$49"],
       "notContains": ["Starter", "$19"],
       "bridgeExecuteTool": "read_page_content",
