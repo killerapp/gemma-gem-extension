@@ -162,6 +162,16 @@
     },
     "expect": {
       "json": "object",
+      "jsonFields": {
+        "selector": "body",
+        "format": "text",
+        "interactiveControls.0.selector": "#download-receipt",
+        "interactiveControls.0.label": "Receipt PDF",
+        "interactiveControls.0.tag": "button",
+        "interactiveControls.1.selector": "#download-invoice",
+        "interactiveControls.2.selector": "#payment-settings",
+        "interactiveControls.2.label": "Payment settings"
+      },
       "contains": ["Receipt PDF", "Payment settings", "INV-2026-041", "\"selector\": \"#download-receipt\"", "\"selector\": \"#payment-settings\""],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",

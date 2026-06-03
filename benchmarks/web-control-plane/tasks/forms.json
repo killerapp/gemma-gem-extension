@@ -12,6 +12,17 @@
     },
     "expect": {
       "json": "object",
+      "jsonFields": {
+        "selector": "body",
+        "format": "text",
+        "interactiveControls.0.selector": "#dest-name",
+        "interactiveControls.0.label": "Name",
+        "interactiveControls.0.tag": "input",
+        "interactiveControls.0.name": "name",
+        "interactiveControls.3.selector": "#save-profile",
+        "interactiveControls.3.label": "Save profile",
+        "interactiveControls.3.tag": "button"
+      },
       "contains": ["interactiveControls", "\"selector\": \"#dest-name\"", "\"label\": \"Name\"", "\"tag\": \"input\"", "\"name\": \"name\"", "\"selector\": \"#save-profile\""],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",
