@@ -104,6 +104,28 @@
     }
   },
   {
+    "id": "semantic-invoice-agent-runtime-error-before-click",
+    "suite": "semantic-buttons",
+    "title": "Recover invoice agent runtime error before internal click",
+    "tool": "gemma_agent",
+    "modes": ["local-fake-extension"],
+    "arguments": {
+      "tabId": 101,
+      "task": "simulate transient runtime error before clicking invoice",
+      "thinking": false,
+      "maxIterations": 3
+    },
+    "expect": {
+      "contains": ["Recovered from transient model runtime error", "#download-invoice", "Result", "Invoice PDF", "INV-2026-041"],
+      "actions": 4,
+      "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent", "click_element"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model", "selector=#download-invoice"],
+      "bridgeExecuteTools": ["read_page_content", "click_element"],
+      "bridgeExecuteSelectors": ["body", "#download-invoice"],
+      "bridgeRunAgent": true
+    }
+  },
+  {
     "id": "semantic-settings-agent",
     "suite": "semantic-buttons",
     "title": "Choose the payment settings button",

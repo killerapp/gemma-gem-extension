@@ -579,6 +579,11 @@ class FakeExtension implements HarnessProbe {
         text: 'Something went wrong: operation does not support unaligned accesses',
       })
     }
+    if (/simulate transient runtime error before clicking invoice/i.test(request.prompt)) {
+      return this.response(request.requestId, {
+        text: 'Something went wrong: operation does not support unaligned accesses',
+      })
+    }
 
     return [
       {
@@ -632,6 +637,10 @@ class FakeExtension implements HarnessProbe {
         }
         const label = selector === '#download-receipt'
           ? 'button: Receipt PDF'
+          : selector === '#download-invoice'
+            ? 'button: Invoice PDF'
+            : selector === '#payment-settings'
+              ? 'button: Payment settings'
           : selector === '#settings-link'
             ? 'a: Settings'
             : selector === '#billing-link'

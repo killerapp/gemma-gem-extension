@@ -608,3 +608,8 @@ ed19166	real-chrome-extension-agent	96	1.0000	1.0000	1.0000	1.0000	1.32	0.007	4.
 9563e43	local-fake-extension	103	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	keep	preclick runtime fallback benchmark local
 9563e43	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.008	0.532	0.0000	0.000	keep	preclick runtime fallback benchmark real smoke
 9563e43	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.007	0.564	0.0000	0.001	keep	preclick runtime fallback benchmark real agent
+e19c371	local-fake-extension	103	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	baseline	invoice preclick runtime fallback baseline local
+e19c371	local-fake-extension	104	0.9904	0.9904	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	discard	invoice preclick runtime fallback local
+e19c371	local-fake-extension	104	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	keep	invoice preclick runtime fallback local
+e19c371	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.007	0.547	0.0000	0.000	keep	invoice preclick runtime fallback real smoke
+e19c371	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.007	4.130	0.0000	0.001	keep	invoice preclick runtime fallback real agent
