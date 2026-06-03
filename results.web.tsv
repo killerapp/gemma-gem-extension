@@ -470,3 +470,7 @@ ba8a167	real-chrome-extension-agent	73	1.0000	1.0000	1.0000	1.0000	1.48	0.007	4.
 6a2b3b6	local-fake-extension	74	1.0000	1.0000	1.0000	1.0000	1.43	0.003	0.006	0.0000	0.000	keep	navigation billing tab visibility local
 6a2b3b6	real-chrome-extension-smoke	64	1.0000	1.0000	1.0000	1.0000	1.27	0.007	0.014	0.0000	0.000	keep	navigation billing tab visibility real smoke
 6a2b3b6	real-chrome-extension-agent	74	1.0000	1.0000	1.0000	1.0000	1.46	0.007	4.910	0.0000	0.001	keep	navigation billing tab visibility real agent
+a6cd371	local-fake-extension	74	1.0000	1.0000	1.0000	1.0000	1.43	0.003	0.006	0.0000	0.000	baseline	navigation isolated billing read baseline local
+a6cd371	local-fake-extension	75	1.0000	1.0000	1.0000	1.0000	1.43	0.003	0.006	0.0000	0.000	keep	navigation isolated billing read local
+a6cd371	real-chrome-extension-smoke	65	1.0000	1.0000	1.0000	1.0000	1.26	0.006	0.015	0.0000	0.000	keep	navigation isolated billing read real smoke
+a6cd371	real-chrome-extension-agent	75	1.0000	1.0000	1.0000	1.0000	1.45	0.008	4.938	0.0000	0.001	keep	navigation isolated billing read real agent
