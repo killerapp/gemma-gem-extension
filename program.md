@@ -1159,6 +1159,14 @@ June 3, 2026 navigation active-tab activation coverage result:
 - Real smoke passed 67/67 with `actions_per_success 1.22`, `p95_task_seconds 0.019`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 77/77 with `actions_per_success 1.42`, `p95_task_seconds 4.887`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts remain at 109 raw positive records from 65 tasks and 178 training records from 74 tasks because both active-tab contracts emit no browser action; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 navigation screenshot coverage result:
+
+- Added frozen `navigation/screenshot-navigation-tab-contract`, proving `gemma_screenshot` routes `take_screenshot` to the navigation fixture tab and returns MCP `image/png` content outside the default billing tab.
+- Baseline local before the task stayed green at 77/77 with `actions_per_success 1.39` and `p95_task_seconds 0.006`; after adding the screenshot task, local passed 78/78 with `actions_per_success 1.38` and `p95_task_seconds 0.005`.
+- Real smoke passed 68/68 with `actions_per_success 1.22`, `p95_task_seconds 0.055`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- The first real-agent attempt was discarded at 76/78 after the screenshot task passed but two semantic agent tasks hit the known transient model runtime error path; the retry passed 78/78 with `actions_per_success 1.41`, `p95_task_seconds 4.886`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 110 raw positive records from 66 tasks and 179 training records from 75 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
