@@ -796,6 +796,14 @@ June 3, 2026 scoped HTML read coverage result:
 - Real smoke passed 19/19 with `selector_hit_rate 1.0000`, `actions_per_success 1.32`, and `timeout_rate 0.0000`; real agent passed 24/24 with `p95_task_seconds 7.403`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 37 raw positive records from 18 tasks and 99 training records from 26 tasks, with target selector matching records up to 7 while preference and reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 negative scroll coverage result:
+
+- Added frozen `navigation/scroll-up-contract`, a one-action `gemma_scroll` task that follows the existing down-scroll task and sends `amount: -300`, asserting the bridge tool call uses `direction=up amount=300` and the viewport returns to roughly 400px.
+- Added a `scrollYAtMost` benchmark assertion alongside the existing `scrollYAtLeast` check, so scroll regressions can be bounded from both directions without relying only on exact JSON result fields.
+- Baseline local before the task stayed green at 24/24 with `p95_task_seconds 0.010`; after adding the task, local passed 25/25 with `actions_per_success 1.52` and `p95_task_seconds 0.010`.
+- Real smoke passed 20/20 with `selector_hit_rate 1.0000`, `actions_per_success 1.30`, and `timeout_rate 0.0000`; real agent passed 25/25 with `p95_task_seconds 6.821`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 38 raw positive records from 19 tasks and 100 training records from 27 tasks, while preference and reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

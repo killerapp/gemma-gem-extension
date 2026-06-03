@@ -127,5 +127,30 @@
       "bridgeExecuteTool": "scroll_page",
       "bridgeRunAgent": false
     }
+  },
+  {
+    "id": "scroll-up-contract",
+    "suite": "navigation",
+    "title": "Negative scroll moves viewport upward",
+    "tool": "gemma_scroll",
+    "arguments": {
+      "tabId": 105,
+      "amount": -300
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "scrolled": "up 300px",
+        "scrollY": 400
+      },
+      "contains": ["up 300px", "scrollY"],
+      "scrollYAtLeast": 350,
+      "scrollYAtMost": 450,
+      "actions": 1,
+      "actionTraceTools": ["scroll_page"],
+      "actionTraceTextIncludes": ["direction=up amount=300"],
+      "bridgeExecuteTool": "scroll_page",
+      "bridgeRunAgent": false
+    }
   }
 ]

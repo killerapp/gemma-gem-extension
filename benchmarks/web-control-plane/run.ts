@@ -1571,6 +1571,13 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
         notes.push(`expected scrollY at least ${expect.scrollYAtLeast}, got ${scrollY}`)
       }
     }
+    if (typeof expect.scrollYAtMost === 'number') {
+      const targetTabId = typeof task.arguments.tabId === 'number' ? task.arguments.tabId : 101
+      const scrollY = await harness.scrollY(targetTabId)
+      if (scrollY > expect.scrollYAtMost) {
+        notes.push(`expected scrollY at most ${expect.scrollYAtMost}, got ${scrollY}`)
+      }
+    }
 
     if (typeof expect.image === 'string' && !hasImage(result, expect.image)) {
       notes.push(`expected MCP image content ${expect.image}`)
