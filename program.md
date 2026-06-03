@@ -897,6 +897,15 @@ June 3, 2026 checkbox recovery coverage result:
 - Real smoke passed 37/37 with `actions_per_success 1.35`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 42/42 with `actions_per_success 1.48`, `p95_task_seconds 4.220`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 62 raw positive records from 36 tasks and 124 training records from 44 tasks, while candidate buckets rose to 50 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 radio recovery coverage result:
+
+- Added frozen `forms/click-priority-low-recover-selector`, proving `gemma_click` can recover `text=Priority Low` to the radio selector `#dest-priority-low`.
+- Added `forms/read-destination-priority-low-after-recovered-click` and `forms/read-destination-priority-high-after-low-recovered-click`, proving the recovered radio click selects low priority and clears the previously selected high-priority radio in the same group.
+- Baseline local before the tasks stayed green at 42/42 with `actions_per_success 1.48` and `p95_task_seconds 0.007`; after adding the tasks, local passed 45/45 with `actions_per_success 1.49` and `p95_task_seconds 0.007`.
+- Real smoke passed 40/40 with `actions_per_success 1.38`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; the first real-agent attempt failed before tasks because a stale bridge sidecar left the extension bridge disconnected, then `pnpm bridge:stop` cleared it and the rerun passed 45/45.
+- Real agent passed with `actions_per_success 1.49`, `p95_task_seconds 4.120`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 67 raw positive records from 39 tasks and 129 training records from 47 tasks, while candidate buckets rose to 54 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
