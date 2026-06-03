@@ -51,6 +51,28 @@
     }
   },
   {
+    "id": "active-pricing-tab-contract",
+    "suite": "navigation",
+    "title": "Active tab metadata follows activated pricing fixture",
+    "tool": "gemma_active_tab",
+    "arguments": {},
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "title": "Pricing sandbox"
+      },
+      "jsonFieldIncludes": {
+        "url": "extraction.html"
+      },
+      "contains": ["Pricing sandbox", "extraction.html"],
+      "activateTabId": 102,
+      "activeTabId": 102,
+      "actions": 0,
+      "bridgeGetActiveTab": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "active-navigation-tab-contract",
     "suite": "navigation",
     "title": "Active tab metadata follows activated navigation fixture",

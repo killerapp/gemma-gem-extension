@@ -557,3 +557,7 @@ e1537f7	real-chrome-extension-agent	91	1.0000	1.0000	1.0000	1.0000	1.37	0.007	4.
 9b71a42	local-fake-extension	94	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.006	0.0000	0.000	keep	destination active tab local
 9b71a42	real-chrome-extension-smoke	84	1.0000	1.0000	1.0000	1.0000	1.18	0.006	0.501	0.0000	0.000	keep	destination active tab real smoke
 9b71a42	real-chrome-extension-agent	94	1.0000	1.0000	1.0000	1.0000	1.34	0.007	4.184	0.0000	0.001	keep	destination active tab real agent
+f0d435f	local-fake-extension	94	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.006	0.0000	0.000	baseline	pricing active tab baseline local
+f0d435f	local-fake-extension	95	1.0000	1.0000	1.0000	1.0000	1.31	0.002	0.005	0.0000	0.000	keep	pricing active tab local
+f0d435f	real-chrome-extension-smoke	85	1.0000	1.0000	1.0000	1.0000	1.16	0.007	0.504	0.0000	0.000	keep	pricing active tab real smoke
+f0d435f	real-chrome-extension-agent	95	1.0000	1.0000	1.0000	1.0000	1.33	0.008	4.158	0.0000	0.001	keep	pricing active tab real agent

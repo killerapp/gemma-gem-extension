@@ -1299,6 +1299,14 @@ June 3, 2026 destination active-tab coverage result:
 - Real smoke passed 84/84 with `actions_per_success 1.18`, `p95_task_seconds 0.501`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 94/94 with `actions_per_success 1.34`, `p95_task_seconds 4.184`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Because this task records browser metadata instead of a content action, trace artifacts remain at 126 raw positive records from 79 tasks and 195 training records from 88 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 pricing active-tab coverage result:
+
+- Added frozen `navigation/active-pricing-tab-contract`, proving `gemma_active_tab` reports the pricing/extraction fixture after activating logical tab 102 and still restores billing before later tasks.
+- The task completes active-tab metadata coverage across the current logical fixture tabs 101 through 106 while keeping the contract zero-action and bridge-only.
+- Baseline local before the task stayed green at 94/94 with `actions_per_success 1.32` and `p95_task_seconds 0.006`; after adding the zero-action active-tab task, local passed 95/95 with `actions_per_success 1.31` and `p95_task_seconds 0.005`.
+- Real smoke passed 85/85 with `actions_per_success 1.16`, `p95_task_seconds 0.504`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 95/95 with `actions_per_success 1.33`, `p95_task_seconds 4.158`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Because this task records browser metadata instead of a content action, trace artifacts remain at 126 raw positive records from 79 tasks and 195 training records from 88 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
