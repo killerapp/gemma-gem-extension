@@ -92,6 +92,35 @@
     }
   },
   {
+    "id": "read-destination-body-text-initial",
+    "suite": "forms",
+    "title": "Read initial destination form body text",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "body",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Name", "Email", "Role", "Choose role", "Administrator", "Reviewer", "Subscribe updates", "Priority Low", "Priority High", "Notes", "Save profile"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["Ada Lovelace", "ada@example.test", "data-plan", "download-receipt"]
+      },
+      "contains": ["Name", "Email", "Role", "Choose role", "Administrator", "Reviewer", "Subscribe updates", "Priority Low", "Priority High", "Notes", "Save profile"],
+      "notContains": ["Ada Lovelace", "ada@example.test", "data-plan", "download-receipt"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "type-text-recover-selector",
     "suite": "forms",
     "title": "Recover a name text-like type selector",

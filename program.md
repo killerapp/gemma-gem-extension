@@ -1316,6 +1316,14 @@ June 3, 2026 source body-text read coverage result:
 - The real-agent retry passed 96/96 with `actions_per_success 1.32`, `p95_task_seconds 4.189`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 127 raw positive records from 80 tasks and 196 training records from 89 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 destination body-text read coverage result:
+
+- Added frozen `forms/read-destination-body-text-initial`, proving exact `gemma_read_page` body text reads on logical tab 104 expose the initial destination form labels and options without leaking source profile values or pricing identifiers.
+- The task complements the destination page brief, initial body HTML read, exact field reads after mutations, transfer-result body read, and source body-text read with a one-action text-only destination contract.
+- Baseline local before the task stayed green at 96/96 with `actions_per_success 1.30` and `p95_task_seconds 0.005`; after adding the content-read task, local passed 97/97 with `actions_per_success 1.30` and `p95_task_seconds 0.006`.
+- Real smoke passed 87/87 with `actions_per_success 1.16`, `p95_task_seconds 0.548`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 97/97 with `actions_per_success 1.32`, `p95_task_seconds 4.191`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 128 raw positive records from 81 tasks and 197 training records from 90 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

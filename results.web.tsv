@@ -566,3 +566,7 @@ ed19166	local-fake-extension	96	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0
 ed19166	real-chrome-extension-smoke	86	1.0000	1.0000	1.0000	1.0000	1.16	0.007	0.502	0.0000	0.000	keep	source body text real smoke
 ed19166	real-chrome-extension-agent	96	0.9792	0.9792	1.0000	1.0000	1.27	0.007	4.119	0.0000	0.001	discard	source body text real agent
 ed19166	real-chrome-extension-agent	96	1.0000	1.0000	1.0000	1.0000	1.32	0.007	4.189	0.0000	0.001	keep	source body text real agent retry
+804a514	local-fake-extension	96	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	baseline	destination body text baseline local
+804a514	local-fake-extension	97	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.006	0.0000	0.000	keep	destination body text local
+804a514	real-chrome-extension-smoke	87	1.0000	1.0000	1.0000	1.0000	1.16	0.007	0.548	0.0000	0.000	keep	destination body text real smoke
+804a514	real-chrome-extension-agent	97	1.0000	1.0000	1.0000	1.0000	1.32	0.008	4.191	0.0000	0.717	keep	destination body text real agent
