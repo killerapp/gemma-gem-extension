@@ -51,6 +51,50 @@
     }
   },
   {
+    "id": "active-navigation-tab-contract",
+    "suite": "navigation",
+    "title": "Active tab metadata follows activated navigation fixture",
+    "tool": "gemma_active_tab",
+    "arguments": {},
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "title": "Navigation sandbox"
+      },
+      "jsonFieldIncludes": {
+        "url": "navigation.html"
+      },
+      "contains": ["Navigation sandbox", "navigation.html"],
+      "activateTabId": 105,
+      "activeTabId": 105,
+      "actions": 0,
+      "bridgeGetActiveTab": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "active-billing-tab-restored-contract",
+    "suite": "navigation",
+    "title": "Active tab metadata returns to billing fixture after navigation activation",
+    "tool": "gemma_active_tab",
+    "arguments": {},
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "title": "Billing sandbox"
+      },
+      "jsonFieldIncludes": {
+        "url": "semantic-buttons.html"
+      },
+      "contains": ["Billing sandbox", "semantic-buttons.html"],
+      "activateTabId": 101,
+      "activeTabId": 101,
+      "actions": 0,
+      "bridgeGetActiveTab": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "model-ready-contract",
     "suite": "navigation",
     "title": "Model readiness returns bounded diagnostic status",

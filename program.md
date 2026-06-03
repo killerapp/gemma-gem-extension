@@ -1150,6 +1150,15 @@ June 3, 2026 navigation isolated billing-link read coverage result:
 - Real smoke passed 65/65 with `actions_per_success 1.26`, `p95_task_seconds 0.015`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 75/75 with `actions_per_success 1.45`, `p95_task_seconds 4.938`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 109 raw positive records from 65 tasks and 178 training records from 74 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 navigation active-tab activation coverage result:
+
+- Added harness support for per-task `activateTabId` preconditions, then added frozen `navigation/active-navigation-tab-contract` proving `gemma_active_tab` follows an activated navigation fixture.
+- Added `navigation/active-billing-tab-restored-contract` to restore the active tab to the billing fixture after the navigation assertion, keeping later model-backed semantic tasks in their historical active-tab context.
+- The un-restored real-agent shape was discarded at 74/76 after two semantic agent tasks hit the known transient model runtime error path; the restored design passed the full real-agent suite.
+- Baseline local before the task stayed green at 75/75 with `actions_per_success 1.43` and `p95_task_seconds 0.006`; after adding the active-tab activation and restore contracts, local passed 77/77 with `actions_per_success 1.39` and `p95_task_seconds 0.006`.
+- Real smoke passed 67/67 with `actions_per_success 1.22`, `p95_task_seconds 0.019`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 77/77 with `actions_per_success 1.42`, `p95_task_seconds 4.887`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts remain at 109 raw positive records from 65 tasks and 178 training records from 74 tasks because both active-tab contracts emit no browser action; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

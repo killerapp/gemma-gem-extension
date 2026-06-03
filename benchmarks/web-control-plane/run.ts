@@ -105,6 +105,7 @@ type HarnessProbe = {
   readonly mode: string
   readonly supportsBridgeRequestLog: boolean
   remapTask(task: BenchmarkTask): BenchmarkTask
+  activateTab(logicalTabId: number): Promise<void> | void
   selectorExists(selector: string, logicalTabId?: number): Promise<boolean> | boolean
   value(logicalTabId: number, selector: string): Promise<string> | string
   clicked(selector: string): Promise<boolean> | boolean
@@ -390,6 +391,12 @@ class FakeExtension implements HarnessProbe {
 
   remapTask(task: BenchmarkTask): BenchmarkTask {
     return task
+  }
+
+  activateTab(logicalTabId: number): void {
+    for (const tab of this.tabs) {
+      tab.active = tab.id === logicalTabId
+    }
   }
 
   requestCount(): number {
@@ -900,6 +907,11 @@ class RealChromeHarness implements HarnessProbe {
     }
   }
 
+  async activateTab(logicalTabId: number): Promise<void> {
+    await this.activateLogicalTab(logicalTabId)
+    await new Promise(resolve => setTimeout(resolve, 100))
+  }
+
   requestCount(): number {
     return this.requests.length
   }
@@ -1376,6 +1388,9 @@ async function runModelReadyPreflight(client: Client): Promise<ModelReadyPreflig
 
 async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTask): Promise<TaskResult> {
   const start = performance.now()
+  if (typeof task.expect.activateTabId === 'number') {
+    await harness.activateTab(task.expect.activateTabId)
+  }
   const taskForCall = harness.remapTask(task)
   const startRequestCount = harness.requestCount()
   const startActionCount = await harness.actionCount()
