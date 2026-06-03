@@ -128,6 +128,32 @@
     }
   },
   {
+    "id": "read-source-email",
+    "suite": "forms",
+    "title": "Read a source profile email field by selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "#source-email",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["ada@example.test"]
+      },
+      "contains": ["ada@example.test"],
+      "notContains": ["Ada Lovelace"],
+      "selector": "#source-email",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-email format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#source-email",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "transfer-profile-fields",
     "suite": "forms",
     "title": "Transfer account fields between tabs",

@@ -773,6 +773,13 @@ June 3, 2026 source-read coverage result:
 - After the tab-aware check, real smoke passed 16/16 with `p95_task_seconds 0.025`, and real agent passed 21/21 with `p95_task_seconds 6.684`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace regeneration now normalizes untitled tool-action trace rows to `bridge:execute_tool` and deduplicates equivalent click surfaces before preference pairing. This keeps real and fake trace surfaces comparable and preserves reranker gates at 71 pairs, learned LOTO margin 12, and learned LOSO margin 10.
 
+June 3, 2026 source-email read coverage result:
+
+- Added frozen `forms/read-source-email`, a one-action `gemma_read_page` task that reads `#source-email` from the source profile tab and asserts the scoped response includes `ada@example.test` without leaking `Ada Lovelace`.
+- Baseline local before the task stayed green at 21/21 with `p95_task_seconds 0.010`; after adding the task, local passed 22/22 with `actions_per_success 1.59` and `p95_task_seconds 0.010`.
+- Real smoke passed 17/17 with `selector_hit_rate 1.0000`, `actions_per_success 1.35`, and `timeout_rate 0.0000`; real agent passed 22/22 with `p95_task_seconds 6.523`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 35 raw positive records from 16 tasks and 97 training records from 24 tasks, while preference and reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

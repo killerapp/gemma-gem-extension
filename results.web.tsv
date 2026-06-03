@@ -263,3 +263,7 @@ c51f5b5	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.
 32932d7	local-fake-extension	21	1.0000	1.0000	1.0000	1.0000	1.62	0.004	0.009	0.0000	0.000	keep	source read task tab-aware local
 32932d7	real-chrome-extension-smoke	16	1.0000	1.0000	1.0000	1.0000	1.38	0.007	0.025	0.0000	0.000	keep	source read task real smoke tab-aware selector
 32932d7	real-chrome-extension-agent	21	1.0000	1.0000	1.0000	1.0000	1.62	0.008	6.684	0.0000	0.001	keep	source read task real agent tab-aware selector
+b00165a	local-fake-extension	21	1.0000	1.0000	1.0000	1.0000	1.62	0.004	0.010	0.0000	0.000	baseline	source email read task baseline local
+b00165a	local-fake-extension	22	1.0000	1.0000	1.0000	1.0000	1.59	0.004	0.010	0.0000	0.000	keep	source email read task local
+b00165a	real-chrome-extension-smoke	17	1.0000	1.0000	1.0000	1.0000	1.35	0.008	0.087	0.0000	0.000	keep	source email read task real smoke
+b00165a	real-chrome-extension-agent	22	1.0000	1.0000	1.0000	1.0000	1.59	0.008	6.523	0.0000	0.001	keep	source email read task real agent
