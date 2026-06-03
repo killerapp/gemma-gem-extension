@@ -48,17 +48,18 @@ function clickElement(args: Record<string, unknown>): ToolResponse {
 function typeText(args: Record<string, unknown>): ToolResponse {
   const selector = args.selector as string
   const text = args.text as string
+  const clear = args.clear !== false
   const element = document.querySelector(selector) as HTMLInputElement | null
   if (!element) {
     return { name: 'type_text', result: { error: `No element found for selector: ${selector}` } }
   }
 
   element.focus()
-  element.value = text
+  element.value = clear ? text : `${element.value}${text}`
   element.dispatchEvent(new Event('input', { bubbles: true }))
   element.dispatchEvent(new Event('change', { bubbles: true }))
 
-  return { name: 'type_text', result: { typed: text, into: selector } }
+  return { name: 'type_text', result: { typed: text, into: selector, value: element.value } }
 }
 
 function selectOption(args: Record<string, unknown>): ToolResponse {

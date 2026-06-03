@@ -309,3 +309,8 @@ a5e43b9	real-chrome-extension-agent	29	1.0000	1.0000	1.0000	1.0000	1.48	0.007	6.
 31f95dd	local-fake-extension	34	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.010	0.0000	0.000	keep	radio readback local
 31f95dd	real-chrome-extension-smoke	29	1.0000	1.0000	1.0000	1.0000	1.24	0.007	0.017	0.0000	0.000	keep	radio readback real smoke
 31f95dd	real-chrome-extension-agent	34	1.0000	1.0000	1.0000	1.0000	1.41	0.007	6.566	0.0000	0.001	keep	radio readback real agent
+47daab9	local-fake-extension	34	1.0000	1.0000	1.0000	1.0000	1.41	0.004	0.011	0.0000	0.000	baseline	type append baseline local
+47daab9	local-fake-extension	36	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.010	0.0000	0.000	keep	type append local
+47daab9	real-chrome-extension-smoke	31	0.9677	0.9677	1.0000	1.0000	1.23	0.007	0.017	0.0000	0.000	discard	type append real smoke
+47daab9	real-chrome-extension-smoke	31	1.0000	1.0000	1.0000	1.0000	1.23	0.010	0.032	0.0000	0.000	keep	type append real smoke trace clear
+47daab9	real-chrome-extension-agent	36	1.0000	1.0000	1.0000	1.0000	1.39	0.006	6.656	0.0000	0.001	keep	type append real agent

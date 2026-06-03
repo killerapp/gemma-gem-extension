@@ -291,6 +291,7 @@ function compactBenchmarkToolText(name: string, args: Record<string, unknown>): 
   } else if (name === 'type_text') {
     const textLength = typeof args.text === 'string' ? args.text.length : 0
     parts.push(`textLength=${textLength}`)
+    if (args.clear === false) parts.push('clear=false')
   } else if (name === 'select_option') {
     if (typeof args.value === 'string') parts.push(`value=${args.value}`)
     if (typeof args.label === 'string') parts.push(`label=${args.label}`)
@@ -557,8 +558,9 @@ class FakeExtension implements HarnessProbe {
         if (!this.selectorExists(selector)) {
           return this.response(request.requestId, { error: `No element found for selector: ${selector}` })
         }
-        this.values.set(`${tabId}:${selector}`, text)
-        return this.response(request.requestId, { typed: text, into: selector })
+        const value = args.clear === false ? `${this.value(tabId, selector)}${text}` : text
+        this.values.set(`${tabId}:${selector}`, value)
+        return this.response(request.requestId, { typed: text, into: selector, value })
       }
       case 'click_element': {
         const selector = String(args.selector)

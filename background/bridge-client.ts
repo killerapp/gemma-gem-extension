@@ -293,6 +293,7 @@ function compactToolActivityText(name: string, args: Record<string, unknown>): s
   } else if (name === 'type_text') {
     const textLength = typeof args.text === 'string' ? args.text.length : 0
     parts.push(`textLength=${textLength}`)
+    if (args.clear === false) parts.push('clear=false')
   } else if (name === 'select_option') {
     if (typeof args.value === 'string') parts.push(`value=${args.value}`)
     if (typeof args.label === 'string') parts.push(`label=${args.label}`)

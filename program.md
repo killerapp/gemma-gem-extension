@@ -855,6 +855,15 @@ June 3, 2026 radio readback coverage result:
 - Real smoke passed 29/29 with `actions_per_success 1.24`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 34/34 with `actions_per_success 1.41`, `p95_task_seconds 6.566`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 48 raw positive records from 28 tasks and 110 training records from 36 tasks, while candidate buckets rose to 39 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 type append coverage result:
+
+- Added frozen `forms/append-destination-name-without-clear` and `forms/read-destination-name-after-append`, proving `gemma_type_text` honors `clear: false` by appending to an existing input value and that exact selector reads observe the appended value.
+- `type_text` now appends when `clear` is false in both the content script and fake harness, while preserving default clearing behavior for existing form-copy and text-recovery tasks.
+- The first real-smoke run was recorded as `discard`: the append behavior and readback passed, but real extension activity traces omitted `clear=false`, so the strict trace assertion failed. Background bridge activity now includes `clear=false` in compact `type_text` diagnostics without exposing typed content.
+- Baseline local before the tasks stayed green at 34/34 with `actions_per_success 1.41` and `p95_task_seconds 0.011`; after adding the tasks, local passed 36/36 with `actions_per_success 1.39` and `p95_task_seconds 0.010`.
+- Real smoke passed 31/31 after the trace fix with `actions_per_success 1.23`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 36/36 with `actions_per_success 1.39`, `p95_task_seconds 6.656`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 50 raw positive records from 30 tasks and 112 training records from 38 tasks, while candidate buckets rose to 41 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
