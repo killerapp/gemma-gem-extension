@@ -52,6 +52,7 @@
       "method": "click",
       "actions": 2,
       "actionTraceTools": ["read_page_content", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",
       "bridgeRunAgent": false
@@ -130,6 +131,7 @@
       "clicked": "#download-receipt",
       "actions": 1,
       "actionTraceTools": ["click_element"],
+      "actionTraceTextIncludes": ["selector=#download-receipt"],
       "bridgeExecuteTool": "click_element",
       "bridgeRunAgent": false
     }
@@ -155,6 +157,7 @@
       "clicked": "#download-receipt",
       "actions": 3,
       "actionTraceTools": ["read_page_content", "read_page_content", "click_element"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "selector=#download-receipt"],
       "bridgeExecuteTools": ["read_page_content", "click_element"],
       "bridgeExecuteSelectors": ["body", "#download-receipt"],
       "bridgeRunAgent": false
@@ -215,6 +218,7 @@
       },
       "actions": 2,
       "actionTraceTools": ["read_page_content", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
       "contains": ["Receipt PDF", "Payment settings", "INV-2026-041", "\"selector\": \"#download-receipt\"", "\"selector\": \"#payment-settings\""],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",

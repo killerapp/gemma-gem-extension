@@ -35,6 +35,7 @@
       },
       "actions": 2,
       "actionTraceTools": ["read_page_content", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
       "contains": ["interactiveControls", "\"selector\": \"#dest-name\"", "\"label\": \"Name\"", "\"tag\": \"input\"", "\"name\": \"name\"", "\"selector\": \"#save-profile\""],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",
@@ -65,6 +66,7 @@
       },
       "actions": 3,
       "actionTraceTools": ["read_page_content", "read_page_content", "type_text"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "selector=#dest-name"],
       "bridgeExecuteTools": ["read_page_content", "type_text"],
       "bridgeExecuteSelectors": ["body", "#dest-name"],
       "bridgeRunAgent": false
@@ -93,6 +95,7 @@
       },
       "actions": 1,
       "actionTraceTools": ["select_option"],
+      "actionTraceTextIncludes": ["selector=#dest-role label=Reviewer"],
       "bridgeExecuteTool": "select_option",
       "bridgeExecuteSelector": "#dest-role",
       "bridgeRunAgent": false
@@ -153,6 +156,7 @@
       "clicked": "#save-profile",
       "actions": 6,
       "actionTraceTools": ["read_page_content", "type_text", "read_page_content", "type_text", "click_element", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-name", "selector=#dest-name", "selector=#source-email", "selector=#dest-email", "selector=#save-profile", "selector=#save-result"],
       "bridgeExecuteTools": ["read_page_content", "type_text", "click_element"],
       "bridgeExecuteSelectors": ["#source-name", "#source-email", "#dest-name", "#dest-email", "#save-profile", "#save-result"],
       "bridgeRunAgent": false

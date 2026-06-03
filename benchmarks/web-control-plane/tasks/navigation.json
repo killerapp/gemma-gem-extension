@@ -80,6 +80,7 @@
       "image": "image/png",
       "actions": 1,
       "actionTraceTools": ["take_screenshot"],
+      "actionTraceTextIncludes": ["take_screenshot"],
       "bridgeExecuteTool": "take_screenshot",
       "bridgeRunAgent": false
     }
@@ -122,6 +123,7 @@
       "scrollYAtLeast": 650,
       "actions": 1,
       "actionTraceTools": ["scroll_page"],
+      "actionTraceTextIncludes": ["direction=down amount=700"],
       "bridgeExecuteTool": "scroll_page",
       "bridgeRunAgent": false
     }

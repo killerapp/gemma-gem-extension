@@ -111,6 +111,7 @@
       },
       "actions": 1,
       "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=.plan[data-plan=\"team\"] format=text"],
       "contains": ["Team", "$49"],
       "notContains": ["Starter", "$19"],
       "bridgeExecuteTool": "read_page_content",
