@@ -922,6 +922,14 @@ June 3, 2026 starter scoped read coverage result:
 - Real smoke passed 42/42 with `actions_per_success 1.40`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 47/47 with `actions_per_success 1.51`, `p95_task_seconds 4.159`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 71 raw positive records from 41 tasks and 133 training records from 49 tasks, with target selector matching records up to 8 while preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 starter scoped HTML coverage result:
+
+- Added frozen `extraction/read-scoped-starter-plan-html`, proving exact selector HTML reads can scope to `.plan[data-plan="starter"]` and exclude the neighboring Team card.
+- The task mirrors the existing Team scoped HTML read and freezes the HTML response shape with `<h2>Starter</h2>`, `class="price"`, and `$19/month`.
+- Baseline local before the task stayed green at 47/47 with `actions_per_success 1.51` and `p95_task_seconds 0.007`; after adding the task, local passed 48/48 with `actions_per_success 1.50` and `p95_task_seconds 0.006`.
+- Real smoke passed 43/43 with `actions_per_success 1.40`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 48/48 with `actions_per_success 1.50`, `p95_task_seconds 4.183`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 72 raw positive records from 42 tasks and 134 training records from 50 tasks, with target selector matching records up to 9 while preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

@@ -343,3 +343,7 @@ f735b80	local-fake-extension	46	1.0000	1.0000	1.0000	1.0000	1.52	0.003	0.007	0.0
 f735b80	local-fake-extension	47	1.0000	1.0000	1.0000	1.0000	1.51	0.003	0.005	0.0000	0.000	keep	starter scoped read local
 f735b80	real-chrome-extension-smoke	42	1.0000	1.0000	1.0000	1.0000	1.40	0.007	0.017	0.0000	0.000	keep	starter scoped read real smoke
 f735b80	real-chrome-extension-agent	47	1.0000	1.0000	1.0000	1.0000	1.51	0.008	4.159	0.0000	0.001	keep	starter scoped read real agent
+67c5b8e	local-fake-extension	47	1.0000	1.0000	1.0000	1.0000	1.51	0.003	0.007	0.0000	0.000	baseline	starter scoped html baseline local
+67c5b8e	local-fake-extension	48	1.0000	1.0000	1.0000	1.0000	1.50	0.003	0.006	0.0000	0.000	keep	starter scoped html local
+67c5b8e	real-chrome-extension-smoke	43	1.0000	1.0000	1.0000	1.0000	1.40	0.006	0.014	0.0000	0.000	keep	starter scoped html real smoke
+67c5b8e	real-chrome-extension-agent	48	1.0000	1.0000	1.0000	1.0000	1.50	0.007	4.183	0.0000	0.001	keep	starter scoped html real agent
