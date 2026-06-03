@@ -150,3 +150,7 @@ b70acbd	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0
 48774af	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	model json fields local benchmark
 48774af	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.007	0.074	0.0000	0.000	keep	real smoke model json fields
 48774af	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.005	0.010	0.0000	0.000	keep	final model json field artifacts
+9a0a522	real-chrome-extension-agent	20	0.9500	0.9500	1.0000	1.0000	1.74	0.008	7.212	0.0000	0.630	discard	real agent fake phase exact field
+9a0a522	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	mode fields local benchmark
+9a0a522	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.010	6.431	0.0000	0.001	keep	mode fields real agent
+9a0a522	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final mode field artifacts

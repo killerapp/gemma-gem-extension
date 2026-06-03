@@ -1214,7 +1214,16 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
     const text = toolText(result)
     outputPreview = text.slice(0, 1000)
     const expect = task.expect
-    const contains = Array.isArray(expect.contains) ? expect.contains.map(String) : []
+    const modeContains =
+      expect.containsByMode &&
+      typeof expect.containsByMode === 'object' &&
+      !Array.isArray(expect.containsByMode)
+        ? (expect.containsByMode as Record<string, unknown>)[harness.mode]
+        : undefined
+    const contains = [
+      ...(Array.isArray(expect.contains) ? expect.contains.map(String) : []),
+      ...(Array.isArray(modeContains) ? modeContains.map(String) : []),
+    ]
     const containsOk = contains.every(item => text.includes(item))
     if (!containsOk) {
       notes.push(`missing expected text in result: ${contains.filter(item => !text.includes(item)).join(', ')}`)
@@ -1268,13 +1277,25 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
         jsonOk = false
       }
     }
-    if (expect.jsonFields && typeof expect.jsonFields === 'object' && !Array.isArray(expect.jsonFields)) {
-      for (const [path, expectedValue] of Object.entries(expect.jsonFields as Record<string, unknown>)) {
-        const actualValue = jsonPathValue(parsedJson, path)
-        if (JSON.stringify(actualValue) !== JSON.stringify(expectedValue)) {
-          notes.push(`expected JSON field ${path}=${JSON.stringify(expectedValue)}, got ${JSON.stringify(actualValue)}`)
-          jsonOk = false
-        }
+    const modeJsonFields =
+      expect.jsonFieldsByMode &&
+      typeof expect.jsonFieldsByMode === 'object' &&
+      !Array.isArray(expect.jsonFieldsByMode)
+        ? (expect.jsonFieldsByMode as Record<string, unknown>)[harness.mode]
+        : undefined
+    const jsonFields = {
+      ...(expect.jsonFields && typeof expect.jsonFields === 'object' && !Array.isArray(expect.jsonFields)
+        ? expect.jsonFields as Record<string, unknown>
+        : {}),
+      ...(modeJsonFields && typeof modeJsonFields === 'object' && !Array.isArray(modeJsonFields)
+        ? modeJsonFields as Record<string, unknown>
+        : {}),
+    }
+    for (const [path, expectedValue] of Object.entries(jsonFields)) {
+      const actualValue = jsonPathValue(parsedJson, path)
+      if (JSON.stringify(actualValue) !== JSON.stringify(expectedValue)) {
+        notes.push(`expected JSON field ${path}=${JSON.stringify(expectedValue)}, got ${JSON.stringify(actualValue)}`)
+        jsonOk = false
       }
     }
 
