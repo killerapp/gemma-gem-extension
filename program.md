@@ -564,6 +564,10 @@ Experiment result:
 - `pnpm benchmark:web` passes with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.011`, and `timeout_rate 0.0000`.
 - `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.116`, and `timeout_rate 0.0000`.
 - Trace floors remain unchanged after hardening selector recovery coverage because the new assertions freeze existing recovery read/action shape rather than adding new browser action steps.
+- The frozen forms suite now hardens `forms-page-brief-controls`: `gemma_page_brief` must return valid JSON object output, list tabs, read `body`, expose destination controls including `#dest-name` and `#save-profile`, and avoid `bridge:run_agent`.
+- `pnpm benchmark:web` passes with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
+- `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.024`, and `timeout_rate 0.0000`.
+- Trace floors remain unchanged after hardening form brief JSON/tab coverage because the new assertions freeze existing metadata and bridge-request shape rather than adding browser action steps.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

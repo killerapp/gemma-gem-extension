@@ -11,9 +11,11 @@
       "maxChars": 4000
     },
     "expect": {
+      "json": "object",
       "contains": ["interactiveControls", "\"selector\": \"#dest-name\"", "\"label\": \"Name\"", "\"tag\": \"input\"", "\"name\": \"name\"", "\"selector\": \"#save-profile\""],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",
+      "bridgeListTabs": true,
       "bridgeRunAgent": false
     }
   },
