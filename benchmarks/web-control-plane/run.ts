@@ -179,6 +179,34 @@ function jsonPathValue(value: unknown, path: string): unknown {
   }, value)
 }
 
+function modeExpectationMap(
+  expect: Record<string, unknown>,
+  baseKey: string,
+  modeKey: string,
+  mode: string,
+): Record<string, unknown> {
+  const base = expect[baseKey]
+  const modeValues = expect[modeKey]
+  const selectedModeValues =
+    modeValues && typeof modeValues === 'object' && !Array.isArray(modeValues)
+      ? (modeValues as Record<string, unknown>)[mode]
+      : undefined
+
+  return {
+    ...(base && typeof base === 'object' && !Array.isArray(base)
+      ? base as Record<string, unknown>
+      : {}),
+    ...(selectedModeValues && typeof selectedModeValues === 'object' && !Array.isArray(selectedModeValues)
+      ? selectedModeValues as Record<string, unknown>
+      : {}),
+  }
+}
+
+function stringArray(value: unknown): string[] {
+  if (Array.isArray(value)) return value.filter(item => typeof item === 'string')
+  return typeof value === 'string' ? [value] : []
+}
+
 function percentile(values: number[], p: number): number {
   if (values.length === 0) return 0
   const sorted = [...values].sort((a, b) => a - b)
@@ -1277,24 +1305,43 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
         jsonOk = false
       }
     }
-    const modeJsonFields =
-      expect.jsonFieldsByMode &&
-      typeof expect.jsonFieldsByMode === 'object' &&
-      !Array.isArray(expect.jsonFieldsByMode)
-        ? (expect.jsonFieldsByMode as Record<string, unknown>)[harness.mode]
-        : undefined
-    const jsonFields = {
-      ...(expect.jsonFields && typeof expect.jsonFields === 'object' && !Array.isArray(expect.jsonFields)
-        ? expect.jsonFields as Record<string, unknown>
-        : {}),
-      ...(modeJsonFields && typeof modeJsonFields === 'object' && !Array.isArray(modeJsonFields)
-        ? modeJsonFields as Record<string, unknown>
-        : {}),
-    }
+    const jsonFields = modeExpectationMap(expect, 'jsonFields', 'jsonFieldsByMode', harness.mode)
     for (const [path, expectedValue] of Object.entries(jsonFields)) {
       const actualValue = jsonPathValue(parsedJson, path)
       if (JSON.stringify(actualValue) !== JSON.stringify(expectedValue)) {
         notes.push(`expected JSON field ${path}=${JSON.stringify(expectedValue)}, got ${JSON.stringify(actualValue)}`)
+        jsonOk = false
+      }
+    }
+
+    const jsonFieldIncludes = modeExpectationMap(expect, 'jsonFieldIncludes', 'jsonFieldIncludesByMode', harness.mode)
+    for (const [path, expectedValues] of Object.entries(jsonFieldIncludes)) {
+      const actualValue = jsonPathValue(parsedJson, path)
+      const expectedStrings = stringArray(expectedValues)
+      if (typeof actualValue !== 'string') {
+        notes.push(`expected JSON field ${path} to be a string, got ${JSON.stringify(actualValue)}`)
+        jsonOk = false
+        continue
+      }
+      const missing = expectedStrings.filter(expectedValue => !actualValue.includes(expectedValue))
+      if (missing.length > 0) {
+        notes.push(`expected JSON field ${path} to include ${missing.map(item => JSON.stringify(item)).join(', ')}`)
+        jsonOk = false
+      }
+    }
+
+    const jsonFieldExcludes = modeExpectationMap(expect, 'jsonFieldExcludes', 'jsonFieldExcludesByMode', harness.mode)
+    for (const [path, expectedValues] of Object.entries(jsonFieldExcludes)) {
+      const actualValue = jsonPathValue(parsedJson, path)
+      const expectedStrings = stringArray(expectedValues)
+      if (typeof actualValue !== 'string') {
+        notes.push(`expected JSON field ${path} to be a string, got ${JSON.stringify(actualValue)}`)
+        jsonOk = false
+        continue
+      }
+      const present = expectedStrings.filter(expectedValue => actualValue.includes(expectedValue))
+      if (present.length > 0) {
+        notes.push(`expected JSON field ${path} to exclude ${present.map(item => JSON.stringify(item)).join(', ')}`)
         jsonOk = false
       }
     }

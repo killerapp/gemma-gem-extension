@@ -154,3 +154,9 @@ b70acbd	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0
 9a0a522	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	mode fields local benchmark
 9a0a522	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.010	6.431	0.0000	0.001	keep	mode fields real agent
 9a0a522	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final mode field artifacts
+cf1a004	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	field includes local baseline
+cf1a004	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	field includes local benchmark
+cf1a004	real-chrome-extension-smoke	15	0.9333	0.9333	1.0000	1.0000	1.50	0.008	0.101	0.0000	0.000	discard	active field real missing
+cf1a004	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.108	0.0000	0.000	keep	field includes real smoke
+cf1a004	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.009	6.507	0.0000	0.001	keep	field includes real agent
+cf1a004	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final field include artifacts

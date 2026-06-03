@@ -105,6 +105,9 @@
       "jsonFields": {
         "selector": "#download-receipt"
       },
+      "jsonFieldIncludes": {
+        "clicked": "Receipt PDF"
+      },
       "contains": ["#download-receipt", "Receipt PDF"],
       "selector": "#download-receipt",
       "clicked": "#download-receipt",
@@ -169,6 +172,7 @@
     "expect": {
       "json": "object",
       "jsonFields": {
+        "tab.title": "Billing sandbox",
         "selector": "body",
         "format": "text",
         "interactiveControls.0.selector": "#download-receipt",
@@ -177,6 +181,9 @@
         "interactiveControls.1.selector": "#download-invoice",
         "interactiveControls.2.selector": "#payment-settings",
         "interactiveControls.2.label": "Payment settings"
+      },
+      "jsonFieldIncludes": {
+        "content": ["Invoice INV-2026-041", "Receipt PDF", "Payment settings"]
       },
       "contains": ["Receipt PDF", "Payment settings", "INV-2026-041", "\"selector\": \"#download-receipt\"", "\"selector\": \"#payment-settings\""],
       "bridgeExecuteTool": "read_page_content",

@@ -24,6 +24,9 @@
       "jsonFields": {
         "title": "Billing sandbox"
       },
+      "jsonFieldIncludes": {
+        "url": "semantic-buttons.html"
+      },
       "contains": ["Billing sandbox", "semantic-buttons.html"],
       "activeTabId": 101,
       "bridgeGetActiveTab": true,

@@ -91,6 +91,12 @@
     },
     "expect": {
       "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Team", "$49"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["Starter", "$19"]
+      },
       "contains": ["Team", "$49"],
       "notContains": ["Starter", "$19"],
       "bridgeExecuteTool": "read_page_content",

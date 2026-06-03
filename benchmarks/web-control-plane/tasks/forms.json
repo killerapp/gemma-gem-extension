@@ -13,6 +13,7 @@
     "expect": {
       "json": "object",
       "jsonFields": {
+        "tab.title": "Profile destination",
         "selector": "body",
         "format": "text",
         "interactiveControls.0.selector": "#dest-name",
@@ -22,6 +23,9 @@
         "interactiveControls.3.selector": "#save-profile",
         "interactiveControls.3.label": "Save profile",
         "interactiveControls.3.tag": "button"
+      },
+      "jsonFieldIncludes": {
+        "content": ["Name", "Email", "Role", "Save profile"]
       },
       "contains": ["interactiveControls", "\"selector\": \"#dest-name\"", "\"label\": \"Name\"", "\"tag\": \"input\"", "\"name\": \"name\"", "\"selector\": \"#save-profile\""],
       "bridgeExecuteTool": "read_page_content",
@@ -109,8 +113,19 @@
       "json": "object",
       "jsonFields": {
         "ok": true,
+        "copiedFields.0.fromSelector": "#source-name",
+        "copiedFields.0.toSelector": "#dest-name",
+        "copiedFields.0.value": "Ada Lovelace",
+        "copiedFields.1.fromSelector": "#source-email",
+        "copiedFields.1.toSelector": "#dest-email",
+        "copiedFields.1.value": "ada@example.test",
         "submitSelector": "#save-profile",
+        "submitResult.selector": "#save-profile",
         "resultSelector": "#save-result"
+      },
+      "jsonFieldIncludes": {
+        "destinationResult.content": ["Saved Ada Lovelace", "ada@example.test"],
+        "peerSummary.action": "Copied mapped source fields"
       },
       "contains": ["Ada Lovelace", "ada@example.test", "Copied mapped source fields", "Saved Ada Lovelace"],
       "destinationValues": {
