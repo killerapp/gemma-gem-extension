@@ -938,6 +938,14 @@ June 3, 2026 starter scoped extract coverage result:
 - Real smoke stayed green at 43/43 with `actions_per_success 1.40`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 49/49 with `actions_per_success 1.53`, `p95_task_seconds 4.845`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 75 raw positive records from 43 tasks and 137 training records from 51 tasks, with target selector matching records up to 11 while preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 select selected-readback coverage result:
+
+- Added frozen `forms/read-destination-role-after-select`, proving exact `gemma_read_page` on `#dest-role` exposes the live selected option after `gemma_select_option` sets the role by value.
+- Updated select text reads in the content script and fake harness to include `selected: Administrator (admin)` plus the option list, preserving the existing role-options coverage while freezing selected-state readback.
+- Baseline local before the task stayed green at 49/49 with `actions_per_success 1.53` and `p95_task_seconds 0.007`; after adding the task, local passed 50/50 with `actions_per_success 1.52` and `p95_task_seconds 0.006`.
+- Real smoke passed 44/44 with `actions_per_success 1.39`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 50/50 with `actions_per_success 1.52`, `p95_task_seconds 4.903`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 76 raw positive records from 44 tasks and 138 training records from 52 tasks, while candidate buckets rose to 60 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

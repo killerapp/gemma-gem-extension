@@ -708,7 +708,15 @@ class FakeExtension implements HarnessProbe {
         ].filter(Boolean).join('\n')
       }
       if (selector === '#dest-role') {
+        const selectedValue = this.value(104, '#dest-role')
+        const selectedLabel = selectedValue === 'admin'
+          ? 'Administrator'
+          : selectedValue === 'reviewer'
+            ? 'Reviewer'
+            : 'Choose role'
         return [
+          `selected: ${selectedLabel} (${selectedValue})`,
+          'options:',
           'Choose role',
           'Administrator',
           'Reviewer',

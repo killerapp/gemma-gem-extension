@@ -26,6 +26,17 @@ function textContentForRead(element: Element): string {
   if (element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement) {
     return element.value
   }
+  if (element instanceof HTMLSelectElement) {
+    const selected = element.selectedOptions[0]
+    const selectedLabel = selected?.textContent?.trim() ?? ''
+    const selectedValue = selected?.value ?? ''
+    const options = [...element.options].map(option => option.textContent?.trim()).filter(Boolean)
+    return [
+      `selected: ${selectedLabel} (${selectedValue})`,
+      'options:',
+      ...options,
+    ].join('\n')
+  }
   return (element as HTMLElement).innerText
 }
 

@@ -317,6 +317,32 @@
     }
   },
   {
+    "id": "read-destination-role-after-select",
+    "suite": "forms",
+    "title": "Read selected destination role after select",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["selected: Administrator (admin)", "options:", "Choose role", "Reviewer"]
+      },
+      "contains": ["selected: Administrator", "admin", "Choose role", "Reviewer"],
+      "notContains": ["Save profile", "Ada Lovelace"],
+      "selector": "#dest-role",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-role format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "read-destination-role-options",
     "suite": "forms",
     "title": "Read destination role options by selector",
