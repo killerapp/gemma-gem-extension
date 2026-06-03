@@ -1820,7 +1820,7 @@ function parseResultsLedgerRow(line: string): ResultsLedgerRow | undefined {
   }
 }
 
-async function readRecentResultsLedger(pendingRow: ResultsLedgerRow, limit = 8): Promise<ResultsLedgerRow[]> {
+async function readResultsLedgerRows(pendingRow: ResultsLedgerRow): Promise<ResultsLedgerRow[]> {
   const file = resolve(REPO_ROOT, 'results.web.tsv')
   const rows: ResultsLedgerRow[] = []
 
@@ -1836,7 +1836,43 @@ async function readRecentResultsLedger(pendingRow: ResultsLedgerRow, limit = 8):
   }
 
   rows.push(pendingRow)
-  return rows.slice(-limit)
+  return rows
+}
+
+function numericLedgerValue(value: string): number {
+  const parsed = Number.parseFloat(value)
+  return Number.isFinite(parsed) ? parsed : 0
+}
+
+function isBetterKeptLedgerRow(candidate: ResultsLedgerRow, current: ResultsLedgerRow): boolean {
+  const comparisons = [
+    numericLedgerValue(candidate.successRate) - numericLedgerValue(current.successRate),
+    numericLedgerValue(candidate.strictSuccessRate) - numericLedgerValue(current.strictSuccessRate),
+    numericLedgerValue(candidate.jsonValidRate) - numericLedgerValue(current.jsonValidRate),
+    numericLedgerValue(candidate.selectorHitRate) - numericLedgerValue(current.selectorHitRate),
+    numericLedgerValue(current.timeoutRate) - numericLedgerValue(candidate.timeoutRate),
+    numericLedgerValue(current.p95TaskSeconds) - numericLedgerValue(candidate.p95TaskSeconds),
+    numericLedgerValue(current.actionsPerSuccess) - numericLedgerValue(candidate.actionsPerSuccess),
+  ]
+
+  for (const comparison of comparisons) {
+    if (Math.abs(comparison) > 0.0005) return comparison > 0
+  }
+  return false
+}
+
+function bestKeptRowsBySuite(rows: ResultsLedgerRow[]): ResultsLedgerRow[] {
+  const bestBySuite = new Map<string, ResultsLedgerRow>()
+
+  for (const row of rows) {
+    if (row.status !== 'keep') continue
+    const current = bestBySuite.get(row.suite)
+    if (!current || isBetterKeptLedgerRow(row, current)) {
+      bestBySuite.set(row.suite, row)
+    }
+  }
+
+  return [...bestBySuite.values()].sort((a, b) => a.suite.localeCompare(b.suite))
 }
 
 function markdownTableCell(value: string): string {
@@ -1863,7 +1899,32 @@ async function writeReport(results: TaskResult[], summary: ReturnType<typeof sum
     ...(typeof summary.modelReady.progress === 'number' ? [`- model_ready_progress: ${summary.modelReady.progress}`] : []),
     ...(summary.modelReady.error ? [`- model_ready_error: ${summary.modelReady.error}`] : []),
   ]
-  const recentLedger = await readRecentResultsLedger(ledgerRow)
+  const ledgerRows = await readResultsLedgerRows(ledgerRow)
+  const bestKeptRows = bestKeptRowsBySuite(ledgerRows)
+  const bestKeptLines = bestKeptRows.length
+    ? [
+        '',
+        '## Best Kept Runs By Suite',
+        '',
+        '| suite | commit | tasks | success | strict | json | selector | actions | p95_s | timeout | model_load_s | description |',
+        '| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |',
+        ...bestKeptRows.map(row => [
+          row.suite,
+          row.commit,
+          row.tasks,
+          row.successRate,
+          row.strictSuccessRate,
+          row.jsonValidRate,
+          row.selectorHitRate,
+          row.actionsPerSuccess,
+          row.p95TaskSeconds,
+          row.timeoutRate,
+          row.modelLoadSeconds,
+          row.description,
+        ].map(markdownTableCell).join(' | ')).map(row => `| ${row} |`),
+      ]
+    : []
+  const recentLedger = ledgerRows.slice(-8)
   const recentLedgerLines = [
     '',
     '## Recent Ledger',
@@ -1903,6 +1964,7 @@ async function writeReport(results: TaskResult[], summary: ReturnType<typeof sum
     `- p95_task_seconds: ${summary.p95TaskSeconds.toFixed(3)}`,
     `- timeout_rate: ${summary.timeoutRate.toFixed(4)}`,
     `- tool_error_rate: ${summary.toolErrorRate.toFixed(4)}`,
+    ...bestKeptLines,
     ...recentLedgerLines,
     '',
     '## Latency Split',
