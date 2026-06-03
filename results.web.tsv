@@ -359,3 +359,7 @@ e8a1f21	local-fake-extension	50	1.0000	1.0000	1.0000	1.0000	1.52	0.003	0.006	0.0
 e8a1f21	local-fake-extension	51	1.0000	1.0000	1.0000	1.0000	1.55	0.003	0.006	0.0000	0.000	keep	select recovery local
 e8a1f21	real-chrome-extension-smoke	45	1.0000	1.0000	1.0000	1.0000	1.42	0.006	0.014	0.0000	0.000	keep	select recovery real smoke
 e8a1f21	real-chrome-extension-agent	51	1.0000	1.0000	1.0000	1.0000	1.55	0.007	4.873	0.0000	0.001	keep	select recovery real agent
+90c6287	local-fake-extension	51	1.0000	1.0000	1.0000	1.0000	1.55	0.003	0.005	0.0000	0.000	baseline	select recovered readback baseline local
+90c6287	local-fake-extension	52	1.0000	1.0000	1.0000	1.0000	1.54	0.003	0.005	0.0000	0.000	keep	select recovered readback local
+90c6287	real-chrome-extension-smoke	46	1.0000	1.0000	1.0000	1.0000	1.41	0.007	0.016	0.0000	0.000	keep	select recovered readback real smoke
+90c6287	real-chrome-extension-agent	52	1.0000	1.0000	1.0000	1.0000	1.54	0.007	4.881	0.0000	0.001	keep	select recovered readback real agent

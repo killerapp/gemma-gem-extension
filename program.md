@@ -954,6 +954,14 @@ June 3, 2026 select recovery coverage result:
 - Real smoke passed 45/45 with `actions_per_success 1.42`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 51/51 with `actions_per_success 1.55`, `p95_task_seconds 4.873`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 79 raw positive records from 45 tasks and 141 training records from 53 tasks, while candidate buckets rose to 61 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 select recovered-readback coverage result:
+
+- Added frozen `forms/read-destination-role-after-recovered-select`, proving exact `gemma_read_page` on `#dest-role` observes the `Reviewer` selection made through recovered `text=Role` selector selection.
+- This closes the select recovery loop by pairing the recovered select action with an exact state readback, mirroring the checkbox and radio recovered-action readback pattern.
+- Baseline local before the task stayed green at 51/51 with `actions_per_success 1.55` and `p95_task_seconds 0.005`; after adding the task, local passed 52/52 with `actions_per_success 1.54` and `p95_task_seconds 0.005`.
+- Real smoke passed 46/46 with `actions_per_success 1.41`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 52/52 with `actions_per_success 1.54`, `p95_task_seconds 4.881`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 80 raw positive records from 46 tasks and 142 training records from 54 tasks, while candidate buckets rose to 62 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
