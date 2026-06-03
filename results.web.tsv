@@ -384,3 +384,7 @@ d19ceba	real-chrome-extension-agent	56	1.0000	1.0000	1.0000	1.0000	1.50	0.007	4.
 693b575	local-fake-extension	57	1.0000	1.0000	1.0000	1.0000	1.49	0.003	0.006	0.0000	0.000	keep	transfer name readback local
 693b575	real-chrome-extension-smoke	51	1.0000	1.0000	1.0000	1.0000	1.37	0.007	0.017	0.0000	0.000	keep	transfer name readback real smoke
 693b575	real-chrome-extension-agent	57	1.0000	1.0000	1.0000	1.0000	1.49	0.006	4.833	0.0000	0.001	keep	transfer name readback real agent
+66461d4	local-fake-extension	57	1.0000	1.0000	1.0000	1.0000	1.49	0.003	0.006	0.0000	0.000	baseline	transfer save result readback baseline local
+66461d4	local-fake-extension	58	1.0000	1.0000	1.0000	1.0000	1.48	0.003	0.006	0.0000	0.000	keep	transfer save result readback local
+66461d4	real-chrome-extension-smoke	52	1.0000	1.0000	1.0000	1.0000	1.37	0.007	0.014	0.0000	0.000	keep	transfer save result readback real smoke
+66461d4	real-chrome-extension-agent	58	1.0000	1.0000	1.0000	1.0000	1.48	0.008	4.817	0.0000	0.001	keep	transfer save result readback real agent
