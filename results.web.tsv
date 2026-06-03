@@ -553,3 +553,7 @@ e1537f7	real-chrome-extension-agent	91	1.0000	1.0000	1.0000	1.0000	1.37	0.007	4.
 1ed4f50	real-chrome-extension-smoke	83	1.0000	1.0000	1.0000	1.0000	1.19	0.006	0.501	0.0000	0.000	keep	source active tab real smoke
 1ed4f50	real-chrome-extension-agent	93	0.9785	0.9785	1.0000	1.0000	1.30	0.007	4.141	0.0000	0.001	discard	source active tab real agent
 1ed4f50	real-chrome-extension-agent	93	1.0000	1.0000	1.0000	1.0000	1.35	0.007	4.191	0.0000	0.001	keep	source active tab real agent retry
+9b71a42	local-fake-extension	93	1.0000	1.0000	1.0000	1.0000	1.33	0.002	0.006	0.0000	0.000	baseline	destination active tab baseline local
+9b71a42	local-fake-extension	94	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.006	0.0000	0.000	keep	destination active tab local
+9b71a42	real-chrome-extension-smoke	84	1.0000	1.0000	1.0000	1.0000	1.18	0.006	0.501	0.0000	0.000	keep	destination active tab real smoke
+9b71a42	real-chrome-extension-agent	94	1.0000	1.0000	1.0000	1.0000	1.34	0.007	4.184	0.0000	0.001	keep	destination active tab real agent

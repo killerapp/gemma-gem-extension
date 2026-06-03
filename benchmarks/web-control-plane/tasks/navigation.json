@@ -117,6 +117,28 @@
     }
   },
   {
+    "id": "active-destination-tab-contract",
+    "suite": "navigation",
+    "title": "Active tab metadata follows activated destination profile fixture",
+    "tool": "gemma_active_tab",
+    "arguments": {},
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "title": "Profile destination"
+      },
+      "jsonFieldIncludes": {
+        "url": "forms-destination.html"
+      },
+      "contains": ["Profile destination", "forms-destination.html"],
+      "activateTabId": 104,
+      "activeTabId": 104,
+      "actions": 0,
+      "bridgeGetActiveTab": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "active-billing-tab-restored-contract",
     "suite": "navigation",
     "title": "Active tab metadata returns to billing fixture after navigation activation",

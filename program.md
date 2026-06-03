@@ -1291,6 +1291,14 @@ June 3, 2026 source active-tab coverage result:
 - The real-agent retry passed 93/93 with `actions_per_success 1.35`, `p95_task_seconds 4.191`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Because this task records browser metadata instead of a content action, trace artifacts remain at 126 raw positive records from 79 tasks and 195 training records from 88 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 destination active-tab coverage result:
+
+- Added frozen `navigation/active-destination-tab-contract`, proving `gemma_active_tab` reports the destination profile fixture after activating logical tab 104 and preserves explicit billing restoration for later tasks.
+- The task completes active-tab metadata coverage for both form fixtures while keeping the contract zero-action and bridge-only.
+- Baseline local before the task stayed green at 93/93 with `actions_per_success 1.33` and `p95_task_seconds 0.006`; after adding the zero-action active-tab task, local passed 94/94 with `actions_per_success 1.32` and `p95_task_seconds 0.006`.
+- Real smoke passed 84/84 with `actions_per_success 1.18`, `p95_task_seconds 0.501`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 94/94 with `actions_per_success 1.34`, `p95_task_seconds 4.184`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Because this task records browser metadata instead of a content action, trace artifacts remain at 126 raw positive records from 79 tasks and 195 training records from 88 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
