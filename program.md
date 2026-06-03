@@ -1051,6 +1051,14 @@ June 3, 2026 semantic settings act coverage result:
 - Real smoke passed 57/57 with `actions_per_success 1.33`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 63/63 with `actions_per_success 1.44`, `p95_task_seconds 4.173`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 91 raw positive records from 57 tasks and 153 training records from 65 tasks, while candidate buckets rose to 73 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 semantic invoice act coverage result:
+
+- Added frozen `semantic-buttons/semantic-invoice-observed-act`, proving `gemma_act` executes the observed `#download-invoice` click candidate directly without invoking generation.
+- This completes direct observed-action execution coverage for all three billing controls: receipt, payment settings, and invoice.
+- Baseline local before the task stayed green at 63/63 with `actions_per_success 1.44` and `p95_task_seconds 0.005`; after adding the task, local passed 64/64 with `actions_per_success 1.44` and `p95_task_seconds 0.006`.
+- Real smoke passed 58/58 with `actions_per_success 1.33`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 64/64 with `actions_per_success 1.44`, `p95_task_seconds 4.148`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 92 raw positive records from 58 tasks and 154 training records from 66 tasks, while candidate buckets rose to 74 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

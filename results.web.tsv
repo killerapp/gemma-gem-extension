@@ -410,3 +410,7 @@ fd87850	local-fake-extension	62	1.0000	1.0000	1.0000	1.0000	1.45	0.003	0.005	0.0
 fd87850	local-fake-extension	63	1.0000	1.0000	1.0000	1.0000	1.44	0.003	0.006	0.0000	0.000	keep	semantic settings act local
 fd87850	real-chrome-extension-smoke	57	1.0000	1.0000	1.0000	1.0000	1.33	0.006	0.015	0.0000	0.000	keep	semantic settings act real smoke
 fd87850	real-chrome-extension-agent	63	1.0000	1.0000	1.0000	1.0000	1.44	0.007	4.173	0.0000	0.001	keep	semantic settings act real agent
+c65cdee	local-fake-extension	63	1.0000	1.0000	1.0000	1.0000	1.44	0.003	0.005	0.0000	0.000	baseline	semantic invoice act baseline local
+c65cdee	local-fake-extension	64	1.0000	1.0000	1.0000	1.0000	1.44	0.003	0.006	0.0000	0.000	keep	semantic invoice act local
+c65cdee	real-chrome-extension-smoke	58	1.0000	1.0000	1.0000	1.0000	1.33	0.007	0.016	0.0000	0.000	keep	semantic invoice act real smoke
+c65cdee	real-chrome-extension-agent	64	1.0000	1.0000	1.0000	1.0000	1.44	0.007	4.148	0.0000	0.001	keep	semantic invoice act real agent

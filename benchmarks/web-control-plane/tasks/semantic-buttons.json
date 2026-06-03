@@ -245,6 +245,36 @@
     }
   },
   {
+    "id": "semantic-invoice-observed-act",
+    "suite": "semantic-buttons",
+    "title": "Execute observed invoice action without generation",
+    "tool": "gemma_act",
+    "arguments": {
+      "tabId": 101,
+      "action": {
+        "description": "Invoice PDF (#download-invoice)",
+        "method": "click",
+        "arguments": ["#download-invoice"],
+        "selector": "#download-invoice",
+        "confidence": 0.61
+      }
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "selector": "#download-invoice"
+      },
+      "contains": ["#download-invoice"],
+      "selector": "#download-invoice",
+      "clicked": "#download-invoice",
+      "actions": 1,
+      "actionTraceTools": ["click_element"],
+      "actionTraceTextIncludes": ["selector=#download-invoice"],
+      "bridgeExecuteTool": "click_element",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "semantic-click-recover-selector",
     "suite": "semantic-buttons",
     "title": "Recover a receipt text-like click selector",
