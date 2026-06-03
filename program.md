@@ -1273,6 +1273,15 @@ June 3, 2026 source profile screenshot coverage result:
 - Real smoke passed 81/81 with `actions_per_success 1.21`, `p95_task_seconds 0.124`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 91/91 with `actions_per_success 1.37`, `p95_task_seconds 4.221`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 125 raw positive records from 78 tasks and 194 training records from 87 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 destination profile screenshot coverage result:
+
+- Added frozen `navigation/screenshot-destination-tab-contract`, proving `gemma_screenshot` can route `take_screenshot` to the destination profile fixture on logical tab 104 and return MCP `image/png` content.
+- The task completes screenshot coverage across the current logical fixture tabs 101 through 106, and the throttled bridge path handled six consecutive screenshot captures without hitting Chrome's capture quota.
+- Baseline local before the task stayed green at 91/91 with `actions_per_success 1.35` and `p95_task_seconds 0.005`; after adding the screenshot task, local passed 92/92 with `actions_per_success 1.35` and `p95_task_seconds 0.005`.
+- Real smoke passed 82/82 with `actions_per_success 1.21`, `p95_task_seconds 0.498`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; the first real-agent run discarded at 90/92 after model-backed semantic invoice/settings misses while the new screenshot contract passed.
+- The real-agent retry passed 92/92 with `actions_per_success 1.37`, `p95_task_seconds 4.186`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 126 raw positive records from 79 tasks and 195 training records from 88 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
