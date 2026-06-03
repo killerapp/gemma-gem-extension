@@ -63,6 +63,9 @@ type TraceCheckConfig = {
   minCandidateBuckets?: number
   minPairedCandidateBuckets?: number
   minTargetSelectorRecords?: number
+  minTargetSelectorMatches?: number
+  minTargetSelectorMismatches?: number
+  minTargetSelectorNoActionSelectors?: number
 }
 
 function parseArgs(): TraceCheckConfig {
@@ -78,6 +81,9 @@ function parseArgs(): TraceCheckConfig {
   let minCandidateBuckets: number | undefined
   let minPairedCandidateBuckets: number | undefined
   let minTargetSelectorRecords: number | undefined
+  let minTargetSelectorMatches: number | undefined
+  let minTargetSelectorMismatches: number | undefined
+  let minTargetSelectorNoActionSelectors: number | undefined
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i]
@@ -132,6 +138,21 @@ function parseArgs(): TraceCheckConfig {
       i += 1
     } else if (arg.startsWith('--min-target-selector-records=')) {
       minTargetSelectorRecords = parseNumber(arg.slice('--min-target-selector-records='.length), '--min-target-selector-records')
+    } else if (arg === '--min-target-selector-matches') {
+      minTargetSelectorMatches = parseNumber(value, '--min-target-selector-matches')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-matches=')) {
+      minTargetSelectorMatches = parseNumber(arg.slice('--min-target-selector-matches='.length), '--min-target-selector-matches')
+    } else if (arg === '--min-target-selector-mismatches') {
+      minTargetSelectorMismatches = parseNumber(value, '--min-target-selector-mismatches')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-mismatches=')) {
+      minTargetSelectorMismatches = parseNumber(arg.slice('--min-target-selector-mismatches='.length), '--min-target-selector-mismatches')
+    } else if (arg === '--min-target-selector-no-action-selectors') {
+      minTargetSelectorNoActionSelectors = parseNumber(value, '--min-target-selector-no-action-selectors')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-no-action-selectors=')) {
+      minTargetSelectorNoActionSelectors = parseNumber(arg.slice('--min-target-selector-no-action-selectors='.length), '--min-target-selector-no-action-selectors')
     } else {
       throw new Error(`Unknown argument ${arg}. Use --input <path>, --require-negative, --require-candidate-pairs, and --min-* coverage options.`)
     }
@@ -149,6 +170,9 @@ function parseArgs(): TraceCheckConfig {
     minCandidateBuckets,
     minPairedCandidateBuckets,
     minTargetSelectorRecords,
+    minTargetSelectorMatches,
+    minTargetSelectorMismatches,
+    minTargetSelectorNoActionSelectors,
   }
 }
 
@@ -276,6 +300,9 @@ async function main(): Promise<void> {
     minCandidateBuckets,
     minPairedCandidateBuckets,
     minTargetSelectorRecords,
+    minTargetSelectorMatches,
+    minTargetSelectorMismatches,
+    minTargetSelectorNoActionSelectors,
   } = parseArgs()
   if (!existsSync(input)) throw new Error(`Trace export not found: ${input}`)
 
@@ -291,6 +318,9 @@ async function main(): Promise<void> {
   let positives = 0
   let negatives = 0
   let targetSelectorRecords = 0
+  let targetSelectorMatches = 0
+  let targetSelectorMismatches = 0
+  let targetSelectorNoActionSelectors = 0
   const candidateLabels = new Map<string, Set<string>>()
   for (let i = 0; i < lines.length; i += 1) {
     const parsed = JSON.parse(lines[i]) as TraceRecord
@@ -299,7 +329,16 @@ async function main(): Promise<void> {
     if (result.hasClick) clicks += 1
     if (result.label === 'positive') positives += 1
     if (result.label === 'negative') negatives += 1
-    if (typeof parsed.task?.targetSelector === 'string') targetSelectorRecords += 1
+    if (typeof parsed.task?.targetSelector === 'string') {
+      targetSelectorRecords += 1
+      if (typeof parsed.action?.selector !== 'string' || parsed.action.selector.length === 0) {
+        targetSelectorNoActionSelectors += 1
+      } else if (parsed.action.selector === parsed.task.targetSelector) {
+        targetSelectorMatches += 1
+      } else {
+        targetSelectorMismatches += 1
+      }
+    }
     if (result.candidateKey) {
       const labels = candidateLabels.get(result.candidateKey) ?? new Set<string>()
       labels.add(result.label)
@@ -325,6 +364,9 @@ async function main(): Promise<void> {
   assertAtLeast(candidateLabels.size, minCandidateBuckets, 'candidate buckets')
   assertAtLeast(pairedBuckets, minPairedCandidateBuckets, 'paired candidate buckets')
   assertAtLeast(targetSelectorRecords, minTargetSelectorRecords, 'target selector records')
+  assertAtLeast(targetSelectorMatches, minTargetSelectorMatches, 'target selector matching records')
+  assertAtLeast(targetSelectorMismatches, minTargetSelectorMismatches, 'target selector mismatched records')
+  assertAtLeast(targetSelectorNoActionSelectors, minTargetSelectorNoActionSelectors, 'target selector no-action-selector records')
 
   console.log(`Checked ${lines.length} action trace records`)
   console.log(`Positive records: ${positives}`)
@@ -332,6 +374,9 @@ async function main(): Promise<void> {
   console.log(`Selector records: ${selectors}`)
   console.log(`Click records: ${clicks}`)
   if (minTargetSelectorRecords !== undefined) console.log(`Target selector records: ${targetSelectorRecords}`)
+  if (minTargetSelectorMatches !== undefined) console.log(`Target selector matching records: ${targetSelectorMatches}`)
+  if (minTargetSelectorMismatches !== undefined) console.log(`Target selector mismatched records: ${targetSelectorMismatches}`)
+  if (minTargetSelectorNoActionSelectors !== undefined) console.log(`Target selector no-action-selector records: ${targetSelectorNoActionSelectors}`)
   if (requireCandidatePairs) {
     console.log(`Candidate buckets: ${candidateLabels.size}`)
     console.log(`Paired candidate buckets: ${pairedBuckets}`)

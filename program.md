@@ -666,6 +666,8 @@ Experiment result:
 - Trace summaries now split scoped target records into `target_selector_matching_records`, `target_selector_mismatched_records`, and `target_selector_no_action_selector_records`, with the same match/mismatch/no-selector breakdown in the `Target Selector Coverage` table.
 - The raw trace summary shows `3` scoped selector matches, `0` mismatches, and `1` no-action-selector delegation record; the training summary shows `6` matches, `5` mismatches, and `1` no-action-selector record.
 - `pnpm benchmark:web` passes after the target selector match/mismatch reporting change with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
+- `pnpm benchmark:traces:check` now locks raw scoped target diagnostics at `4` records, `3` selector matches, and `1` no-action-selector delegation record; `pnpm benchmark:traces:training:check` locks training diagnostics at `12` records, `6` matches, `5` mismatches, and `1` no-action-selector record.
+- `pnpm benchmark:web` passes after adding target selector match/mismatch checker floors with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:
