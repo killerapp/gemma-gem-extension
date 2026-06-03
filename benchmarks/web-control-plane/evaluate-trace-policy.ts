@@ -33,6 +33,8 @@ type PolicyCheckConfig = {
   minCandidatePairwise?: number
   minPairwisePairs?: number
   minCandidatePairs?: number
+  minCandidateBuckets?: number
+  minPairedCandidateBuckets?: number
   minTargetSelectorCandidatePairwise?: number
   minTargetSelectorCandidatePairs?: number
   minTargetSelectorCandidateMargin?: number
@@ -63,6 +65,8 @@ function parseArgs(): { input: string; output: string; check: PolicyCheckConfig 
     minCandidatePairwise: process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE, 'GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRWISE') : undefined,
     minPairwisePairs: process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_PAIRS ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_PAIRS, 'GEMMA_GEM_TRACE_POLICY_MIN_PAIRWISE_PAIRS') : undefined,
     minCandidatePairs: process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRS ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRS, 'GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_PAIRS') : undefined,
+    minCandidateBuckets: process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_BUCKETS ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_BUCKETS, 'GEMMA_GEM_TRACE_POLICY_MIN_CANDIDATE_BUCKETS') : undefined,
+    minPairedCandidateBuckets: process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRED_CANDIDATE_BUCKETS ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_PAIRED_CANDIDATE_BUCKETS, 'GEMMA_GEM_TRACE_POLICY_MIN_PAIRED_CANDIDATE_BUCKETS') : undefined,
     minTargetSelectorCandidatePairwise: process.env.GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_PAIRWISE ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_PAIRWISE, 'GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_PAIRWISE') : undefined,
     minTargetSelectorCandidatePairs: process.env.GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_PAIRS ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_PAIRS, 'GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_PAIRS') : undefined,
     minTargetSelectorCandidateMargin: process.env.GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_MARGIN ? parseNumber(process.env.GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_MARGIN, 'GEMMA_GEM_TRACE_POLICY_MIN_TARGET_SELECTOR_CANDIDATE_MARGIN') : undefined,
@@ -135,6 +139,16 @@ function parseArgs(): { input: string; output: string; check: PolicyCheckConfig 
       i += 1
     } else if (arg.startsWith('--min-candidate-pairs=')) {
       check.minCandidatePairs = parseNumber(arg.slice('--min-candidate-pairs='.length), '--min-candidate-pairs')
+    } else if (arg === '--min-candidate-buckets') {
+      check.minCandidateBuckets = parseNumber(value, '--min-candidate-buckets')
+      i += 1
+    } else if (arg.startsWith('--min-candidate-buckets=')) {
+      check.minCandidateBuckets = parseNumber(arg.slice('--min-candidate-buckets='.length), '--min-candidate-buckets')
+    } else if (arg === '--min-paired-candidate-buckets') {
+      check.minPairedCandidateBuckets = parseNumber(value, '--min-paired-candidate-buckets')
+      i += 1
+    } else if (arg.startsWith('--min-paired-candidate-buckets=')) {
+      check.minPairedCandidateBuckets = parseNumber(arg.slice('--min-paired-candidate-buckets='.length), '--min-paired-candidate-buckets')
     } else if (arg === '--min-target-selector-candidate-pairwise') {
       check.minTargetSelectorCandidatePairwise = parseNumber(value, '--min-target-selector-candidate-pairwise')
       i += 1
@@ -216,6 +230,28 @@ function targetSelectorCandidatePairwiseStats(records: ScoredRecord[]): Pairwise
   ))
 }
 
+function candidateBucketKey(record: TraceRecord): string | null {
+  if (!record.action.toolName || !CANDIDATE_TOOL_NAMES.has(record.action.toolName)) return null
+  if (!record.action.selector) return null
+  return `${record.task.id}:${record.action.toolName}`
+}
+
+function candidateBucketLabels(records: TraceRecord[]): Map<string, Set<TraceRecord['label']>> {
+  const buckets = new Map<string, Set<TraceRecord['label']>>()
+  for (const record of records) {
+    const key = candidateBucketKey(record)
+    if (!key) continue
+    const labels = buckets.get(key) ?? new Set<TraceRecord['label']>()
+    labels.add(record.label)
+    buckets.set(key, labels)
+  }
+  return buckets
+}
+
+function pairedCandidateBuckets(buckets: Map<string, Set<TraceRecord['label']>>): number {
+  return [...buckets.values()].filter(labels => labels.has('positive') && labels.has('negative')).length
+}
+
 function thresholdAccuracy(records: ScoredRecord[], threshold: number): number {
   if (records.length === 0) return 0
   const correct = records.filter(record => {
@@ -268,6 +304,8 @@ function checkPolicyResult(bestPolicy: PolicyResult, check: PolicyCheckConfig, c
   positives: number
   negatives: number
   tasks: number
+  candidateBuckets: number
+  pairedCandidateBuckets: number
 }): void {
   if (check.requireBestPolicy && bestPolicy.name !== check.requireBestPolicy) {
     throw new Error(`best_policy ${bestPolicy.name} does not match required policy ${check.requireBestPolicy}`)
@@ -280,6 +318,8 @@ function checkPolicyResult(bestPolicy: PolicyResult, check: PolicyCheckConfig, c
   assertAtLeast(bestPolicy.candidatePairwise.accuracy, check.minCandidatePairwise, 'candidate_pairwise_accuracy')
   assertAtLeast(bestPolicy.pairwise.total, check.minPairwisePairs, 'pairwise_task_pairs')
   assertAtLeast(bestPolicy.candidatePairwise.total, check.minCandidatePairs, 'candidate_pairwise_pairs')
+  assertAtLeast(coverage.candidateBuckets, check.minCandidateBuckets, 'candidate_buckets')
+  assertAtLeast(coverage.pairedCandidateBuckets, check.minPairedCandidateBuckets, 'paired_candidate_buckets')
   const targetSelectorCandidatePairwise = targetSelectorCandidatePairwiseStats(bestPolicy.records)
   assertAtLeast(targetSelectorCandidatePairwise.accuracy, check.minTargetSelectorCandidatePairwise, 'target_selector_candidate_pairwise_accuracy')
   assertAtLeast(targetSelectorCandidatePairwise.total, check.minTargetSelectorCandidatePairs, 'target_selector_candidate_pairwise_pairs')
@@ -315,6 +355,8 @@ async function main(): Promise<void> {
   const positives = traceRecords.filter(record => record.label === 'positive').length
   const negatives = traceRecords.filter(record => record.label === 'negative').length
   const tasks = new Set(traceRecords.map(record => record.task.id))
+  const candidateBuckets = candidateBucketLabels(traceRecords)
+  const pairedBuckets = pairedCandidateBuckets(candidateBuckets)
   const grouped = byTask(bestPolicy.records)
 
   const lines: string[] = []
@@ -328,6 +370,8 @@ async function main(): Promise<void> {
   lines.push(`- positive_records: ${positives}`)
   lines.push(`- negative_records: ${negatives}`)
   lines.push(`- trace_tasks: ${tasks.size}`)
+  lines.push(`- candidate_buckets: ${candidateBuckets.size}`)
+  lines.push(`- paired_candidate_buckets: ${pairedBuckets}`)
   lines.push(`- best_policy: ${bestPolicy.name}`)
   lines.push(`- best_pairwise_task_accuracy: ${bestPolicy.pairwise.accuracy.toFixed(4)}`)
   lines.push(`- best_pairwise_task_pairs: ${bestPolicy.pairwise.total}`)
@@ -387,6 +431,8 @@ async function main(): Promise<void> {
     positives,
     negatives,
     tasks: tasks.size,
+    candidateBuckets: candidateBuckets.size,
+    pairedCandidateBuckets: pairedBuckets,
   })
 
   if (!check.checkOnly) {
@@ -400,6 +446,8 @@ async function main(): Promise<void> {
   console.log(`Positive records: ${positives}`)
   console.log(`Negative records: ${negatives}`)
   console.log(`Trace tasks: ${tasks.size}`)
+  console.log(`Candidate buckets: ${candidateBuckets.size}`)
+  console.log(`Paired candidate buckets: ${pairedBuckets}`)
   console.log(`Pairwise task accuracy: ${bestPolicy.pairwise.accuracy.toFixed(4)} (${bestPolicy.pairwise.total} pairs)`)
   console.log(`Pairwise min margin: ${bestPolicy.pairwise.minMargin.toFixed(3)}`)
   console.log(`Candidate pairwise accuracy: ${bestPolicy.candidatePairwise.accuracy.toFixed(4)} (${bestPolicy.candidatePairwise.total} pairs)`)
