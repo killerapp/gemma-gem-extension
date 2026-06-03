@@ -1346,6 +1346,25 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
       }
     }
 
+    const jsonFieldMinItems = modeExpectationMap(expect, 'jsonFieldMinItems', 'jsonFieldMinItemsByMode', harness.mode)
+    for (const [path, expectedMinItems] of Object.entries(jsonFieldMinItems)) {
+      const actualValue = jsonPathValue(parsedJson, path)
+      if (!Array.isArray(actualValue)) {
+        notes.push(`expected JSON field ${path} to be an array, got ${JSON.stringify(actualValue)}`)
+        jsonOk = false
+        continue
+      }
+      if (typeof expectedMinItems !== 'number' || !Number.isFinite(expectedMinItems)) {
+        notes.push(`expected JSON field ${path} min item count must be numeric, got ${JSON.stringify(expectedMinItems)}`)
+        jsonOk = false
+        continue
+      }
+      if (actualValue.length < expectedMinItems) {
+        notes.push(`expected JSON field ${path} to have at least ${expectedMinItems} items, got ${actualValue.length}`)
+        jsonOk = false
+      }
+    }
+
     if (expect.schemaValid === true) {
       const schema = taskForCall.arguments.schema
       if (!schema || typeof schema !== 'object' || Array.isArray(schema)) {

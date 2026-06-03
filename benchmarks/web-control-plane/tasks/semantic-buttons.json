@@ -34,6 +34,7 @@
         "1.selector": "#payment-settings",
         "1.method": "click"
       },
+      "minItems": 2,
       "selector": "#download-receipt",
       "method": "click",
       "bridgeExecuteTool": "read_page_content",
@@ -184,6 +185,9 @@
       },
       "jsonFieldIncludes": {
         "content": ["Invoice INV-2026-041", "Receipt PDF", "Payment settings"]
+      },
+      "jsonFieldMinItems": {
+        "interactiveControls": 3
       },
       "contains": ["Receipt PDF", "Payment settings", "INV-2026-041", "\"selector\": \"#download-receipt\"", "\"selector\": \"#payment-settings\""],
       "bridgeExecuteTool": "read_page_content",

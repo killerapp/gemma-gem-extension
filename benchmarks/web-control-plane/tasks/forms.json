@@ -27,6 +27,9 @@
       "jsonFieldIncludes": {
         "content": ["Name", "Email", "Role", "Save profile"]
       },
+      "jsonFieldMinItems": {
+        "interactiveControls": 4
+      },
       "contains": ["interactiveControls", "\"selector\": \"#dest-name\"", "\"label\": \"Name\"", "\"tag\": \"input\"", "\"name\": \"name\"", "\"selector\": \"#save-profile\""],
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",
@@ -126,6 +129,9 @@
       "jsonFieldIncludes": {
         "destinationResult.content": ["Saved Ada Lovelace", "ada@example.test"],
         "peerSummary.action": "Copied mapped source fields"
+      },
+      "jsonFieldMinItems": {
+        "copiedFields": 2
       },
       "contains": ["Ada Lovelace", "ada@example.test", "Copied mapped source fields", "Saved Ada Lovelace"],
       "destinationValues": {

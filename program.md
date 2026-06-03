@@ -596,6 +596,12 @@ Experiment result:
 - `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.108`, and `timeout_rate 0.0000`.
 - `pnpm benchmark:web -- --real --include-agent` passes with `20` real-extension agent tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 6.507`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace floors remain unchanged after adding field-specific substring assertions because the checks harden JSON result validation without changing browser action traces.
+- The benchmark evaluator now supports `jsonFieldMinItems`, including mode-specific overlays, for nested parsed JSON arrays that cannot be covered by the root-level `minItems` check.
+- The kept array-length contracts assert at least two pricing plans, four destination form controls, two copied transfer fields, two observed receipt candidates, and three semantic billing controls.
+- `pnpm benchmark:web` passes with `20` local-fake-extension tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
+- `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `15` tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.40`, `p95_task_seconds 0.107`, and `timeout_rate 0.0000`.
+- `pnpm benchmark:web -- --real --include-agent` passes with `20` real-extension agent tasks at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.65`, `p95_task_seconds 6.480`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace floors remain unchanged after adding nested array-length assertions because the checks validate structured output shape without changing browser action traces.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

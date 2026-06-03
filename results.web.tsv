@@ -160,3 +160,8 @@ cf1a004	real-chrome-extension-smoke	15	0.9333	0.9333	1.0000	1.0000	1.50	0.008	0.
 cf1a004	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.108	0.0000	0.000	keep	field includes real smoke
 cf1a004	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.009	6.507	0.0000	0.001	keep	field includes real agent
 cf1a004	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final field include artifacts
+7099c7b	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	array length local baseline
+7099c7b	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	array length local benchmark
+7099c7b	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.107	0.0000	0.000	keep	array length real smoke
+7099c7b	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.480	0.0000	0.001	keep	array length real agent
+7099c7b	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final array length artifacts

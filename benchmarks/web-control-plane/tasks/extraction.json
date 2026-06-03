@@ -33,6 +33,9 @@
         "plans.1.name": "Team",
         "plans.1.price": "$49/month"
       },
+      "jsonFieldMinItems": {
+        "plans": 2
+      },
       "contains": ["Starter", "$19", "Team", "$49"],
       "schemaValid": true,
       "minPlans": 2,
