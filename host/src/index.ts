@@ -341,6 +341,16 @@ async function pageSnapshotFor(
   return content.length > maxChars ? `${content.slice(0, maxChars)}\n...(truncated)` : content
 }
 
+type InteractiveControlSummary = {
+  selector: string
+  label: string
+  tag: string
+  id?: string
+  name?: string
+  value?: string
+  ariaLabel?: string
+}
+
 async function pageContextFor(tabId: number | undefined, selector = 'body'): Promise<string> {
   const [text, html] = await Promise.all([
     pageSnapshotFor(tabId, 'text', 6000, selector),
@@ -361,23 +371,63 @@ async function pageContextFor(tabId: number | undefined, selector = 'body'): Pro
   ].join('\n')
 }
 
-function interactiveControlsFromHtml(html: string): string[] {
-  const controls: string[] = []
+function attributeValue(attrs: string, name: string): string | undefined {
+  return attrs.match(new RegExp(`\\b${name}=["']([^"']+)["']`, 'i'))?.[1]
+}
+
+function textFromHtml(html: string): string {
+  return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
+}
+
+function interactiveControlSummariesFromHtml(html: string): InteractiveControlSummary[] {
+  const labelByFor = new Map<string, string>()
+  const wrappedLabelBySelector = new Map<string, string>()
+  for (const labelMatch of html.matchAll(/<label\b([^>]*)>([\s\S]*?)<\/label>/gi)) {
+    const attrs = labelMatch[1] || ''
+    const body = labelMatch[2] || ''
+    const labelText = textFromHtml(body)
+    const forId = attributeValue(attrs, 'for')
+    if (forId && labelText) labelByFor.set(forId, labelText)
+
+    const controlMatch = body.match(/<(input|select|textarea)\b([^>]*)/i)
+    if (!controlMatch || !labelText) continue
+    const tag = controlMatch[1]
+    const controlAttrs = controlMatch[2] || ''
+    const id = attributeValue(controlAttrs, 'id')
+    const name = attributeValue(controlAttrs, 'name')
+    const selector = id ? `#${id}` : name ? `${tag}[name="${name}"]` : tag
+    wrappedLabelBySelector.set(selector, labelText)
+  }
+
+  const controls: InteractiveControlSummary[] = []
   const pattern = /<(button|a|input|select|textarea)\b([^>]*)>([\s\S]*?)<\/\1>|<(input)\b([^>]*)\/?>/gi
   for (const match of html.matchAll(pattern)) {
     const tag = match[1] || match[4]
     const attrs = match[2] || match[5] || ''
-    const body = (match[3] || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
-    const id = attrs.match(/\bid=["']([^"']+)["']/i)?.[1]
-    const aria = attrs.match(/\baria-label=["']([^"']+)["']/i)?.[1]
-    const name = attrs.match(/\bname=["']([^"']+)["']/i)?.[1]
-    const value = attrs.match(/\bvalue=["']([^"']+)["']/i)?.[1]
-    const label = body || aria || value || name || tag
+    const body = textFromHtml(match[3] || '')
+    const id = attributeValue(attrs, 'id')
+    const aria = attributeValue(attrs, 'aria-label')
+    const name = attributeValue(attrs, 'name')
+    const value = attributeValue(attrs, 'value')
     const selector = id ? `#${id}` : name ? `${tag}[name="${name}"]` : tag
-    controls.push(`- ${selector}: ${label}`)
+    const label = body || aria || (id ? labelByFor.get(id) : undefined) || wrappedLabelBySelector.get(selector) || value || name || tag
+    controls.push({ selector, label, tag, id, name, value, ariaLabel: aria })
     if (controls.length >= 30) break
   }
   return controls
+}
+
+function interactiveControlsFromHtml(html: string): string[] {
+  return interactiveControlSummariesFromHtml(html).map(control => {
+    const metadata = [
+      `tag=${control.tag}`,
+      control.id ? `id=${control.id}` : undefined,
+      control.name ? `name=${control.name}` : undefined,
+      control.value ? `value=${control.value}` : undefined,
+      control.ariaLabel ? `aria-label=${control.ariaLabel}` : undefined,
+    ].filter(Boolean).join(', ')
+    return `- ${control.selector}: ${control.label}${metadata ? ` (${metadata})` : ''}`
+  })
 }
 
 function textFromAgentResult(result: unknown): string {
@@ -1127,17 +1177,23 @@ function registerTools(server: McpServer): void {
     const tabs = Array.isArray(tabsValue) ? tabsValue as Array<{ id: number; title?: string; url?: string; active?: boolean }> : []
     const targetTabId = tabId ?? (parseToolResult(activeValue).id as number | undefined)
     const tab = tabs.find(item => item.id === targetTabId)
+    const requestedSelector = selector ?? 'body'
+    const requestedFormat = format ?? 'text'
     const readResult = await sendBridgeRequest({
       type: 'bridge:execute_tool',
       tabId: targetTabId,
       name: 'read_page_content',
       arguments: {
-        selector: selector ?? 'body',
-        format: format ?? 'text',
+        selector: requestedSelector,
+        format: requestedFormat,
       },
     })
     const content = contentFromToolResult(readResult)
     const limit = maxChars ?? 8000
+    const html = requestedFormat === 'html'
+      ? content
+      : await pageSnapshotFor(targetTabId, 'html', 16000, requestedSelector)
+    const interactiveControls = interactiveControlSummariesFromHtml(html)
 
     return objectResult({
       tab: {
@@ -1146,10 +1202,11 @@ function registerTools(server: McpServer): void {
         url: tab?.url,
         active: tab?.active,
       },
-      selector: selector ?? 'body',
-      format: format ?? 'text',
+      selector: requestedSelector,
+      format: requestedFormat,
       content: content.length > limit ? `${content.slice(0, limit)}\n...(truncated)` : content,
       truncated: content.length > limit,
+      interactiveControls,
       peerGuidance: [
         'Use gemma_read_page for exact selector reads.',
         'Use gemma_transfer_fields when copying values from one tab into another tab.',

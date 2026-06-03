@@ -1,6 +1,21 @@
 [
   {
     "task": {
+      "id": "forms-page-brief-controls",
+      "suite": "forms",
+      "title": "Brief exposes destination form controls",
+      "tool": "gemma_page_brief"
+    },
+    "action": {
+      "status": "tool",
+      "toolName": "read_page_content",
+      "selector": "#dest-email",
+      "text": "read_page_content selector=#dest-email format=text",
+      "title": "destination email narrow context"
+    }
+  },
+  {
+    "task": {
       "id": "semantic-receipt-agent",
       "suite": "semantic-buttons",
       "title": "Choose the receipt proof button",

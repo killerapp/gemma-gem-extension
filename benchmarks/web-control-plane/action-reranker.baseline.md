@@ -5,9 +5,9 @@ The machine-readable learned weights are written to `./benchmarks/web-control-pl
 
 ## Metrics
 
-- reranker_pairs: 62
-- reranker_buckets: 19
-- reranker_tasks: 13
+- reranker_pairs: 65
+- reranker_buckets: 20
+- reranker_tasks: 14
 - epochs: 40
 - best_policy: learned_perceptron
 - best_accuracy: 1.0000
@@ -17,10 +17,10 @@ The machine-readable learned weights are written to `./benchmarks/web-control-pl
 
 | policy | accuracy | pairs | min_margin |
 | --- | ---: | ---: | ---: |
-| semantic_keyword | 1.0000 | 62 | 2.000 |
-| learned_perceptron | 1.0000 | 62 | 14.000 |
-| learned_perceptron_loto | 1.0000 | 62 | 10.000 |
-| learned_perceptron_loso | 1.0000 | 62 | 10.000 |
+| semantic_keyword | 1.0000 | 65 | 3.000 |
+| learned_perceptron | 1.0000 | 65 | 14.000 |
+| learned_perceptron_loto | 1.0000 | 65 | 10.000 |
+| learned_perceptron_loso | 1.0000 | 65 | 10.000 |
 
 ## Learned Weights
 
@@ -70,53 +70,56 @@ The machine-readable learned weights are written to `./benchmarks/web-control-pl
 | 12 | forms-supervised | copy-shipping-fields | type_text | candidate_a:#billing-email | candidate_b:#billing-name | 25.000 |
 | 13 | extraction | extract-pricing-json | read_page_content | candidate_b:body | candidate_a:[data-plan=starter] | 61.000 |
 | 14 | extraction | extract-pricing-json | read_page_content | candidate_a:body | candidate_b:[data-plan=starter] | 61.000 |
-| 15 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_b:#customer-name | candidate_a:#order-name | 46.000 |
-| 16 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_a:#customer-name | candidate_b:#order-email | 74.000 |
-| 17 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_b:#customer-email | candidate_a:#order-name | 18.000 |
-| 18 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_a:#customer-email | candidate_b:#order-email | 46.000 |
-| 19 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_b:#order-result | candidate_a:#order-name | 14.000 |
-| 20 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_a:#order-result | candidate_b:#order-email | 42.000 |
-| 21 | semantic-buttons | semantic-click-recover-selector | click_element | candidate_b:#download-receipt | candidate_a:#download-invoice | 24.000 |
-| 22 | semantic-buttons | semantic-click-recover-selector | click_element | candidate_a:#download-receipt | candidate_b:#payment-settings | 15.000 |
-| 23 | semantic-buttons-supervised | semantic-context-read | read_page_content | candidate_b:body | candidate_a:#payment-settings | 53.000 |
-| 24 | semantic-buttons-supervised | semantic-context-read | read_page_content | candidate_a:body | candidate_b:#download-invoice | 60.000 |
-| 25 | semantic-buttons | semantic-observe-json | click_element | candidate_b:#download-receipt | candidate_a:#download-invoice | 38.000 |
-| 26 | semantic-buttons | semantic-observe-json | click_element | candidate_a:#download-receipt | candidate_b:#payment-settings | 10.000 |
-| 27 | semantic-buttons | semantic-observe-json | read_page_content | candidate_b:body | candidate_a:#payment-settings | 60.000 |
-| 28 | semantic-buttons | semantic-observe-json | read_page_content | candidate_a:body | candidate_b:#payment-settings | 60.000 |
-| 29 | semantic-buttons | semantic-observed-act | click_element | candidate_b:#download-receipt | candidate_a:#download-invoice | 28.000 |
-| 30 | semantic-buttons | semantic-observed-act | click_element | candidate_a:#download-receipt | candidate_b:#payment-settings | 17.000 |
-| 31 | semantic-buttons | semantic-page-brief | read_page_content | candidate_b:body | candidate_a:#download-invoice | 65.000 |
-| 32 | semantic-buttons-supervised | semantic-proof-observe | click_element | candidate_a:#download-receipt | candidate_b:#download-invoice | 38.000 |
-| 33 | semantic-buttons-supervised | semantic-proof-observe | click_element | candidate_b:#download-receipt | candidate_a:#payment-settings | 19.000 |
-| 34 | semantic-buttons | semantic-receipt-agent | click_element | candidate_a:#download-receipt | candidate_b:#download-invoice | 26.000 |
-| 35 | semantic-buttons | semantic-receipt-agent | click_element | candidate_b:#download-receipt | candidate_a:#payment-settings | 15.000 |
-| 36 | semantic-buttons | semantic-receipt-agent | read_page_content | candidate_a:body | candidate_b:#payment-settings | 59.000 |
-| 37 | semantic-buttons | semantic-receipt-agent | read_page_content | candidate_b:body | candidate_a:#payment-settings | 59.000 |
-| 38 | forms-supervised | sync-contact-fields | read_page_content | candidate_a:#contact-name | candidate_b:#checkout-name | 46.000 |
-| 39 | forms-supervised | sync-contact-fields | read_page_content | candidate_b:#contact-name | candidate_a:#checkout-email | 78.000 |
-| 40 | forms-supervised | sync-contact-fields | read_page_content | candidate_a:#contact-email | candidate_b:#checkout-name | 14.000 |
-| 41 | forms-supervised | sync-contact-fields | read_page_content | candidate_b:#contact-email | candidate_a:#checkout-email | 46.000 |
-| 42 | forms-supervised | sync-contact-fields | read_page_content | candidate_a:#checkout-result | candidate_b:#checkout-name | 16.000 |
-| 43 | forms-supervised | sync-contact-fields | read_page_content | candidate_b:#checkout-result | candidate_a:#checkout-email | 48.000 |
-| 44 | forms | transfer-profile-fields | click_element | candidate_a:#save-profile | candidate_b:#dest-name | 69.000 |
-| 45 | forms | transfer-profile-fields | click_element | candidate_b:#save-profile | candidate_a:#dest-email | 61.000 |
-| 46 | forms | transfer-profile-fields | click_element | candidate_a:#save-profile | candidate_b:#save-result | 15.000 |
-| 47 | forms | transfer-profile-fields | read_page_content | candidate_b:#source-name | candidate_a:#dest-name | 43.000 |
-| 48 | forms | transfer-profile-fields | read_page_content | candidate_a:#source-name | candidate_b:#dest-email | 67.000 |
-| 49 | forms | transfer-profile-fields | read_page_content | candidate_b:#source-email | candidate_a:#dest-name | 19.000 |
-| 50 | forms | transfer-profile-fields | read_page_content | candidate_a:#source-email | candidate_b:#dest-email | 43.000 |
-| 51 | forms | transfer-profile-fields | read_page_content | candidate_b:#save-result | candidate_a:#dest-name | 27.000 |
-| 52 | forms | transfer-profile-fields | read_page_content | candidate_a:#save-result | candidate_b:#dest-email | 51.000 |
-| 53 | forms | transfer-profile-fields | type_text | candidate_b:#dest-name | candidate_a:#dest-email | 36.000 |
-| 54 | forms | transfer-profile-fields | type_text | candidate_a:#dest-name | candidate_b:#dest-name | 32.000 |
-| 55 | forms | transfer-profile-fields | type_text | candidate_b:#dest-email | candidate_a:#dest-email | 28.000 |
-| 56 | forms | transfer-profile-fields | type_text | candidate_a:#dest-email | candidate_b:#dest-name | 24.000 |
-| 57 | forms | transfer-profile-fields | type_text | candidate_b:#dest-name | candidate_a:#dest-email | 39.000 |
-| 58 | forms | transfer-profile-fields | type_text | candidate_a:#dest-name | candidate_b:#dest-name | 35.000 |
-| 59 | forms | transfer-profile-fields | type_text | candidate_b:#dest-email | candidate_a:#dest-email | 31.000 |
-| 60 | forms | transfer-profile-fields | type_text | candidate_a:#dest-email | candidate_b:#dest-name | 27.000 |
-| 61 | forms | type-text-recover-selector | type_text | candidate_b:#dest-name | candidate_a:#dest-email | 32.000 |
+| 15 | forms | forms-page-brief-controls | read_page_content | candidate_b:body | candidate_a:#dest-email | 94.000 |
+| 16 | forms | forms-page-brief-controls | read_page_content | candidate_a:body | candidate_b:#dest-email | 94.000 |
+| 17 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_b:#customer-name | candidate_a:#order-name | 46.000 |
+| 18 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_a:#customer-name | candidate_b:#order-email | 74.000 |
+| 19 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_b:#customer-email | candidate_a:#order-name | 18.000 |
+| 20 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_a:#customer-email | candidate_b:#order-email | 46.000 |
+| 21 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_b:#order-result | candidate_a:#order-name | 14.000 |
+| 22 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_a:#order-result | candidate_b:#order-email | 42.000 |
+| 23 | semantic-buttons | semantic-click-recover-selector | click_element | candidate_b:#download-receipt | candidate_a:#download-invoice | 24.000 |
+| 24 | semantic-buttons | semantic-click-recover-selector | click_element | candidate_a:#download-receipt | candidate_b:#payment-settings | 15.000 |
+| 25 | semantic-buttons-supervised | semantic-context-read | read_page_content | candidate_b:body | candidate_a:#payment-settings | 53.000 |
+| 26 | semantic-buttons-supervised | semantic-context-read | read_page_content | candidate_a:body | candidate_b:#download-invoice | 60.000 |
+| 27 | semantic-buttons | semantic-observe-json | click_element | candidate_b:#download-receipt | candidate_a:#download-invoice | 38.000 |
+| 28 | semantic-buttons | semantic-observe-json | click_element | candidate_a:#download-receipt | candidate_b:#payment-settings | 10.000 |
+| 29 | semantic-buttons | semantic-observe-json | read_page_content | candidate_b:body | candidate_a:#payment-settings | 60.000 |
+| 30 | semantic-buttons | semantic-observe-json | read_page_content | candidate_a:body | candidate_b:#payment-settings | 60.000 |
+| 31 | semantic-buttons | semantic-observed-act | click_element | candidate_b:#download-receipt | candidate_a:#download-invoice | 28.000 |
+| 32 | semantic-buttons | semantic-observed-act | click_element | candidate_a:#download-receipt | candidate_b:#payment-settings | 17.000 |
+| 33 | semantic-buttons | semantic-page-brief | read_page_content | candidate_b:body | candidate_a:#download-invoice | 65.000 |
+| 34 | semantic-buttons | semantic-page-brief | read_page_content | candidate_a:body | candidate_b:#download-invoice | 65.000 |
+| 35 | semantic-buttons-supervised | semantic-proof-observe | click_element | candidate_b:#download-receipt | candidate_a:#download-invoice | 38.000 |
+| 36 | semantic-buttons-supervised | semantic-proof-observe | click_element | candidate_a:#download-receipt | candidate_b:#payment-settings | 19.000 |
+| 37 | semantic-buttons | semantic-receipt-agent | click_element | candidate_b:#download-receipt | candidate_a:#download-invoice | 26.000 |
+| 38 | semantic-buttons | semantic-receipt-agent | click_element | candidate_a:#download-receipt | candidate_b:#payment-settings | 15.000 |
+| 39 | semantic-buttons | semantic-receipt-agent | read_page_content | candidate_b:body | candidate_a:#payment-settings | 59.000 |
+| 40 | semantic-buttons | semantic-receipt-agent | read_page_content | candidate_a:body | candidate_b:#payment-settings | 59.000 |
+| 41 | forms-supervised | sync-contact-fields | read_page_content | candidate_b:#contact-name | candidate_a:#checkout-name | 46.000 |
+| 42 | forms-supervised | sync-contact-fields | read_page_content | candidate_a:#contact-name | candidate_b:#checkout-email | 78.000 |
+| 43 | forms-supervised | sync-contact-fields | read_page_content | candidate_b:#contact-email | candidate_a:#checkout-name | 14.000 |
+| 44 | forms-supervised | sync-contact-fields | read_page_content | candidate_a:#contact-email | candidate_b:#checkout-email | 46.000 |
+| 45 | forms-supervised | sync-contact-fields | read_page_content | candidate_b:#checkout-result | candidate_a:#checkout-name | 16.000 |
+| 46 | forms-supervised | sync-contact-fields | read_page_content | candidate_a:#checkout-result | candidate_b:#checkout-email | 48.000 |
+| 47 | forms | transfer-profile-fields | click_element | candidate_b:#save-profile | candidate_a:#dest-name | 69.000 |
+| 48 | forms | transfer-profile-fields | click_element | candidate_a:#save-profile | candidate_b:#dest-email | 61.000 |
+| 49 | forms | transfer-profile-fields | click_element | candidate_b:#save-profile | candidate_a:#save-result | 15.000 |
+| 50 | forms | transfer-profile-fields | read_page_content | candidate_a:#source-name | candidate_b:#dest-name | 43.000 |
+| 51 | forms | transfer-profile-fields | read_page_content | candidate_b:#source-name | candidate_a:#dest-email | 67.000 |
+| 52 | forms | transfer-profile-fields | read_page_content | candidate_a:#source-email | candidate_b:#dest-name | 19.000 |
+| 53 | forms | transfer-profile-fields | read_page_content | candidate_b:#source-email | candidate_a:#dest-email | 43.000 |
+| 54 | forms | transfer-profile-fields | read_page_content | candidate_a:#save-result | candidate_b:#dest-name | 27.000 |
+| 55 | forms | transfer-profile-fields | read_page_content | candidate_b:#save-result | candidate_a:#dest-email | 51.000 |
+| 56 | forms | transfer-profile-fields | type_text | candidate_a:#dest-name | candidate_b:#dest-email | 36.000 |
+| 57 | forms | transfer-profile-fields | type_text | candidate_b:#dest-name | candidate_a:#dest-name | 32.000 |
+| 58 | forms | transfer-profile-fields | type_text | candidate_a:#dest-email | candidate_b:#dest-email | 28.000 |
+| 59 | forms | transfer-profile-fields | type_text | candidate_b:#dest-email | candidate_a:#dest-name | 24.000 |
+| 60 | forms | transfer-profile-fields | type_text | candidate_a:#dest-name | candidate_b:#dest-email | 39.000 |
+| 61 | forms | transfer-profile-fields | type_text | candidate_b:#dest-name | candidate_a:#dest-name | 35.000 |
+| 62 | forms | transfer-profile-fields | type_text | candidate_a:#dest-email | candidate_b:#dest-email | 31.000 |
+| 63 | forms | transfer-profile-fields | type_text | candidate_b:#dest-email | candidate_a:#dest-name | 27.000 |
+| 64 | forms | type-text-recover-selector | type_text | candidate_a:#dest-name | candidate_b:#dest-email | 32.000 |
 
 ## Pair Rankings (learned_perceptron_loso)
 
@@ -137,53 +140,56 @@ The machine-readable learned weights are written to `./benchmarks/web-control-pl
 | 12 | forms-supervised | copy-shipping-fields | type_text | candidate_a:#billing-email | candidate_b:#billing-name | 25.000 |
 | 13 | extraction | extract-pricing-json | read_page_content | candidate_b:body | candidate_a:[data-plan=starter] | 61.000 |
 | 14 | extraction | extract-pricing-json | read_page_content | candidate_a:body | candidate_b:[data-plan=starter] | 61.000 |
-| 15 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_b:#customer-name | candidate_a:#order-name | 46.000 |
-| 16 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_a:#customer-name | candidate_b:#order-email | 74.000 |
-| 17 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_b:#customer-email | candidate_a:#order-name | 18.000 |
-| 18 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_a:#customer-email | candidate_b:#order-email | 46.000 |
-| 19 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_b:#order-result | candidate_a:#order-name | 14.000 |
-| 20 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_a:#order-result | candidate_b:#order-email | 42.000 |
-| 21 | semantic-buttons | semantic-click-recover-selector | click_element | candidate_b:#download-receipt | candidate_a:#download-invoice | 24.000 |
-| 22 | semantic-buttons | semantic-click-recover-selector | click_element | candidate_a:#download-receipt | candidate_b:#payment-settings | 11.000 |
-| 23 | semantic-buttons-supervised | semantic-context-read | read_page_content | candidate_b:body | candidate_a:#payment-settings | 53.000 |
-| 24 | semantic-buttons-supervised | semantic-context-read | read_page_content | candidate_a:body | candidate_b:#download-invoice | 60.000 |
-| 25 | semantic-buttons | semantic-observe-json | click_element | candidate_b:#download-receipt | candidate_a:#download-invoice | 38.000 |
-| 26 | semantic-buttons | semantic-observe-json | click_element | candidate_a:#download-receipt | candidate_b:#payment-settings | 10.000 |
-| 27 | semantic-buttons | semantic-observe-json | read_page_content | candidate_b:body | candidate_a:#payment-settings | 60.000 |
-| 28 | semantic-buttons | semantic-observe-json | read_page_content | candidate_a:body | candidate_b:#payment-settings | 60.000 |
-| 29 | semantic-buttons | semantic-observed-act | click_element | candidate_b:#download-receipt | candidate_a:#download-invoice | 28.000 |
-| 30 | semantic-buttons | semantic-observed-act | click_element | candidate_a:#download-receipt | candidate_b:#payment-settings | 12.000 |
-| 31 | semantic-buttons | semantic-page-brief | read_page_content | candidate_b:body | candidate_a:#download-invoice | 65.000 |
-| 32 | semantic-buttons-supervised | semantic-proof-observe | click_element | candidate_a:#download-receipt | candidate_b:#download-invoice | 38.000 |
-| 33 | semantic-buttons-supervised | semantic-proof-observe | click_element | candidate_b:#download-receipt | candidate_a:#payment-settings | 19.000 |
-| 34 | semantic-buttons | semantic-receipt-agent | click_element | candidate_a:#download-receipt | candidate_b:#download-invoice | 30.000 |
-| 35 | semantic-buttons | semantic-receipt-agent | click_element | candidate_b:#download-receipt | candidate_a:#payment-settings | 11.000 |
-| 36 | semantic-buttons | semantic-receipt-agent | read_page_content | candidate_a:body | candidate_b:#payment-settings | 53.000 |
-| 37 | semantic-buttons | semantic-receipt-agent | read_page_content | candidate_b:body | candidate_a:#payment-settings | 53.000 |
-| 38 | forms-supervised | sync-contact-fields | read_page_content | candidate_a:#contact-name | candidate_b:#checkout-name | 71.000 |
-| 39 | forms-supervised | sync-contact-fields | read_page_content | candidate_b:#contact-name | candidate_a:#checkout-email | 85.000 |
-| 40 | forms-supervised | sync-contact-fields | read_page_content | candidate_a:#contact-email | candidate_b:#checkout-name | 41.000 |
-| 41 | forms-supervised | sync-contact-fields | read_page_content | candidate_b:#contact-email | candidate_a:#checkout-email | 55.000 |
-| 42 | forms-supervised | sync-contact-fields | read_page_content | candidate_a:#checkout-result | candidate_b:#checkout-name | 84.000 |
-| 43 | forms-supervised | sync-contact-fields | read_page_content | candidate_b:#checkout-result | candidate_a:#checkout-email | 98.000 |
-| 44 | forms | transfer-profile-fields | click_element | candidate_a:#save-profile | candidate_b:#dest-name | 69.000 |
-| 45 | forms | transfer-profile-fields | click_element | candidate_b:#save-profile | candidate_a:#dest-email | 61.000 |
-| 46 | forms | transfer-profile-fields | click_element | candidate_a:#save-profile | candidate_b:#save-result | 15.000 |
-| 47 | forms | transfer-profile-fields | read_page_content | candidate_b:#source-name | candidate_a:#dest-name | 43.000 |
-| 48 | forms | transfer-profile-fields | read_page_content | candidate_a:#source-name | candidate_b:#dest-email | 67.000 |
-| 49 | forms | transfer-profile-fields | read_page_content | candidate_b:#source-email | candidate_a:#dest-name | 19.000 |
-| 50 | forms | transfer-profile-fields | read_page_content | candidate_a:#source-email | candidate_b:#dest-email | 43.000 |
-| 51 | forms | transfer-profile-fields | read_page_content | candidate_b:#save-result | candidate_a:#dest-name | 27.000 |
-| 52 | forms | transfer-profile-fields | read_page_content | candidate_a:#save-result | candidate_b:#dest-email | 51.000 |
-| 53 | forms | transfer-profile-fields | type_text | candidate_b:#dest-name | candidate_a:#dest-email | 36.000 |
-| 54 | forms | transfer-profile-fields | type_text | candidate_a:#dest-name | candidate_b:#dest-name | 32.000 |
-| 55 | forms | transfer-profile-fields | type_text | candidate_b:#dest-email | candidate_a:#dest-email | 28.000 |
-| 56 | forms | transfer-profile-fields | type_text | candidate_a:#dest-email | candidate_b:#dest-name | 24.000 |
-| 57 | forms | transfer-profile-fields | type_text | candidate_b:#dest-name | candidate_a:#dest-email | 39.000 |
-| 58 | forms | transfer-profile-fields | type_text | candidate_a:#dest-name | candidate_b:#dest-name | 35.000 |
-| 59 | forms | transfer-profile-fields | type_text | candidate_b:#dest-email | candidate_a:#dest-email | 31.000 |
-| 60 | forms | transfer-profile-fields | type_text | candidate_a:#dest-email | candidate_b:#dest-name | 27.000 |
-| 61 | forms | type-text-recover-selector | type_text | candidate_b:#dest-name | candidate_a:#dest-email | 32.000 |
+| 15 | forms | forms-page-brief-controls | read_page_content | candidate_b:body | candidate_a:#dest-email | 94.000 |
+| 16 | forms | forms-page-brief-controls | read_page_content | candidate_a:body | candidate_b:#dest-email | 94.000 |
+| 17 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_b:#customer-name | candidate_a:#order-name | 46.000 |
+| 18 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_a:#customer-name | candidate_b:#order-email | 74.000 |
+| 19 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_b:#customer-email | candidate_a:#order-name | 18.000 |
+| 20 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_a:#customer-email | candidate_b:#order-email | 46.000 |
+| 21 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_b:#order-result | candidate_a:#order-name | 14.000 |
+| 22 | forms-read-supervised | mirror-customer-fields | read_page_content | candidate_a:#order-result | candidate_b:#order-email | 42.000 |
+| 23 | semantic-buttons | semantic-click-recover-selector | click_element | candidate_b:#download-receipt | candidate_a:#download-invoice | 24.000 |
+| 24 | semantic-buttons | semantic-click-recover-selector | click_element | candidate_a:#download-receipt | candidate_b:#payment-settings | 11.000 |
+| 25 | semantic-buttons-supervised | semantic-context-read | read_page_content | candidate_b:body | candidate_a:#payment-settings | 53.000 |
+| 26 | semantic-buttons-supervised | semantic-context-read | read_page_content | candidate_a:body | candidate_b:#download-invoice | 60.000 |
+| 27 | semantic-buttons | semantic-observe-json | click_element | candidate_b:#download-receipt | candidate_a:#download-invoice | 38.000 |
+| 28 | semantic-buttons | semantic-observe-json | click_element | candidate_a:#download-receipt | candidate_b:#payment-settings | 10.000 |
+| 29 | semantic-buttons | semantic-observe-json | read_page_content | candidate_b:body | candidate_a:#payment-settings | 60.000 |
+| 30 | semantic-buttons | semantic-observe-json | read_page_content | candidate_a:body | candidate_b:#payment-settings | 60.000 |
+| 31 | semantic-buttons | semantic-observed-act | click_element | candidate_b:#download-receipt | candidate_a:#download-invoice | 28.000 |
+| 32 | semantic-buttons | semantic-observed-act | click_element | candidate_a:#download-receipt | candidate_b:#payment-settings | 12.000 |
+| 33 | semantic-buttons | semantic-page-brief | read_page_content | candidate_b:body | candidate_a:#download-invoice | 65.000 |
+| 34 | semantic-buttons | semantic-page-brief | read_page_content | candidate_a:body | candidate_b:#download-invoice | 65.000 |
+| 35 | semantic-buttons-supervised | semantic-proof-observe | click_element | candidate_b:#download-receipt | candidate_a:#download-invoice | 38.000 |
+| 36 | semantic-buttons-supervised | semantic-proof-observe | click_element | candidate_a:#download-receipt | candidate_b:#payment-settings | 19.000 |
+| 37 | semantic-buttons | semantic-receipt-agent | click_element | candidate_b:#download-receipt | candidate_a:#download-invoice | 30.000 |
+| 38 | semantic-buttons | semantic-receipt-agent | click_element | candidate_a:#download-receipt | candidate_b:#payment-settings | 11.000 |
+| 39 | semantic-buttons | semantic-receipt-agent | read_page_content | candidate_b:body | candidate_a:#payment-settings | 53.000 |
+| 40 | semantic-buttons | semantic-receipt-agent | read_page_content | candidate_a:body | candidate_b:#payment-settings | 53.000 |
+| 41 | forms-supervised | sync-contact-fields | read_page_content | candidate_b:#contact-name | candidate_a:#checkout-name | 71.000 |
+| 42 | forms-supervised | sync-contact-fields | read_page_content | candidate_a:#contact-name | candidate_b:#checkout-email | 85.000 |
+| 43 | forms-supervised | sync-contact-fields | read_page_content | candidate_b:#contact-email | candidate_a:#checkout-name | 41.000 |
+| 44 | forms-supervised | sync-contact-fields | read_page_content | candidate_a:#contact-email | candidate_b:#checkout-email | 55.000 |
+| 45 | forms-supervised | sync-contact-fields | read_page_content | candidate_b:#checkout-result | candidate_a:#checkout-name | 84.000 |
+| 46 | forms-supervised | sync-contact-fields | read_page_content | candidate_a:#checkout-result | candidate_b:#checkout-email | 98.000 |
+| 47 | forms | transfer-profile-fields | click_element | candidate_b:#save-profile | candidate_a:#dest-name | 69.000 |
+| 48 | forms | transfer-profile-fields | click_element | candidate_a:#save-profile | candidate_b:#dest-email | 61.000 |
+| 49 | forms | transfer-profile-fields | click_element | candidate_b:#save-profile | candidate_a:#save-result | 15.000 |
+| 50 | forms | transfer-profile-fields | read_page_content | candidate_a:#source-name | candidate_b:#dest-name | 43.000 |
+| 51 | forms | transfer-profile-fields | read_page_content | candidate_b:#source-name | candidate_a:#dest-email | 67.000 |
+| 52 | forms | transfer-profile-fields | read_page_content | candidate_a:#source-email | candidate_b:#dest-name | 19.000 |
+| 53 | forms | transfer-profile-fields | read_page_content | candidate_b:#source-email | candidate_a:#dest-email | 43.000 |
+| 54 | forms | transfer-profile-fields | read_page_content | candidate_a:#save-result | candidate_b:#dest-name | 27.000 |
+| 55 | forms | transfer-profile-fields | read_page_content | candidate_b:#save-result | candidate_a:#dest-email | 51.000 |
+| 56 | forms | transfer-profile-fields | type_text | candidate_a:#dest-name | candidate_b:#dest-email | 36.000 |
+| 57 | forms | transfer-profile-fields | type_text | candidate_b:#dest-name | candidate_a:#dest-name | 32.000 |
+| 58 | forms | transfer-profile-fields | type_text | candidate_a:#dest-email | candidate_b:#dest-email | 28.000 |
+| 59 | forms | transfer-profile-fields | type_text | candidate_b:#dest-email | candidate_a:#dest-name | 24.000 |
+| 60 | forms | transfer-profile-fields | type_text | candidate_a:#dest-name | candidate_b:#dest-email | 39.000 |
+| 61 | forms | transfer-profile-fields | type_text | candidate_b:#dest-name | candidate_a:#dest-name | 35.000 |
+| 62 | forms | transfer-profile-fields | type_text | candidate_a:#dest-email | candidate_b:#dest-email | 31.000 |
+| 63 | forms | transfer-profile-fields | type_text | candidate_b:#dest-email | candidate_a:#dest-name | 27.000 |
+| 64 | forms | type-text-recover-selector | type_text | candidate_a:#dest-name | candidate_b:#dest-email | 32.000 |
 
 ## Interpretation
 

@@ -98,6 +98,7 @@ function fieldAlignment(selector: string | null, title: string | null): 'match' 
 
 function requiresFullPageRead(taskId: string): boolean {
   return taskId === 'extract-pricing-json' ||
+    taskId === 'forms-page-brief-controls' ||
     taskId === 'semantic-page-brief' ||
     taskId === 'semantic-context-read' ||
     taskId === 'semantic-receipt-agent' ||
@@ -177,7 +178,7 @@ export function scoreRecord(record: TraceRecord, policy = 'lexical'): ScoredReco
       requiresFullPageRead(record.task.id) &&
       record.action.selector !== 'body'
     ) {
-      score -= 2
+      score -= 4
       reasons.push('narrow_context_read')
     }
     if (

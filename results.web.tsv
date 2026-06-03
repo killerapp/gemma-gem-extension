@@ -89,3 +89,6 @@ f6a1373	local-fake-extension	11	1.0000	1.0000	1.0000	1.0000	2.09	0.005	0.014	0.0
 8d89baf	local-fake-extension	12	1.0000	1.0000	1.0000	1.0000	2.17	0.005	0.012	0.0000	0.000	keep	type selector recovery local benchmark
 8d89baf	real-chrome-extension-smoke	8	1.0000	1.0000	1.0000	1.0000	1.88	0.010	0.134	0.0000	0.000	keep	real smoke type selector recovery
 8d89baf	local-fake-extension	12	1.0000	1.0000	1.0000	1.0000	2.17	0.006	0.012	0.0000	0.000	keep	final type selector recovery artifacts
+a4636af	local-fake-extension	13	1.0000	1.0000	1.0000	1.0000	2.23	0.006	0.011	0.0000	0.000	keep	page brief controls local benchmark
+a4636af	real-chrome-extension-smoke	9	1.0000	1.0000	1.0000	1.0000	2.00	0.011	0.128	0.0000	0.000	keep	real smoke page brief controls
+a4636af	local-fake-extension	13	1.0000	1.0000	1.0000	1.0000	2.23	0.005	0.010	0.0000	0.000	keep	final page brief controls artifacts

@@ -1,5 +1,23 @@
 [
   {
+    "id": "forms-page-brief-controls",
+    "suite": "forms",
+    "title": "Brief exposes destination form controls",
+    "tool": "gemma_page_brief",
+    "arguments": {
+      "tabId": 104,
+      "selector": "body",
+      "format": "text",
+      "maxChars": 4000
+    },
+    "expect": {
+      "contains": ["interactiveControls", "\"selector\": \"#dest-name\"", "\"label\": \"Name\"", "\"tag\": \"input\"", "\"name\": \"name\"", "\"selector\": \"#save-profile\""],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "type-text-recover-selector",
     "suite": "forms",
     "title": "Recover a name text-like type selector",
