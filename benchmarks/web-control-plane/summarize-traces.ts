@@ -52,6 +52,13 @@ type CandidateBucket = {
   negative: number
 }
 
+type TargetSelectorBucket = {
+  records: number
+  matches: number
+  mismatches: number
+  noActionSelector: number
+}
+
 function parseArgs(): { input: string; output: string } {
   const args = process.argv.slice(2)
   let input = process.env.GEMMA_GEM_TRACE_OUTPUT ? resolve(process.env.GEMMA_GEM_TRACE_OUTPUT) : DEFAULT_INPUT
@@ -89,6 +96,10 @@ function sortedEntries(map: Map<string, number>): Array<[string, number]> {
   return [...map.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
 }
 
+function sortedTargetSelectorEntries(map: Map<string, TargetSelectorBucket>): Array<[string, TargetSelectorBucket]> {
+  return [...map.entries()].sort((a, b) => b[1].records - a[1].records || a[0].localeCompare(b[0]))
+}
+
 function tableRow(cells: Array<string | number>): string {
   return `| ${cells.map(cell => String(cell)).join(' | ')} |`
 }
@@ -115,7 +126,7 @@ async function main(): Promise<void> {
   const byTask = new Map<string, TaskSummary>()
   const byTool = new Map<string, number>()
   const bySelector = new Map<string, number>()
-  const byTargetSelector = new Map<string, number>()
+  const byTargetSelector = new Map<string, TargetSelectorBucket>()
   const byActionStatus = new Map<string, number>()
   const candidateBuckets = new Map<string, CandidateBucket>()
 
@@ -123,6 +134,9 @@ async function main(): Promise<void> {
   let negatives = 0
   let selectorRecords = 0
   let targetSelectorRecords = 0
+  let targetSelectorMatches = 0
+  let targetSelectorMismatches = 0
+  let targetSelectorNoActionSelector = 0
   let clickRecords = 0
   for (const record of records) {
     if (record.label === 'positive') positives += 1
@@ -138,7 +152,24 @@ async function main(): Promise<void> {
     }
     if (record.task.targetSelector) {
       targetSelectorRecords += 1
-      increment(byTargetSelector, record.task.targetSelector)
+      const bucket = byTargetSelector.get(record.task.targetSelector) ?? {
+        records: 0,
+        matches: 0,
+        mismatches: 0,
+        noActionSelector: 0,
+      }
+      bucket.records += 1
+      if (!record.action.selector) {
+        targetSelectorNoActionSelector += 1
+        bucket.noActionSelector += 1
+      } else if (record.action.selector === record.task.targetSelector) {
+        targetSelectorMatches += 1
+        bucket.matches += 1
+      } else {
+        targetSelectorMismatches += 1
+        bucket.mismatches += 1
+      }
+      byTargetSelector.set(record.task.targetSelector, bucket)
     }
     if (record.action.toolName === 'click_element' || String(record.action.text ?? '').includes('click_element')) {
       clickRecords += 1
@@ -182,6 +213,9 @@ async function main(): Promise<void> {
   lines.push(`- negative_records: ${negatives}`)
   lines.push(`- selector_records: ${selectorRecords}`)
   lines.push(`- target_selector_records: ${targetSelectorRecords}`)
+  lines.push(`- target_selector_matching_records: ${targetSelectorMatches}`)
+  lines.push(`- target_selector_mismatched_records: ${targetSelectorMismatches}`)
+  lines.push(`- target_selector_no_action_selector_records: ${targetSelectorNoActionSelector}`)
   lines.push(`- click_records: ${clickRecords}`)
   lines.push(`- task_count: ${byTask.size}`)
   lines.push(`- candidate_buckets: ${candidateBuckets.size}`)
@@ -224,10 +258,16 @@ async function main(): Promise<void> {
   lines.push('')
   lines.push('## Target Selector Coverage')
   lines.push('')
-  lines.push(tableRow(['target_selector', 'records']))
-  lines.push(tableRow(['---', '---:']))
-  for (const [targetSelector, count] of sortedEntries(byTargetSelector)) {
-    lines.push(tableRow([targetSelector, count]))
+  lines.push(tableRow(['target_selector', 'records', 'matches', 'mismatches', 'no_action_selector']))
+  lines.push(tableRow(['---', '---:', '---:', '---:', '---:']))
+  for (const [targetSelector, bucket] of sortedTargetSelectorEntries(byTargetSelector)) {
+    lines.push(tableRow([
+      targetSelector,
+      bucket.records,
+      bucket.matches,
+      bucket.mismatches,
+      bucket.noActionSelector,
+    ]))
   }
   lines.push('')
   lines.push('## Candidate Pair Coverage')
@@ -258,6 +298,11 @@ async function main(): Promise<void> {
   }
   if (targetSelectorRecords === 0) {
     lines.push('- No scoped target selectors are represented. Scoped selector/reranker training cannot verify requested target context.')
+  } else if (targetSelectorMismatches === 0) {
+    lines.push('- No scoped target-selector mismatches are represented. Add counterfactual scoped reads to train target-vs-distractor choices.')
+  }
+  if (targetSelectorRecords > 0 && targetSelectorMatches === 0) {
+    lines.push('- No scoped target-selector matches are represented. Add successful scoped reads before training target-aware ranking.')
   }
   if (negatives > 0 && clickRecords > 0 && selectorRecords > 0) {
     lines.push('- Basic positive/negative, click, and selector coverage is present.')
