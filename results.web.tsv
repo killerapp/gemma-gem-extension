@@ -548,3 +548,8 @@ e1537f7	real-chrome-extension-agent	91	1.0000	1.0000	1.0000	1.0000	1.37	0.007	4.
 36c8a13	real-chrome-extension-smoke	82	1.0000	1.0000	1.0000	1.0000	1.21	0.006	0.498	0.0000	0.000	keep	destination screenshot real smoke
 36c8a13	real-chrome-extension-agent	92	0.9783	0.9783	1.0000	1.0000	1.31	0.007	4.080	0.0000	0.001	discard	destination screenshot real agent
 36c8a13	real-chrome-extension-agent	92	1.0000	1.0000	1.0000	1.0000	1.37	0.007	4.186	0.0000	0.001	keep	destination screenshot real agent retry
+1ed4f50	local-fake-extension	92	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.005	0.0000	0.000	baseline	source active tab baseline local
+1ed4f50	local-fake-extension	93	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.006	0.0000	0.000	keep	source active tab local
+1ed4f50	real-chrome-extension-smoke	83	1.0000	1.0000	1.0000	1.0000	1.19	0.006	0.501	0.0000	0.000	keep	source active tab real smoke
+1ed4f50	real-chrome-extension-agent	93	0.9785	0.9785	1.0000	1.0000	1.30	0.007	4.141	0.0000	0.001	discard	source active tab real agent
+1ed4f50	real-chrome-extension-agent	93	1.0000	1.0000	1.0000	1.0000	1.35	0.007	4.191	0.0000	0.001	keep	source active tab real agent retry

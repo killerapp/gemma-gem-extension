@@ -1282,6 +1282,15 @@ June 3, 2026 destination profile screenshot coverage result:
 - The real-agent retry passed 92/92 with `actions_per_success 1.37`, `p95_task_seconds 4.186`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 126 raw positive records from 79 tasks and 195 training records from 88 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 source active-tab coverage result:
+
+- Added frozen `navigation/active-source-tab-contract`, proving `gemma_active_tab` reports the source profile fixture after activating logical tab 103 and preserves explicit billing restoration for later tasks.
+- The task extends active-tab metadata coverage beyond billing and navigation fixtures into the form source fixture without adding content actions.
+- Baseline local before the task stayed green at 92/92 with `actions_per_success 1.35` and `p95_task_seconds 0.005`; after adding the zero-action active-tab task, local passed 93/93 with `actions_per_success 1.33` and `p95_task_seconds 0.006`.
+- Real smoke passed 83/83 with `actions_per_success 1.19`, `p95_task_seconds 0.501`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; the first real-agent run discarded at 91/93 after the same model-backed semantic invoice/settings misses while the new active-tab contract passed.
+- The real-agent retry passed 93/93 with `actions_per_success 1.35`, `p95_task_seconds 4.191`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Because this task records browser metadata instead of a content action, trace artifacts remain at 126 raw positive records from 79 tasks and 195 training records from 88 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
