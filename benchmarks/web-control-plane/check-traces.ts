@@ -23,6 +23,7 @@ type TraceRecord = {
     suite?: unknown
     title?: unknown
     tool?: unknown
+    targetSelector?: unknown
   }
   outcome?: {
     success?: unknown
@@ -61,6 +62,7 @@ type TraceCheckConfig = {
   minClicks?: number
   minCandidateBuckets?: number
   minPairedCandidateBuckets?: number
+  minTargetSelectorRecords?: number
 }
 
 function parseArgs(): TraceCheckConfig {
@@ -75,6 +77,7 @@ function parseArgs(): TraceCheckConfig {
   let minClicks: number | undefined
   let minCandidateBuckets: number | undefined
   let minPairedCandidateBuckets: number | undefined
+  let minTargetSelectorRecords: number | undefined
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i]
@@ -124,6 +127,11 @@ function parseArgs(): TraceCheckConfig {
       i += 1
     } else if (arg.startsWith('--min-paired-candidate-buckets=')) {
       minPairedCandidateBuckets = parseNumber(arg.slice('--min-paired-candidate-buckets='.length), '--min-paired-candidate-buckets')
+    } else if (arg === '--min-target-selector-records') {
+      minTargetSelectorRecords = parseNumber(value, '--min-target-selector-records')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-records=')) {
+      minTargetSelectorRecords = parseNumber(arg.slice('--min-target-selector-records='.length), '--min-target-selector-records')
     } else {
       throw new Error(`Unknown argument ${arg}. Use --input <path>, --require-negative, --require-candidate-pairs, and --min-* coverage options.`)
     }
@@ -140,6 +148,7 @@ function parseArgs(): TraceCheckConfig {
     minClicks,
     minCandidateBuckets,
     minPairedCandidateBuckets,
+    minTargetSelectorRecords,
   }
 }
 
@@ -198,6 +207,10 @@ function validateRecord(record: TraceRecord, lineNumber: number): { hasSelector:
   assertString(record.task.suite, `${prefix}: task.suite`)
   assertString(record.task.title, `${prefix}: task.title`)
   assertString(record.task.tool, `${prefix}: task.tool`)
+  if (record.task.targetSelector !== undefined) {
+    assertString(record.task.targetSelector, `${prefix}: task.targetSelector`)
+    assertNoLabelLeak(record.task.targetSelector, `${prefix}: task.targetSelector`)
+  }
 
   assert(record.outcome && typeof record.outcome === 'object', `${prefix}: outcome must be an object`)
   assertBoolean(record.outcome.success, `${prefix}: outcome.success`)
@@ -262,6 +275,7 @@ async function main(): Promise<void> {
     minClicks,
     minCandidateBuckets,
     minPairedCandidateBuckets,
+    minTargetSelectorRecords,
   } = parseArgs()
   if (!existsSync(input)) throw new Error(`Trace export not found: ${input}`)
 
@@ -276,6 +290,7 @@ async function main(): Promise<void> {
   let clicks = 0
   let positives = 0
   let negatives = 0
+  let targetSelectorRecords = 0
   const candidateLabels = new Map<string, Set<string>>()
   for (let i = 0; i < lines.length; i += 1) {
     const parsed = JSON.parse(lines[i]) as TraceRecord
@@ -284,6 +299,7 @@ async function main(): Promise<void> {
     if (result.hasClick) clicks += 1
     if (result.label === 'positive') positives += 1
     if (result.label === 'negative') negatives += 1
+    if (typeof parsed.task?.targetSelector === 'string') targetSelectorRecords += 1
     if (result.candidateKey) {
       const labels = candidateLabels.get(result.candidateKey) ?? new Set<string>()
       labels.add(result.label)
@@ -308,12 +324,14 @@ async function main(): Promise<void> {
   assertAtLeast(clicks, minClicks, 'click records')
   assertAtLeast(candidateLabels.size, minCandidateBuckets, 'candidate buckets')
   assertAtLeast(pairedBuckets, minPairedCandidateBuckets, 'paired candidate buckets')
+  assertAtLeast(targetSelectorRecords, minTargetSelectorRecords, 'target selector records')
 
   console.log(`Checked ${lines.length} action trace records`)
   console.log(`Positive records: ${positives}`)
   console.log(`Negative records: ${negatives}`)
   console.log(`Selector records: ${selectors}`)
   console.log(`Click records: ${clicks}`)
+  if (minTargetSelectorRecords !== undefined) console.log(`Target selector records: ${targetSelectorRecords}`)
   if (requireCandidatePairs) {
     console.log(`Candidate buckets: ${candidateLabels.size}`)
     console.log(`Paired candidate buckets: ${pairedBuckets}`)

@@ -43,6 +43,7 @@ type RerankerPreferenceRecord = {
     suite?: unknown
     title?: unknown
     tool?: unknown
+    targetSelector?: unknown
   }
   prompt?: unknown
   candidates?: unknown
@@ -59,6 +60,7 @@ type RerankerCheckConfig = {
   minTasks?: number
   minChosenA?: number
   minChosenB?: number
+  minTargetSelectorPairs?: number
 }
 
 function parseNumber(value: string | undefined, label: string): number {
@@ -76,6 +78,7 @@ function parseArgs(): RerankerCheckConfig {
   let minTasks: number | undefined
   let minChosenA: number | undefined
   let minChosenB: number | undefined
+  let minTargetSelectorPairs: number | undefined
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i]
@@ -111,12 +114,17 @@ function parseArgs(): RerankerCheckConfig {
       i += 1
     } else if (arg.startsWith('--min-chosen-b=')) {
       minChosenB = parseNumber(arg.slice('--min-chosen-b='.length), '--min-chosen-b')
+    } else if (arg === '--min-target-selector-pairs') {
+      minTargetSelectorPairs = parseNumber(value, '--min-target-selector-pairs')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-pairs=')) {
+      minTargetSelectorPairs = parseNumber(arg.slice('--min-target-selector-pairs='.length), '--min-target-selector-pairs')
     } else {
       throw new Error(`Unknown argument ${arg}. Use --input <path> and --min-* coverage options.`)
     }
   }
 
-  return { input, minPairs, minBuckets, minTasks, minChosenA, minChosenB }
+  return { input, minPairs, minBuckets, minTasks, minChosenA, minChosenB, minTargetSelectorPairs }
 }
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -200,7 +208,7 @@ function assertAtLeast(actual: number, minimum: number | undefined, label: strin
 }
 
 async function main(): Promise<void> {
-  const { input, minPairs, minBuckets, minTasks, minChosenA, minChosenB } = parseArgs()
+  const { input, minPairs, minBuckets, minTasks, minChosenA, minChosenB, minTargetSelectorPairs } = parseArgs()
   if (!existsSync(input)) throw new Error(`Reranker preference export not found: ${input}`)
 
   const lines = (await readFile(input, 'utf8'))
@@ -213,6 +221,7 @@ async function main(): Promise<void> {
   const tasks = new Set<string>()
   let chosenA = 0
   let chosenB = 0
+  let targetSelectorPairs = 0
 
   for (let i = 0; i < lines.length; i += 1) {
     const record = JSON.parse(lines[i]) as RerankerPreferenceRecord
@@ -229,10 +238,17 @@ async function main(): Promise<void> {
     assertString(record.task.suite, `${prefix}: task.suite`)
     assertString(record.task.title, `${prefix}: task.title`)
     assertString(record.task.tool, `${prefix}: task.tool`)
+    if (record.task.targetSelector !== undefined) {
+      assertString(record.task.targetSelector, `${prefix}: task.targetSelector`)
+      assertNoLabelLeak(record.task.targetSelector, `${prefix}: task.targetSelector`)
+    }
     assert(taskId === bucketTaskId, `${prefix}: task.id must match bucket.taskId`)
     const prompt = assertString(record.prompt, `${prefix}: prompt`)
     assert(prompt.includes('browser action reranker'), `${prefix}: prompt must describe the reranker task`)
     assert(prompt.includes('candidate_a') && prompt.includes('candidate_b'), `${prefix}: prompt must include both candidates`)
+    if (typeof record.task.targetSelector === 'string') {
+      assert(prompt.includes(`target_selector: ${record.task.targetSelector}`), `${prefix}: prompt must include task.targetSelector`)
+    }
     assertNoLabelLeak(prompt, `${prefix}: prompt`)
 
     assert(Array.isArray(record.candidates), `${prefix}: candidates must be an array`)
@@ -263,6 +279,7 @@ async function main(): Promise<void> {
     tasks.add(taskId)
     if (chosen.id === 'candidate_a') chosenA += 1
     if (chosen.id === 'candidate_b') chosenB += 1
+    if (typeof record.task.targetSelector === 'string') targetSelectorPairs += 1
   }
 
   assertAtLeast(lines.length, minPairs, 'reranker preference pairs')
@@ -270,12 +287,14 @@ async function main(): Promise<void> {
   assertAtLeast(tasks.size, minTasks, 'reranker tasks')
   assertAtLeast(chosenA, minChosenA, 'chosen candidate_a pairs')
   assertAtLeast(chosenB, minChosenB, 'chosen candidate_b pairs')
+  assertAtLeast(targetSelectorPairs, minTargetSelectorPairs, 'target selector reranker pairs')
 
   console.log(`Checked ${lines.length} reranker preference pairs`)
   console.log(`Reranker buckets: ${buckets.size}`)
   console.log(`Reranker tasks: ${tasks.size}`)
   console.log(`Chosen candidate_a: ${chosenA}`)
   console.log(`Chosen candidate_b: ${chosenB}`)
+  if (minTargetSelectorPairs !== undefined) console.log(`Target selector pairs: ${targetSelectorPairs}`)
 }
 
 main().catch(error => {

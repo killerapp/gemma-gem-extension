@@ -37,6 +37,7 @@ type PreferenceRecord = {
     suite?: unknown
     title?: unknown
     tool?: unknown
+    targetSelector?: unknown
   }
   preferred?: PreferenceAction
   rejected?: PreferenceAction
@@ -50,6 +51,7 @@ type PreferenceCheckConfig = {
   minReadPairs?: number
   minClickPairs?: number
   minTypePairs?: number
+  minTargetSelectorPairs?: number
 }
 
 function parseNumber(value: string | undefined, label: string): number {
@@ -68,6 +70,7 @@ function parseArgs(): PreferenceCheckConfig {
   let minReadPairs: number | undefined
   let minClickPairs: number | undefined
   let minTypePairs: number | undefined
+  let minTargetSelectorPairs: number | undefined
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i]
@@ -108,12 +111,17 @@ function parseArgs(): PreferenceCheckConfig {
       i += 1
     } else if (arg.startsWith('--min-type-pairs=')) {
       minTypePairs = parseNumber(arg.slice('--min-type-pairs='.length), '--min-type-pairs')
+    } else if (arg === '--min-target-selector-pairs') {
+      minTargetSelectorPairs = parseNumber(value, '--min-target-selector-pairs')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-pairs=')) {
+      minTargetSelectorPairs = parseNumber(arg.slice('--min-target-selector-pairs='.length), '--min-target-selector-pairs')
     } else {
       throw new Error(`Unknown argument ${arg}. Use --input <path> and --min-* coverage options.`)
     }
   }
 
-  return { input, minPairs, minBuckets, minTasks, minReadPairs, minClickPairs, minTypePairs }
+  return { input, minPairs, minBuckets, minTasks, minReadPairs, minClickPairs, minTypePairs, minTargetSelectorPairs }
 }
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -166,7 +174,7 @@ function assertAtLeast(actual: number, minimum: number | undefined, label: strin
 }
 
 async function main(): Promise<void> {
-  const { input, minPairs, minBuckets, minTasks, minReadPairs, minClickPairs, minTypePairs } = parseArgs()
+  const { input, minPairs, minBuckets, minTasks, minReadPairs, minClickPairs, minTypePairs, minTargetSelectorPairs } = parseArgs()
   if (!existsSync(input)) throw new Error(`Preference export not found: ${input}`)
 
   const lines = (await readFile(input, 'utf8'))
@@ -180,6 +188,7 @@ async function main(): Promise<void> {
   let readPairs = 0
   let clickPairs = 0
   let typePairs = 0
+  let targetSelectorPairs = 0
 
   for (let i = 0; i < lines.length; i += 1) {
     const record = JSON.parse(lines[i]) as PreferenceRecord
@@ -196,6 +205,10 @@ async function main(): Promise<void> {
     assertString(record.task.suite, `${prefix}: task.suite`)
     assertString(record.task.title, `${prefix}: task.title`)
     assertString(record.task.tool, `${prefix}: task.tool`)
+    if (record.task.targetSelector !== undefined) {
+      assertString(record.task.targetSelector, `${prefix}: task.targetSelector`)
+      assertNoLabelLeak(record.task.targetSelector, `${prefix}: task.targetSelector`)
+    }
     assert(taskId === bucketTaskId, `${prefix}: task.id must match bucket.taskId`)
 
     const preferred = validateAction(record.preferred, `${prefix}: preferred`)
@@ -212,6 +225,7 @@ async function main(): Promise<void> {
     if (bucketToolName === 'read_page_content') readPairs += 1
     if (bucketToolName === 'click_element') clickPairs += 1
     if (bucketToolName === 'type_text') typePairs += 1
+    if (typeof record.task.targetSelector === 'string') targetSelectorPairs += 1
   }
 
   assertAtLeast(lines.length, minPairs, 'preference pairs')
@@ -220,6 +234,7 @@ async function main(): Promise<void> {
   assertAtLeast(readPairs, minReadPairs, 'read preference pairs')
   assertAtLeast(clickPairs, minClickPairs, 'click preference pairs')
   assertAtLeast(typePairs, minTypePairs, 'type preference pairs')
+  assertAtLeast(targetSelectorPairs, minTargetSelectorPairs, 'target selector preference pairs')
 
   console.log(`Checked ${lines.length} preference pairs`)
   console.log(`Preference buckets: ${buckets.size}`)
@@ -227,6 +242,7 @@ async function main(): Promise<void> {
   console.log(`Read pairs: ${readPairs}`)
   console.log(`Click pairs: ${clickPairs}`)
   console.log(`Type pairs: ${typePairs}`)
+  if (minTargetSelectorPairs !== undefined) console.log(`Target selector pairs: ${targetSelectorPairs}`)
 }
 
 main().catch(error => {
