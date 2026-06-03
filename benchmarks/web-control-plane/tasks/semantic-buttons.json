@@ -215,6 +215,36 @@
     }
   },
   {
+    "id": "semantic-settings-observed-act",
+    "suite": "semantic-buttons",
+    "title": "Execute observed payment settings action without generation",
+    "tool": "gemma_act",
+    "arguments": {
+      "tabId": 101,
+      "action": {
+        "description": "Payment settings (#payment-settings)",
+        "method": "click",
+        "arguments": ["#payment-settings"],
+        "selector": "#payment-settings",
+        "confidence": 0.63
+      }
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "selector": "#payment-settings"
+      },
+      "contains": ["#payment-settings"],
+      "selector": "#payment-settings",
+      "clicked": "#payment-settings",
+      "actions": 1,
+      "actionTraceTools": ["click_element"],
+      "actionTraceTextIncludes": ["selector=#payment-settings"],
+      "bridgeExecuteTool": "click_element",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "semantic-click-recover-selector",
     "suite": "semantic-buttons",
     "title": "Recover a receipt text-like click selector",
