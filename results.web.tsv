@@ -271,3 +271,8 @@ d61031f	local-fake-extension	22	1.0000	1.0000	1.0000	1.0000	1.59	0.004	0.011	0.0
 d61031f	local-fake-extension	23	1.0000	1.0000	1.0000	1.0000	1.57	0.004	0.009	0.0000	0.000	keep	destination select read local
 d61031f	real-chrome-extension-smoke	18	1.0000	1.0000	1.0000	1.0000	1.33	0.007	0.142	0.0000	0.000	keep	destination select read real smoke
 d61031f	real-chrome-extension-agent	23	1.0000	1.0000	1.0000	1.0000	1.57	0.008	6.639	0.0000	0.001	keep	destination select read real agent
+6ddbef3	local-fake-extension	23	1.0000	1.0000	1.0000	1.0000	1.57	0.004	0.010	0.0000	0.000	baseline	scoped html read baseline local
+6ddbef3	local-fake-extension	24	0.9583	0.9583	1.0000	1.0000	1.57	0.004	0.009	0.0000	0.000	discard	scoped html read local
+6ddbef3	local-fake-extension	24	1.0000	1.0000	1.0000	1.0000	1.54	0.004	0.010	0.0000	0.000	keep	scoped html read local escaped text
+6ddbef3	real-chrome-extension-smoke	19	1.0000	1.0000	1.0000	1.0000	1.32	0.008	0.092	0.0000	0.000	keep	scoped html read real smoke
+6ddbef3	real-chrome-extension-agent	24	1.0000	1.0000	1.0000	1.0000	1.54	0.007	7.403	0.0000	0.001	keep	scoped html read real agent

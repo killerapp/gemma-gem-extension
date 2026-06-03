@@ -788,6 +788,14 @@ June 3, 2026 destination select read coverage result:
 - Real smoke passed 18/18 with `selector_hit_rate 1.0000`, `actions_per_success 1.33`, and `timeout_rate 0.0000`; real agent passed 23/23 with `p95_task_seconds 6.639`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 36 raw positive records from 17 tasks and 98 training records from 25 tasks, while preference and reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 scoped HTML read coverage result:
+
+- Added frozen `extraction/read-scoped-plan-html`, a one-action `gemma_read_page` task that reads `.plan[data-plan="team"]` with `format: "html"` and asserts the scoped HTML includes `<h2>Team</h2>`, `class="price"`, and `$49/month` without leaking `Starter` or `$19`.
+- The first local post-edit run was recorded as `discard` because the raw MCP text assertion expected unescaped `class="price"`; the parsed JSON content assertion stayed strict, and the raw-text `contains` check now uses `price` to account for JSON escaping.
+- Baseline local before the task stayed green at 23/23 with `p95_task_seconds 0.010`; after the escaped-text assertion fix, local passed 24/24 with `actions_per_success 1.54` and `p95_task_seconds 0.010`.
+- Real smoke passed 19/19 with `selector_hit_rate 1.0000`, `actions_per_success 1.32`, and `timeout_rate 0.0000`; real agent passed 24/24 with `p95_task_seconds 7.403`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 37 raw positive records from 18 tasks and 99 training records from 26 tasks, with target selector matching records up to 7 while preference and reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
