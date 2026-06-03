@@ -335,3 +335,7 @@ c62f0d9	local-fake-extension	42	1.0000	1.0000	1.0000	1.0000	1.48	0.003	0.007	0.0
 c62f0d9	local-fake-extension	45	1.0000	1.0000	1.0000	1.0000	1.49	0.003	0.007	0.0000	0.000	keep	radio recovery local
 c62f0d9	real-chrome-extension-smoke	40	1.0000	1.0000	1.0000	1.0000	1.38	0.007	0.015	0.0000	0.000	keep	radio recovery real smoke
 c62f0d9	real-chrome-extension-agent	45	1.0000	1.0000	1.0000	1.0000	1.49	0.007	4.120	0.0000	0.001	keep	radio recovery real agent
+e5373ab	local-fake-extension	45	1.0000	1.0000	1.0000	1.0000	1.49	0.003	0.008	0.0000	0.000	baseline	semantic settings recovery baseline local
+e5373ab	local-fake-extension	46	1.0000	1.0000	1.0000	1.0000	1.52	0.003	0.006	0.0000	0.000	keep	semantic settings recovery local
+e5373ab	real-chrome-extension-smoke	41	1.0000	1.0000	1.0000	1.0000	1.41	0.007	0.015	0.0000	0.000	keep	semantic settings recovery real smoke
+e5373ab	real-chrome-extension-agent	46	1.0000	1.0000	1.0000	1.0000	1.52	0.007	4.192	0.0000	0.001	keep	semantic settings recovery real agent

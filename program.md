@@ -906,6 +906,14 @@ June 3, 2026 radio recovery coverage result:
 - Real agent passed with `actions_per_success 1.49`, `p95_task_seconds 4.120`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 67 raw positive records from 39 tasks and 129 training records from 47 tasks, while candidate buckets rose to 54 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 semantic settings recovery coverage result:
+
+- Added frozen `semantic-buttons/semantic-settings-recover-selector`, proving `gemma_click` can recover `button:has-text("Payment settings")` to `#payment-settings` on the billing sandbox.
+- This complements receipt-button recovery with a second semantic button on the same page, freezing the same page text read, page HTML read, and recovered `click_element` trace shape for the payment settings distractor.
+- Baseline local before the task stayed green at 45/45 with `actions_per_success 1.49` and `p95_task_seconds 0.008`; after adding the task, local passed 46/46 with `actions_per_success 1.52` and `p95_task_seconds 0.006`.
+- Real smoke passed 41/41 with `actions_per_success 1.41`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 46/46 with `actions_per_success 1.52`, `p95_task_seconds 4.192`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 70 raw positive records from 40 tasks and 132 training records from 48 tasks, while candidate buckets rose to 56 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

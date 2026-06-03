@@ -164,6 +164,33 @@
     }
   },
   {
+    "id": "semantic-settings-recover-selector",
+    "suite": "semantic-buttons",
+    "title": "Recover a payment settings text-like click selector",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 101,
+      "selector": "button:has-text(\"Payment settings\")"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "recovered": true,
+        "recoveredSelector": "#payment-settings",
+        "result.selector": "#payment-settings"
+      },
+      "contains": ["recoveredSelector", "#payment-settings", "Payment settings"],
+      "selector": "#payment-settings",
+      "clicked": "#payment-settings",
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "click_element"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "selector=#payment-settings"],
+      "bridgeExecuteTools": ["read_page_content", "click_element"],
+      "bridgeExecuteSelectors": ["body", "#payment-settings"],
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "semantic-act-multi-reject",
     "suite": "semantic-buttons",
     "title": "Reject multi-step action prompt",
