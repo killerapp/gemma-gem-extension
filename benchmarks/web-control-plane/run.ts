@@ -421,6 +421,12 @@ class FakeExtension implements HarnessProbe {
     }
 
     if (request.prompt.includes('gemma_extract')) {
+      if (request.prompt.includes('Scope selector: .plan[data-plan="team"]')) {
+        return this.response(request.requestId, JSON.stringify({
+          plan: { name: 'Team', price: '$49/month' },
+        }))
+      }
+
       return this.response(request.requestId, JSON.stringify({
         plans: [
           { name: 'Starter', price: '$19/month' },
@@ -489,6 +495,7 @@ class FakeExtension implements HarnessProbe {
       ].join('\n')
     }
     if (tabId === 102) {
+      if (selector === '.plan[data-plan="team"]') return 'Team $49/month'
       return ['Starter $19/month', 'Team $49/month'].join('\n')
     }
     if (tabId === 103) {
@@ -1133,6 +1140,11 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
     if (!containsOk) {
       notes.push(`missing expected text in result: ${contains.filter(item => !text.includes(item)).join(', ')}`)
     }
+    const notContains = Array.isArray(expect.notContains) ? expect.notContains.map(String) : []
+    const absentOk = notContains.every(item => !text.includes(item))
+    if (!absentOk) {
+      notes.push(`unexpected text in result: ${notContains.filter(item => text.includes(item)).join(', ')}`)
+    }
 
     let jsonOk = true
     let parsedJson: any
@@ -1201,6 +1213,16 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
       )
       if (!sawTool) notes.push(`expected bridge tool ${expect.bridgeExecuteTool}`)
     }
+    if (typeof expect.bridgeExecuteSelector === 'string' && harness.supportsBridgeRequestLog) {
+      const sawSelector = harness.requestsSince(startRequestCount).some(request =>
+        request.type === 'bridge:execute_tool' &&
+        request.arguments &&
+        typeof request.arguments === 'object' &&
+        !Array.isArray(request.arguments) &&
+        request.arguments.selector === expect.bridgeExecuteSelector
+      )
+      if (!sawSelector) notes.push(`expected bridge selector ${expect.bridgeExecuteSelector}`)
+    }
 
     if (expect.bridgeRunAgent === true && harness.supportsBridgeRequestLog) {
       const sawRunAgent = harness.requestsSince(startRequestCount).some(request => request.type === 'bridge:run_agent')
@@ -1235,7 +1257,7 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
     const activeOk = typeof expect.activeTabId === 'number'
       ? text.includes(`"id": ${expectedActiveTabId}`) || text.includes(`"id":${expectedActiveTabId}`)
       : true
-    success = containsOk && jsonOk && clickedOk && imageOk && activeOk && notes.length === 0
+    success = containsOk && absentOk && jsonOk && clickedOk && imageOk && activeOk && notes.length === 0
     strict = success
   } catch (error) {
     timeout = error instanceof Error && error.message.includes('timed out')

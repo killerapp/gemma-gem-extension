@@ -31,5 +31,37 @@
       "schemaValid": true,
       "minPlans": 2
     }
+  },
+  {
+    "id": "extract-scoped-plan-json",
+    "suite": "extraction",
+    "title": "Extract a selector-scoped pricing plan",
+    "tool": "gemma_extract",
+    "arguments": {
+      "tabId": 102,
+      "selector": ".plan[data-plan=\"team\"]",
+      "instruction": "extract the selected pricing plan and monthly price",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "plan": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "price": { "type": "string" }
+            },
+            "required": ["name", "price"]
+          }
+        },
+        "required": ["plan"]
+      }
+    },
+    "expect": {
+      "json": "object",
+      "contains": ["Team", "$49"],
+      "notContains": ["Starter", "$19"],
+      "schemaValid": true,
+      "bridgeExecuteSelector": ".plan[data-plan=\"team\"]"
+    }
   }
 ]

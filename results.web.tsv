@@ -74,3 +74,6 @@ c0b024b	local-fake-extension	8	1.0000	1.0000	1.0000	1.0000	2.25	0.004	0.009	0.00
 c0875d3	local-fake-extension	8	1.0000	1.0000	1.0000	1.0000	2.25	0.004	0.010	0.0000	0.000	keep	schema-validated extract retry
 5d587a2	local-fake-extension	9	1.0000	1.0000	1.0000	1.0000	2.00	0.006	0.010	0.0000	0.000	keep	multi-action act rejection contract
 5d587a2	real-chrome-extension-smoke	6	1.0000	1.0000	1.0000	1.0000	1.50	0.008	0.066	0.0000	0.000	keep	real smoke multi-action act rejection
+31a7cce	local-fake-extension	10	1.0000	1.0000	1.0000	1.0000	2.10	0.004	0.010	0.0000	0.000	keep	selector-scoped extract contract
+31a7cce	real-chrome-extension-smoke	6	1.0000	1.0000	1.0000	1.0000	1.50	0.008	0.146	0.0000	0.000	keep	real smoke after scoped extract contract
+31a7cce	local-fake-extension	10	1.0000	1.0000	1.0000	1.0000	2.10	0.005	0.009	0.0000	0.000	keep	final local scoped extract artifacts

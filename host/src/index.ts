@@ -322,13 +322,18 @@ function contentFromToolResult(value: unknown): string {
   return typeof parsed.content === 'string' ? parsed.content : JSON.stringify(parsed)
 }
 
-async function pageSnapshotFor(tabId: number | undefined, format: 'text' | 'html', maxChars = 8000): Promise<string> {
+async function pageSnapshotFor(
+  tabId: number | undefined,
+  format: 'text' | 'html',
+  maxChars = 8000,
+  selector = 'body',
+): Promise<string> {
   const result = await sendBridgeRequest({
     type: 'bridge:execute_tool',
     tabId,
     name: 'read_page_content',
     arguments: {
-      selector: 'body',
+      selector,
       format,
     },
   })
@@ -336,13 +341,15 @@ async function pageSnapshotFor(tabId: number | undefined, format: 'text' | 'html
   return content.length > maxChars ? `${content.slice(0, maxChars)}\n...(truncated)` : content
 }
 
-async function pageContextFor(tabId: number | undefined): Promise<string> {
+async function pageContextFor(tabId: number | undefined, selector = 'body'): Promise<string> {
   const [text, html] = await Promise.all([
-    pageSnapshotFor(tabId, 'text', 6000),
-    pageSnapshotFor(tabId, 'html', 6000),
+    pageSnapshotFor(tabId, 'text', 6000, selector),
+    pageSnapshotFor(tabId, 'html', 6000, selector),
   ])
   const controls = interactiveControlsFromHtml(html)
   return [
+    `Snapshot selector: ${selector}`,
+    '',
     'Visible text:',
     text,
     '',
@@ -811,7 +818,7 @@ function registerTools(server: McpServer): void {
       tabId: z.number().int().optional().describe('Optional target tab id from gemma_tabs. Defaults to the active tab.'),
     },
   }, async ({ instruction, schema, selector, tabId }) => {
-    const pageSnapshot = await pageContextFor(tabId)
+    const pageSnapshot = await pageContextFor(tabId, selector ?? 'body')
     const prompt = [
       'You are implementing gemma_extract, a Stagehand-style structured extraction primitive.',
       'The active browser tab is already selected. Do not ask for a URL, screenshot, or HTML.',
