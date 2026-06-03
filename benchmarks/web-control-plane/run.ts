@@ -105,7 +105,7 @@ type HarnessProbe = {
   readonly mode: string
   readonly supportsBridgeRequestLog: boolean
   remapTask(task: BenchmarkTask): BenchmarkTask
-  selectorExists(selector: string): Promise<boolean> | boolean
+  selectorExists(selector: string, logicalTabId?: number): Promise<boolean> | boolean
   value(logicalTabId: number, selector: string): Promise<string> | string
   clicked(selector: string): Promise<boolean> | boolean
   scrollY(logicalTabId: number): Promise<number> | number
@@ -421,7 +421,7 @@ class FakeExtension implements HarnessProbe {
     return { mode: this.mode, bridgeRequests: this.requests.length, toolErrors: this.toolErrors.length }
   }
 
-  selectorExists(selector: string): boolean {
+  selectorExists(selector: string, _logicalTabId?: number): boolean {
     const knownSelectors = new Set([
       '#download-receipt',
       '#download-invoice',
@@ -822,8 +822,8 @@ class RealChromeHarness implements HarnessProbe {
     }
   }
 
-  async selectorExists(selector: string): Promise<boolean> {
-    const session = await this.pageSessionForLogicalTab(101)
+  async selectorExists(selector: string, logicalTabId = 101): Promise<boolean> {
+    const session = await this.pageSessionForLogicalTab(logicalTabId)
     const value = await this.evaluate(session, `!!document.querySelector(${JSON.stringify(selector)})`)
     session.close()
     return value === true
@@ -1315,7 +1315,8 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
 
     if (typeof expect.selector === 'string') {
       selectorChecks += 1
-      const selectorExists = await harness.selectorExists(expect.selector)
+      const selectorTabId = typeof task.arguments.tabId === 'number' ? task.arguments.tabId : undefined
+      const selectorExists = await harness.selectorExists(expect.selector, selectorTabId)
       selectorHits += selectorExists ? 1 : 0
       if (!selectorExists) notes.push(`selector not found: ${expect.selector}`)
       if (Array.isArray(parsedJson)) {

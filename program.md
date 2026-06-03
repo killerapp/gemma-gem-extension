@@ -765,6 +765,14 @@ Per task:
 
 If a run exceeds its budget, stop it, mark the result as `timeout`, and move on.
 
+June 3, 2026 source-read coverage result:
+
+- Added frozen `forms/read-source-name`, a one-action `gemma_read_page` task that reads `#source-name` from the source profile tab and asserts the response includes `Ada Lovelace` without leaking the email field.
+- Baseline local before the task stayed green at 20/20 with `p95_task_seconds 0.010`; after adding the task, local stayed green at 21/21 with `p95_task_seconds 0.009` and `actions_per_success 1.62`.
+- The first real-smoke run exposed an evaluator bug, not a task failure: the tool returned `Ada Lovelace`, but selector verification still checked logical tab `101`. Keep the tab-aware selector check in `benchmarks/web-control-plane/run.ts`; do not weaken the selector assertion.
+- After the tab-aware check, real smoke passed 16/16 with `p95_task_seconds 0.025`, and real agent passed 21/21 with `p95_task_seconds 6.684`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace regeneration now normalizes untitled tool-action trace rows to `bridge:execute_tool` and deduplicates equivalent click surfaces before preference pairing. This keeps real and fake trace surfaces comparable and preserves reranker gates at 71 pairs, learned LOTO margin 12, and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

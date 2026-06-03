@@ -106,6 +106,29 @@ function actionSurface(record: TraceRecord): string {
   ].join('\u001f')
 }
 
+function actionIdentity(record: TraceRecord): string {
+  if (record.action.toolName === 'click_element') {
+    return [record.action.toolName, record.action.selector ?? ''].join('\u001f')
+  }
+  return actionSurface(record)
+}
+
+function actionSpecificity(record: TraceRecord): number {
+  return (record.action.title?.length ?? 0) + (record.action.text?.length ?? 0)
+}
+
+function dedupeActions(records: TraceRecord[]): TraceRecord[] {
+  const byIdentity = new Map<string, TraceRecord>()
+  for (const record of records) {
+    const identity = actionIdentity(record)
+    const existing = byIdentity.get(identity)
+    if (!existing || actionSpecificity(record) > actionSpecificity(existing)) {
+      byIdentity.set(identity, record)
+    }
+  }
+  return [...byIdentity.values()]
+}
+
 async function main(): Promise<void> {
   const { input, output } = parseArgs()
   if (!existsSync(input)) throw new Error(`Training trace source not found: ${input}`)
@@ -130,8 +153,10 @@ async function main(): Promise<void> {
   for (const [key, bucket] of [...buckets.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
     if (bucket.positives.length === 0 || bucket.negatives.length === 0) continue
     const [taskId, toolName] = key.split(':')
-    for (const positive of bucket.positives) {
-      for (const negative of bucket.negatives) {
+    const positives = dedupeActions(bucket.positives)
+    const negatives = dedupeActions(bucket.negatives)
+    for (const positive of positives) {
+      for (const negative of negatives) {
         if (actionSurface(positive) === actionSurface(negative)) continue
         preferences.push({
           recordType: 'web-control-action-preference',

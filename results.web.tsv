@@ -257,3 +257,9 @@ ee50d80	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0
 ee50d80	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.005	0.010	0.0000	0.000	keep	report artifacts local
 aff1d45	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.072	0.0000	0.000	keep	current real smoke refresh after report artifacts
 c51f5b5	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.560	0.0000	0.002	keep	current real agent refresh after real smoke
+32932d7	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	source read task baseline local
+32932d7	local-fake-extension	21	1.0000	1.0000	1.0000	1.0000	1.62	0.005	0.010	0.0000	0.000	keep	source read task local
+32932d7	real-chrome-extension-smoke	16	0.9375	0.9375	1.0000	0.8571	1.40	0.008	0.107	0.0000	0.000	discard	source read task real smoke
+32932d7	local-fake-extension	21	1.0000	1.0000	1.0000	1.0000	1.62	0.004	0.009	0.0000	0.000	keep	source read task tab-aware local
+32932d7	real-chrome-extension-smoke	16	1.0000	1.0000	1.0000	1.0000	1.38	0.007	0.025	0.0000	0.000	keep	source read task real smoke tab-aware selector
+32932d7	real-chrome-extension-agent	21	1.0000	1.0000	1.0000	1.0000	1.62	0.008	6.684	0.0000	0.001	keep	source read task real agent tab-aware selector

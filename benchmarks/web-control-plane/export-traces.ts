@@ -117,6 +117,10 @@ function selectorHitRate(task: TaskTrace): number | null {
   return (task.selectorHits ?? 0) / task.selectorChecks
 }
 
+function actionTitle(action: ActionTraceEvent): string | null {
+  return shortText(action.title, 200) ?? (action.status === 'tool' ? 'bridge:execute_tool' : null)
+}
+
 function taskRecords(task: TaskTrace, sourceFile: string): ExportRecord[] {
   const actions = Array.isArray(task.actionTrace) ? task.actionTrace : []
   if (actions.length === 0) return []
@@ -151,7 +155,7 @@ function taskRecords(task: TaskTrace, sourceFile: string): ExportRecord[] {
       toolName: action.toolName ?? null,
       selector: selectorFromText(action.text),
       text: shortText(action.text),
-      title: shortText(action.title, 200),
+      title: actionTitle(action),
     },
     label: task.success === true && task.strict === true && task.timeout !== true ? 'positive' : 'negative',
   }))

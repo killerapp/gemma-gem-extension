@@ -107,8 +107,8 @@ The machine-readable learned weights are written to `./benchmarks/web-control-pl
 | 39 | semantic-buttons | semantic-page-brief | read_page_content | candidate_b:body | candidate_a:#download-invoice | 67.000 |
 | 40 | semantic-buttons-supervised | semantic-proof-observe | click_element | candidate_a:#download-receipt | candidate_b:#download-invoice | 28.000 |
 | 41 | semantic-buttons-supervised | semantic-proof-observe | click_element | candidate_b:#download-receipt | candidate_a:#payment-settings | 75.000 |
-| 42 | semantic-buttons | semantic-receipt-agent | click_element | candidate_a:#download-receipt | candidate_b:#download-invoice | 33.000 |
-| 43 | semantic-buttons | semantic-receipt-agent | click_element | candidate_b:#download-receipt | candidate_a:#payment-settings | 56.000 |
+| 42 | semantic-buttons | semantic-receipt-agent | click_element | candidate_a:#download-receipt | candidate_b:#download-invoice | 49.000 |
+| 43 | semantic-buttons | semantic-receipt-agent | click_element | candidate_b:#download-receipt | candidate_a:#payment-settings | 72.000 |
 | 44 | semantic-buttons | semantic-receipt-agent | read_page_content | candidate_a:body | candidate_b:#payment-settings | 92.000 |
 | 45 | semantic-buttons | semantic-receipt-agent | read_page_content | candidate_b:body | candidate_a:#payment-settings | 92.000 |
 | 46 | semantic-buttons-supervised | semantic-scoped-receipt-read | read_page_content | candidate_a:#download-receipt | candidate_b:#download-invoice | 101.000 |
@@ -183,8 +183,8 @@ The machine-readable learned weights are written to `./benchmarks/web-control-pl
 | 39 | semantic-buttons | semantic-page-brief | read_page_content | candidate_b:body | candidate_a:#download-invoice | 65.000 |
 | 40 | semantic-buttons-supervised | semantic-proof-observe | click_element | candidate_a:#download-receipt | candidate_b:#download-invoice | 28.000 |
 | 41 | semantic-buttons-supervised | semantic-proof-observe | click_element | candidate_b:#download-receipt | candidate_a:#payment-settings | 75.000 |
-| 42 | semantic-buttons | semantic-receipt-agent | click_element | candidate_a:#download-receipt | candidate_b:#download-invoice | 30.000 |
-| 43 | semantic-buttons | semantic-receipt-agent | click_element | candidate_b:#download-receipt | candidate_a:#payment-settings | 11.000 |
+| 42 | semantic-buttons | semantic-receipt-agent | click_element | candidate_a:#download-receipt | candidate_b:#download-invoice | 34.000 |
+| 43 | semantic-buttons | semantic-receipt-agent | click_element | candidate_b:#download-receipt | candidate_a:#payment-settings | 15.000 |
 | 44 | semantic-buttons | semantic-receipt-agent | read_page_content | candidate_a:body | candidate_b:#payment-settings | 53.000 |
 | 45 | semantic-buttons | semantic-receipt-agent | read_page_content | candidate_b:body | candidate_a:#payment-settings | 53.000 |
 | 46 | semantic-buttons-supervised | semantic-scoped-receipt-read | read_page_content | candidate_a:#download-receipt | candidate_b:#download-invoice | 101.000 |
