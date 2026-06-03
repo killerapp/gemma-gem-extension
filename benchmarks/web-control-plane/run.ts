@@ -1822,7 +1822,7 @@ async function writeReport(results: TaskResult[], summary: ReturnType<typeof sum
     '',
     'Install/update the local browser runtime with `pnpm browser:install`. Launch a persistent manual debug profile with `pnpm browser:debug`.',
     '',
-    'Run `pnpm benchmark:web -- --real --include-agent` to include model-backed `gemma_model_ready`, `gemma_agent`, `gemma_observe`, and `gemma_extract` tasks. That mode may spend time loading/running the local Gemma model.',
+    'Run `pnpm benchmark:web:real:agent` to include model-backed `gemma_model_ready`, `gemma_agent`, `gemma_observe`, and `gemma_extract` tasks. That mode may spend time loading/running the local Gemma model.',
     '',
   ]
   await writeFile(reportPath, lines.join('\n'))
