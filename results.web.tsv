@@ -372,3 +372,7 @@ e8a1f21	real-chrome-extension-agent	51	1.0000	1.0000	1.0000	1.0000	1.55	0.007	4.
 762400a	local-fake-extension	54	1.0000	1.0000	1.0000	1.0000	1.52	0.003	0.006	0.0000	0.000	keep	navigation billing link read local
 762400a	real-chrome-extension-smoke	48	1.0000	1.0000	1.0000	1.0000	1.40	0.007	0.017	0.0000	0.000	keep	navigation billing link read real smoke
 762400a	real-chrome-extension-agent	54	1.0000	1.0000	1.0000	1.0000	1.52	0.007	4.799	0.0000	0.001	keep	navigation billing link read real agent
+aa90f83	local-fake-extension	54	1.0000	1.0000	1.0000	1.0000	1.52	0.003	0.006	0.0000	0.000	baseline	navigation settings link read baseline local
+aa90f83	local-fake-extension	55	1.0000	1.0000	1.0000	1.0000	1.51	0.003	0.006	0.0000	0.000	keep	navigation settings link read local
+aa90f83	real-chrome-extension-smoke	49	1.0000	1.0000	1.0000	1.0000	1.39	0.007	0.017	0.0000	0.000	keep	navigation settings link read real smoke
+aa90f83	real-chrome-extension-agent	55	1.0000	1.0000	1.0000	1.0000	1.51	0.007	4.822	0.0000	0.001	keep	navigation settings link read real agent

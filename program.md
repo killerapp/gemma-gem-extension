@@ -979,6 +979,14 @@ June 3, 2026 navigation billing-link read coverage result:
 - Real smoke passed 48/48 with `actions_per_success 1.40`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 54/54 with `actions_per_success 1.52`, `p95_task_seconds 4.799`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 82 raw positive records from 48 tasks and 144 training records from 56 tasks, while candidate buckets rose to 64 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 navigation settings-link read coverage result:
+
+- Added frozen `navigation/read-settings-link-before-click`, proving exact `gemma_read_page` can scope to `#settings-link` immediately before the navigation fixture clicks that same link.
+- The task freezes the clicked navigation link as a one-action selector-scoped read and excludes both the adjacent Billing link and the lower scroll-target text.
+- Baseline local before the task stayed green at 54/54 with `actions_per_success 1.52` and `p95_task_seconds 0.006`; after adding the task, local passed 55/55 with `actions_per_success 1.51` and `p95_task_seconds 0.006`.
+- Real smoke passed 49/49 with `actions_per_success 1.39`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 55/55 with `actions_per_success 1.51`, `p95_task_seconds 4.822`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 83 raw positive records from 49 tasks and 145 training records from 57 tasks, while candidate buckets rose to 65 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

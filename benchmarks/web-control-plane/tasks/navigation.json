@@ -249,6 +249,32 @@
     }
   },
   {
+    "id": "read-settings-link-before-click",
+    "suite": "navigation",
+    "title": "Read settings link by exact selector before navigation click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 105,
+      "selector": "#settings-link",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Settings"]
+      },
+      "contains": ["Settings"],
+      "notContains": ["Billing", "Scroll target reached"],
+      "selector": "#settings-link",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#settings-link format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#settings-link",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "click-settings-link",
     "suite": "navigation",
     "title": "Click navigation link changes page URL",
