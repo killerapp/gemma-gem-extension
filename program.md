@@ -1240,6 +1240,15 @@ June 3, 2026 navigation primary HTML read coverage result:
 - The real-agent retry passed 87/87 with `actions_per_success 1.40`, `p95_task_seconds 4.147`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 122 raw positive records from 75 tasks and 191 training records from 84 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 navigation isolated screenshot coverage result:
+
+- Added frozen `navigation/screenshot-isolated-navigation-tab-contract`, proving `gemma_screenshot` can route `take_screenshot` to the isolated navigation fixture on logical tab 106 and return MCP `image/png` content.
+- The first real-smoke attempt was discarded at 77/78 because three screenshot tasks in quick succession exceeded Chrome's `MAX_CAPTURE_VISIBLE_TAB_CALLS_PER_SECOND` quota; the bridge now throttles screenshot captures before `chrome.tabs.captureVisibleTab`.
+- Baseline local before the task stayed green at 87/87 with `actions_per_success 1.38` and `p95_task_seconds 0.005`; after adding the screenshot task, local passed 88/88 with `actions_per_success 1.38` and `p95_task_seconds 0.006`.
+- The throttled real smoke passed 78/78 with `actions_per_success 1.23`, `p95_task_seconds 0.124`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; the first throttled real-agent attempt was discarded at 86/88 after existing semantic invoice/settings agent tasks missed their expected selectors, while all screenshot tasks passed.
+- The real-agent retry passed 88/88 with `actions_per_success 1.40`, `p95_task_seconds 4.193`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 123 raw positive records from 76 tasks and 192 training records from 85 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

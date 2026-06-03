@@ -16,6 +16,7 @@ let connectionStatus: BridgeConnectionStatus = 'disabled'
 let connectionError: string | undefined
 let setupComplete = false
 const bridgeActivityLog: BridgeActivityMessage[] = []
+let lastScreenshotCaptureAt = 0
 
 const pendingToolResults = new Map<string, { resolve: (result: unknown) => void, timeoutId: number }>()
 const pendingAgentRuns = new Map<number, {
@@ -371,6 +372,15 @@ async function activateTab(tabId: number): Promise<void> {
   await chrome.tabs.update(tabId, { active: true })
 }
 
+async function waitForScreenshotQuota(): Promise<void> {
+  const elapsed = Date.now() - lastScreenshotCaptureAt
+  const delayMs = Math.max(0, 550 - elapsed)
+  if (delayMs > 0) {
+    await new Promise(resolve => self.setTimeout(resolve, delayMs))
+  }
+  lastScreenshotCaptureAt = Date.now()
+}
+
 async function runAgentForBridge(request: Extract<BridgeRequest, { type: 'bridge:run_agent' }>): Promise<{ text: string }> {
   const tabId = await resolveTabId(request.tabId)
   if (pendingAgentRuns.has(tabId)) {
@@ -431,6 +441,7 @@ async function executeToolForBridge(tabIdInput: number | undefined, name: string
 
   if (name === 'take_screenshot') {
     await activateTab(tabId)
+    await waitForScreenshotQuota()
     return { screenshot: await chrome.tabs.captureVisibleTab({ format: 'png' }) }
   }
 
