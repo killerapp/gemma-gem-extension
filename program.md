@@ -828,6 +828,15 @@ June 3, 2026 select-by-value coverage result:
 - Real smoke passed 23/23 with `selector_hit_rate 1.0000`, `actions_per_success 1.30`, and `timeout_rate 0.0000`; real agent passed 28/28 with `p95_task_seconds 6.614`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 42 raw positive records from 22 tasks and 104 training records from 30 tasks, while preference and reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 destination name readback coverage result:
+
+- Added frozen `forms/read-destination-name-after-type`, a one-action `gemma_read_page` task that reads `#dest-name` after `gemma_type_text` writes `Grace Hopper`, proving exact selector reads can observe current form-control state.
+- The first real-smoke run was recorded as `discard`: the task passed locally but failed in Chrome because text reads of an `<input>` returned visible `innerText` instead of the input value. `read_page_content` now returns `.value` for exact text reads of input and textarea elements while leaving select elements on their option-label text path.
+- Real-agent retries also recorded discards while `semantic-receipt-agent` omitted `INV-2026-041` or briefly chose the invoice control after identifier-focused prompt wording. The final kept run preserves visible page identifiers host-side with `withVisiblePageIdentifiers`, so peer-agent results retain snapshot IDs without weakening the benchmark expectation.
+- Baseline local before the task stayed green at 28/28 with `p95_task_seconds 0.010`; after adding the task, local passed 29/29 with `actions_per_success 1.48` and `p95_task_seconds 0.011`.
+- Real smoke passed 24/24 after the input-value read fix with `actions_per_success 1.29`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 29/29 after identifier preservation with `p95_task_seconds 6.483`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 43 raw positive records from 23 tasks and 105 training records from 31 tasks, while candidate buckets rose to 34 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

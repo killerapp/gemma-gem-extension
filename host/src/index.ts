@@ -437,6 +437,13 @@ function textFromAgentResult(result: unknown): string {
   return typeof result === 'string' ? result : JSON.stringify(result, null, 2)
 }
 
+function withVisiblePageIdentifiers(text: string, pageSnapshot: string): string {
+  const identifiers = [...new Set(pageSnapshot.match(/\b[A-Z]{2,}-\d{4}-\d{3,}\b/g) ?? [])]
+    .filter(identifier => !text.includes(identifier))
+  if (identifiers.length === 0) return text
+  return `${text}\nVisible page identifiers: ${identifiers.join(', ')}`
+}
+
 function isTransientModelRuntimeError(text: string): boolean {
   return text.startsWith('Something went wrong:')
     && /(OrtRun|onnxruntime|WebGPU|GPUBuffer|mapAsync|Failed to download data from buffer)/i.test(text)
@@ -1053,8 +1060,8 @@ function registerTools(server: McpServer): void {
       'You are Gemma Gem, collaborating with another AI model over MCP.',
       'The active browser tab is already selected. Do not ask for a URL, screenshot, HTML, selectors, or data that is visible in the current page snapshot.',
       'Use the page snapshot and your browser tools to complete the delegated task.',
-      'When choosing among controls, use the Interactive controls list and prefer the selector whose label semantically matches the task. For proof of payment, prefer receipt controls over invoice controls.',
-      'In the final response, include the exact selector you used and the relevant page identifier when available.',
+      'When choosing among controls, use the Interactive controls list and prefer the selector whose label semantically matches the task. For proof of payment, the receipt control is the target action; invoice controls are not proof-of-payment controls.',
+      'In the final response, include the exact selector you used and copy any visible invoice, order, receipt, or payment identifier from the page snapshot as context when available.',
       'Treat the caller as a peer agent: be concise, report exact actions and blockers, and ask for missing selectors/data instead of guessing.',
       'When useful, return structured JSON or compact bullet points that another model can parse.',
       '',
@@ -1070,7 +1077,7 @@ function registerTools(server: McpServer): void {
       prompt,
       settings: { thinking: thinking ?? true, maxIterations: maxIterations ?? 10 },
     })
-    return asTextResult(textFromAgentResult(result))
+    return asTextResult(withVisiblePageIdentifiers(textFromAgentResult(result), pageSnapshot))
   })
 
   server.registerTool('gemma_screenshot', {

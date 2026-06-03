@@ -11,12 +11,19 @@ function readPageContent(args: Record<string, unknown>): ToolResponse {
     return { name: 'read_page_content', result: { error: `No element found for selector: ${selector}` } }
   }
 
-  let content = format === 'html' ? element.innerHTML : (element as HTMLElement).innerText
+  let content = format === 'html' ? element.innerHTML : textContentForRead(element)
   if (content.length > MAX_CONTENT_LENGTH) {
     content = content.slice(0, MAX_CONTENT_LENGTH) + '\n...(truncated)'
   }
 
   return { name: 'read_page_content', result: { content } }
+}
+
+function textContentForRead(element: Element): string {
+  if (element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement) {
+    return element.value
+  }
+  return (element as HTMLElement).innerText
 }
 
 function clickElement(args: Record<string, unknown>): ToolResponse {

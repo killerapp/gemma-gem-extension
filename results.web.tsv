@@ -292,3 +292,12 @@ b03be1e	local-fake-extension	27	1.0000	1.0000	1.0000	1.0000	1.52	0.004	0.010	0.0
 b03be1e	local-fake-extension	28	1.0000	1.0000	1.0000	1.0000	1.50	0.004	0.010	0.0000	0.000	keep	select role value local
 b03be1e	real-chrome-extension-smoke	23	1.0000	1.0000	1.0000	1.0000	1.30	0.008	0.027	0.0000	0.000	keep	select role value real smoke
 b03be1e	real-chrome-extension-agent	28	1.0000	1.0000	1.0000	1.0000	1.50	0.008	6.614	0.0000	0.001	keep	select role value real agent
+a5e43b9	local-fake-extension	28	1.0000	1.0000	1.0000	1.0000	1.50	0.004	0.010	0.0000	0.000	baseline	destination name readback baseline local
+a5e43b9	local-fake-extension	29	1.0000	1.0000	1.0000	1.0000	1.48	0.004	0.011	0.0000	0.000	keep	destination name readback local
+a5e43b9	real-chrome-extension-smoke	24	0.9583	0.9583	1.0000	1.0000	1.30	0.007	0.018	0.0000	0.000	discard	destination name readback real smoke
+a5e43b9	real-chrome-extension-smoke	24	1.0000	1.0000	1.0000	1.0000	1.29	0.007	0.019	0.0000	0.000	keep	destination name readback real smoke input value
+a5e43b9	real-chrome-extension-agent	29	0.9655	0.9655	1.0000	1.0000	1.39	0.008	6.525	0.0000	0.001	discard	destination name readback real agent
+a5e43b9	real-chrome-extension-agent	29	0.9655	0.9655	1.0000	1.0000	1.39	0.008	6.494	0.0000	0.001	discard	destination name readback real agent retry
+a5e43b9	real-chrome-extension-agent	29	0.9655	0.9655	1.0000	1.0000	1.39	0.007	6.545	0.0000	0.001	discard	destination name readback real agent identifier prompt
+a5e43b9	real-chrome-extension-agent	29	0.9655	0.9655	1.0000	1.0000	1.39	0.008	6.509	0.0000	0.001	discard	destination name readback real agent receipt prompt
+a5e43b9	real-chrome-extension-agent	29	1.0000	1.0000	1.0000	1.0000	1.48	0.007	6.483	0.0000	0.001	keep	destination name readback real agent identifier append
