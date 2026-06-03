@@ -245,3 +245,5 @@ adb148e	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.
 7c6dbc1	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.009	0.142	0.0000	0.000	keep	report header real command real smoke
 ef57de4	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.431	0.0000	0.001	baseline	report mode description baseline real agent
 ef57de4	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.415	0.0000	0.001	keep	report mode description real agent
+8fcc210	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	report recent ledger baseline local
+8fcc210	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	report recent ledger local

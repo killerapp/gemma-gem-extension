@@ -698,6 +698,7 @@ Experiment result:
 - Generated benchmark reports now point users at `pnpm benchmark:web:real:agent` for model-backed real-extension coverage instead of the older forwarded-argument form.
 - Generated benchmark reports now also identify the mode-specific command that produced them: `pnpm benchmark:web`, `pnpm benchmark:web:real`, or `pnpm benchmark:web:real:agent`.
 - Generated benchmark reports now describe `real-chrome-extension-agent` separately from deterministic smoke, including the model-backed `gemma_model_ready`, `gemma_agent`, `gemma_observe`, and `gemma_extract` task coverage.
+- Generated benchmark reports now include a compact Recent Ledger table from `results.web.tsv`, including the just-recorded run, so baseline/keep context is visible without opening the full TSV.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:

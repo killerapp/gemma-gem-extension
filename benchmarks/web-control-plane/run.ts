@@ -77,6 +77,23 @@ type ModelReadyPreflight = {
   outputPreview?: string
 }
 
+type ResultsLedgerRow = {
+  commit: string
+  suite: string
+  tasks: string
+  successRate: string
+  strictSuccessRate: string
+  jsonValidRate: string
+  selectorHitRate: string
+  actionsPerSuccess: string
+  p50TaskSeconds: string
+  p95TaskSeconds: string
+  timeoutRate: string
+  modelLoadSeconds: string
+  status: string
+  description: string
+}
+
 type FakeTab = {
   id: number
   active: boolean
@@ -1675,47 +1692,69 @@ async function gitShortHash(): Promise<string> {
   return Buffer.concat(chunks).toString('utf8').trim() || 'unknown'
 }
 
-async function appendResults(summary: ReturnType<typeof summarize>, mode: string): Promise<void> {
-  const file = resolve(REPO_ROOT, 'results.web.tsv')
-  const columns = [
-    'commit',
-    'suite',
-    'tasks',
-    'success_rate',
-    'strict_success_rate',
-    'json_valid_rate',
-    'selector_hit_rate',
-    'actions_per_success',
-    'p50_s',
-    'p95_s',
-    'timeout_rate',
-    'model_load_s',
-    'status',
-    'description',
-  ]
-  const header = columns.join('\t')
-  await migrateResultsLedger(file, header)
+const RESULTS_LEDGER_COLUMNS = [
+  'commit',
+  'suite',
+  'tasks',
+  'success_rate',
+  'strict_success_rate',
+  'json_valid_rate',
+  'selector_hit_rate',
+  'actions_per_success',
+  'p50_s',
+  'p95_s',
+  'timeout_rate',
+  'model_load_s',
+  'status',
+  'description',
+]
+const RESULTS_LEDGER_HEADER = RESULTS_LEDGER_COLUMNS.join('\t')
 
+async function buildResultsLedgerRow(summary: ReturnType<typeof summarize>, mode: string): Promise<ResultsLedgerRow> {
   const requestedStatus = process.env.BENCHMARK_STATUS ?? 'baseline'
   const status = summary.successRate < 1 && requestedStatus === 'keep' ? 'discard' : requestedStatus
-  const row = [
-    await gitShortHash(),
-    mode,
-    String(summary.tasks),
-    summary.successRate.toFixed(4),
-    summary.strictSuccessRate.toFixed(4),
-    summary.jsonValidRate.toFixed(4),
-    summary.selectorHitRate.toFixed(4),
-    summary.actionsPerSuccess.toFixed(2),
-    summary.p50TaskSeconds.toFixed(3),
-    summary.p95TaskSeconds.toFixed(3),
-    summary.timeoutRate.toFixed(4),
-    summary.modelLoadSeconds.toFixed(3),
+  return {
+    commit: await gitShortHash(),
+    suite: mode,
+    tasks: String(summary.tasks),
+    successRate: summary.successRate.toFixed(4),
+    strictSuccessRate: summary.strictSuccessRate.toFixed(4),
+    jsonValidRate: summary.jsonValidRate.toFixed(4),
+    selectorHitRate: summary.selectorHitRate.toFixed(4),
+    actionsPerSuccess: summary.actionsPerSuccess.toFixed(2),
+    p50TaskSeconds: summary.p50TaskSeconds.toFixed(3),
+    p95TaskSeconds: summary.p95TaskSeconds.toFixed(3),
+    timeoutRate: summary.timeoutRate.toFixed(4),
+    modelLoadSeconds: summary.modelLoadSeconds.toFixed(3),
     status,
-    process.env.BENCHMARK_DESCRIPTION ?? `${mode} benchmark run`,
-  ].join('\t')
+    description: process.env.BENCHMARK_DESCRIPTION ?? `${mode} benchmark run`,
+  }
+}
 
-  const content = `${existsSync(file) ? '' : `${header}\n`}${row}\n`
+function formatResultsLedgerRow(row: ResultsLedgerRow): string {
+  return [
+    row.commit,
+    row.suite,
+    row.tasks,
+    row.successRate,
+    row.strictSuccessRate,
+    row.jsonValidRate,
+    row.selectorHitRate,
+    row.actionsPerSuccess,
+    row.p50TaskSeconds,
+    row.p95TaskSeconds,
+    row.timeoutRate,
+    row.modelLoadSeconds,
+    row.status,
+    row.description,
+  ].join('\t')
+}
+
+async function appendResults(row: ResultsLedgerRow): Promise<void> {
+  const file = resolve(REPO_ROOT, 'results.web.tsv')
+  await migrateResultsLedger(file, RESULTS_LEDGER_HEADER)
+
+  const content = `${existsSync(file) ? '' : `${RESULTS_LEDGER_HEADER}\n`}${formatResultsLedgerRow(row)}\n`
   await writeFile(file, content, { flag: 'a' })
 }
 
@@ -1759,7 +1798,52 @@ async function migrateResultsLedger(file: string, currentHeader: string): Promis
   await writeFile(file, migrated)
 }
 
-async function writeReport(results: TaskResult[], summary: ReturnType<typeof summarize>, mode: string): Promise<void> {
+function parseResultsLedgerRow(line: string): ResultsLedgerRow | undefined {
+  const parts = line.split('\t')
+  if (parts.length < RESULTS_LEDGER_COLUMNS.length) return undefined
+
+  return {
+    commit: parts[0] ?? '',
+    suite: parts[1] ?? '',
+    tasks: parts[2] ?? '',
+    successRate: parts[3] ?? '',
+    strictSuccessRate: parts[4] ?? '',
+    jsonValidRate: parts[5] ?? '',
+    selectorHitRate: parts[6] ?? '',
+    actionsPerSuccess: parts[7] ?? '',
+    p50TaskSeconds: parts[8] ?? '',
+    p95TaskSeconds: parts[9] ?? '',
+    timeoutRate: parts[10] ?? '',
+    modelLoadSeconds: parts[11] ?? '',
+    status: parts[12] ?? '',
+    description: parts.slice(13).join(' '),
+  }
+}
+
+async function readRecentResultsLedger(pendingRow: ResultsLedgerRow, limit = 8): Promise<ResultsLedgerRow[]> {
+  const file = resolve(REPO_ROOT, 'results.web.tsv')
+  const rows: ResultsLedgerRow[] = []
+
+  if (existsSync(file)) {
+    const text = await readFile(file, 'utf8')
+    const lines = text.trimEnd().split(/\r?\n/)
+    if (lines[0] === RESULTS_LEDGER_HEADER) {
+      for (const line of lines.slice(1)) {
+        const parsed = parseResultsLedgerRow(line)
+        if (parsed) rows.push(parsed)
+      }
+    }
+  }
+
+  rows.push(pendingRow)
+  return rows.slice(-limit)
+}
+
+function markdownTableCell(value: string): string {
+  return value.replace(/\|/g, '/').trim()
+}
+
+async function writeReport(results: TaskResult[], summary: ReturnType<typeof summarize>, mode: string, ledgerRow: ResultsLedgerRow): Promise<void> {
   const reportPath = resolve(BENCH_ROOT, 'report.md')
   const reportCommand = mode === 'local-fake-extension'
     ? 'pnpm benchmark:web'
@@ -1779,6 +1863,29 @@ async function writeReport(results: TaskResult[], summary: ReturnType<typeof sum
     ...(typeof summary.modelReady.progress === 'number' ? [`- model_ready_progress: ${summary.modelReady.progress}`] : []),
     ...(summary.modelReady.error ? [`- model_ready_error: ${summary.modelReady.error}`] : []),
   ]
+  const recentLedger = await readRecentResultsLedger(ledgerRow)
+  const recentLedgerLines = [
+    '',
+    '## Recent Ledger',
+    '',
+    '| commit | suite | status | tasks | success | strict | json | selector | actions | p95_s | timeout | model_load_s | description |',
+    '| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |',
+    ...recentLedger.map(row => [
+      row.commit,
+      row.suite,
+      row.status,
+      row.tasks,
+      row.successRate,
+      row.strictSuccessRate,
+      row.jsonValidRate,
+      row.selectorHitRate,
+      row.actionsPerSuccess,
+      row.p95TaskSeconds,
+      row.timeoutRate,
+      row.modelLoadSeconds,
+      row.description,
+    ].map(markdownTableCell).join(' | ')).map(row => `| ${row} |`),
+  ]
   const lines = [
     '# Web Control Plane Benchmark',
     '',
@@ -1796,6 +1903,7 @@ async function writeReport(results: TaskResult[], summary: ReturnType<typeof sum
     `- p95_task_seconds: ${summary.p95TaskSeconds.toFixed(3)}`,
     `- timeout_rate: ${summary.timeoutRate.toFixed(4)}`,
     `- tool_error_rate: ${summary.toolErrorRate.toFixed(4)}`,
+    ...recentLedgerLines,
     '',
     '## Latency Split',
     '',
@@ -1888,9 +1996,10 @@ async function main(): Promise<void> {
       }
 
       const summary = summarize(results, modelReady)
+      const ledgerRow = await buildResultsLedgerRow(summary, harness.mode)
       await writeJsonl(results, modelReady)
-      await writeReport(results, summary, harness.mode)
-      await appendResults(summary, harness.mode)
+      await writeReport(results, summary, harness.mode, ledgerRow)
+      await appendResults(ledgerRow)
 
       console.log('---')
       console.log(`task_success_rate: ${summary.successRate.toFixed(4)}`)
