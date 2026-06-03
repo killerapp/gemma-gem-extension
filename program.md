@@ -1076,6 +1076,14 @@ June 3, 2026 semantic invoice rerank coverage result:
 - Real smoke passed 60/60 with `actions_per_success 1.33`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 66/66 with `actions_per_success 1.44`, `p95_task_seconds 4.111`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Raw action traces remain at 95 positive records from 59 tasks because the new rank task is zero-action; training traces now cover 164 records from 68 tasks, 117 positive and 47 negative records, 77 candidate buckets, 28 paired buckets, and 77 preference/reranker pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 semantic settings rerank coverage result:
+
+- Added frozen `semantic-buttons/rank-settings-actions`, proving runtime `gemma_rank_actions` ranks `#payment-settings` above receipt and invoice billing distractors for a payment-settings request.
+- This completes runtime billing-control reranker coverage for all three semantic billing controls: receipt, invoice, and payment settings.
+- Baseline local before the task stayed green at 66/66 with `actions_per_success 1.44` and `p95_task_seconds 0.005`; after adding the zero-action rank task, local passed 67/67 with `actions_per_success 1.42` and `p95_task_seconds 0.006`.
+- Real smoke passed 61/61 with `actions_per_success 1.31`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 67/67 with `actions_per_success 1.42`, `p95_task_seconds 4.176`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts remain at 95 raw positive records from 59 tasks and 164 training records from 68 tasks because the new reranker task emits no browser actions; preference/reranker pairs remain at 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

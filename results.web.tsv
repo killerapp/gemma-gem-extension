@@ -423,3 +423,7 @@ b148f96	local-fake-extension	66	0.9848	0.9848	1.0000	1.0000	1.46	0.003	0.006	0.0
 b148f96	local-fake-extension	66	1.0000	1.0000	1.0000	1.0000	1.44	0.003	0.006	0.0000	0.000	keep	semantic invoice rerank local
 b148f96	real-chrome-extension-smoke	60	1.0000	1.0000	1.0000	1.0000	1.33	0.006	0.011	0.0000	0.000	keep	semantic invoice rerank real smoke
 b148f96	real-chrome-extension-agent	66	1.0000	1.0000	1.0000	1.0000	1.44	0.007	4.111	0.0000	0.001	keep	semantic invoice rerank real agent
+8a5d5a8	local-fake-extension	66	1.0000	1.0000	1.0000	1.0000	1.44	0.003	0.005	0.0000	0.000	baseline	semantic settings rerank baseline local
+8a5d5a8	local-fake-extension	67	1.0000	1.0000	1.0000	1.0000	1.42	0.003	0.006	0.0000	0.000	keep	semantic settings rerank local
+8a5d5a8	real-chrome-extension-smoke	61	1.0000	1.0000	1.0000	1.0000	1.31	0.007	0.014	0.0000	0.000	keep	semantic settings rerank real smoke
+8a5d5a8	real-chrome-extension-agent	67	1.0000	1.0000	1.0000	1.0000	1.42	0.007	4.176	0.0000	0.001	keep	semantic settings rerank real agent
