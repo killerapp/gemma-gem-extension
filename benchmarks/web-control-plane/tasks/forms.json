@@ -681,6 +681,41 @@
     }
   },
   {
+    "id": "source-page-brief-no-controls",
+    "suite": "forms",
+    "title": "Brief exposes source profile content without controls",
+    "tool": "gemma_page_brief",
+    "arguments": {
+      "tabId": 103,
+      "selector": "body",
+      "format": "text",
+      "maxChars": 4000
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "tab.title": "Profile source",
+        "selector": "body",
+        "format": "text"
+      },
+      "jsonFieldIncludes": {
+        "tab.url": ["forms-source.html"],
+        "content": ["Name", "Ada Lovelace", "Email", "ada@example.test"]
+      },
+      "jsonFieldItemCount": {
+        "interactiveControls": 0
+      },
+      "actions": 2,
+      "actionTraceTools": ["read_page_content", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
+      "contains": ["Profile source", "forms-source.html", "Ada Lovelace", "ada@example.test", "\"interactiveControls\": []"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeListTabs": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "read-source-name",
     "suite": "forms",
     "title": "Read a source profile field by selector",

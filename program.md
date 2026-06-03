@@ -1183,6 +1183,14 @@ June 3, 2026 extraction page-brief no-controls coverage result:
 - Real smoke passed 70/70 with `actions_per_success 1.24`, `p95_task_seconds 0.037`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 80/80 with `actions_per_success 1.43`, `p95_task_seconds 4.172`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 114 raw positive records from 68 tasks and 183 training records from 77 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 forms source page-brief no-controls coverage result:
+
+- Added frozen `forms/source-page-brief-no-controls`, proving `gemma_page_brief` reads the profile source fixture on logical tab 103 while returning zero interactive controls.
+- Added fake-harness parity for source tab body text+HTML reads so local page-brief behavior mirrors the real `forms-source.html` fixture used by transfer-field workflows.
+- Baseline local before the task stayed green at 80/80 with `actions_per_success 1.40` and `p95_task_seconds 0.006`; after adding the page-brief task, local passed 81/81 with `actions_per_success 1.41` and `p95_task_seconds 0.005`.
+- Real smoke passed 71/71 with `actions_per_success 1.25`, `p95_task_seconds 0.023`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 81/81 with `actions_per_success 1.43`, `p95_task_seconds 4.213`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 116 raw positive records from 69 tasks and 185 training records from 78 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

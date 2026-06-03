@@ -690,6 +690,26 @@ class FakeExtension implements HarnessProbe {
       return ['Starter $19/month', 'Team $49/month'].join('\n')
     }
     if (tabId === 103) {
+      if (selector === 'body' && format === 'html') {
+        return [
+          '<main>',
+          '<dl>',
+          '<dt>Name</dt>',
+          '<dd id="source-name">Ada Lovelace</dd>',
+          '<dt>Email</dt>',
+          '<dd id="source-email">ada@example.test</dd>',
+          '</dl>',
+          '</main>',
+        ].join('\n')
+      }
+      if (selector === 'body') {
+        return [
+          'Name',
+          'Ada Lovelace',
+          'Email',
+          'ada@example.test',
+        ].join('\n')
+      }
       return this.value(103, selector)
     }
     if (tabId === 104) {
