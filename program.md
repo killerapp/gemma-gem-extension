@@ -971,6 +971,14 @@ June 3, 2026 navigation scroll-target read coverage result:
 - Real agent retry passed 53/53 with `actions_per_success 1.53`, `p95_task_seconds 4.850`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 81 raw positive records from 47 tasks and 143 training records from 55 tasks, while candidate buckets rose to 63 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 navigation billing-link read coverage result:
+
+- Added frozen `navigation/read-billing-link-before-click`, proving exact `gemma_read_page` can scope to `#billing-link` before the navigation fixture clicks the neighboring Settings link.
+- The task freezes the second navigation link as a one-action selector-scoped read and excludes both the adjacent Settings link and the lower scroll-target text.
+- Baseline local before the task stayed green at 53/53 with `actions_per_success 1.53` and `p95_task_seconds 0.006`; after adding the task, local passed 54/54 with `actions_per_success 1.52` and `p95_task_seconds 0.006`.
+- Real smoke passed 48/48 with `actions_per_success 1.40`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 54/54 with `actions_per_success 1.52`, `p95_task_seconds 4.799`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 82 raw positive records from 48 tasks and 144 training records from 56 tasks, while candidate buckets rose to 64 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
