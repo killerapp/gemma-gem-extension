@@ -1,5 +1,19 @@
 [
   {
+    "id": "tabs-contract",
+    "suite": "navigation",
+    "title": "List addressable browser fixture tabs",
+    "tool": "gemma_tabs",
+    "arguments": {},
+    "expect": {
+      "json": "array",
+      "minItems": 5,
+      "contains": ["Billing sandbox", "Pricing sandbox", "Profile source", "Profile destination", "Navigation sandbox"],
+      "bridgeListTabs": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "active-tab-contract",
     "suite": "navigation",
     "title": "Active tab metadata is available to caller agents",

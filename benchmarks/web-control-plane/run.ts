@@ -1247,6 +1247,10 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
       notes.push(`expected at least ${expect.minPlans} plans`)
       jsonOk = false
     }
+    if (typeof expect.minItems === 'number' && Array.isArray(parsedJson) && parsedJson.length < expect.minItems) {
+      notes.push(`expected at least ${expect.minItems} JSON array items`)
+      jsonOk = false
+    }
 
     if (expect.schemaValid === true) {
       const schema = taskForCall.arguments.schema
@@ -1308,6 +1312,14 @@ async function runTask(client: Client, harness: HarnessProbe, task: BenchmarkTas
     if (expect.bridgeStop === false && harness.supportsBridgeRequestLog) {
       const sawStop = harness.requestsSince(startRequestCount).some(request => request.type === 'bridge:stop')
       if (sawStop) notes.push('unexpected bridge:stop request')
+    }
+    if (expect.bridgeListTabs === true && harness.supportsBridgeRequestLog) {
+      const sawListTabs = harness.requestsSince(startRequestCount).some(request => request.type === 'bridge:list_tabs')
+      if (!sawListTabs) notes.push('expected bridge:list_tabs request')
+    }
+    if (expect.bridgeListTabs === false && harness.supportsBridgeRequestLog) {
+      const sawListTabs = harness.requestsSince(startRequestCount).some(request => request.type === 'bridge:list_tabs')
+      if (sawListTabs) notes.push('unexpected bridge:list_tabs request')
     }
 
     if (typeof expect.activeTabId === 'number') {

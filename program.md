@@ -523,6 +523,11 @@ Experiment result:
 - `pnpm benchmark:web` passes with `17` local-fake-extension tasks, including `navigation/scroll-contract`, at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.94`, `p95_task_seconds 0.010`, and `timeout_rate 0.0000`.
 - `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `13` tasks, including `navigation/scroll-contract`, at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.62`, `p95_task_seconds 0.035`, and `timeout_rate 0.0000`.
 - Trace floors are raised to `32` raw records, `32` positives, `86` training records, and `50` training positives. Selector, preference, policy, reranker, baseline, and weight gates remain unchanged and green.
+- The frozen navigation suite now includes `tabs-contract`, proving `gemma_tabs` returns valid JSON, lists the five addressable fixture tabs, sends `bridge:list_tabs`, and does not use `bridge:run_agent`.
+- The benchmark evaluator now supports a generic `minItems` assertion for JSON arrays and explicit `bridgeListTabs` request-log checks in fake-extension mode.
+- `pnpm benchmark:web` passes with `18` local-fake-extension tasks, including `navigation/tabs-contract`, at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.83`, `p95_task_seconds 0.011`, and `timeout_rate 0.0000`.
+- `pnpm benchmark:web -- --real` passes the deterministic real-extension smoke subset with `14` tasks, including `navigation/tabs-contract`, at `task_success_rate 1.0000`, `strict_success_rate 1.0000`, `selector_hit_rate 1.0000`, `actions_per_success 1.50`, `p95_task_seconds 0.103`, and `timeout_rate 0.0000`.
+- Trace floors remain unchanged after adding tabs coverage because `bridge:list_tabs` is a metadata request, not an action trace. All trace, policy, preference, reranker, baseline, and weight gates remain green.
 - Interpretation: real-extension benchmark runs now report model-driven browser activity at the same action-count scale as the fake harness, and the JSONL artifacts keep enough action metadata to begin building selector/action trace datasets.
 
 Relevant platform constraints:
