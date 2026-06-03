@@ -1223,6 +1223,14 @@ June 3, 2026 semantic billing HTML read coverage result:
 - Real smoke passed 75/75 with `actions_per_success 1.24`, `p95_task_seconds 0.097`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 85/85 with `actions_per_success 1.41`, `p95_task_seconds 4.216`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 120 raw positive records from 73 tasks and 189 training records from 82 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 navigation isolated HTML read coverage result:
+
+- Added frozen `navigation/read-isolated-navigation-body-html`, proving direct `gemma_read_page` HTML readback captures the isolated navigation fixture before the billing-link click mutates its URL.
+- The task complements tab-list, page-brief, exact link read, screenshot, and click coverage for logical tab 106 by freezing raw link and scroll-target markup while excluding semantic, form, and pricing markup.
+- Baseline local before the task stayed green at 85/85 with `actions_per_success 1.39` and `p95_task_seconds 0.006`; after adding the HTML read task, local passed 86/86 with `actions_per_success 1.38` and `p95_task_seconds 0.005`.
+- Real smoke passed 76/76 with `actions_per_success 1.24`, `p95_task_seconds 0.027`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 86/86 with `actions_per_success 1.41`, `p95_task_seconds 4.133`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 121 raw positive records from 74 tasks and 190 training records from 83 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

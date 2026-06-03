@@ -516,3 +516,7 @@ af32c9d	local-fake-extension	84	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.005	0.0
 af32c9d	local-fake-extension	85	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.006	0.0000	0.000	keep	semantic billing html read local
 af32c9d	real-chrome-extension-smoke	75	1.0000	1.0000	1.0000	1.0000	1.24	0.006	0.097	0.0000	0.000	keep	semantic billing html read real smoke
 af32c9d	real-chrome-extension-agent	85	1.0000	1.0000	1.0000	1.0000	1.41	0.007	4.216	0.0000	0.001	keep	semantic billing html read real agent
+f1bb818	local-fake-extension	85	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.006	0.0000	0.000	baseline	navigation isolated html read baseline local
+f1bb818	local-fake-extension	86	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	keep	navigation isolated html read local
+f1bb818	real-chrome-extension-smoke	76	1.0000	1.0000	1.0000	1.0000	1.24	0.006	0.027	0.0000	0.000	keep	navigation isolated html read real smoke
+f1bb818	real-chrome-extension-agent	86	1.0000	1.0000	1.0000	1.0000	1.41	0.007	4.133	0.0000	0.001	keep	navigation isolated html read real agent
