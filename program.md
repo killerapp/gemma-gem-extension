@@ -1199,6 +1199,14 @@ June 3, 2026 forms source HTML read coverage result:
 - Real smoke passed 72/72 with `actions_per_success 1.25`, `p95_task_seconds 0.049`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 82/82 with `actions_per_success 1.43`, `p95_task_seconds 4.248`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 117 raw positive records from 70 tasks and 186 training records from 79 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 extraction pricing HTML read coverage result:
+
+- Added frozen `extraction/read-pricing-body-html`, proving direct `gemma_read_page` HTML readback on logical tab 102 preserves both pricing plan sections without leaking form or billing-control markup.
+- The first two local attempts were discarded at 82/83: first because the fake harness did not yet mirror pricing body HTML, then because the top-level text assertion expected unescaped HTML attribute quotes. The kept version adds fake-harness parity for pricing body HTML and keeps exact attribute checks inside `jsonFieldIncludes`.
+- Baseline local before the task stayed green at 82/82 with `actions_per_success 1.40` and `p95_task_seconds 0.005`; after the parity/assertion fix, local passed 83/83 with `actions_per_success 1.40` and `p95_task_seconds 0.005`.
+- Real smoke passed 73/73 with `actions_per_success 1.25`, `p95_task_seconds 0.088`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 83/83 with `actions_per_success 1.42`, `p95_task_seconds 4.209`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 118 raw positive records from 71 tasks and 187 training records from 80 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

@@ -502,3 +502,9 @@ e6e6bde	real-chrome-extension-agent	80	1.0000	1.0000	1.0000	1.0000	1.43	0.007	4.
 9b5c48e	local-fake-extension	82	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	keep	forms source html read local
 9b5c48e	real-chrome-extension-smoke	72	1.0000	1.0000	1.0000	1.0000	1.25	0.006	0.049	0.0000	0.000	keep	forms source html read real smoke
 9b5c48e	real-chrome-extension-agent	82	1.0000	1.0000	1.0000	1.0000	1.43	0.007	4.248	0.0000	0.001	keep	forms source html read real agent
+413e5c5	local-fake-extension	82	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	baseline	extraction pricing html read baseline local
+413e5c5	local-fake-extension	83	0.9880	0.9880	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	discard	extraction pricing html read local
+413e5c5	local-fake-extension	83	0.9880	0.9880	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	discard	extraction pricing html read local
+413e5c5	local-fake-extension	83	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	keep	extraction pricing html read local
+413e5c5	real-chrome-extension-smoke	73	1.0000	1.0000	1.0000	1.0000	1.25	0.006	0.088	0.0000	0.000	keep	extraction pricing html read real smoke
+413e5c5	real-chrome-extension-agent	83	1.0000	1.0000	1.0000	1.0000	1.42	0.007	4.209	0.0000	0.001	keep	extraction pricing html read real agent

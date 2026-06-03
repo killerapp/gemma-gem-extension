@@ -168,6 +168,35 @@
     }
   },
   {
+    "id": "read-pricing-body-html",
+    "suite": "extraction",
+    "title": "Read full pricing body HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 102,
+      "selector": "body",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["data-plan=\"starter\"", "<h2>Starter</h2>", "$19/month", "data-plan=\"team\"", "<h2>Team</h2>", "$49/month"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["dest-name", "Save profile", "download-receipt"]
+      },
+      "contains": ["data-plan", "starter", "<h2>Starter</h2>", "$19/month", "team", "<h2>Team</h2>", "$49/month"],
+      "notContains": ["dest-name", "Save profile", "download-receipt"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "read-scoped-plan",
     "suite": "extraction",
     "title": "Read only a selector-scoped pricing plan",
