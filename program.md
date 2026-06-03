@@ -1191,6 +1191,14 @@ June 3, 2026 forms source page-brief no-controls coverage result:
 - Real smoke passed 71/71 with `actions_per_success 1.25`, `p95_task_seconds 0.023`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 81/81 with `actions_per_success 1.43`, `p95_task_seconds 4.213`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 116 raw positive records from 69 tasks and 185 training records from 78 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 forms source HTML read coverage result:
+
+- Added frozen `forms/read-source-body-html`, proving direct `gemma_read_page` HTML readback on logical tab 103 preserves the source profile `#source-name` and `#source-email` elements without leaking destination form controls.
+- The task complements source page-brief and transfer-field coverage by freezing the raw source fixture markup used for profile-copy workflows.
+- Baseline local before the task stayed green at 81/81 with `actions_per_success 1.41` and `p95_task_seconds 0.006`; after adding the HTML read task, local passed 82/82 with `actions_per_success 1.40` and `p95_task_seconds 0.005`.
+- Real smoke passed 72/72 with `actions_per_success 1.25`, `p95_task_seconds 0.049`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 82/82 with `actions_per_success 1.43`, `p95_task_seconds 4.248`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 117 raw positive records from 70 tasks and 186 training records from 79 tasks; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

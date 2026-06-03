@@ -498,3 +498,7 @@ e6e6bde	real-chrome-extension-agent	80	1.0000	1.0000	1.0000	1.0000	1.43	0.007	4.
 2647ab8	local-fake-extension	81	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.005	0.0000	0.000	keep	forms source page brief local
 2647ab8	real-chrome-extension-smoke	71	1.0000	1.0000	1.0000	1.0000	1.25	0.007	0.023	0.0000	0.000	keep	forms source page brief real smoke
 2647ab8	real-chrome-extension-agent	81	1.0000	1.0000	1.0000	1.0000	1.43	0.006	4.213	0.0000	0.001	keep	forms source page brief real agent
+9b5c48e	local-fake-extension	81	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.006	0.0000	0.000	baseline	forms source html read baseline local
+9b5c48e	local-fake-extension	82	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	keep	forms source html read local
+9b5c48e	real-chrome-extension-smoke	72	1.0000	1.0000	1.0000	1.0000	1.25	0.006	0.049	0.0000	0.000	keep	forms source html read real smoke
+9b5c48e	real-chrome-extension-agent	82	1.0000	1.0000	1.0000	1.0000	1.43	0.007	4.248	0.0000	0.001	keep	forms source html read real agent
