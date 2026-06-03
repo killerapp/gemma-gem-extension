@@ -432,3 +432,7 @@ b148f96	real-chrome-extension-agent	66	1.0000	1.0000	1.0000	1.0000	1.44	0.007	4.
 013cf7b	real-chrome-extension-smoke	61	1.0000	1.0000	1.0000	1.0000	1.31	0.006	0.011	0.0000	0.000	keep	semantic invoice observe real smoke
 013cf7b	real-chrome-extension-smoke	61	1.0000	1.0000	1.0000	1.0000	1.31	0.006	0.012	0.0000	0.000	keep	semantic invoice observe real smoke
 013cf7b	real-chrome-extension-agent	68	1.0000	1.0000	1.0000	1.0000	1.43	0.007	4.211	0.0000	0.001	keep	semantic invoice observe real agent
+acf1e9d	local-fake-extension	68	1.0000	1.0000	1.0000	1.0000	1.43	0.003	0.006	0.0000	0.000	baseline	semantic settings observe baseline local
+acf1e9d	local-fake-extension	69	1.0000	1.0000	1.0000	1.0000	1.43	0.003	0.005	0.0000	0.000	keep	semantic settings observe local
+acf1e9d	real-chrome-extension-smoke	61	1.0000	1.0000	1.0000	1.0000	1.31	0.007	0.011	0.0000	0.000	keep	semantic settings observe real smoke
+acf1e9d	real-chrome-extension-agent	69	1.0000	1.0000	1.0000	1.0000	1.43	0.007	4.213	0.0000	0.001	keep	semantic settings observe real agent

@@ -1092,6 +1092,14 @@ June 3, 2026 semantic invoice observe coverage result:
 - Real smoke passed 61/61 with `actions_per_success 1.31`, final observed `p95_task_seconds 0.012`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 68/68 with `actions_per_success 1.43`, `p95_task_seconds 4.211`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 97 raw positive records from 60 tasks and 166 training records from 69 tasks, while candidate buckets rose to 78, paired buckets remain 28, and preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 semantic settings observe coverage result:
+
+- Added frozen `semantic-buttons/semantic-settings-observe-json`, proving `gemma_observe` returns `#payment-settings` first for a payment-settings instruction through the deterministic observe candidate path and checked billing-control reranker.
+- This completes JSON observe coverage for all three semantic billing controls: receipt, invoice, and payment settings.
+- Baseline local before the task stayed green at 68/68 with `actions_per_success 1.43` and `p95_task_seconds 0.006`; after adding the observe task, local passed 69/69 with `actions_per_success 1.43` and `p95_task_seconds 0.005`.
+- Real smoke passed 61/61 with `actions_per_success 1.31`, `p95_task_seconds 0.011`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 69/69 with `actions_per_success 1.43`, `p95_task_seconds 4.213`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 99 raw positive records from 61 tasks and 168 training records from 70 tasks, while candidate buckets rose to 79, paired buckets remain 28, and preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

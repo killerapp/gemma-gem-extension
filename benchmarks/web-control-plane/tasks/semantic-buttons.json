@@ -85,6 +85,32 @@
     }
   },
   {
+    "id": "semantic-settings-observe-json",
+    "suite": "semantic-buttons",
+    "title": "Observe the payment settings action as valid JSON",
+    "tool": "gemma_observe",
+    "arguments": {
+      "tabId": 101,
+      "instruction": "find the control for payment settings"
+    },
+    "expect": {
+      "json": "array",
+      "jsonFields": {
+        "0.selector": "#payment-settings",
+        "0.method": "click"
+      },
+      "minItems": 1,
+      "selector": "#payment-settings",
+      "method": "click",
+      "actions": 2,
+      "actionTraceTools": ["read_page_content", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "rank-receipt-actions",
     "suite": "semantic-buttons",
     "title": "Rank receipt action above billing distractors",
