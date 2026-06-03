@@ -522,6 +522,12 @@ class FakeExtension implements HarnessProbe {
     }
 
     if (request.prompt.includes('gemma_extract')) {
+      if (request.prompt.includes('Scope selector: .plan[data-plan="starter"]')) {
+        return this.response(request.requestId, JSON.stringify({
+          plan: { name: 'Starter', price: '$19/month' },
+        }))
+      }
+
       if (request.prompt.includes('Scope selector: .plan[data-plan="team"]')) {
         return this.response(request.requestId, JSON.stringify({
           plan: { name: 'Team', price: '$49/month' },

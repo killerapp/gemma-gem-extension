@@ -92,6 +92,47 @@
     }
   },
   {
+    "id": "extract-scoped-starter-plan-json",
+    "suite": "extraction",
+    "title": "Extract a selector-scoped starter pricing plan",
+    "tool": "gemma_extract",
+    "arguments": {
+      "tabId": 102,
+      "selector": ".plan[data-plan=\"starter\"]",
+      "instruction": "extract the selected pricing plan and monthly price",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "plan": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "price": { "type": "string" }
+            },
+            "required": ["name", "price"]
+          }
+        },
+        "required": ["plan"]
+      }
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "plan.name": "Starter",
+        "plan.price": "$19/month"
+      },
+      "contains": ["Starter", "$19"],
+      "notContains": ["Team", "$49"],
+      "schemaValid": true,
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent"],
+      "actionTraceTextIncludes": ["selector=.plan[data-plan=\"starter\"] format=text", "selector=.plan[data-plan=\"starter\"] format=html", "Scope selector: .plan[data-plan=\"starter\"]"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": ".plan[data-plan=\"starter\"]",
+      "bridgeRunAgent": true
+    }
+  },
+  {
     "id": "read-scoped-plan",
     "suite": "extraction",
     "title": "Read only a selector-scoped pricing plan",

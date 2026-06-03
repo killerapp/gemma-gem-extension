@@ -347,3 +347,7 @@ f735b80	real-chrome-extension-agent	47	1.0000	1.0000	1.0000	1.0000	1.51	0.008	4.
 67c5b8e	local-fake-extension	48	1.0000	1.0000	1.0000	1.0000	1.50	0.003	0.006	0.0000	0.000	keep	starter scoped html local
 67c5b8e	real-chrome-extension-smoke	43	1.0000	1.0000	1.0000	1.0000	1.40	0.006	0.014	0.0000	0.000	keep	starter scoped html real smoke
 67c5b8e	real-chrome-extension-agent	48	1.0000	1.0000	1.0000	1.0000	1.50	0.007	4.183	0.0000	0.001	keep	starter scoped html real agent
+4df2e8f	local-fake-extension	48	1.0000	1.0000	1.0000	1.0000	1.50	0.003	0.006	0.0000	0.000	baseline	starter scoped extract baseline local
+4df2e8f	local-fake-extension	49	1.0000	1.0000	1.0000	1.0000	1.53	0.003	0.006	0.0000	0.000	keep	starter scoped extract local
+4df2e8f	real-chrome-extension-smoke	43	1.0000	1.0000	1.0000	1.0000	1.40	0.007	0.014	0.0000	0.000	keep	starter scoped extract real smoke
+4df2e8f	real-chrome-extension-agent	49	1.0000	1.0000	1.0000	1.0000	1.53	0.007	4.845	0.0000	0.001	keep	starter scoped extract real agent
