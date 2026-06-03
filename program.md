@@ -881,6 +881,14 @@ June 3, 2026 save button recovery coverage result:
 - Real smoke passed 34/34 with `actions_per_success 1.26`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 39/39 with `actions_per_success 1.41`, `p95_task_seconds 6.504`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 55 raw positive records from 33 tasks and 117 training records from 41 tasks, while candidate buckets rose to 45 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 textarea recovery coverage result:
+
+- Added frozen `forms/type-notes-recover-selector`, proving `gemma_type_text` can recover `text=Notes` to the textarea selector `#dest-notes` and type through the recovered control.
+- The task freezes the same text-selector recovery shape used by input and button recovery: page text read, page HTML read, then `type_text` on the recovered textarea selector while keeping typed text redacted in action traces via `textLength=8`.
+- Baseline local before the task stayed green at 39/39 with `actions_per_success 1.41` and `p95_task_seconds 0.009`; after adding the task, local passed 40/40 with `actions_per_success 1.45` and `p95_task_seconds 0.006`.
+- Real smoke passed 35/35 with `actions_per_success 1.31`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real agent passed 40/40 with `actions_per_success 1.45`, `p95_task_seconds 4.186`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 58 raw positive records from 34 tasks and 120 training records from 42 tasks, while candidate buckets rose to 47 and preference/reranker pair counts remain stable at 71 pairs with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

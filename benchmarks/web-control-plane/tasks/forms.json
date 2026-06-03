@@ -229,6 +229,36 @@
     }
   },
   {
+    "id": "type-notes-recover-selector",
+    "suite": "forms",
+    "title": "Recover destination notes textarea selector",
+    "tool": "gemma_type_text",
+    "arguments": {
+      "tabId": 104,
+      "selector": "text=Notes",
+      "text": "Ops note"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "recovered": true,
+        "recoveredSelector": "#dest-notes",
+        "result.into": "#dest-notes",
+        "result.value": "Ops note"
+      },
+      "contains": ["recoveredSelector", "#dest-notes", "Ops note"],
+      "destinationValues": {
+        "#dest-notes": "Ops note"
+      },
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "type_text"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "selector=#dest-notes textLength=8"],
+      "bridgeExecuteTools": ["read_page_content", "type_text"],
+      "bridgeExecuteSelectors": ["body", "#dest-notes"],
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "select-role-label",
     "suite": "forms",
     "title": "Select a role option by visible label",
