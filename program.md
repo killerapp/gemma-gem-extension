@@ -1397,6 +1397,14 @@ June 3, 2026 settings pre-click runtime-fallback benchmark coverage result:
 - Real smoke remained 91/91 with `actions_per_success 1.15`, `p95_task_seconds 0.548`, and `timeout_rate 0.0000`; real agent passed 101/101 with `actions_per_success 1.31`, `p95_task_seconds 0.566`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts remained at 132 raw positive records from 85 tasks and 201 training records from 94 tasks because the latest trace export follows the real-agent JSONL, where the local-only synthetic runtime tasks are excluded; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 3, 2026 invoice after-click runtime-fallback benchmark coverage result:
+
+- Added frozen local-only `semantic-buttons/semantic-invoice-agent-runtime-error-after-click`, extending the already-executed transient runtime fallback coverage from receipt to invoice.
+- The fake extension now can emit a `click_element({"selector":"#download-invoice"})` agent chunk before returning the unaligned-access runtime error, proving the sidecar reports the already-executed invoice selector without issuing a duplicate fallback `click_element`.
+- Baseline local before the task stayed green at 105/105 with `actions_per_success 1.38` and `p95_task_seconds 0.006`; after adding the task, local passed 106/106 with `actions_per_success 1.40`, `p95_task_seconds 0.006`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke remained 91/91 with `actions_per_success 1.15`, `p95_task_seconds 0.548`, and `timeout_rate 0.0000`; real agent passed 101/101 with `actions_per_success 1.31`, `p95_task_seconds 4.145`, `model_ready_status ready`, and `timeout_rate 0.0000`.
+- Trace artifacts remained at 132 raw positive records from 85 tasks and 201 training records from 94 tasks because the latest trace export follows the real-agent JSONL, where the local-only synthetic runtime tasks are excluded; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

@@ -574,6 +574,18 @@ class FakeExtension implements HarnessProbe {
         }),
       ]
     }
+    if (/simulate transient runtime error after clicking invoice/i.test(request.prompt)) {
+      return [
+        {
+          type: 'bridge:chunk',
+          requestId: request.requestId,
+          text: '[Tool] click_element({"selector":"#download-invoice"})',
+        },
+        this.response(request.requestId, {
+          text: 'Something went wrong: operation does not support unaligned accesses',
+        }),
+      ]
+    }
     if (/simulate transient runtime error before clicking receipt/i.test(request.prompt)) {
       return this.response(request.requestId, {
         text: 'Something went wrong: operation does not support unaligned accesses',

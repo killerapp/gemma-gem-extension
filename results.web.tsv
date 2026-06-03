@@ -617,3 +617,7 @@ a9fffa9	local-fake-extension	104	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.006	0.
 a9fffa9	local-fake-extension	105	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.006	0.0000	0.000	keep	settings preclick runtime fallback local
 a9fffa9	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.007	0.548	0.0000	0.000	keep	settings preclick runtime fallback real smoke
 a9fffa9	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.008	0.566	0.0000	0.001	keep	settings preclick runtime fallback real agent
+969c5e7	local-fake-extension	105	1.0000	1.0000	1.0000	1.0000	1.38	0.004	0.006	0.0000	0.000	baseline	invoice afterclick runtime fallback baseline local
+969c5e7	local-fake-extension	106	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.006	0.0000	0.000	keep	invoice afterclick runtime fallback local
+969c5e7	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.008	0.548	0.0000	0.000	keep	invoice afterclick runtime fallback real smoke
+969c5e7	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.009	4.145	0.0000	0.001	keep	invoice afterclick runtime fallback real agent
