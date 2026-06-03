@@ -42,6 +42,7 @@
       "contains": ["Starter", "$19", "Team", "$49"],
       "schemaValid": true,
       "minPlans": 2,
+      "actions": 3,
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",
       "bridgeRunAgent": true
@@ -80,6 +81,7 @@
       "contains": ["Team", "$49"],
       "notContains": ["Starter", "$19"],
       "schemaValid": true,
+      "actions": 3,
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": ".plan[data-plan=\"team\"]",
       "bridgeRunAgent": true

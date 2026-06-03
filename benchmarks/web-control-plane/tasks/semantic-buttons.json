@@ -12,6 +12,10 @@
     },
     "expect": {
       "contains": ["#download-receipt", "INV-2026-041"],
+      "actions": 3,
+      "actionsByMode": {
+        "real-chrome-extension-agent": 4
+      },
       "bridgeExecuteTool": "read_page_content",
       "bridgeExecuteSelector": "body",
       "bridgeRunAgent": true
