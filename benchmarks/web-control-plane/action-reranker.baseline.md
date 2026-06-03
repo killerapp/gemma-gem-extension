@@ -12,6 +12,7 @@ The machine-readable learned weights are written to `./benchmarks/web-control-pl
 - best_policy: learned_perceptron
 - best_accuracy: 1.0000
 - best_min_margin: 14.000
+- target_selector_pairs: 6
 
 ## Policy Comparison
 
@@ -21,6 +22,15 @@ The machine-readable learned weights are written to `./benchmarks/web-control-pl
 | learned_perceptron | 1.0000 | 71 | 14.000 |
 | learned_perceptron_loto | 1.0000 | 71 | 12.000 |
 | learned_perceptron_loso | 1.0000 | 71 | 10.000 |
+
+## Target Selector Policy Comparison
+
+| policy | accuracy | pairs | min_margin |
+| --- | ---: | ---: | ---: |
+| semantic_keyword | 1.0000 | 6 | 11.000 |
+| learned_perceptron | 1.0000 | 6 | 101.000 |
+| learned_perceptron_loto | 1.0000 | 6 | 101.000 |
+| learned_perceptron_loso | 1.0000 | 6 | 101.000 |
 
 ## Learned Weights
 

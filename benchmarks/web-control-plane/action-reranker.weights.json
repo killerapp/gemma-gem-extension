@@ -41,6 +41,32 @@
         "pairs": 71,
         "minMargin": 10
       }
+    ],
+    "targetSelectorPolicies": [
+      {
+        "name": "semantic_keyword",
+        "accuracy": 1,
+        "pairs": 6,
+        "minMargin": 11
+      },
+      {
+        "name": "learned_perceptron",
+        "accuracy": 1,
+        "pairs": 6,
+        "minMargin": 101
+      },
+      {
+        "name": "learned_perceptron_loto",
+        "accuracy": 1,
+        "pairs": 6,
+        "minMargin": 101
+      },
+      {
+        "name": "learned_perceptron_loso",
+        "accuracy": 1,
+        "pairs": 6,
+        "minMargin": 101
+      }
     ]
   },
   "weights": [

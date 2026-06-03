@@ -20,6 +20,7 @@ type PairResult = {
   pairIndex: number
   taskId: string
   suiteId: string
+  targetSelector?: string
   toolName: string
   chosenId: string
   rejectedId: string
@@ -47,6 +48,15 @@ type CheckConfig = {
   minLearnedLotoMargin?: number
   minLearnedLosoAccuracy?: number
   minLearnedLosoMargin?: number
+  minTargetSelectorPairs?: number
+  minTargetSelectorSemanticAccuracy?: number
+  minTargetSelectorSemanticMargin?: number
+  minTargetSelectorLearnedAccuracy?: number
+  minTargetSelectorLearnedMargin?: number
+  minTargetSelectorLearnedLotoAccuracy?: number
+  minTargetSelectorLearnedLotoMargin?: number
+  minTargetSelectorLearnedLosoAccuracy?: number
+  minTargetSelectorLearnedLosoMargin?: number
   checkOnly: boolean
 }
 
@@ -72,6 +82,15 @@ function parseArgs(): { input: string; output: string; weightsOutput: string; ep
     minLearnedLotoMargin: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOTO_MARGIN ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOTO_MARGIN, 'GEMMA_GEM_RERANKER_BASELINE_MIN_LOTO_MARGIN') : undefined,
     minLearnedLosoAccuracy: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOSO ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOSO, 'GEMMA_GEM_RERANKER_BASELINE_MIN_LOSO') : undefined,
     minLearnedLosoMargin: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOSO_MARGIN ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_LOSO_MARGIN, 'GEMMA_GEM_RERANKER_BASELINE_MIN_LOSO_MARGIN') : undefined,
+    minTargetSelectorPairs: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_PAIRS ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_PAIRS, 'GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_PAIRS') : undefined,
+    minTargetSelectorSemanticAccuracy: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_SEMANTIC ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_SEMANTIC, 'GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_SEMANTIC') : undefined,
+    minTargetSelectorSemanticMargin: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_SEMANTIC_MARGIN ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_SEMANTIC_MARGIN, 'GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_SEMANTIC_MARGIN') : undefined,
+    minTargetSelectorLearnedAccuracy: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LEARNED ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LEARNED, 'GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LEARNED') : undefined,
+    minTargetSelectorLearnedMargin: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LEARNED_MARGIN ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LEARNED_MARGIN, 'GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LEARNED_MARGIN') : undefined,
+    minTargetSelectorLearnedLotoAccuracy: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LOTO ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LOTO, 'GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LOTO') : undefined,
+    minTargetSelectorLearnedLotoMargin: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LOTO_MARGIN ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LOTO_MARGIN, 'GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LOTO_MARGIN') : undefined,
+    minTargetSelectorLearnedLosoAccuracy: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LOSO ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LOSO, 'GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LOSO') : undefined,
+    minTargetSelectorLearnedLosoMargin: process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LOSO_MARGIN ? parseNumber(process.env.GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LOSO_MARGIN, 'GEMMA_GEM_RERANKER_BASELINE_MIN_TARGET_SELECTOR_LOSO_MARGIN') : undefined,
     checkOnly: false,
   }
 
@@ -144,6 +163,51 @@ function parseArgs(): { input: string; output: string; weightsOutput: string; ep
       i += 1
     } else if (arg.startsWith('--min-learned-loso-margin=')) {
       check.minLearnedLosoMargin = parseNumber(arg.slice('--min-learned-loso-margin='.length), '--min-learned-loso-margin')
+    } else if (arg === '--min-target-selector-pairs') {
+      check.minTargetSelectorPairs = parseNumber(value, '--min-target-selector-pairs')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-pairs=')) {
+      check.minTargetSelectorPairs = parseNumber(arg.slice('--min-target-selector-pairs='.length), '--min-target-selector-pairs')
+    } else if (arg === '--min-target-selector-semantic-accuracy') {
+      check.minTargetSelectorSemanticAccuracy = parseNumber(value, '--min-target-selector-semantic-accuracy')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-semantic-accuracy=')) {
+      check.minTargetSelectorSemanticAccuracy = parseNumber(arg.slice('--min-target-selector-semantic-accuracy='.length), '--min-target-selector-semantic-accuracy')
+    } else if (arg === '--min-target-selector-semantic-margin') {
+      check.minTargetSelectorSemanticMargin = parseNumber(value, '--min-target-selector-semantic-margin')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-semantic-margin=')) {
+      check.minTargetSelectorSemanticMargin = parseNumber(arg.slice('--min-target-selector-semantic-margin='.length), '--min-target-selector-semantic-margin')
+    } else if (arg === '--min-target-selector-learned-accuracy') {
+      check.minTargetSelectorLearnedAccuracy = parseNumber(value, '--min-target-selector-learned-accuracy')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-learned-accuracy=')) {
+      check.minTargetSelectorLearnedAccuracy = parseNumber(arg.slice('--min-target-selector-learned-accuracy='.length), '--min-target-selector-learned-accuracy')
+    } else if (arg === '--min-target-selector-learned-margin') {
+      check.minTargetSelectorLearnedMargin = parseNumber(value, '--min-target-selector-learned-margin')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-learned-margin=')) {
+      check.minTargetSelectorLearnedMargin = parseNumber(arg.slice('--min-target-selector-learned-margin='.length), '--min-target-selector-learned-margin')
+    } else if (arg === '--min-target-selector-learned-loto-accuracy') {
+      check.minTargetSelectorLearnedLotoAccuracy = parseNumber(value, '--min-target-selector-learned-loto-accuracy')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-learned-loto-accuracy=')) {
+      check.minTargetSelectorLearnedLotoAccuracy = parseNumber(arg.slice('--min-target-selector-learned-loto-accuracy='.length), '--min-target-selector-learned-loto-accuracy')
+    } else if (arg === '--min-target-selector-learned-loto-margin') {
+      check.minTargetSelectorLearnedLotoMargin = parseNumber(value, '--min-target-selector-learned-loto-margin')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-learned-loto-margin=')) {
+      check.minTargetSelectorLearnedLotoMargin = parseNumber(arg.slice('--min-target-selector-learned-loto-margin='.length), '--min-target-selector-learned-loto-margin')
+    } else if (arg === '--min-target-selector-learned-loso-accuracy') {
+      check.minTargetSelectorLearnedLosoAccuracy = parseNumber(value, '--min-target-selector-learned-loso-accuracy')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-learned-loso-accuracy=')) {
+      check.minTargetSelectorLearnedLosoAccuracy = parseNumber(arg.slice('--min-target-selector-learned-loso-accuracy='.length), '--min-target-selector-learned-loso-accuracy')
+    } else if (arg === '--min-target-selector-learned-loso-margin') {
+      check.minTargetSelectorLearnedLosoMargin = parseNumber(value, '--min-target-selector-learned-loso-margin')
+      i += 1
+    } else if (arg.startsWith('--min-target-selector-learned-loso-margin=')) {
+      check.minTargetSelectorLearnedLosoMargin = parseNumber(arg.slice('--min-target-selector-learned-loso-margin='.length), '--min-target-selector-learned-loso-margin')
     } else {
       throw new Error(`Unknown argument ${arg}. Use --input <path>, --output <path>, --epochs <n>, --check-only, and metric threshold options.`)
     }
@@ -180,6 +244,7 @@ function evaluateSemanticKeyword(pairs: RerankerPreferenceRecord[]): PolicyResul
       pairIndex: pair.pairIndex,
       taskId: pair.task.id,
       suiteId: pair.task.suite,
+      targetSelector: pair.task.targetSelector,
       toolName: pair.bucket.toolName,
       chosenId: pair.chosen.id,
       rejectedId: pair.rejected.id,
@@ -201,6 +266,7 @@ function evaluateLearned(name: string, pairs: RerankerPreferenceRecord[], weight
       pairIndex: pair.pairIndex,
       taskId: pair.task.id,
       suiteId: pair.task.suite,
+      targetSelector: pair.task.targetSelector,
       toolName: pair.bucket.toolName,
       chosenId: pair.chosen.id,
       rejectedId: pair.rejected.id,
@@ -223,6 +289,10 @@ function policyResult(name: string, pairs: PairResult[]): PolicyResult {
     pairs,
     minMargin: pairs.length ? Math.min(...pairs.map(pair => pair.margin)) : 0,
   }
+}
+
+function targetSelectorResult(result: PolicyResult): PolicyResult {
+  return policyResult(result.name, result.pairs.filter(pair => Boolean(pair.targetSelector)))
 }
 
 function evaluateLeaveOneTaskOut(pairs: RerankerPreferenceRecord[], epochs: number): PolicyResult {
@@ -287,6 +357,20 @@ function checkResults(results: PolicyResult[], check: CheckConfig): void {
   assertAtLeast(loto.minMargin, check.minLearnedLotoMargin, 'learned_perceptron_loto_min_margin')
   assertAtLeast(loso.accuracy, check.minLearnedLosoAccuracy, 'learned_perceptron_loso_accuracy')
   assertAtLeast(loso.minMargin, check.minLearnedLosoMargin, 'learned_perceptron_loso_min_margin')
+
+  const targetSemantic = targetSelectorResult(semantic)
+  const targetLearned = targetSelectorResult(learned)
+  const targetLoto = targetSelectorResult(loto)
+  const targetLoso = targetSelectorResult(loso)
+  assertAtLeast(targetSemantic.pairs.length, check.minTargetSelectorPairs, 'target_selector_reranker_pairs')
+  assertAtLeast(targetSemantic.accuracy, check.minTargetSelectorSemanticAccuracy, 'target_selector_semantic_keyword_accuracy')
+  assertAtLeast(targetSemantic.minMargin, check.minTargetSelectorSemanticMargin, 'target_selector_semantic_keyword_min_margin')
+  assertAtLeast(targetLearned.accuracy, check.minTargetSelectorLearnedAccuracy, 'target_selector_learned_perceptron_accuracy')
+  assertAtLeast(targetLearned.minMargin, check.minTargetSelectorLearnedMargin, 'target_selector_learned_perceptron_min_margin')
+  assertAtLeast(targetLoto.accuracy, check.minTargetSelectorLearnedLotoAccuracy, 'target_selector_learned_perceptron_loto_accuracy')
+  assertAtLeast(targetLoto.minMargin, check.minTargetSelectorLearnedLotoMargin, 'target_selector_learned_perceptron_loto_min_margin')
+  assertAtLeast(targetLoso.accuracy, check.minTargetSelectorLearnedLosoAccuracy, 'target_selector_learned_perceptron_loso_accuracy')
+  assertAtLeast(targetLoso.minMargin, check.minTargetSelectorLearnedLosoMargin, 'target_selector_learned_perceptron_loso_min_margin')
 }
 
 function bestPolicy(results: PolicyResult[]): PolicyResult {
@@ -325,6 +409,7 @@ function weightsArtifact(input: string, epochs: number, pairs: RerankerPreferenc
   const tasks = new Set(pairs.map(pair => pair.task.id))
   const suites = new Set(pairs.map(pair => pair.task.suite))
   const best = bestPolicy(results)
+  const targetSelectorResults = results.map(targetSelectorResult)
   return {
     recordType: 'web-control-action-reranker-weights',
     version: 1,
@@ -344,6 +429,12 @@ function weightsArtifact(input: string, epochs: number, pairs: RerankerPreferenc
     metrics: {
       bestPolicy: best.name,
       policies: results.map(result => ({
+        name: result.name,
+        accuracy: Number(result.accuracy.toFixed(4)),
+        pairs: result.pairs.length,
+        minMargin: Number(result.minMargin.toFixed(3)),
+      })),
+      targetSelectorPolicies: targetSelectorResults.map(result => ({
         name: result.name,
         accuracy: Number(result.accuracy.toFixed(4)),
         pairs: result.pairs.length,
@@ -371,6 +462,8 @@ async function main(): Promise<void> {
     evaluateLeaveOneSuiteOut(pairs, epochs),
   ]
   const best = bestPolicy(results)
+  const targetSelectorResults = results.map(targetSelectorResult)
+  const targetSelectorPairs = targetSelectorResults[0]?.pairs.length ?? 0
   const buckets = new Set(pairs.map(pair => `${pair.bucket.taskId}:${pair.bucket.toolName}`))
   const tasks = new Set(pairs.map(pair => pair.task.id))
 
@@ -389,12 +482,26 @@ async function main(): Promise<void> {
   lines.push(`- best_policy: ${best.name}`)
   lines.push(`- best_accuracy: ${best.accuracy.toFixed(4)}`)
   lines.push(`- best_min_margin: ${best.minMargin.toFixed(3)}`)
+  lines.push(`- target_selector_pairs: ${targetSelectorPairs}`)
   lines.push('')
   lines.push('## Policy Comparison')
   lines.push('')
   lines.push(tableRow(['policy', 'accuracy', 'pairs', 'min_margin']))
   lines.push(tableRow(['---', '---:', '---:', '---:']))
   for (const result of results) {
+    lines.push(tableRow([
+      result.name,
+      result.accuracy.toFixed(4),
+      result.pairs.length,
+      result.minMargin.toFixed(3),
+    ]))
+  }
+  lines.push('')
+  lines.push('## Target Selector Policy Comparison')
+  lines.push('')
+  lines.push(tableRow(['policy', 'accuracy', 'pairs', 'min_margin']))
+  lines.push(tableRow(['---', '---:', '---:', '---:']))
+  for (const result of targetSelectorResults) {
     lines.push(tableRow([
       result.name,
       result.accuracy.toFixed(4),
