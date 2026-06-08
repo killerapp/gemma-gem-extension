@@ -908,3 +908,7 @@ a97b96b	real-chrome-extension-agent	166	1.0000	1.0000	1.0000	1.0000	1.19	0.008	0
 274f6d0	local-fake-extension	173	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	keep	destination priority low after save click read local
 274f6d0	real-chrome-extension-smoke	157	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.124	0.0000	0.000	keep	destination priority low after save click read real smoke
 274f6d0	real-chrome-extension-agent	167	1.0000	1.0000	1.0000	1.0000	1.19	0.008	0.601	0.0000	0.001	keep	destination priority low after save click read real agent
+b4e5c1a	local-fake-extension	173	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	baseline	destination priority high after save click read baseline local
+b4e5c1a	local-fake-extension	174	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	keep	destination priority high after save click read local
+b4e5c1a	real-chrome-extension-smoke	158	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.124	0.0000	0.000	keep	destination priority high after save click read real smoke
+b4e5c1a	real-chrome-extension-agent	168	1.0000	1.0000	1.0000	1.0000	1.18	0.009	0.599	0.0000	0.001	keep	destination priority high after save click read real agent
