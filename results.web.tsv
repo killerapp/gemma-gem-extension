@@ -666,3 +666,7 @@ a32a230	real-chrome-extension-agent	109	1.0000	1.0000	1.0000	1.0000	1.28	0.010	4
 2a91539	local-fake-extension	116	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	keep	initial destination updates read local
 2a91539	real-chrome-extension-smoke	100	1.0000	1.0000	1.0000	1.0000	1.14	0.008	0.126	0.0000	0.000	keep	initial destination updates read real smoke
 2a91539	real-chrome-extension-agent	110	1.0000	1.0000	1.0000	1.0000	1.28	0.010	4.185	0.0000	0.001	keep	initial destination updates read real agent
+b449bd5	local-fake-extension	116	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	baseline	initial destination priority high read baseline local
+b449bd5	local-fake-extension	117	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	keep	initial destination priority high read local
+b449bd5	real-chrome-extension-smoke	101	1.0000	1.0000	1.0000	1.0000	1.14	0.008	0.130	0.0000	0.000	keep	initial destination priority high read real smoke
+b449bd5	real-chrome-extension-agent	111	1.0000	1.0000	1.0000	1.0000	1.28	0.008	4.189	0.0000	0.012	keep	initial destination priority high read real agent
