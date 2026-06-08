@@ -713,3 +713,7 @@ a23cf65	real-chrome-extension-agent	120	1.0000	1.0000	1.0000	1.0000	1.26	0.007	0
 6aa0332	local-fake-extension	127	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.005	0.0000	0.000	keep	source email html read local
 6aa0332	real-chrome-extension-smoke	111	1.0000	1.0000	1.0000	1.0000	1.13	0.008	0.124	0.0000	0.000	keep	source email html read real smoke
 6aa0332	real-chrome-extension-agent	121	1.0000	1.0000	1.0000	1.0000	1.26	0.008	0.601	0.0000	0.059	keep	source email html read real agent
+8b334ad	local-fake-extension	127	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.005	0.0000	0.000	baseline	save profile button html read baseline local
+8b334ad	local-fake-extension	128	1.0000	1.0000	1.0000	1.0000	1.34	0.003	0.005	0.0000	0.000	keep	save profile button html read local
+8b334ad	real-chrome-extension-smoke	112	1.0000	1.0000	1.0000	1.0000	1.13	0.007	0.125	0.0000	0.000	keep	save profile button html read real smoke
+8b334ad	real-chrome-extension-agent	122	1.0000	1.0000	1.0000	1.0000	1.25	0.008	0.605	0.0000	0.001	keep	save profile button html read real agent

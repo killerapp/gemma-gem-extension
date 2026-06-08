@@ -1582,6 +1582,14 @@ June 8, 2026 source email HTML read coverage result:
 - Real smoke passed 111/111 with `actions_per_success 1.13`, `p95_task_seconds 0.124`, and `timeout_rate 0.0000`; real agent passed 121/121 with `actions_per_success 1.26`, `p95_task_seconds 0.601`, `model_ready_status ready`, `model_load_seconds 0.059`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 152 raw positive records from 105 tasks and 221 training records from 114 tasks because the new deterministic real-extension source email HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 save profile button HTML read coverage result:
+
+- Added frozen `forms/read-save-profile-button-html-before-click`, proving exact `gemma_read_page` can read the destination save button in HTML format before the recovered click mutates `#save-result`.
+- The task completes text/HTML paired exact-selector coverage for `#save-profile`, asserting the narrow `Save profile` button HTML, one `read_page_content` action, and absence of result/source/destination field leakage.
+- Baseline local before the task stayed green at 127/127 with `actions_per_success 1.35` and `p95_task_seconds 0.005`; after adding the task, local passed 128/128 with `actions_per_success 1.34`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 112/112 with `actions_per_success 1.13`, `p95_task_seconds 0.125`, and `timeout_rate 0.0000`; real agent passed 122/122 with `actions_per_success 1.25`, `p95_task_seconds 0.605`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 153 raw positive records from 106 tasks and 222 training records from 115 tasks because the new deterministic real-extension button HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
