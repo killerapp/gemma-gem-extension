@@ -1808,6 +1808,32 @@
     }
   },
   {
+    "id": "read-destination-role-after-save-click",
+    "suite": "forms",
+    "title": "Read destination role after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["selected: Reviewer (reviewer)", "options:", "Administrator"]
+      },
+      "contains": ["selected: Reviewer", "reviewer", "Administrator"],
+      "notContains": ["Grace Hopper", "Saved", "save-result", "Ada Lovelace", "ada@example.test", "source-name"],
+      "selector": "#dest-role",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-role format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "read-source-body-after-save-click",
     "suite": "forms",
     "title": "Read source body after destination save click",

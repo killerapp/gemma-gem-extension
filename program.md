@@ -1934,6 +1934,14 @@ June 8, 2026 destination email after save-click read coverage result:
 - Real smoke passed 154/154 with `actions_per_success 1.09`, `p95_task_seconds 0.124`, and `timeout_rate 0.0000`; real agent passed 164/164 with `actions_per_success 1.19`, `p95_task_seconds 0.504`, `deterministic_p95_task_seconds 0.122`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 195 raw positive records from 148 tasks and 264 training records from 157 tasks because the new deterministic real-extension destination-email after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 destination role after save-click read coverage result:
+
+- Added frozen `forms/read-destination-role-after-save-click`, proving exact `gemma_read_page` can read destination `#dest-role` after the recovered destination save click mutates `#save-result` but before `transfer-profile-fields` copies source fields.
+- The task extends intermediate save-click destination field coverage from name/email inputs to the recovered `<select>` state, asserting `selected: Reviewer (reviewer)`, one `read_page_content` action, exact `#dest-role` selector propagation, and absence of source/save-result content.
+- Baseline local before the task stayed green at 170/170 with `actions_per_success 1.26` and `p95_task_seconds 0.005`; after adding the task, local passed 171/171 with `actions_per_success 1.26`, `p95_task_seconds 0.004`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 155/155 with `actions_per_success 1.09`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; real agent passed 165/165 with `actions_per_success 1.19`, `p95_task_seconds 0.594`, `deterministic_p95_task_seconds 0.122`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 196 raw positive records from 149 tasks and 265 training records from 158 tasks because the new deterministic real-extension destination-role after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
