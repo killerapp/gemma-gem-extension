@@ -1980,6 +1980,14 @@ June 8, 2026 destination high-priority after save-click read coverage result:
 - Real smoke passed 158/158 with `actions_per_success 1.09`, `p95_task_seconds 0.124`, and `timeout_rate 0.0000`; real agent passed 168/168 with improved `actions_per_success 1.18`, `p95_task_seconds 0.599`, `deterministic_p95_task_seconds 0.123`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 199 raw positive records from 152 tasks and 268 training records from 161 tasks because the deterministic real-extension destination-high-priority after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 destination notes after save-click read coverage result:
+
+- Added frozen `forms/read-destination-notes-after-save-click`, proving exact `gemma_read_page` can read destination `#dest-notes` as `Ops note` after the recovered destination save click and before `transfer-profile-fields`.
+- The task extends intermediate save-click destination field coverage from inputs/select/checkbox/radio to textarea state, asserting one `read_page_content` action, exact `#dest-notes` selector propagation, and absence of label, source, and save-result content.
+- Baseline local before the task stayed green at 174/174 with `actions_per_success 1.25` and `p95_task_seconds 0.005`; after adding the task, local passed 175/175 with `actions_per_success 1.25`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 159/159 with `actions_per_success 1.09`, `p95_task_seconds 0.124`, and `timeout_rate 0.0000`; real agent passed 169/169 with `actions_per_success 1.18`, `p95_task_seconds 0.595`, `deterministic_p95_task_seconds 0.124`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 200 raw positive records from 153 tasks and 269 training records from 162 tasks because the deterministic real-extension destination-notes after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

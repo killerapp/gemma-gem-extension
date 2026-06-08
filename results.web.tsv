@@ -912,3 +912,7 @@ b4e5c1a	local-fake-extension	173	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.
 b4e5c1a	local-fake-extension	174	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	keep	destination priority high after save click read local
 b4e5c1a	real-chrome-extension-smoke	158	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.124	0.0000	0.000	keep	destination priority high after save click read real smoke
 b4e5c1a	real-chrome-extension-agent	168	1.0000	1.0000	1.0000	1.0000	1.18	0.009	0.599	0.0000	0.001	keep	destination priority high after save click read real agent
+f89661e	local-fake-extension	174	1.0000	1.0000	1.0000	1.0000	1.25	0.002	0.005	0.0000	0.000	baseline	destination notes after save click read baseline local
+f89661e	local-fake-extension	175	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	keep	destination notes after save click read local
+f89661e	real-chrome-extension-smoke	159	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.124	0.0000	0.000	keep	destination notes after save click read real smoke
+f89661e	real-chrome-extension-agent	169	1.0000	1.0000	1.0000	1.0000	1.18	0.008	0.595	0.0000	0.001	keep	destination notes after save click read real agent
