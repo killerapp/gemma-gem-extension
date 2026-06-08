@@ -977,3 +977,7 @@ d47fc5c	local-fake-extension	189	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.
 d47fc5c	local-fake-extension	190	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	navigation billing link html read local
 d47fc5c	real-chrome-extension-smoke	174	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.123	0.0000	0.000	keep	navigation billing link html read real smoke
 d47fc5c	real-chrome-extension-agent	184	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.503	0.0000	0.001	keep	navigation billing link html read real agent
+ff53ec3	local-fake-extension	190	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	baseline	navigation settings link html read baseline local
+ff53ec3	local-fake-extension	191	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	navigation settings link html read local
+ff53ec3	real-chrome-extension-smoke	175	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.121	0.0000	0.000	keep	navigation settings link html read real smoke
+ff53ec3	real-chrome-extension-agent	185	1.0000	1.0000	1.0000	1.0000	1.17	0.008	0.506	0.0000	0.001	keep	navigation settings link html read real agent
