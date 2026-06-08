@@ -1477,6 +1477,14 @@ June 8, 2026 empty destination-notes read coverage result:
 - Real smoke passed 98/98 with `actions_per_success 1.14`, `p95_task_seconds 0.499`, and `timeout_rate 0.0000`; real agent passed 108/108 with `actions_per_success 1.29`, `p95_task_seconds 0.602`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 139 raw positive records from 92 tasks and 208 training records from 101 tasks because the new deterministic real-extension read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 initial destination-role read coverage result:
+
+- Added frozen `forms/read-destination-role-initial`, proving exact `gemma_read_page` can read the untouched destination role select before any select task mutates `#dest-role`.
+- The task covers the initial select-control state with `selected: Choose role ()`, requires the exact selector and one `read_page_content` action, and guards against already-selected Administrator/Reviewer state leaking from later tasks.
+- Baseline local before the task stayed green at 114/114 with `actions_per_success 1.39` and `p95_task_seconds 0.005`; after adding the task, local passed 115/115 with `actions_per_success 1.38`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 99/99 with `actions_per_success 1.14`, `p95_task_seconds 0.499`, and `timeout_rate 0.0000`; real agent passed 109/109 with `actions_per_success 1.28`, `p95_task_seconds 4.288`, `model_ready_status ready`, `model_load_seconds 0.002`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 140 raw positive records from 93 tasks and 209 training records from 102 tasks because the new deterministic real-extension read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

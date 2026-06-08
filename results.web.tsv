@@ -658,3 +658,7 @@ ee8f664	local-fake-extension	113	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.005	0.
 ee8f664	local-fake-extension	114	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.006	0.0000	0.000	keep	empty destination notes read local
 ee8f664	real-chrome-extension-smoke	98	1.0000	1.0000	1.0000	1.0000	1.14	0.008	0.499	0.0000	0.000	keep	empty destination notes read real smoke
 ee8f664	real-chrome-extension-agent	108	1.0000	1.0000	1.0000	1.0000	1.29	0.009	0.602	0.0000	0.001	keep	empty destination notes read real agent
+a32a230	local-fake-extension	114	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.005	0.0000	0.000	baseline	initial destination role read baseline local
+a32a230	local-fake-extension	115	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	keep	initial destination role read local
+a32a230	real-chrome-extension-smoke	99	1.0000	1.0000	1.0000	1.0000	1.14	0.009	0.499	0.0000	0.000	keep	initial destination role read real smoke
+a32a230	real-chrome-extension-agent	109	1.0000	1.0000	1.0000	1.0000	1.28	0.010	4.288	0.0000	0.002	keep	initial destination role read real agent
