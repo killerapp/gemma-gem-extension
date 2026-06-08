@@ -1867,6 +1867,32 @@
     }
   },
   {
+    "id": "read-source-email-after-save-click",
+    "suite": "forms",
+    "title": "Read source email after destination save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "#source-email",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["ada@example.test"]
+      },
+      "contains": ["ada@example.test"],
+      "notContains": ["Grace Hopper", "Saved", "save-result", "dest-email", "Ada Lovelace", "source-name"],
+      "selector": "#source-email",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-email format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#source-email",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "transfer-profile-fields",
     "suite": "forms",
     "title": "Transfer account fields between tabs",
