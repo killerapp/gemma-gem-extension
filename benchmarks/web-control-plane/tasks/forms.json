@@ -1246,6 +1246,35 @@
     }
   },
   {
+    "id": "read-destination-body-text-after-click",
+    "suite": "forms",
+    "title": "Read destination body text after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "body",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Name", "Email", "Save profile", "Saved Grace Hopper Jr.", "<>"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["Ada Lovelace", "ada@example.test", "&lt;&gt;"]
+      },
+      "contains": ["Name", "Email", "Save profile", "Saved Grace Hopper Jr.", "<>"],
+      "notContains": ["Ada Lovelace", "ada@example.test", "&lt;&gt;"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "transfer-profile-fields",
     "suite": "forms",
     "title": "Transfer account fields between tabs",
