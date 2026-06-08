@@ -1703,6 +1703,14 @@ June 8, 2026 destination email transfer HTML read coverage result:
 - Real smoke passed 126/126 with `actions_per_success 1.11`, `p95_task_seconds 0.124`, and `timeout_rate 0.0000`; real agent passed 136/136 with `actions_per_success 1.23`, `p95_task_seconds 0.577`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 167 raw positive records from 120 tasks and 236 training records from 129 tasks because the new deterministic real-extension transferred email input HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 destination notes typed HTML read coverage result:
+
+- Added frozen `forms/read-destination-notes-textarea-html`, proving exact `gemma_read_page` can read the typed destination notes textarea as empty HTML after `type-destination-notes-textarea` writes `Coordinate follow-up` into `#dest-notes`.
+- The task extends typed form-control `innerHTML` parity coverage from input elements to the textarea path, asserting empty `content`, one `read_page_content` action, exact `#dest-notes` selector propagation, and absence of typed notes, label, button, and destination-name text.
+- Baseline local before the task stayed green at 142/142 with `actions_per_success 1.31` and `p95_task_seconds 0.005`; after adding the task, local passed 143/143 with `actions_per_success 1.31`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 127/127 with `actions_per_success 1.11`, `p95_task_seconds 0.125`, and `timeout_rate 0.0000`; real agent passed 137/137 with `actions_per_success 1.23`, `p95_task_seconds 0.558`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 168 raw positive records from 121 tasks and 237 training records from 130 tasks because the new deterministic real-extension typed textarea HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
