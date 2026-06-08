@@ -1936,6 +1936,32 @@
     }
   },
   {
+    "id": "read-destination-role-after-save-click-html",
+    "suite": "forms",
+    "title": "Read destination role HTML after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["<option value=\"\">Choose role</option>", "<option value=\"admin\">Administrator</option>", "<option value=\"reviewer\">Reviewer</option>"]
+      },
+      "contains": ["Choose role", "Administrator", "Reviewer"],
+      "notContains": ["selected:", "Grace Hopper", "Grace Hopper Jr.", "Saved", "Save profile", "Ada Lovelace", "ada@example.test", "save-result", "source-name", "dest-name"],
+      "selector": "#dest-role",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-role format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "read-destination-updates-unchecked-after-save-click",
     "suite": "forms",
     "title": "Read unchecked destination updates after recovered save click",
