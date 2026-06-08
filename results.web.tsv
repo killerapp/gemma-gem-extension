@@ -750,3 +750,7 @@ ca5e975	local-fake-extension	135	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.
 ca5e975	local-fake-extension	136	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.005	0.0000	0.000	keep	destination priority low unchecked html read local
 ca5e975	real-chrome-extension-smoke	120	1.0000	1.0000	1.0000	1.0000	1.12	0.007	0.124	0.0000	0.000	keep	destination priority low unchecked html read real smoke
 ca5e975	real-chrome-extension-agent	130	1.0000	1.0000	1.0000	1.0000	1.24	0.007	0.603	0.0000	0.001	keep	destination priority low unchecked html read real agent
+3be5445	local-fake-extension	136	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.006	0.0000	0.000	baseline	destination priority high unchecked html read baseline local
+3be5445	local-fake-extension	137	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.006	0.0000	0.000	keep	destination priority high unchecked html read local
+3be5445	real-chrome-extension-smoke	121	1.0000	1.0000	1.0000	1.0000	1.12	0.009	0.123	0.0000	0.000	keep	destination priority high unchecked html read real smoke
+3be5445	real-chrome-extension-agent	131	1.0000	1.0000	1.0000	1.0000	1.24	0.009	0.584	0.0000	0.001	keep	destination priority high unchecked html read real agent
