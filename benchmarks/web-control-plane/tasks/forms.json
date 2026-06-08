@@ -1972,6 +1972,32 @@
     }
   },
   {
+    "id": "read-destination-updates-after-transfer",
+    "suite": "forms",
+    "title": "Read destination updates checkbox after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-updates",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["unchecked"]
+      },
+      "contains": ["unchecked"],
+      "notContains": ["Ada Lovelace", "ada@example.test", "Saved", "Subscribe updates"],
+      "selector": "#dest-updates",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-updates format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-updates",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "read-save-result-after-transfer",
     "suite": "forms",
     "title": "Read save result after transferred profile submit",
