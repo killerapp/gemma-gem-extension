@@ -1114,6 +1114,31 @@
     }
   },
   {
+    "id": "read-save-result-empty-html-before-click",
+    "suite": "forms",
+    "title": "Read empty save result HTML before save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#save-result",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Saved", "Grace Hopper", "Ada Lovelace", "Save profile"],
+      "selector": "#save-result",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#save-result format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#save-result",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "click-save-profile-recover-selector",
     "suite": "forms",
     "title": "Recover save profile button text selector",

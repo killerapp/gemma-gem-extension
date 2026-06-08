@@ -678,3 +678,7 @@ bf95884	local-fake-extension	118	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.005	0.
 bf95884	local-fake-extension	119	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.006	0.0000	0.000	keep	empty save result read local
 bf95884	real-chrome-extension-smoke	103	1.0000	1.0000	1.0000	1.0000	1.14	0.009	0.124	0.0000	0.000	keep	empty save result read real smoke
 bf95884	real-chrome-extension-agent	113	1.0000	1.0000	1.0000	1.0000	1.27	0.009	0.566	0.0000	0.001	keep	empty save result read real agent
+d8c1037	local-fake-extension	119	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.005	0.0000	0.000	baseline	empty save result html read baseline local
+d8c1037	local-fake-extension	120	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.005	0.0000	0.000	keep	empty save result html read local
+d8c1037	real-chrome-extension-smoke	104	1.0000	1.0000	1.0000	1.0000	1.13	0.007	0.125	0.0000	0.000	keep	empty save result html read real smoke
+d8c1037	real-chrome-extension-agent	114	1.0000	1.0000	1.0000	1.0000	1.27	0.008	4.214	0.0000	0.001	keep	empty save result html read real agent

@@ -1517,6 +1517,14 @@ June 8, 2026 empty save-result read coverage result:
 - Real smoke passed 103/103 with `actions_per_success 1.14`, `p95_task_seconds 0.124`, and `timeout_rate 0.0000`; real agent passed 113/113 with `actions_per_success 1.27`, `p95_task_seconds 0.566`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 144 raw positive records from 97 tasks and 213 training records from 106 tasks because the new deterministic real-extension read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 empty save-result HTML read coverage result:
+
+- Added frozen `forms/read-save-result-empty-html-before-click`, proving exact `gemma_read_page` can read the empty save result element's HTML before the recovered save click mutates `#save-result`.
+- The task completes paired empty text/HTML exact-selector read coverage for the destination form's result output, using an empty `content` assertion, the exact selector, one `read_page_content` action, and absence checks for saved/source text.
+- Baseline local before the task stayed green at 119/119 with `actions_per_success 1.37` and `p95_task_seconds 0.005`; after adding the task, local passed 120/120 with `actions_per_success 1.37`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 104/104 with `actions_per_success 1.13`, `p95_task_seconds 0.125`, and `timeout_rate 0.0000`; real agent passed 114/114 with `actions_per_success 1.27`, `p95_task_seconds 4.214`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 145 raw positive records from 98 tasks and 214 training records from 107 tasks because the new deterministic real-extension read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
