@@ -758,3 +758,7 @@ ca5e975	real-chrome-extension-agent	130	1.0000	1.0000	1.0000	1.0000	1.24	0.007	0
 4b7094e	local-fake-extension	138	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.005	0.0000	0.000	keep	destination updates unchecked html read local
 4b7094e	real-chrome-extension-smoke	122	1.0000	1.0000	1.0000	1.0000	1.11	0.008	0.122	0.0000	0.000	keep	destination updates unchecked html read real smoke
 4b7094e	real-chrome-extension-agent	132	1.0000	1.0000	1.0000	1.0000	1.23	0.010	0.566	0.0000	0.001	keep	destination updates unchecked html read real agent
+cd5b710	local-fake-extension	138	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.005	0.0000	0.000	baseline	destination name typed html read baseline local
+cd5b710	local-fake-extension	139	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.005	0.0000	0.000	keep	destination name typed html read local
+cd5b710	real-chrome-extension-smoke	123	1.0000	1.0000	1.0000	1.0000	1.11	0.010	0.124	0.0000	0.000	keep	destination name typed html read real smoke
+cd5b710	real-chrome-extension-agent	133	1.0000	1.0000	1.0000	1.0000	1.23	0.010	0.565	0.0000	0.001	keep	destination name typed html read real agent
