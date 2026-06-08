@@ -1942,6 +1942,13 @@ June 8, 2026 destination role after save-click read coverage result:
 - Real smoke passed 155/155 with `actions_per_success 1.09`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; real agent passed 165/165 with `actions_per_success 1.19`, `p95_task_seconds 0.594`, `deterministic_p95_task_seconds 0.122`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 196 raw positive records from 149 tasks and 265 training records from 158 tasks because the new deterministic real-extension destination-role after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 destination updates after save-click unchecked discard result:
+
+- Tried frozen `forms/read-destination-updates-after-save-click` to extend intermediate save-click destination field coverage from name/email/role to the updates checkbox.
+- Baseline local before the task stayed green at 171/171 with `actions_per_success 1.26` and `p95_task_seconds 0.005`; the candidate run dropped to 171/172 with `task_success_rate 0.9942`, `strict_success_rate 0.9942`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Discarded the task because the exact `#dest-updates` read returned `checked`, not the asserted recovered-click `unchecked` state; changing the kept task to pass would be a different state hypothesis rather than this failed unchecked assertion.
+- Removed the candidate task and restored the local manifest to 171/171 with `actions_per_success 1.26`, `p95_task_seconds 0.004`, and `timeout_rate 0.0000`; no real-extension or trace gates were run for the discarded hypothesis because it failed the local gate.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

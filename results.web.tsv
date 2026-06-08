@@ -894,3 +894,6 @@ e19f1ef	real-chrome-extension-agent	164	1.0000	1.0000	1.0000	1.0000	1.19	0.008	0
 0083aa2	local-fake-extension	171	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.004	0.0000	0.000	keep	destination role after save click read local
 0083aa2	real-chrome-extension-smoke	155	1.0000	1.0000	1.0000	1.0000	1.09	0.009	0.123	0.0000	0.000	keep	destination role after save click read real smoke
 0083aa2	real-chrome-extension-agent	165	1.0000	1.0000	1.0000	1.0000	1.19	0.008	0.594	0.0000	0.001	keep	destination role after save click read real agent
+54db15d	local-fake-extension	171	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	baseline	destination updates after save click read baseline local
+54db15d	local-fake-extension	172	0.9942	0.9942	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	discard	destination updates after save click read local
+54db15d	local-fake-extension	171	1.0000	1.0000	1.0000	1.0000	1.26	0.002	0.004	0.0000	0.000	baseline	destination updates after save click discard restored local
