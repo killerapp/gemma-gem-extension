@@ -1741,6 +1741,31 @@
     }
   },
   {
+    "id": "read-destination-email-after-transfer-html",
+    "suite": "forms",
+    "title": "Read transferred destination email input HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-email",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["ada@example.test", "Ada Lovelace", "Saved", "Save profile"],
+      "selector": "#dest-email",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-email format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-email",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "read-destination-name-after-transfer",
     "suite": "forms",
     "title": "Read transferred destination name by selector",

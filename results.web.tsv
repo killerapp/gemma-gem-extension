@@ -770,3 +770,7 @@ e1465a5	local-fake-extension	140	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.005	0.
 e1465a5	local-fake-extension	141	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.006	0.0000	0.000	keep	destination name transfer html read local
 e1465a5	real-chrome-extension-smoke	125	1.0000	1.0000	1.0000	1.0000	1.11	0.009	0.125	0.0000	0.000	keep	destination name transfer html read real smoke
 e1465a5	real-chrome-extension-agent	135	1.0000	1.0000	1.0000	1.0000	1.23	0.010	0.577	0.0000	0.001	keep	destination name transfer html read real agent
+6f48ddd	local-fake-extension	141	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.005	0.0000	0.000	baseline	destination email transfer html read baseline local
+6f48ddd	local-fake-extension	142	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.005	0.0000	0.000	keep	destination email transfer html read local
+6f48ddd	real-chrome-extension-smoke	126	1.0000	1.0000	1.0000	1.0000	1.11	0.009	0.124	0.0000	0.000	keep	destination email transfer html read real smoke
+6f48ddd	real-chrome-extension-agent	136	1.0000	1.0000	1.0000	1.0000	1.23	0.010	0.577	0.0000	0.001	keep	destination email transfer html read real agent
