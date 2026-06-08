@@ -973,3 +973,7 @@ a85f454	local-fake-extension	188	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.
 a85f454	local-fake-extension	189	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	destination role options html read local
 a85f454	real-chrome-extension-smoke	173	1.0000	1.0000	1.0000	1.0000	1.08	0.010	0.123	0.0000	0.000	keep	destination role options html read real smoke
 a85f454	real-chrome-extension-agent	183	1.0000	1.0000	1.0000	1.0000	1.17	0.008	0.501	0.0000	0.001	keep	destination role options html read real agent
+d47fc5c	local-fake-extension	189	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	baseline	navigation billing link html read baseline local
+d47fc5c	local-fake-extension	190	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	navigation billing link html read local
+d47fc5c	real-chrome-extension-smoke	174	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.123	0.0000	0.000	keep	navigation billing link html read real smoke
+d47fc5c	real-chrome-extension-agent	184	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.503	0.0000	0.001	keep	navigation billing link html read real agent

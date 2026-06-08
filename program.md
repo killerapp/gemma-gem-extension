@@ -2100,6 +2100,14 @@ June 8, 2026 destination role options HTML read coverage result:
 - Real smoke passed 173/173 with `actions_per_success 1.08`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; real agent passed 183/183 with `actions_per_success 1.17`, `p95_task_seconds 0.501`, `deterministic_p95_task_seconds 0.123`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 214 raw positive records from 167 tasks and 283 training records from 176 tasks because the deterministic real-extension destination-role options HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 navigation billing link HTML read coverage result:
+
+- Added frozen `navigation/read-billing-link-before-click-html`, proving exact `gemma_read_page` can read primary navigation `#billing-link` in HTML mode before the settings-link click mutates tab 105.
+- The task complements the kept billing-link text read by asserting scoped `Billing` content, one `read_page_content` action, exact `#billing-link` selector propagation, and absence of neighboring Settings and scroll-target content.
+- Baseline local before the task stayed green at 189/189 with `actions_per_success 1.23` and `p95_task_seconds 0.005`; after adding the task, local passed 190/190 with `actions_per_success 1.23`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 174/174 with `actions_per_success 1.08`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; real agent passed 184/184 with `actions_per_success 1.17`, `p95_task_seconds 0.503`, `deterministic_p95_task_seconds 0.122`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 215 raw positive records from 168 tasks and 284 training records from 177 tasks because the deterministic real-extension navigation billing-link HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
