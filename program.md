@@ -1598,6 +1598,14 @@ June 8, 2026 empty destination email HTML read coverage result:
 - Real smoke passed 113/113 with `actions_per_success 1.12`, `p95_task_seconds 0.126`, and `timeout_rate 0.0000`; real agent passed 123/123 with `actions_per_success 1.25`, `p95_task_seconds 0.607`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 154 raw positive records from 107 tasks and 223 training records from 116 tasks because the new deterministic real-extension empty input HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 empty destination name HTML read coverage result:
+
+- Added frozen `forms/read-destination-name-empty-html-initial`, proving exact `gemma_read_page` can read untouched destination name input HTML before `type-text-recover-selector` mutates `#dest-name`.
+- The task completes paired empty HTML exact-selector coverage for the destination form's primary text inputs, asserting empty `content`, one `read_page_content` action, exact `#dest-name` selector propagation, and absence of typed/source/button text.
+- Baseline local before the task stayed green at 129/129 with `actions_per_success 1.34` and `p95_task_seconds 0.006`; after adding the task, local passed 130/130 with `actions_per_success 1.34`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 114/114 with `actions_per_success 1.12`, `p95_task_seconds 0.125`, and `timeout_rate 0.0000`; real agent passed 124/124 with `actions_per_success 1.25`, `p95_task_seconds 0.606`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 155 raw positive records from 108 tasks and 224 training records from 117 tasks because the new deterministic real-extension empty input HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

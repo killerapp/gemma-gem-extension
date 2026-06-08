@@ -721,3 +721,7 @@ b66c034	local-fake-extension	128	1.0000	1.0000	1.0000	1.0000	1.34	0.003	0.005	0.
 b66c034	local-fake-extension	129	1.0000	1.0000	1.0000	1.0000	1.34	0.003	0.005	0.0000	0.000	keep	empty destination email html read local
 b66c034	real-chrome-extension-smoke	113	1.0000	1.0000	1.0000	1.0000	1.12	0.008	0.126	0.0000	0.000	keep	empty destination email html read real smoke
 b66c034	real-chrome-extension-agent	123	1.0000	1.0000	1.0000	1.0000	1.25	0.008	0.607	0.0000	0.001	keep	empty destination email html read real agent
+e10a078	local-fake-extension	129	1.0000	1.0000	1.0000	1.0000	1.34	0.003	0.006	0.0000	0.000	baseline	empty destination name html read baseline local
+e10a078	local-fake-extension	130	1.0000	1.0000	1.0000	1.0000	1.34	0.003	0.005	0.0000	0.000	keep	empty destination name html read local
+e10a078	real-chrome-extension-smoke	114	1.0000	1.0000	1.0000	1.0000	1.12	0.007	0.125	0.0000	0.000	keep	empty destination name html read real smoke
+e10a078	real-chrome-extension-agent	124	1.0000	1.0000	1.0000	1.0000	1.25	0.008	0.606	0.0000	0.001	keep	empty destination name html read real agent
