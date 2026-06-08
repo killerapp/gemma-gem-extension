@@ -146,6 +146,31 @@
     }
   },
   {
+    "id": "read-destination-name-empty-initial",
+    "suite": "forms",
+    "title": "Read empty destination name field by exact selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-name",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Grace Hopper", "Ada Lovelace", "Name", "Save profile"],
+      "selector": "#dest-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-name format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "type-text-recover-selector",
     "suite": "forms",
     "title": "Recover a name text-like type selector",

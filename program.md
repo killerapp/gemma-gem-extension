@@ -1461,6 +1461,14 @@ June 8, 2026 empty destination-email read coverage result:
 - Real smoke passed 96/96 with `actions_per_success 1.15`, `p95_task_seconds 0.498`, and `timeout_rate 0.0000`; real agent passed 106/106 with `actions_per_success 1.29`, `p95_task_seconds 0.606`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 137 raw positive records from 90 tasks and 206 training records from 99 tasks because the new deterministic real-extension read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 empty destination-name read coverage result:
+
+- Added frozen `forms/read-destination-name-empty-initial`, proving exact `gemma_read_page` can read the initially empty destination name input before the first text-selector recovery task mutates `#dest-name`.
+- The task completes exact initial empty-read coverage for the destination form's two primary text inputs, using an empty `content` assertion plus selector, one-action trace, bridge selector, and absence checks for later typed/source values.
+- Baseline local before the task stayed green at 112/112 with `actions_per_success 1.39` and `p95_task_seconds 0.005`; after adding the task, local passed 113/113 with `actions_per_success 1.39`, `p95_task_seconds 0.006`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 97/97 with `actions_per_success 1.14`, `p95_task_seconds 0.500`, and `timeout_rate 0.0000`; real agent passed 107/107 with `actions_per_success 1.29`, `p95_task_seconds 4.330`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 138 raw positive records from 91 tasks and 207 training records from 100 tasks because the new deterministic real-extension read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
