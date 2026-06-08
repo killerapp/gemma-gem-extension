@@ -1089,6 +1089,32 @@
     }
   },
   {
+    "id": "read-source-email-html",
+    "suite": "forms",
+    "title": "Read source profile email HTML by selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "#source-email",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["ada@example.test"]
+      },
+      "contains": ["ada@example.test"],
+      "notContains": ["Ada Lovelace", "source-name", "dest-email"],
+      "selector": "#source-email",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-email format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#source-email",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "read-save-profile-button-before-click",
     "suite": "forms",
     "title": "Read save profile button by exact selector before click",

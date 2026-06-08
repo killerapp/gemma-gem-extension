@@ -709,3 +709,7 @@ a23cf65	local-fake-extension	125	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.005	0.
 a23cf65	local-fake-extension	126	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.005	0.0000	0.000	keep	source name html read local
 a23cf65	real-chrome-extension-smoke	110	1.0000	1.0000	1.0000	1.0000	1.13	0.008	0.125	0.0000	0.000	keep	source name html read real smoke
 a23cf65	real-chrome-extension-agent	120	1.0000	1.0000	1.0000	1.0000	1.26	0.007	0.604	0.0000	0.001	keep	source name html read real agent
+6aa0332	local-fake-extension	126	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.005	0.0000	0.000	baseline	source email html read baseline local
+6aa0332	local-fake-extension	127	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.005	0.0000	0.000	keep	source email html read local
+6aa0332	real-chrome-extension-smoke	111	1.0000	1.0000	1.0000	1.0000	1.13	0.008	0.124	0.0000	0.000	keep	source email html read real smoke
+6aa0332	real-chrome-extension-agent	121	1.0000	1.0000	1.0000	1.0000	1.26	0.008	0.601	0.0000	0.059	keep	source email html read real agent
