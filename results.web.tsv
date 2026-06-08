@@ -662,3 +662,7 @@ a32a230	local-fake-extension	114	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.005	0.
 a32a230	local-fake-extension	115	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	keep	initial destination role read local
 a32a230	real-chrome-extension-smoke	99	1.0000	1.0000	1.0000	1.0000	1.14	0.009	0.499	0.0000	0.000	keep	initial destination role read real smoke
 a32a230	real-chrome-extension-agent	109	1.0000	1.0000	1.0000	1.0000	1.28	0.010	4.288	0.0000	0.002	keep	initial destination role read real agent
+2a91539	local-fake-extension	115	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	baseline	initial destination updates read baseline local
+2a91539	local-fake-extension	116	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	keep	initial destination updates read local
+2a91539	real-chrome-extension-smoke	100	1.0000	1.0000	1.0000	1.0000	1.14	0.008	0.126	0.0000	0.000	keep	initial destination updates read real smoke
+2a91539	real-chrome-extension-agent	110	1.0000	1.0000	1.0000	1.0000	1.28	0.010	4.185	0.0000	0.001	keep	initial destination updates read real agent
