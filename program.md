@@ -1429,6 +1429,14 @@ June 8, 2026 isolated settings-link read coverage result:
 - Real smoke passed 92/92 with `actions_per_success 1.15`, `p95_task_seconds 0.546`, and `timeout_rate 0.0000`; real agent passed 102/102 with `actions_per_success 1.30`, `p95_task_seconds 4.424`, `model_ready_status ready`, `model_load_seconds 0.055`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 133 raw positive records from 86 tasks and 202 training records from 95 tasks because the new deterministic real-extension read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 isolated scroll-target read coverage result:
+
+- Added frozen `navigation/read-isolated-scroll-target-before-click`, proving exact `gemma_read_page` on logical tab 106 can read the isolated navigation fixture's scroll target before the later billing-link click mutates that tab.
+- The task completes exact isolated navigation selector read coverage for both links and the scroll target, complementing the isolated body HTML/text, active-tab, screenshot, and click contracts.
+- Baseline local before the task stayed green at 108/108 with `actions_per_success 1.41` and `p95_task_seconds 0.005`; after adding the task, local passed 109/109 with `actions_per_success 1.40`, `p95_task_seconds 0.006`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 93/93 with `actions_per_success 1.15`, `p95_task_seconds 0.501`, and `timeout_rate 0.0000`; real agent passed 103/103 with `actions_per_success 1.30`, `p95_task_seconds 4.205`, `model_ready_status ready`, `model_load_seconds 0.161`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 134 raw positive records from 87 tasks and 203 training records from 96 tasks because the new deterministic real-extension read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

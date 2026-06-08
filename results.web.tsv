@@ -633,3 +633,7 @@ b35f1a4	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.013	4
 9617c61	local-fake-extension	108	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.005	0.0000	0.000	keep	isolated settings link read local
 9617c61	real-chrome-extension-smoke	92	1.0000	1.0000	1.0000	1.0000	1.15	0.009	0.546	0.0000	0.000	keep	isolated settings link read real smoke
 9617c61	real-chrome-extension-agent	102	1.0000	1.0000	1.0000	1.0000	1.30	0.011	4.424	0.0000	0.055	keep	isolated settings link read real agent
+926f51e	local-fake-extension	108	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.005	0.0000	0.000	baseline	isolated scroll target read baseline local
+926f51e	local-fake-extension	109	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.006	0.0000	0.000	keep	isolated scroll target read local
+926f51e	real-chrome-extension-smoke	93	1.0000	1.0000	1.0000	1.0000	1.15	0.009	0.501	0.0000	0.000	keep	isolated scroll target read real smoke
+926f51e	real-chrome-extension-agent	103	1.0000	1.0000	1.0000	1.0000	1.30	0.009	4.205	0.0000	0.161	keep	isolated scroll target read real agent
