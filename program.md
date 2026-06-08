@@ -1421,6 +1421,14 @@ June 8, 2026 latest kept report section result:
 - Real smoke remained 91/91 with `actions_per_success 1.15`, `p95_task_seconds 0.548`, and `timeout_rate 0.0000`; real agent passed 101/101 with `actions_per_success 1.31`, `p95_task_seconds 4.209`, `model_ready_status ready`, `model_load_seconds 0.533`, and `timeout_rate 0.0000`.
 - The regenerated report now shows latest kept rows for `local-fake-extension` at 107 tasks, `real-chrome-extension-smoke` at 91 tasks, and `real-chrome-extension-agent` at 101 tasks; trace artifacts remained at 132 raw positive records from 85 tasks and 201 training records from 94 tasks, with preference/reranker pairs still 77 and learned LOTO/LOSO margins 12/10.
 
+June 8, 2026 isolated settings-link read coverage result:
+
+- Added frozen `navigation/read-isolated-settings-link-before-click`, proving exact `gemma_read_page` on logical tab 106 can read the isolated navigation fixture's settings link before the later billing-link click mutates that tab.
+- The task completes exact pre-click isolated navigation link read coverage for both `#billing-link` and `#settings-link`, complementing the isolated page brief, body HTML/text reads, active-tab, screenshot, and click contracts.
+- Baseline local before the task stayed green at 107/107 with `actions_per_success 1.41` and `p95_task_seconds 0.005`; after adding the task, local passed 108/108 with `actions_per_success 1.41`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 92/92 with `actions_per_success 1.15`, `p95_task_seconds 0.546`, and `timeout_rate 0.0000`; real agent passed 102/102 with `actions_per_success 1.30`, `p95_task_seconds 4.424`, `model_ready_status ready`, `model_load_seconds 0.055`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 133 raw positive records from 86 tasks and 202 training records from 95 tasks because the new deterministic real-extension read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

@@ -629,3 +629,7 @@ b35f1a4	local-fake-extension	107	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.006	0.
 b35f1a4	local-fake-extension	107	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.006	0.0000	0.000	keep	latest kept report section local
 b35f1a4	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.011	0.548	0.0000	0.000	keep	latest kept report section real smoke
 b35f1a4	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.013	4.209	0.0000	0.533	keep	latest kept report section real agent
+9617c61	local-fake-extension	107	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.005	0.0000	0.000	baseline	isolated settings link read baseline local
+9617c61	local-fake-extension	108	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.005	0.0000	0.000	keep	isolated settings link read local
+9617c61	real-chrome-extension-smoke	92	1.0000	1.0000	1.0000	1.0000	1.15	0.009	0.546	0.0000	0.000	keep	isolated settings link read real smoke
+9617c61	real-chrome-extension-agent	102	1.0000	1.0000	1.0000	1.0000	1.30	0.011	4.424	0.0000	0.055	keep	isolated settings link read real agent
