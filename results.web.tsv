@@ -920,3 +920,7 @@ f89661e	real-chrome-extension-agent	169	1.0000	1.0000	1.0000	1.0000	1.18	0.008	0
 04c0428	local-fake-extension	176	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	keep	destination notes after save click html read local
 04c0428	real-chrome-extension-smoke	160	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.119	0.0000	0.000	keep	destination notes after save click html read real smoke
 04c0428	real-chrome-extension-agent	170	1.0000	1.0000	1.0000	1.0000	1.18	0.008	0.502	0.0000	0.001	keep	destination notes after save click html read real agent
+a9082ac	local-fake-extension	176	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	baseline	save profile button after save click read baseline local
+a9082ac	local-fake-extension	177	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	keep	save profile button after save click read local
+a9082ac	real-chrome-extension-smoke	161	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.122	0.0000	0.000	keep	save profile button after save click read real smoke
+a9082ac	real-chrome-extension-agent	171	1.0000	1.0000	1.0000	1.0000	1.18	0.008	0.599	0.0000	0.001	keep	save profile button after save click read real agent
