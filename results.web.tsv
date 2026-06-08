@@ -886,3 +886,7 @@ aef54fd	real-chrome-extension-agent	160	1.0000	1.0000	1.0000	1.0000	1.19	0.009	0
 2f665ec	local-fake-extension	169	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.004	0.0000	0.000	baseline	destination name after save click html read baseline local
 2f665ec	local-fake-extension	170	0.9941	0.9941	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	discard	destination name after save click html read local
 2f665ec	local-fake-extension	169	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	baseline	destination name after save click html discard restored local
+e19f1ef	local-fake-extension	169	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	baseline	destination email after save click read baseline local
+e19f1ef	local-fake-extension	170	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.004	0.0000	0.000	keep	destination email after save click read local
+e19f1ef	real-chrome-extension-smoke	154	1.0000	1.0000	1.0000	1.0000	1.09	0.009	0.124	0.0000	0.000	keep	destination email after save click read real smoke
+e19f1ef	real-chrome-extension-agent	164	1.0000	1.0000	1.0000	1.0000	1.19	0.008	0.504	0.0000	0.001	keep	destination email after save click read real agent

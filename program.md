@@ -1926,6 +1926,14 @@ June 8, 2026 destination name after save-click HTML read discard result:
 - Discarded the task because the current HTML read of an input element returns empty `content`, so asserting `Grace Hopper Jr.` would be invalid and weakening the assertion would not prove live value state.
 - Removed the candidate task and restored the local manifest to 169/169 with `actions_per_success 1.26`, `p95_task_seconds 0.005`, and `timeout_rate 0.0000`; no real-extension or trace gates were run for the discarded hypothesis because it failed the local gate.
 
+June 8, 2026 destination email after save-click read coverage result:
+
+- Added frozen `forms/read-destination-email-after-save-click`, proving exact `gemma_read_page` can read destination `#dest-email` after the recovered destination save click mutates `#save-result` but before `transfer-profile-fields` copies source email into the destination field.
+- The task continues scoped destination field coverage at the intermediate save-click state, asserting empty `content`, one `read_page_content` action, exact `#dest-email` selector propagation, and absence of source email/name plus destination save-result content.
+- Baseline local before the task stayed green at 169/169 with `actions_per_success 1.26` and `p95_task_seconds 0.005`; after adding the task, local passed 170/170 with `actions_per_success 1.26`, `p95_task_seconds 0.004`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 154/154 with `actions_per_success 1.09`, `p95_task_seconds 0.124`, and `timeout_rate 0.0000`; real agent passed 164/164 with `actions_per_success 1.19`, `p95_task_seconds 0.504`, `deterministic_p95_task_seconds 0.122`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 195 raw positive records from 148 tasks and 264 training records from 157 tasks because the new deterministic real-extension destination-email after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
