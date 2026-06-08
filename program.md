@@ -1727,6 +1727,14 @@ June 8, 2026 destination role recovered HTML read coverage result:
 - Real smoke passed 129/129 with `actions_per_success 1.11`, `p95_task_seconds 0.124`, and `timeout_rate 0.0000`; real agent passed 139/139 with `actions_per_success 1.22`, `p95_task_seconds 0.599`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 170 raw positive records from 123 tasks and 239 training records from 132 tasks because the new deterministic real-extension recovered select HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 destination role selected HTML read coverage result:
+
+- Added frozen `forms/read-destination-role-after-select-html`, proving exact `gemma_read_page` can read the destination role `<select>` as HTML after the normal `select-role-value` path selects `Administrator`.
+- The task completes selected `<select>` HTML readback coverage for both normal and recovered selection paths, asserting option markup, one `read_page_content` action, exact `#dest-role` selector propagation, and absence of text-mode `selected:` state plus unrelated form content.
+- Baseline local before the task stayed green at 145/145 with `actions_per_success 1.30` and `p95_task_seconds 0.005`; after adding the task, local passed 146/146 with `actions_per_success 1.30`, `p95_task_seconds 0.004`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 130/130 with `actions_per_success 1.11`, `p95_task_seconds 0.124`, and `timeout_rate 0.0000`; real agent passed 140/140 with `actions_per_success 1.22`, `p95_task_seconds 0.603`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 171 raw positive records from 124 tasks and 240 training records from 133 tasks because the new deterministic real-extension selected select HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
