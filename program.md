@@ -1533,6 +1533,14 @@ June 8, 2026 post-click save-result HTML read coverage result:
 - Real smoke passed 105/105 with `actions_per_success 1.13`, `p95_task_seconds 0.129`, and `timeout_rate 0.0000`; real agent passed 115/115 with `actions_per_success 1.27`, `p95_task_seconds 4.142`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 146 raw positive records from 99 tasks and 215 training records from 108 tasks because the new deterministic real-extension HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 transferred save-result HTML read coverage result:
+
+- Added frozen `forms/read-save-result-after-transfer-html`, proving exact `gemma_read_page` can read the destination result element's HTML after `transfer-profile-fields` submits copied source values and mutates `#save-result`.
+- The task completes text/HTML paired coverage for both post-click result states, asserting escaped selector-scoped HTML `&lt;ada@example.test&gt;`, the exact selector, one `read_page_content` action, and absence of the raw angle-bracket variant.
+- Baseline local before the task stayed green at 121/121 with `actions_per_success 1.36` and `p95_task_seconds 0.006`; after adding the task, local passed 122/122 with `actions_per_success 1.36`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 106/106 with `actions_per_success 1.13`, `p95_task_seconds 0.124`, and `timeout_rate 0.0000`; real agent passed 116/116 with `actions_per_success 1.27`, `p95_task_seconds 4.205`, `model_ready_status ready`, `model_load_seconds 0.646`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 147 raw positive records from 100 tasks and 216 training records from 109 tasks because the new deterministic real-extension HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
