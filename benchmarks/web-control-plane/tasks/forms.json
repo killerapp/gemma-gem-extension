@@ -2384,5 +2384,34 @@
       "bridgeExecuteSelector": "#source-email",
       "bridgeRunAgent": false
     }
+  },
+  {
+    "id": "read-source-body-html-after-transfer",
+    "suite": "forms",
+    "title": "Read source body HTML after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "body",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["<dt>Name</dt>", "id=\"source-name\"", "Ada Lovelace", "id=\"source-email\"", "ada@example.test"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["dest-name", "save-result", "Saved Ada Lovelace"]
+      },
+      "contains": ["<dt>Name</dt>", "source-name", "Ada Lovelace", "source-email", "ada@example.test"],
+      "notContains": ["dest-name", "save-result", "Saved Ada Lovelace"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
   }
 ]

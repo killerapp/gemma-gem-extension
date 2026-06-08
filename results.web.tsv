@@ -846,3 +846,7 @@ d511406	real-chrome-extension-agent	153	1.0000	1.0000	1.0000	1.0000	1.20	0.012	0
 6301b40	local-fake-extension	160	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	keep	source email after transfer html read local
 6301b40	real-chrome-extension-smoke	144	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.124	0.0000	0.000	keep	source email after transfer html read real smoke
 6301b40	real-chrome-extension-agent	154	1.0000	1.0000	1.0000	1.0000	1.20	0.009	0.599	0.0000	0.071	keep	source email after transfer html read real agent
+dcb16bf	local-fake-extension	160	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	baseline	source body after transfer html read baseline local
+dcb16bf	local-fake-extension	161	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	keep	source body after transfer html read local
+dcb16bf	real-chrome-extension-smoke	145	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.124	0.0000	0.000	keep	source body after transfer html read real smoke
+dcb16bf	real-chrome-extension-agent	155	1.0000	1.0000	1.0000	1.0000	1.20	0.009	0.604	0.0000	0.001	keep	source body after transfer html read real agent
