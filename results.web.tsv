@@ -969,3 +969,7 @@ bd42640	real-chrome-extension-agent	180	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0
 9e87540	local-fake-extension	188	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	destination notes recovered html read local
 9e87540	real-chrome-extension-smoke	172	1.0000	1.0000	1.0000	1.0000	1.08	0.007	0.120	0.0000	0.000	keep	destination notes recovered html read real smoke
 9e87540	real-chrome-extension-agent	182	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.497	0.0000	0.001	keep	destination notes recovered html read real agent
+a85f454	local-fake-extension	188	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	baseline	destination role options html read baseline local
+a85f454	local-fake-extension	189	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	destination role options html read local
+a85f454	real-chrome-extension-smoke	173	1.0000	1.0000	1.0000	1.0000	1.08	0.010	0.123	0.0000	0.000	keep	destination role options html read real smoke
+a85f454	real-chrome-extension-agent	183	1.0000	1.0000	1.0000	1.0000	1.17	0.008	0.501	0.0000	0.001	keep	destination role options html read real agent

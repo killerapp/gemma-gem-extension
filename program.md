@@ -2092,6 +2092,14 @@ June 8, 2026 destination notes recovered HTML read coverage result:
 - Real smoke passed 172/172 with `actions_per_success 1.08`, `p95_task_seconds 0.120`, and `timeout_rate 0.0000`; real agent passed 182/182 with `actions_per_success 1.17`, `p95_task_seconds 0.497`, `deterministic_p95_task_seconds 0.123`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 213 raw positive records from 166 tasks and 282 training records from 175 tasks because the deterministic real-extension destination-notes recovered HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 destination role options HTML read coverage result:
+
+- Added frozen `forms/read-destination-role-options-html`, proving exact `gemma_read_page` can read destination `#dest-role` option markup in HTML mode after the selected-role read and before the recovered `text=Role` selector path.
+- The task complements the kept role-options text read by asserting the three option elements, one `read_page_content` action, exact `#dest-role` selector propagation, and absence of selected-state text, save-button, source, and neighboring destination field content.
+- Baseline local before the task stayed green at 188/188 with `actions_per_success 1.23` and `p95_task_seconds 0.005`; after adding the task, local passed 189/189 with `actions_per_success 1.23`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 173/173 with `actions_per_success 1.08`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; real agent passed 183/183 with `actions_per_success 1.17`, `p95_task_seconds 0.501`, `deterministic_p95_task_seconds 0.123`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 214 raw positive records from 167 tasks and 283 training records from 176 tasks because the deterministic real-extension destination-role options HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
