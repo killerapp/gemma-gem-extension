@@ -646,3 +646,7 @@ f404110	real-chrome-extension-agent	104	1.0000	1.0000	1.0000	1.0000	1.30	0.011	4
 6580021	local-fake-extension	111	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	keep	save result after click local
 6580021	real-chrome-extension-smoke	95	1.0000	1.0000	1.0000	1.0000	1.15	0.008	0.499	0.0000	0.000	keep	save result after click real smoke
 6580021	real-chrome-extension-agent	105	1.0000	1.0000	1.0000	1.0000	1.30	0.014	4.260	0.0000	0.001	keep	save result after click real agent
+1b71a98	local-fake-extension	111	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	baseline	empty destination email read baseline local
+1b71a98	local-fake-extension	112	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.005	0.0000	0.000	keep	empty destination email read local
+1b71a98	real-chrome-extension-smoke	96	1.0000	1.0000	1.0000	1.0000	1.15	0.009	0.498	0.0000	0.000	keep	empty destination email read real smoke
+1b71a98	real-chrome-extension-agent	106	1.0000	1.0000	1.0000	1.0000	1.29	0.009	0.606	0.0000	0.001	keep	empty destination email read real agent
