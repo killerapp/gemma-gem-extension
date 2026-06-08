@@ -2358,5 +2358,31 @@
       "bridgeExecuteSelector": "#source-email",
       "bridgeRunAgent": false
     }
+  },
+  {
+    "id": "read-source-email-after-transfer-html",
+    "suite": "forms",
+    "title": "Read source email HTML after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "#source-email",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["ada@example.test"]
+      },
+      "contains": ["ada@example.test"],
+      "notContains": ["Saved", "save-result", "dest-email", "Ada Lovelace", "source-name"],
+      "selector": "#source-email",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-email format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#source-email",
+      "bridgeRunAgent": false
+    }
   }
 ]
