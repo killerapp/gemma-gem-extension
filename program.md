@@ -2012,6 +2012,14 @@ June 8, 2026 save-profile button after save-click HTML read coverage result:
 - Real smoke passed 162/162 with `actions_per_success 1.09`, `p95_task_seconds 0.120`, and `timeout_rate 0.0000`; real agent passed 172/172 with `actions_per_success 1.18`, `p95_task_seconds 0.505`, `deterministic_p95_task_seconds 0.123`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 203 raw positive records from 156 tasks and 272 training records from 165 tasks because the deterministic real-extension save-profile button HTML after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 destination name after save-click HTML read coverage result:
+
+- Added frozen `forms/read-destination-name-after-save-click-html`, proving exact `gemma_read_page` can read destination `#dest-name` in HTML mode after the recovered destination save click and before `transfer-profile-fields`.
+- The task complements the kept text read by asserting empty input HTML `content`, one `read_page_content` action, exact `#dest-name` selector propagation, and absence of destination value, save-result, source, and neighboring button content.
+- Baseline local before the task stayed green at 178/178 with `actions_per_success 1.25` and `p95_task_seconds 0.005`; after adding the task, local passed 179/179 with `actions_per_success 1.25`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 163/163 with `actions_per_success 1.09`, `p95_task_seconds 0.122`, and `timeout_rate 0.0000`; real agent passed 173/173 with `actions_per_success 1.18`, `p95_task_seconds 0.506`, `deterministic_p95_task_seconds 0.123`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 204 raw positive records from 157 tasks and 273 training records from 166 tasks because the deterministic real-extension destination-name HTML after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
