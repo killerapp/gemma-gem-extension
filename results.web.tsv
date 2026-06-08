@@ -810,3 +810,7 @@ a850729	real-chrome-extension-agent	144	1.0000	1.0000	1.0000	1.0000	1.22	0.010	0
 1440fc9	local-fake-extension	151	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	keep	destination priority after transfer read local
 1440fc9	real-chrome-extension-smoke	135	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.123	0.0000	0.000	keep	destination priority after transfer read real smoke
 1440fc9	real-chrome-extension-agent	145	1.0000	1.0000	1.0000	1.0000	1.21	0.009	0.601	0.0000	0.001	keep	destination priority after transfer read real agent
+c8641ce	local-fake-extension	151	1.0000	1.0000	1.0000	1.0000	1.29	0.002	0.005	0.0000	0.000	baseline	destination priority after transfer html read baseline local
+c8641ce	local-fake-extension	152	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	keep	destination priority after transfer html read local
+c8641ce	real-chrome-extension-smoke	136	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.125	0.0000	0.000	keep	destination priority after transfer html read real smoke
+c8641ce	real-chrome-extension-agent	146	1.0000	1.0000	1.0000	1.0000	1.21	0.008	0.597	0.0000	0.001	keep	destination priority after transfer html read real agent
