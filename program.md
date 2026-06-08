@@ -1663,6 +1663,14 @@ June 8, 2026 destination priority high unchecked HTML read coverage result:
 - Real smoke passed 121/121 with `actions_per_success 1.12`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; real agent passed 131/131 with `actions_per_success 1.24`, `p95_task_seconds 0.584`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 162 raw positive records from 115 tasks and 231 training records from 124 tasks because the new deterministic real-extension unchecked high-priority radio HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 destination updates unchecked HTML read coverage result:
+
+- Added frozen `forms/read-destination-updates-after-recovered-click-html`, proving exact `gemma_read_page` can read the unchecked destination updates checkbox as empty HTML after `click-updates-recover-selector` toggles it back off.
+- The task completes checked/unchecked checkbox `innerHTML` parity coverage for the destination updates control, asserting empty `content`, one `read_page_content` action, exact `#dest-updates` selector propagation, and absence of state/label/button text.
+- Baseline local before the task stayed green at 137/137 with `actions_per_success 1.32` and `p95_task_seconds 0.005`; after adding the task, local passed 138/138 with `actions_per_success 1.32`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 122/122 with `actions_per_success 1.11`, `p95_task_seconds 0.122`, and `timeout_rate 0.0000`; real agent passed 132/132 with `actions_per_success 1.23`, `p95_task_seconds 0.566`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 163 raw positive records from 116 tasks and 232 training records from 125 tasks because the new deterministic real-extension unchecked checkbox HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
