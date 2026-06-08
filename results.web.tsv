@@ -790,3 +790,7 @@ e1465a5	real-chrome-extension-agent	135	1.0000	1.0000	1.0000	1.0000	1.23	0.010	0
 687c23a	local-fake-extension	146	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.004	0.0000	0.000	keep	destination role selected html read local
 687c23a	real-chrome-extension-smoke	130	1.0000	1.0000	1.0000	1.0000	1.11	0.009	0.124	0.0000	0.000	keep	destination role selected html read real smoke
 687c23a	real-chrome-extension-agent	140	1.0000	1.0000	1.0000	1.0000	1.22	0.008	0.603	0.0000	0.001	keep	destination role selected html read real agent
+096f911	local-fake-extension	146	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	baseline	destination role after transfer read baseline local
+096f911	local-fake-extension	147	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	keep	destination role after transfer read local
+096f911	real-chrome-extension-smoke	131	1.0000	1.0000	1.0000	1.0000	1.11	0.008	0.126	0.0000	0.000	keep	destination role after transfer read real smoke
+096f911	real-chrome-extension-agent	141	1.0000	1.0000	1.0000	1.0000	1.22	0.009	0.600	0.0000	0.001	keep	destination role after transfer read real agent
