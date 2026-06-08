@@ -1566,6 +1566,14 @@ June 8, 2026 post-click destination body text read coverage result:
 - Real smoke passed 109/109 with `actions_per_success 1.13`, `p95_task_seconds 0.126`, and `timeout_rate 0.0000`; real agent passed 119/119 with `actions_per_success 1.26`, `p95_task_seconds 4.128`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 150 raw positive records from 103 tasks and 219 training records from 112 tasks because the new deterministic real-extension body text read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 source name HTML read coverage result:
+
+- Added frozen `forms/read-source-name-html`, proving exact `gemma_read_page` can read the source profile name selector in HTML format through both fake and real extension paths.
+- The task completes text/HTML paired exact-selector coverage for `#source-name`, asserting the narrow `Ada Lovelace` inner HTML, one `read_page_content` action, and absence of neighboring email or destination selectors.
+- Baseline local before the task stayed green at 125/125 with `actions_per_success 1.35` and `p95_task_seconds 0.005`; after adding the task, local passed 126/126 with `actions_per_success 1.35`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 110/110 with `actions_per_success 1.13`, `p95_task_seconds 0.125`, and `timeout_rate 0.0000`; real agent passed 120/120 with `actions_per_success 1.26`, `p95_task_seconds 0.604`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 151 raw positive records from 104 tasks and 220 training records from 113 tasks because the new deterministic real-extension source HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
