@@ -948,3 +948,8 @@ cc1fc42	real-chrome-extension-agent	175	1.0000	1.0000	1.0000	1.0000	1.18	0.010	0
 862b847	local-fake-extension	183	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.004	0.0000	0.000	keep	destination low priority after save click html read local
 862b847	real-chrome-extension-smoke	167	1.0000	1.0000	1.0000	1.0000	1.08	0.007	0.122	0.0000	0.000	keep	destination low priority after save click html read real smoke
 862b847	real-chrome-extension-agent	177	1.0000	1.0000	1.0000	1.0000	1.18	0.008	0.601	0.0000	0.001	keep	destination low priority after save click html read real agent
+c2c1918	local-fake-extension	183	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.004	0.0000	0.000	baseline	destination high priority after save click html read baseline local
+c2c1918	local-fake-extension	184	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	keep	destination high priority after save click html read local
+c2c1918	real-chrome-extension-smoke	168	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.123	0.0000	0.000	keep	destination high priority after save click html read real smoke
+c2c1918	real-chrome-extension-agent	178	0.9888	0.9888	1.0000	1.0000	1.14	0.009	0.499	0.0000	0.001	discard	destination high priority after save click html read real agent
+c2c1918	real-chrome-extension-agent	178	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.506	0.0000	0.002	keep	destination high priority after save click html read real agent
