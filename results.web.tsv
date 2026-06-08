@@ -875,3 +875,7 @@ aef54fd	real-chrome-extension-agent	160	1.0000	1.0000	1.0000	1.0000	1.19	0.009	0
 2f360f3	local-fake-extension	167	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.004	0.0000	0.000	keep	source email after save click read local
 2f360f3	real-chrome-extension-smoke	151	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.121	0.0000	0.000	keep	source email after save click read real smoke
 2f360f3	real-chrome-extension-agent	161	1.0000	1.0000	1.0000	1.0000	1.19	0.008	0.593	0.0000	0.009	keep	source email after save click read real agent
+01ae311	local-fake-extension	167	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	baseline	source email after save click html read baseline local
+01ae311	local-fake-extension	168	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	keep	source email after save click html read local
+01ae311	real-chrome-extension-smoke	152	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.123	0.0000	0.000	keep	source email after save click html read real smoke
+01ae311	real-chrome-extension-agent	162	1.0000	1.0000	1.0000	1.0000	1.19	0.008	0.594	0.0000	0.001	keep	source email after save click html read real agent

@@ -1903,6 +1903,14 @@ June 8, 2026 source email after save-click read coverage result:
 - Real smoke passed 151/151 with `actions_per_success 1.09`, `p95_task_seconds 0.121`, and `timeout_rate 0.0000`; real agent passed 161/161 with `actions_per_success 1.19`, `p95_task_seconds 0.593`, `deterministic_p95_task_seconds 0.123`, `model_ready_status ready`, `model_load_seconds 0.009`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 192 raw positive records from 145 tasks and 261 training records from 154 tasks because the new deterministic real-extension source-email after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 source email after save-click HTML read coverage result:
+
+- Added frozen `forms/read-source-email-after-save-click-html`, proving exact `gemma_read_page` can return to source tab 103 and read `#source-email` HTML after the recovered destination save click mutates tab 104 but before `transfer-profile-fields` copies source fields.
+- The task completes source-email text/HTML coverage at the intermediate save-click state, asserting `ada@example.test`, one `read_page_content` action, exact `#source-email` selector propagation, and absence of destination save-result/email plus sibling source-name/name content.
+- Baseline local before the task stayed green at 167/167 with `actions_per_success 1.26` and `p95_task_seconds 0.005`; after adding the task, local passed 168/168 with `actions_per_success 1.26`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 152/152 with `actions_per_success 1.09`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; real agent passed 162/162 with `actions_per_success 1.19`, `p95_task_seconds 0.594`, `deterministic_p95_task_seconds 0.124`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 193 raw positive records from 146 tasks and 262 training records from 155 tasks because the new deterministic real-extension source-email HTML after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
