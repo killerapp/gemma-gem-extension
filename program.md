@@ -1887,6 +1887,14 @@ June 8, 2026 source name after save-click read coverage result:
 - Real smoke passed 149/149 with `actions_per_success 1.09`, `p95_task_seconds 0.124`, and `timeout_rate 0.0000`; real agent passed 159/159 with improved `actions_per_success 1.19`, `p95_task_seconds 0.605`, `deterministic_p95_task_seconds 0.122`, `model_ready_status ready`, `model_load_seconds 0.002`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 190 raw positive records from 143 tasks and 259 training records from 152 tasks because the new deterministic real-extension source-name after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 source name after save-click HTML read coverage result:
+
+- Added frozen `forms/read-source-name-after-save-click-html`, proving exact `gemma_read_page` can return to source tab 103 and read `#source-name` HTML after the recovered destination save click mutates tab 104 but before `transfer-profile-fields` copies source fields.
+- The task completes field-level source-name immutability coverage across text and HTML at the intermediate save-click state, asserting `Ada Lovelace`, one `read_page_content` action, exact `#source-name` selector propagation, and absence of destination save-result/name/email plus sibling source-email content.
+- Baseline local before the task stayed green at 165/165 with `actions_per_success 1.27` and `p95_task_seconds 0.005`; after adding the task, local passed 166/166 with `actions_per_success 1.27`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 150/150 with `actions_per_success 1.09`, `p95_task_seconds 0.124`, and `timeout_rate 0.0000`; real agent passed 160/160 with `actions_per_success 1.19`, `p95_task_seconds 0.600`, `deterministic_p95_task_seconds 0.124`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 191 raw positive records from 144 tasks and 260 training records from 153 tasks because the new deterministic real-extension source-name HTML after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
