@@ -762,3 +762,7 @@ cd5b710	local-fake-extension	138	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.005	0.
 cd5b710	local-fake-extension	139	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.005	0.0000	0.000	keep	destination name typed html read local
 cd5b710	real-chrome-extension-smoke	123	1.0000	1.0000	1.0000	1.0000	1.11	0.010	0.124	0.0000	0.000	keep	destination name typed html read real smoke
 cd5b710	real-chrome-extension-agent	133	1.0000	1.0000	1.0000	1.0000	1.23	0.010	0.565	0.0000	0.001	keep	destination name typed html read real agent
+f690d7e	local-fake-extension	139	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.006	0.0000	0.000	baseline	destination name appended html read baseline local
+f690d7e	local-fake-extension	140	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.005	0.0000	0.000	keep	destination name appended html read local
+f690d7e	real-chrome-extension-smoke	124	1.0000	1.0000	1.0000	1.0000	1.11	0.010	0.124	0.0000	0.000	keep	destination name appended html read real smoke
+f690d7e	real-chrome-extension-agent	134	1.0000	1.0000	1.0000	1.0000	1.23	0.009	0.581	0.0000	0.001	keep	destination name appended html read real agent
