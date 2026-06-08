@@ -1525,6 +1525,14 @@ June 8, 2026 empty save-result HTML read coverage result:
 - Real smoke passed 104/104 with `actions_per_success 1.13`, `p95_task_seconds 0.125`, and `timeout_rate 0.0000`; real agent passed 114/114 with `actions_per_success 1.27`, `p95_task_seconds 4.214`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 145 raw positive records from 98 tasks and 214 training records from 107 tasks because the new deterministic real-extension read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 post-click save-result HTML read coverage result:
+
+- Added frozen `forms/read-save-result-after-click-html`, proving exact `gemma_read_page` can read the destination result element's HTML immediately after the recovered save click and before `transfer-profile-fields` overwrites `#save-result`.
+- The first probes exposed a fake-vs-real harness mismatch: local fake initially returned raw `<>` for selector-scoped result HTML while the real browser returned `&lt;&gt;`; the kept change makes the fake harness HTML-escape dynamic `#save-result` text to match browser `innerHTML`.
+- Baseline local before the task stayed green at 120/120 with `actions_per_success 1.37` and `p95_task_seconds 0.005`; after the task and harness-parity fix, local passed 121/121 with `actions_per_success 1.36`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 105/105 with `actions_per_success 1.13`, `p95_task_seconds 0.129`, and `timeout_rate 0.0000`; real agent passed 115/115 with `actions_per_success 1.27`, `p95_task_seconds 4.142`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 146 raw positive records from 99 tasks and 215 training records from 108 tasks because the new deterministic real-extension HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

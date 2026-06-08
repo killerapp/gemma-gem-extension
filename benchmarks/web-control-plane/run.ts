@@ -191,6 +191,13 @@ function hasImage(result: any, mimeType: string): boolean {
   return content.some((item: any) => item.type === 'image' && item.mimeType === mimeType)
 }
 
+function escapeHtmlText(value: string): string {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+}
+
 function jsonPathValue(value: unknown, path: string): unknown {
   return path.split('.').reduce<unknown>((current, segment) => {
     if (current == null) return undefined
@@ -837,6 +844,7 @@ class FakeExtension implements HarnessProbe {
         ].join('\n')
       }
       if (selector === '#save-profile') return 'Save profile'
+      if (selector === '#save-result' && format === 'html') return escapeHtmlText(this.value(104, selector))
       return this.value(104, selector)
     }
     if (tabId === 105 || tabId === 106) {

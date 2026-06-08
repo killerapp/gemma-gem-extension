@@ -682,3 +682,10 @@ d8c1037	local-fake-extension	119	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.005	0.
 d8c1037	local-fake-extension	120	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.005	0.0000	0.000	keep	empty save result html read local
 d8c1037	real-chrome-extension-smoke	104	1.0000	1.0000	1.0000	1.0000	1.13	0.007	0.125	0.0000	0.000	keep	empty save result html read real smoke
 d8c1037	real-chrome-extension-agent	114	1.0000	1.0000	1.0000	1.0000	1.27	0.008	4.214	0.0000	0.001	keep	empty save result html read real agent
+7e407a9	local-fake-extension	120	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.005	0.0000	0.000	baseline	save result after click html read baseline local
+7e407a9	local-fake-extension	121	0.9917	0.9917	1.0000	1.0000	1.37	0.003	0.005	0.0000	0.000	discard	save result after click html read local
+7e407a9	local-fake-extension	121	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	keep	save result after click html read local
+7e407a9	real-chrome-extension-smoke	105	0.9905	0.9905	1.0000	1.0000	1.13	0.007	0.125	0.0000	0.000	discard	save result after click html read real smoke
+7e407a9	local-fake-extension	121	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	keep	save result after click html read local
+7e407a9	real-chrome-extension-smoke	105	1.0000	1.0000	1.0000	1.0000	1.13	0.007	0.129	0.0000	0.000	keep	save result after click html read real smoke
+7e407a9	real-chrome-extension-agent	115	1.0000	1.0000	1.0000	1.0000	1.27	0.008	4.142	0.0000	0.001	keep	save result after click html read real agent
