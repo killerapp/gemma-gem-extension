@@ -830,3 +830,7 @@ d111584	real-chrome-extension-agent	148	1.0000	1.0000	1.0000	1.0000	1.21	0.009	0
 66f1f16	local-fake-extension	156	1.0000	1.0000	1.0000	1.0000	1.28	0.003	0.005	0.0000	0.000	keep	destination notes after transfer html read local
 66f1f16	real-chrome-extension-smoke	140	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.124	0.0000	0.000	keep	destination notes after transfer html read real smoke
 66f1f16	real-chrome-extension-agent	150	1.0000	1.0000	1.0000	1.0000	1.21	0.009	0.602	0.0000	0.001	keep	destination notes after transfer html read real agent
+c92ecf7	local-fake-extension	156	1.0000	1.0000	1.0000	1.0000	1.28	0.003	0.005	0.0000	0.000	baseline	source name after transfer read baseline local
+c92ecf7	local-fake-extension	157	1.0000	1.0000	1.0000	1.0000	1.28	0.003	0.005	0.0000	0.000	keep	source name after transfer read local
+c92ecf7	real-chrome-extension-smoke	141	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.123	0.0000	0.000	keep	source name after transfer read real smoke
+c92ecf7	real-chrome-extension-agent	151	1.0000	1.0000	1.0000	1.0000	1.21	0.010	0.604	0.0000	0.001	keep	source name after transfer read real agent
