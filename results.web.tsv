@@ -961,3 +961,7 @@ bd42640	local-fake-extension	185	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.
 bd42640	local-fake-extension	186	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	keep	destination high priority initial html read local
 bd42640	real-chrome-extension-smoke	170	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.114	0.0000	0.000	keep	destination high priority initial html read real smoke
 bd42640	real-chrome-extension-agent	180	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.502	0.0000	0.001	keep	destination high priority initial html read real agent
+2bf0037	local-fake-extension	186	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	baseline	destination low priority initial html read baseline local
+2bf0037	local-fake-extension	187	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	keep	destination low priority initial html read local
+2bf0037	real-chrome-extension-smoke	171	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.122	0.0000	0.000	keep	destination low priority initial html read real smoke
+2bf0037	real-chrome-extension-agent	181	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.500	0.0000	0.001	keep	destination low priority initial html read real agent
