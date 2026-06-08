@@ -864,6 +864,31 @@
     }
   },
   {
+    "id": "read-destination-updates-html-initial",
+    "suite": "forms",
+    "title": "Read initial destination updates checkbox HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-updates",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["checked", "unchecked", "Subscribe updates", "Save profile", "Ada Lovelace"],
+      "selector": "#dest-updates",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-updates format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-updates",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "click-destination-updates-checkbox",
     "suite": "forms",
     "title": "Click destination updates checkbox",

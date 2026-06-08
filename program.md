@@ -2060,6 +2060,14 @@ June 8, 2026 destination high-priority after save-click HTML read coverage resul
 - Real smoke passed 168/168 with `actions_per_success 1.08`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; the first real-agent attempt discarded at 176/178 because existing semantic agent tasks hit model memory-access failures, then the rerun passed 178/178 with `actions_per_success 1.17`, `p95_task_seconds 0.506`, `deterministic_p95_task_seconds 0.123`, `model_ready_status ready`, `model_load_seconds 0.002`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 209 raw positive records from 162 tasks and 278 training records from 171 tasks because the deterministic real-extension destination-high-priority HTML after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 destination updates initial HTML read coverage result:
+
+- Added frozen `forms/read-destination-updates-html-initial`, proving exact `gemma_read_page` can read initial destination `#dest-updates` in HTML mode before any checkbox click or recovered save flow.
+- The task complements the kept initial unchecked text read by asserting empty checkbox HTML `content`, one `read_page_content` action, exact `#dest-updates` selector propagation, and absence of checked-state text, label, save-button, and source content.
+- Baseline local before the task stayed green at 184/184 with `actions_per_success 1.24` and `p95_task_seconds 0.005`; after adding the task, local passed 185/185 with `actions_per_success 1.24`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 169/169 with `actions_per_success 1.08`, `p95_task_seconds 0.121`, and `timeout_rate 0.0000`; real agent passed 179/179 with `actions_per_success 1.17`, `p95_task_seconds 0.503`, `deterministic_p95_task_seconds 0.122`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 210 raw positive records from 163 tasks and 279 training records from 172 tasks because the deterministic real-extension destination-updates initial HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

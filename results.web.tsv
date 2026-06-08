@@ -953,3 +953,7 @@ c2c1918	local-fake-extension	184	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.
 c2c1918	real-chrome-extension-smoke	168	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.123	0.0000	0.000	keep	destination high priority after save click html read real smoke
 c2c1918	real-chrome-extension-agent	178	0.9888	0.9888	1.0000	1.0000	1.14	0.009	0.499	0.0000	0.001	discard	destination high priority after save click html read real agent
 c2c1918	real-chrome-extension-agent	178	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.506	0.0000	0.002	keep	destination high priority after save click html read real agent
+db23740	local-fake-extension	184	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	baseline	destination updates initial html read baseline local
+db23740	local-fake-extension	185	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	keep	destination updates initial html read local
+db23740	real-chrome-extension-smoke	169	1.0000	1.0000	1.0000	1.0000	1.08	0.007	0.121	0.0000	0.000	keep	destination updates initial html read real smoke
+db23740	real-chrome-extension-agent	179	1.0000	1.0000	1.0000	1.0000	1.17	0.008	0.503	0.0000	0.001	keep	destination updates initial html read real agent
