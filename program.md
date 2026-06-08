@@ -1946,8 +1946,23 @@ June 8, 2026 destination updates after save-click unchecked discard result:
 
 - Tried frozen `forms/read-destination-updates-after-save-click` to extend intermediate save-click destination field coverage from name/email/role to the updates checkbox.
 - Baseline local before the task stayed green at 171/171 with `actions_per_success 1.26` and `p95_task_seconds 0.005`; the candidate run dropped to 171/172 with `task_success_rate 0.9942`, `strict_success_rate 0.9942`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
-- Discarded the task because the exact `#dest-updates` read returned `checked`, not the asserted recovered-click `unchecked` state; changing the kept task to pass would be a different state hypothesis rather than this failed unchecked assertion.
+- Discarded the task because its `notContains: checked` assertion conflicted with the asserted `unchecked` content by substring match; the result did not prove a checked runtime state.
 - Removed the candidate task and restored the local manifest to 171/171 with `actions_per_success 1.26`, `p95_task_seconds 0.004`, and `timeout_rate 0.0000`; no real-extension or trace gates were run for the discarded hypothesis because it failed the local gate.
+
+June 8, 2026 destination updates checked after save-click discard result:
+
+- Tried frozen `forms/read-destination-updates-checked-after-save-click` to test the opposite interpretation of the previous failed checkbox assertion.
+- Baseline local before the task stayed green at 171/171 with `actions_per_success 1.26` and `p95_task_seconds 0.005`; the checked candidate run dropped to 171/172 with `task_success_rate 0.9942`, `strict_success_rate 0.9942`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Discarded the checked task because the exact `#dest-updates` read returned `unchecked`, confirming the prior failure was an assertion-substring issue rather than checked state.
+- Removed the checked candidate and restored the local manifest to 171/171 with `actions_per_success 1.26`, `p95_task_seconds 0.005`, and `timeout_rate 0.0000`.
+
+June 8, 2026 destination updates corrected unchecked save-click read coverage result:
+
+- Added frozen `forms/read-destination-updates-unchecked-after-save-click`, proving exact `gemma_read_page` can read destination `#dest-updates` as `unchecked` after the recovered destination save click and before `transfer-profile-fields`, without the substring-conflicting `checked` exclusion.
+- The task extends intermediate save-click destination field coverage from name/email/role to checkbox state, asserting one `read_page_content` action, exact `#dest-updates` selector propagation, and absence of label, source, and save-result content.
+- Baseline local before the corrected task stayed green at 171/171 with `actions_per_success 1.26` and `p95_task_seconds 0.005`; after adding the task, local passed 172/172 with `actions_per_success 1.26`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 156/156 with `actions_per_success 1.09`, `p95_task_seconds 0.124`, and `timeout_rate 0.0000`; real agent passed 166/166 with `actions_per_success 1.19`, `p95_task_seconds 0.604`, `deterministic_p95_task_seconds 0.122`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 197 raw positive records from 150 tasks and 266 training records from 159 tasks because the corrected deterministic real-extension destination-updates after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
 ## Results File
 
