@@ -2023,6 +2023,32 @@
     }
   },
   {
+    "id": "read-destination-priority-low-after-transfer",
+    "suite": "forms",
+    "title": "Read destination low priority radio after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-low",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["checked"]
+      },
+      "contains": ["checked"],
+      "notContains": ["unchecked", "Ada Lovelace", "ada@example.test", "Saved", "Priority Low"],
+      "selector": "#dest-priority-low",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-low format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-low",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "read-save-result-after-transfer",
     "suite": "forms",
     "title": "Read save result after transferred profile submit",

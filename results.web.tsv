@@ -806,3 +806,7 @@ a850729	local-fake-extension	149	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.
 a850729	local-fake-extension	150	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	keep	destination updates after transfer html read local
 a850729	real-chrome-extension-smoke	134	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.123	0.0000	0.000	keep	destination updates after transfer html read real smoke
 a850729	real-chrome-extension-agent	144	1.0000	1.0000	1.0000	1.0000	1.22	0.010	0.604	0.0000	0.001	keep	destination updates after transfer html read real agent
+1440fc9	local-fake-extension	150	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	baseline	destination priority after transfer read baseline local
+1440fc9	local-fake-extension	151	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	keep	destination priority after transfer read local
+1440fc9	real-chrome-extension-smoke	135	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.123	0.0000	0.000	keep	destination priority after transfer read real smoke
+1440fc9	real-chrome-extension-agent	145	1.0000	1.0000	1.0000	1.0000	1.21	0.009	0.601	0.0000	0.001	keep	destination priority after transfer read real agent
