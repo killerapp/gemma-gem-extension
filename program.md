@@ -1759,6 +1759,14 @@ June 8, 2026 destination updates after transfer read coverage result:
 - Real smoke passed 133/133 with `actions_per_success 1.11`, `p95_task_seconds 0.126`, and `timeout_rate 0.0000`; real agent passed 143/143 with `actions_per_success 1.22`, `p95_task_seconds 0.602`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 174 raw positive records from 127 tasks and 243 training records from 136 tasks because the new deterministic real-extension post-transfer updates read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 destination updates after transfer HTML read coverage result:
+
+- Added frozen `forms/read-destination-updates-after-transfer-html`, proving exact `gemma_read_page` can read the destination updates checkbox as empty HTML after `transfer-profile-fields` copies mapped fields and submits the destination form.
+- The task completes post-transfer updates readback coverage across text and HTML formats, asserting empty `content`, one `read_page_content` action, exact `#dest-updates` selector propagation, and absence of checkbox state text plus transferred/save-result content.
+- Baseline local before the task stayed green at 149/149 with `actions_per_success 1.30` and `p95_task_seconds 0.005`; after adding the task, local passed 150/150 with `actions_per_success 1.29`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 134/134 with `actions_per_success 1.10`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; real agent passed 144/144 with `actions_per_success 1.22`, `p95_task_seconds 0.604`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 175 raw positive records from 128 tasks and 244 training records from 137 tasks because the new deterministic real-extension post-transfer updates HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

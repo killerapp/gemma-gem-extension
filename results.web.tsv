@@ -802,3 +802,7 @@ e1465a5	real-chrome-extension-agent	135	1.0000	1.0000	1.0000	1.0000	1.23	0.010	0
 975fdcf	local-fake-extension	149	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	keep	destination updates after transfer read local
 975fdcf	real-chrome-extension-smoke	133	1.0000	1.0000	1.0000	1.0000	1.11	0.009	0.126	0.0000	0.000	keep	destination updates after transfer read real smoke
 975fdcf	real-chrome-extension-agent	143	1.0000	1.0000	1.0000	1.0000	1.22	0.008	0.602	0.0000	0.001	keep	destination updates after transfer read real agent
+a850729	local-fake-extension	149	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	baseline	destination updates after transfer html read baseline local
+a850729	local-fake-extension	150	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	keep	destination updates after transfer html read local
+a850729	real-chrome-extension-smoke	134	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.123	0.0000	0.000	keep	destination updates after transfer html read real smoke
+a850729	real-chrome-extension-agent	144	1.0000	1.0000	1.0000	1.0000	1.22	0.010	0.604	0.0000	0.001	keep	destination updates after transfer html read real agent
