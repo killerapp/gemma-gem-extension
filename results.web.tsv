@@ -957,3 +957,7 @@ db23740	local-fake-extension	184	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.
 db23740	local-fake-extension	185	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	keep	destination updates initial html read local
 db23740	real-chrome-extension-smoke	169	1.0000	1.0000	1.0000	1.0000	1.08	0.007	0.121	0.0000	0.000	keep	destination updates initial html read real smoke
 db23740	real-chrome-extension-agent	179	1.0000	1.0000	1.0000	1.0000	1.17	0.008	0.503	0.0000	0.001	keep	destination updates initial html read real agent
+bd42640	local-fake-extension	185	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	baseline	destination high priority initial html read baseline local
+bd42640	local-fake-extension	186	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	keep	destination high priority initial html read local
+bd42640	real-chrome-extension-smoke	170	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.114	0.0000	0.000	keep	destination high priority initial html read real smoke
+bd42640	real-chrome-extension-agent	180	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.502	0.0000	0.001	keep	destination high priority initial html read real agent
