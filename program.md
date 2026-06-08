@@ -1919,6 +1919,13 @@ June 8, 2026 destination name after save-click read coverage result:
 - Real smoke passed 153/153 with `actions_per_success 1.09`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; real agent passed 163/163 with `actions_per_success 1.19`, `p95_task_seconds 0.601`, `deterministic_p95_task_seconds 0.124`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 194 raw positive records from 147 tasks and 263 training records from 156 tasks because the new deterministic real-extension destination-name after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 destination name after save-click HTML read discard result:
+
+- Tried frozen `forms/read-destination-name-after-save-click-html` to mirror the kept text read for destination `#dest-name` after the recovered destination save click and before `transfer-profile-fields`.
+- Baseline local before the task stayed green at 169/169 with `actions_per_success 1.26` and `p95_task_seconds 0.004`; the candidate run dropped to 169/170 with `task_success_rate 0.9941`, `strict_success_rate 0.9941`, `json_valid_rate 1.0000`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Discarded the task because the current HTML read of an input element returns empty `content`, so asserting `Grace Hopper Jr.` would be invalid and weakening the assertion would not prove live value state.
+- Removed the candidate task and restored the local manifest to 169/169 with `actions_per_success 1.26`, `p95_task_seconds 0.005`, and `timeout_rate 0.0000`; no real-extension or trace gates were run for the discarded hypothesis because it failed the local gate.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
