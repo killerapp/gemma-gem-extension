@@ -1501,6 +1501,14 @@ June 8, 2026 initial destination-priority-high read coverage result:
 - Real smoke passed 101/101 with `actions_per_success 1.14`, `p95_task_seconds 0.130`, and `timeout_rate 0.0000`; real agent passed 111/111 with `actions_per_success 1.28`, `p95_task_seconds 4.189`, `model_ready_status ready`, `model_load_seconds 0.012`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 142 raw positive records from 95 tasks and 211 training records from 104 tasks because the new deterministic real-extension read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 initial destination-priority-low read coverage result:
+
+- Added frozen `forms/read-destination-priority-low-initial`, proving exact `gemma_read_page` can read the untouched low-priority radio before the first priority radio click mutates the group.
+- The task completes initial radio-state coverage for the destination priority group with exact `content: unchecked`, the exact selector, one `read_page_content` action, and absence checks for surrounding label/body text.
+- Baseline local before the task stayed green at 117/117 with `actions_per_success 1.38` and `p95_task_seconds 0.005`; after adding the task, local passed 118/118 with `actions_per_success 1.37`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 102/102 with `actions_per_success 1.14`, `p95_task_seconds 0.125`, and `timeout_rate 0.0000`; real agent passed 112/112 with `actions_per_success 1.28`, `p95_task_seconds 4.228`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 143 raw positive records from 96 tasks and 212 training records from 105 tasks because the new deterministic real-extension read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
