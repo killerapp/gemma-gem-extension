@@ -1863,6 +1863,14 @@ June 8, 2026 source body after transfer text read coverage result:
 - Real smoke passed 146/146 with `actions_per_success 1.10`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; the first real-agent attempt discarded an unrelated `semantic-invoice-agent` timeout at 156 tasks with `task_success_rate 0.9872` and `timeout_rate 0.0064`, then the rerun passed 156/156 with `actions_per_success 1.20`, `p95_task_seconds 0.595`, `deterministic_p95_task_seconds 0.124`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 187 raw positive records from 140 tasks and 256 training records from 149 tasks because the new deterministic real-extension source-body text post-transfer read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 source body after save-click text read coverage result:
+
+- Added frozen `forms/read-source-body-after-save-click`, proving exact `gemma_read_page` can return to source tab 103 and read source body text after the recovered destination save click mutates tab 104 but before `transfer-profile-fields` copies source fields.
+- The task fills the intermediate cross-tab isolation gap between the destination `Saved Grace Hopper Jr. <>` save-result state and the later transferred-profile state, asserting source name/email text while excluding destination save-result, destination selectors, save-button, and pricing fixture content.
+- Baseline local before the task stayed green at 162/162 with `actions_per_success 1.27` and `p95_task_seconds 0.005`; after adding the task, local passed 163/163 with `actions_per_success 1.27`, `p95_task_seconds 0.006`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 147/147 with `actions_per_success 1.10`, `p95_task_seconds 0.124`, and `timeout_rate 0.0000`; real agent passed 157/157 with `actions_per_success 1.20`, `p95_task_seconds 0.599`, `deterministic_p95_task_seconds 0.123`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 188 raw positive records from 141 tasks and 257 training records from 150 tasks because the new deterministic real-extension source-body text after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
