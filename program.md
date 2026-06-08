@@ -2124,6 +2124,14 @@ June 8, 2026 isolated navigation billing link HTML read coverage result:
 - Real smoke passed 176/176 with `actions_per_success 1.08`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; real agent passed 186/186 with `actions_per_success 1.17`, improved `p95_task_seconds 0.496`, `deterministic_p95_task_seconds 0.123`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 217 raw positive records from 170 tasks and 286 training records from 179 tasks because the deterministic real-extension isolated navigation billing-link HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 isolated navigation settings link HTML read coverage result:
+
+- Added frozen `navigation/read-isolated-settings-link-before-click-html`, proving exact `gemma_read_page` can read isolated navigation `#settings-link` on tab 106 in HTML mode before navigation clicks mutate either navigation tab.
+- The task complements the kept isolated settings-link text read by asserting scoped `Settings` content, one `read_page_content` action, exact `#settings-link` selector propagation, and absence of neighboring Billing and scroll-target content.
+- Baseline local before the task stayed green at 192/192 with `actions_per_success 1.23` and `p95_task_seconds 0.005`; after adding the task, local passed 193/193 with `actions_per_success 1.23`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 177/177 with `actions_per_success 1.08`, `p95_task_seconds 0.121`, and `timeout_rate 0.0000`; real agent passed 187/187 with `actions_per_success 1.17`, `p95_task_seconds 0.508`, `deterministic_p95_task_seconds 0.122`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 218 raw positive records from 171 tasks and 287 training records from 180 tasks because the deterministic real-extension isolated navigation settings-link HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

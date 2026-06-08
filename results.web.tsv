@@ -985,3 +985,7 @@ c095dc8	local-fake-extension	191	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.
 c095dc8	local-fake-extension	192	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	navigation isolated billing link html read local
 c095dc8	real-chrome-extension-smoke	176	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.123	0.0000	0.000	keep	navigation isolated billing link html read real smoke
 c095dc8	real-chrome-extension-agent	186	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.496	0.0000	0.001	keep	navigation isolated billing link html read real agent
+bc410b5	local-fake-extension	192	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	baseline	navigation isolated settings link html read baseline local
+bc410b5	local-fake-extension	193	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	navigation isolated settings link html read local
+bc410b5	real-chrome-extension-smoke	177	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.121	0.0000	0.000	keep	navigation isolated settings link html read real smoke
+bc410b5	real-chrome-extension-agent	187	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.508	0.0000	0.001	keep	navigation isolated settings link html read real agent
