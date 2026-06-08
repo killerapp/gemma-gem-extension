@@ -2132,6 +2132,14 @@ June 8, 2026 isolated navigation settings link HTML read coverage result:
 - Real smoke passed 177/177 with `actions_per_success 1.08`, `p95_task_seconds 0.121`, and `timeout_rate 0.0000`; real agent passed 187/187 with `actions_per_success 1.17`, `p95_task_seconds 0.508`, `deterministic_p95_task_seconds 0.122`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 218 raw positive records from 171 tasks and 287 training records from 180 tasks because the deterministic real-extension isolated navigation settings-link HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 semantic receipt button HTML read coverage result:
+
+- Added frozen `semantic-buttons/read-receipt-button-before-act-html`, proving exact `gemma_read_page` can read `#download-receipt` in HTML mode before the semantic act/recovery sequence mutates billing fixture state.
+- The task complements the kept receipt-button text read by asserting scoped `Receipt PDF` content, one `read_page_content` action, exact `#download-receipt` selector propagation, and absence of neighboring invoice, payment-settings, and invoice-heading content.
+- Baseline local before the task stayed green at 193/193 with `actions_per_success 1.23` and `p95_task_seconds 0.006`; after adding the task, local passed 194/194 with `actions_per_success 1.23`, improved `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 178/178 with `actions_per_success 1.08`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; real agent passed 188/188 with `actions_per_success 1.16`, `p95_task_seconds 0.497`, `deterministic_p95_task_seconds 0.123`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 219 raw positive records from 172 tasks and 288 training records from 181 tasks because the deterministic real-extension semantic receipt-button HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
