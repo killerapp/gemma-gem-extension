@@ -924,3 +924,7 @@ a9082ac	local-fake-extension	176	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.
 a9082ac	local-fake-extension	177	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	keep	save profile button after save click read local
 a9082ac	real-chrome-extension-smoke	161	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.122	0.0000	0.000	keep	save profile button after save click read real smoke
 a9082ac	real-chrome-extension-agent	171	1.0000	1.0000	1.0000	1.0000	1.18	0.008	0.599	0.0000	0.001	keep	save profile button after save click read real agent
+dc2acab	local-fake-extension	177	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	baseline	save profile button after save click html read baseline local
+dc2acab	local-fake-extension	178	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	keep	save profile button after save click html read local
+dc2acab	real-chrome-extension-smoke	162	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.120	0.0000	0.000	keep	save profile button after save click html read real smoke
+dc2acab	real-chrome-extension-agent	172	1.0000	1.0000	1.0000	1.0000	1.18	0.008	0.505	0.0000	0.001	keep	save profile button after save click html read real agent
