@@ -693,3 +693,7 @@ d8c1037	real-chrome-extension-agent	114	1.0000	1.0000	1.0000	1.0000	1.27	0.008	4
 51c4827	local-fake-extension	122	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	keep	save result after transfer html read local
 51c4827	real-chrome-extension-smoke	106	1.0000	1.0000	1.0000	1.0000	1.13	0.007	0.124	0.0000	0.000	keep	save result after transfer html read real smoke
 51c4827	real-chrome-extension-agent	116	1.0000	1.0000	1.0000	1.0000	1.27	0.007	4.205	0.0000	0.646	keep	save result after transfer html read real agent
+6b3c852	local-fake-extension	122	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	baseline	destination body after transfer html read baseline local
+6b3c852	local-fake-extension	123	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	keep	destination body after transfer html read local
+6b3c852	real-chrome-extension-smoke	107	1.0000	1.0000	1.0000	1.0000	1.13	0.008	0.125	0.0000	0.000	keep	destination body after transfer html read real smoke
+6b3c852	real-chrome-extension-agent	117	1.0000	1.0000	1.0000	1.0000	1.26	0.009	3.912	0.0000	0.001	keep	destination body after transfer html read real agent

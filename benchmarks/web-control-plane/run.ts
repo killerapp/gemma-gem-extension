@@ -808,7 +808,7 @@ class FakeExtension implements HarnessProbe {
           '<label><input id="dest-priority-high" name="priority" type="radio" value="high"> Priority High</label>',
           '<label>Notes <textarea id="dest-notes" name="notes"></textarea></label>',
           '<button id="save-profile">Save profile</button>',
-          '<p id="save-result"></p>',
+          `<p id="save-result">${escapeHtmlText(this.value(104, '#save-result'))}</p>`,
           '</main>',
         ].join('\n')
       }
