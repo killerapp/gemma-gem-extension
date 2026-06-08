@@ -863,3 +863,7 @@ c5ea2bf	real-chrome-extension-agent	156	1.0000	1.0000	1.0000	1.0000	1.20	0.008	0
 2e64fce	local-fake-extension	164	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	keep	source body after save click html read local
 2e64fce	real-chrome-extension-smoke	148	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.124	0.0000	0.000	keep	source body after save click html read real smoke
 2e64fce	real-chrome-extension-agent	158	1.0000	1.0000	1.0000	1.0000	1.20	0.008	0.596	0.0000	0.001	keep	source body after save click html read real agent
+4a3ee8b	local-fake-extension	164	1.0000	1.0000	1.0000	1.0000	1.27	0.002	0.004	0.0000	0.000	baseline	source name after save click read baseline local
+4a3ee8b	local-fake-extension	165	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	keep	source name after save click read local
+4a3ee8b	real-chrome-extension-smoke	149	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.124	0.0000	0.000	keep	source name after save click read real smoke
+4a3ee8b	real-chrome-extension-agent	159	1.0000	1.0000	1.0000	1.0000	1.19	0.008	0.605	0.0000	0.002	keep	source name after save click read real agent
