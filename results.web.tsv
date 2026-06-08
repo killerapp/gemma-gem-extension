@@ -734,3 +734,7 @@ e10a078	real-chrome-extension-agent	124	1.0000	1.0000	1.0000	1.0000	1.25	0.008	0
 129468e	local-fake-extension	132	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	keep	destination role html read local
 129468e	real-chrome-extension-smoke	116	1.0000	1.0000	1.0000	1.0000	1.12	0.008	0.125	0.0000	0.000	keep	destination role html read real smoke
 129468e	real-chrome-extension-agent	126	1.0000	1.0000	1.0000	1.0000	1.25	0.009	0.603	0.0000	0.001	keep	destination role html read real agent
+782e91b	local-fake-extension	132	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	baseline	destination updates checked html read baseline local
+782e91b	local-fake-extension	133	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	keep	destination updates checked html read local
+782e91b	real-chrome-extension-smoke	117	1.0000	1.0000	1.0000	1.0000	1.12	0.007	0.125	0.0000	0.000	keep	destination updates checked html read real smoke
+782e91b	real-chrome-extension-agent	127	1.0000	1.0000	1.0000	1.0000	1.24	0.007	0.606	0.0000	0.001	keep	destination updates checked html read real agent

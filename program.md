@@ -1623,6 +1623,14 @@ June 8, 2026 destination role HTML read coverage result:
 - Real smoke passed 116/116 with `actions_per_success 1.12`, `p95_task_seconds 0.125`, and `timeout_rate 0.0000`; real agent passed 126/126 with `actions_per_success 1.25`, `p95_task_seconds 0.603`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 157 raw positive records from 110 tasks and 226 training records from 119 tasks because the new deterministic real-extension select HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 destination updates checked HTML read coverage result:
+
+- Added frozen `forms/read-destination-updates-after-click-html`, proving exact `gemma_read_page` can read the checked destination updates checkbox as empty HTML after `click-destination-updates-checkbox` mutates its checked state.
+- Updated the fake extension harness so destination input and textarea selectors with `format=html` return empty `innerHTML`, matching the real content-script contract while preserving stateful text reads like `checked` and `unchecked`.
+- Baseline local before the task stayed green at 132/132 with `actions_per_success 1.33` and `p95_task_seconds 0.005`; after the harness parity fix and new task, local passed 133/133 with `actions_per_success 1.33`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 117/117 with `actions_per_success 1.12`, `p95_task_seconds 0.125`, and `timeout_rate 0.0000`; real agent passed 127/127 with `actions_per_success 1.24`, `p95_task_seconds 0.606`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 158 raw positive records from 111 tasks and 227 training records from 120 tasks because the new deterministic real-extension checked checkbox HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

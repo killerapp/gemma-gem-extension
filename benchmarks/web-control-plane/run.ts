@@ -204,6 +204,15 @@ const DESTINATION_ROLE_SELECT_HTML = [
   '<option value="reviewer">Reviewer</option>',
 ].join('')
 
+const DESTINATION_EMPTY_INNER_HTML_SELECTORS = new Set([
+  '#dest-name',
+  '#dest-email',
+  '#dest-updates',
+  '#dest-priority-low',
+  '#dest-priority-high',
+  '#dest-notes',
+])
+
 function jsonPathValue(value: unknown, path: string): unknown {
   return path.split('.').reduce<unknown>((current, segment) => {
     if (current == null) return undefined
@@ -852,6 +861,7 @@ class FakeExtension implements HarnessProbe {
       }
       if (selector === '#save-profile') return 'Save profile'
       if (selector === '#save-result' && format === 'html') return escapeHtmlText(this.value(104, selector))
+      if (format === 'html' && DESTINATION_EMPTY_INNER_HTML_SELECTORS.has(selector)) return ''
       return this.value(104, selector)
     }
     if (tabId === 105 || tabId === 106) {
