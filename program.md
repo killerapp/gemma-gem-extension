@@ -1799,6 +1799,14 @@ June 8, 2026 destination high priority after transfer HTML read coverage result:
 - Real smoke passed 138/138 with `actions_per_success 1.10`, `p95_task_seconds 0.124`, and `timeout_rate 0.0000`; real agent passed 148/148 with `actions_per_success 1.21`, `p95_task_seconds 0.599`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 179 raw positive records from 132 tasks and 248 training records from 141 tasks because the new deterministic real-extension post-transfer high-priority HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 destination notes after transfer read coverage result:
+
+- Added frozen `forms/read-destination-notes-after-transfer`, proving exact `gemma_read_page` can read the destination notes textarea value after `transfer-profile-fields` copies mapped fields and submits the destination form.
+- The task extends post-transfer state preservation coverage from role, updates, and radio controls to textarea state, asserting recovered `Ops note`, one `read_page_content` action, exact `#dest-notes` selector propagation, and absence of prior notes plus transferred/save-result content.
+- Baseline local before the task stayed green at 154/154 with `actions_per_success 1.29` and `p95_task_seconds 0.005`; after adding the task, local passed 155/155 with `actions_per_success 1.28`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 139/139 with `actions_per_success 1.10`, `p95_task_seconds 0.124`, and `timeout_rate 0.0000`; real agent passed 149/149 with `actions_per_success 1.21`, `p95_task_seconds 0.602`, `model_ready_status ready`, `model_load_seconds 0.002`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 180 raw positive records from 133 tasks and 249 training records from 142 tasks because the new deterministic real-extension post-transfer notes read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

@@ -2125,6 +2125,32 @@
     }
   },
   {
+    "id": "read-destination-notes-after-transfer",
+    "suite": "forms",
+    "title": "Read destination notes after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-notes",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Ops note"]
+      },
+      "contains": ["Ops note"],
+      "notContains": ["Coordinate follow-up", "Ada Lovelace", "ada@example.test", "Saved", "Notes"],
+      "selector": "#dest-notes",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-notes format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-notes",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "read-save-result-after-transfer",
     "suite": "forms",
     "title": "Read save result after transferred profile submit",
