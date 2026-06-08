@@ -940,3 +940,7 @@ cc1fc42	local-fake-extension	180	1.0000	1.0000	1.0000	1.0000	1.24	0.002	0.005	0.
 cc1fc42	local-fake-extension	181	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	keep	destination role after save click html read local
 cc1fc42	real-chrome-extension-smoke	165	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.123	0.0000	0.000	keep	destination role after save click html read real smoke
 cc1fc42	real-chrome-extension-agent	175	1.0000	1.0000	1.0000	1.0000	1.18	0.010	0.499	0.0000	0.095	keep	destination role after save click html read real agent
+4a3a7a1	local-fake-extension	181	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	baseline	destination updates after save click html read baseline local
+4a3a7a1	local-fake-extension	182	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.004	0.0000	0.000	keep	destination updates after save click html read local
+4a3a7a1	real-chrome-extension-smoke	166	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.123	0.0000	0.000	keep	destination updates after save click html read real smoke
+4a3a7a1	real-chrome-extension-agent	176	1.0000	1.0000	1.0000	1.0000	1.18	0.008	0.594	0.0000	0.001	keep	destination updates after save click html read real agent

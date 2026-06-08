@@ -2036,6 +2036,14 @@ June 8, 2026 destination role after save-click HTML read coverage result:
 - Real smoke passed 165/165 with improved `actions_per_success 1.08`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; real agent passed 175/175 with `actions_per_success 1.18`, `p95_task_seconds 0.499`, `deterministic_p95_task_seconds 0.121`, `model_ready_status ready`, `model_load_seconds 0.095`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 206 raw positive records from 159 tasks and 275 training records from 168 tasks because the deterministic real-extension destination-role HTML after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 destination updates after save-click HTML read coverage result:
+
+- Added frozen `forms/read-destination-updates-after-save-click-html`, proving exact `gemma_read_page` can read destination `#dest-updates` in HTML mode after the recovered destination save click and before `transfer-profile-fields`.
+- The task complements the kept unchecked text read by asserting empty checkbox HTML `content`, one `read_page_content` action, exact `#dest-updates` selector propagation, and absence of checked-state text, label, save-result, source, and destination value content.
+- Baseline local before the task stayed green at 181/181 with `actions_per_success 1.24` and `p95_task_seconds 0.005`; after adding the task, local passed 182/182 with `actions_per_success 1.24`, improved `p95_task_seconds 0.004`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 166/166 with `actions_per_success 1.08`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; real agent passed 176/176 with `actions_per_success 1.18`, `p95_task_seconds 0.594`, `deterministic_p95_task_seconds 0.122`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 207 raw positive records from 160 tasks and 276 training records from 169 tasks because the deterministic real-extension destination-updates HTML after-save-click read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
