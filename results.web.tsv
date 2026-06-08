@@ -782,3 +782,7 @@ e1465a5	real-chrome-extension-agent	135	1.0000	1.0000	1.0000	1.0000	1.23	0.010	0
 387b9e2	local-fake-extension	144	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.005	0.0000	0.000	keep	destination notes recovered text read local
 387b9e2	real-chrome-extension-smoke	128	1.0000	1.0000	1.0000	1.0000	1.11	0.009	0.124	0.0000	0.000	keep	destination notes recovered text read real smoke
 387b9e2	real-chrome-extension-agent	138	1.0000	1.0000	1.0000	1.0000	1.22	0.009	0.558	0.0000	0.001	keep	destination notes recovered text read real agent
+505204c	local-fake-extension	144	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.005	0.0000	0.000	baseline	destination role recovered html read baseline local
+505204c	local-fake-extension	145	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	keep	destination role recovered html read local
+505204c	real-chrome-extension-smoke	129	1.0000	1.0000	1.0000	1.0000	1.11	0.007	0.124	0.0000	0.000	keep	destination role recovered html read real smoke
+505204c	real-chrome-extension-agent	139	1.0000	1.0000	1.0000	1.0000	1.22	0.009	0.599	0.0000	0.001	keep	destination role recovered html read real agent
