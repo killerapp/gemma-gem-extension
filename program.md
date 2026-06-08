@@ -1413,6 +1413,14 @@ June 3, 2026 settings after-click runtime-fallback benchmark coverage result:
 - Real smoke remained 91/91 with `actions_per_success 1.15`, `p95_task_seconds 0.548`, and `timeout_rate 0.0000`; real agent passed 101/101 with `actions_per_success 1.31`, `p95_task_seconds 0.581`, `model_ready_status ready`, and `timeout_rate 0.0000`.
 - Trace artifacts remained at 132 raw positive records from 85 tasks and 201 training records from 94 tasks because the latest trace export follows the real-agent JSONL, where the local-only synthetic runtime tasks are excluded; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 latest kept report section result:
+
+- Added a generated `Latest Kept Runs By Suite` report section so coverage progress remains visible even when the older `Best Kept Runs By Suite` table still favors smaller historical suites with lower action count or latency.
+- The report generator now reuses one suite-summary table renderer for both best-kept and latest-kept rows, while preserving the existing best-kept comparison logic and recent ledger tables.
+- Baseline local before the report change stayed green at 107/107 with `actions_per_success 1.41` and `p95_task_seconds 0.006`; after adding the report section, local again passed 107/107 with `actions_per_success 1.41`, `p95_task_seconds 0.006`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke remained 91/91 with `actions_per_success 1.15`, `p95_task_seconds 0.548`, and `timeout_rate 0.0000`; real agent passed 101/101 with `actions_per_success 1.31`, `p95_task_seconds 4.209`, `model_ready_status ready`, `model_load_seconds 0.533`, and `timeout_rate 0.0000`.
+- The regenerated report now shows latest kept rows for `local-fake-extension` at 107 tasks, `real-chrome-extension-smoke` at 91 tasks, and `real-chrome-extension-agent` at 101 tasks; trace artifacts remained at 132 raw positive records from 85 tasks and 201 training records from 94 tasks, with preference/reranker pairs still 77 and learned LOTO/LOSO margins 12/10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

@@ -2130,6 +2130,17 @@ function bestKeptRowsBySuite(rows: ResultsLedgerRow[]): ResultsLedgerRow[] {
   return [...bestBySuite.values()].sort((a, b) => a.suite.localeCompare(b.suite))
 }
 
+function latestKeptRowsBySuite(rows: ResultsLedgerRow[]): ResultsLedgerRow[] {
+  const latestBySuite = new Map<string, ResultsLedgerRow>()
+
+  for (const row of rows) {
+    if (row.status !== 'keep') continue
+    latestBySuite.set(row.suite, row)
+  }
+
+  return [...latestBySuite.values()].sort((a, b) => a.suite.localeCompare(b.suite))
+}
+
 function recentRowsWithStatus(rows: ResultsLedgerRow[], statuses: Set<string>, limit: number): ResultsLedgerRow[] {
   return rows.filter(row => statuses.has(row.status)).slice(-limit)
 }
@@ -2148,6 +2159,32 @@ function decisionTableRows(rows: ResultsLedgerRow[]): string[] {
     row.timeoutRate,
     row.description,
   ].map(markdownTableCell).join(' | ')).map(row => `| ${row} |`)
+}
+
+function suiteSummaryTableLines(title: string, rows: ResultsLedgerRow[]): string[] {
+  if (!rows.length) return []
+
+  return [
+    '',
+    `## ${title}`,
+    '',
+    '| suite | commit | tasks | success | strict | json | selector | actions | p95_s | timeout | model_load_s | description |',
+    '| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |',
+    ...rows.map(row => [
+      row.suite,
+      row.commit,
+      row.tasks,
+      row.successRate,
+      row.strictSuccessRate,
+      row.jsonValidRate,
+      row.selectorHitRate,
+      row.actionsPerSuccess,
+      row.p95TaskSeconds,
+      row.timeoutRate,
+      row.modelLoadSeconds,
+      row.description,
+    ].map(markdownTableCell).join(' | ')).map(row => `| ${row} |`),
+  ]
 }
 
 async function writeReport(results: TaskResult[], summary: ReturnType<typeof summarize>, mode: string, ledgerRow: ResultsLedgerRow): Promise<void> {
@@ -2172,31 +2209,11 @@ async function writeReport(results: TaskResult[], summary: ReturnType<typeof sum
   ]
   const ledgerRows = await readResultsLedgerRows(ledgerRow)
   const bestKeptRows = bestKeptRowsBySuite(ledgerRows)
+  const latestKeptRows = latestKeptRowsBySuite(ledgerRows)
   const recentKeptRows = recentRowsWithStatus(ledgerRows, new Set(['keep']), 6)
   const recentFailedRows = recentRowsWithStatus(ledgerRows, new Set(['discard', 'crash', 'timeout']), 6)
-  const bestKeptLines = bestKeptRows.length
-    ? [
-        '',
-        '## Best Kept Runs By Suite',
-        '',
-        '| suite | commit | tasks | success | strict | json | selector | actions | p95_s | timeout | model_load_s | description |',
-        '| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |',
-        ...bestKeptRows.map(row => [
-          row.suite,
-          row.commit,
-          row.tasks,
-          row.successRate,
-          row.strictSuccessRate,
-          row.jsonValidRate,
-          row.selectorHitRate,
-          row.actionsPerSuccess,
-          row.p95TaskSeconds,
-          row.timeoutRate,
-          row.modelLoadSeconds,
-          row.description,
-        ].map(markdownTableCell).join(' | ')).map(row => `| ${row} |`),
-      ]
-    : []
+  const bestKeptLines = suiteSummaryTableLines('Best Kept Runs By Suite', bestKeptRows)
+  const latestKeptLines = suiteSummaryTableLines('Latest Kept Runs By Suite', latestKeptRows)
   const recentDecisionLines = [
     '',
     '## Recent Decisions',
@@ -2269,6 +2286,7 @@ async function writeReport(results: TaskResult[], summary: ReturnType<typeof sum
     `- timeout_rate: ${summary.timeoutRate.toFixed(4)}`,
     `- tool_error_rate: ${summary.toolErrorRate.toFixed(4)}`,
     ...bestKeptLines,
+    ...latestKeptLines,
     ...recentDecisionLines,
     ...recentLedgerLines,
     '',

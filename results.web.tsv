@@ -625,3 +625,7 @@ a9fffa9	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.008	0
 0efd6ce	local-fake-extension	107	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.005	0.0000	0.000	keep	settings afterclick runtime fallback local
 0efd6ce	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.008	0.548	0.0000	0.000	keep	settings afterclick runtime fallback real smoke
 0efd6ce	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.008	0.581	0.0000	0.001	keep	settings afterclick runtime fallback real agent
+b35f1a4	local-fake-extension	107	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.006	0.0000	0.000	baseline	latest kept report baseline local
+b35f1a4	local-fake-extension	107	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.006	0.0000	0.000	keep	latest kept report section local
+b35f1a4	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.011	0.548	0.0000	0.000	keep	latest kept report section real smoke
+b35f1a4	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.013	4.209	0.0000	0.533	keep	latest kept report section real agent
