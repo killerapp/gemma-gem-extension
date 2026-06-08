@@ -493,6 +493,32 @@
     }
   },
   {
+    "id": "read-destination-role-html-initial",
+    "suite": "forms",
+    "title": "Read initial destination role select HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["<option value=\"\">Choose role</option>", "<option value=\"admin\">Administrator</option>", "<option value=\"reviewer\">Reviewer</option>"]
+      },
+      "contains": ["Choose role", "Administrator", "Reviewer"],
+      "notContains": ["selected:", "Save profile", "Ada Lovelace", "dest-name"],
+      "selector": "#dest-role",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-role format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "select-role-label",
     "suite": "forms",
     "title": "Select a role option by visible label",

@@ -198,6 +198,12 @@ function escapeHtmlText(value: string): string {
     .replaceAll('>', '&gt;')
 }
 
+const DESTINATION_ROLE_SELECT_HTML = [
+  '<option value="">Choose role</option>',
+  '<option value="admin">Administrator</option>',
+  '<option value="reviewer">Reviewer</option>',
+].join('')
+
 function jsonPathValue(value: unknown, path: string): unknown {
   return path.split('.').reduce<unknown>((current, segment) => {
     if (current == null) return undefined
@@ -802,7 +808,7 @@ class FakeExtension implements HarnessProbe {
           '<main>',
           '<label>Name <input id="dest-name" name="name"></label>',
           '<label>Email <input id="dest-email" name="email"></label>',
-          '<label>Role <select id="dest-role" name="role"><option value="">Choose role</option><option value="admin">Administrator</option><option value="reviewer">Reviewer</option></select></label>',
+          `<label>Role <select id="dest-role" name="role">${DESTINATION_ROLE_SELECT_HTML}</select></label>`,
           '<label><input id="dest-updates" name="updates" type="checkbox" value="subscribe"> Subscribe updates</label>',
           '<label><input id="dest-priority-low" name="priority" type="radio" value="low"> Priority Low</label>',
           '<label><input id="dest-priority-high" name="priority" type="radio" value="high"> Priority High</label>',
@@ -829,6 +835,7 @@ class FakeExtension implements HarnessProbe {
         ].filter(Boolean).join('\n')
       }
       if (selector === '#dest-role') {
+        if (format === 'html') return DESTINATION_ROLE_SELECT_HTML
         const selectedValue = this.value(104, '#dest-role')
         const selectedLabel = selectedValue === 'admin'
           ? 'Administrator'

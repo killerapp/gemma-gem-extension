@@ -1614,6 +1614,15 @@ June 8, 2026 empty destination notes HTML read coverage result:
 - Real smoke passed 115/115 with `actions_per_success 1.12`, `p95_task_seconds 0.128`, and `timeout_rate 0.0000`; real agent passed 125/125 with `actions_per_success 1.25`, `p95_task_seconds 0.602`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 156 raw positive records from 109 tasks and 225 training records from 118 tasks because the new deterministic real-extension empty textarea HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 destination role HTML read coverage result:
+
+- Added frozen `forms/read-destination-role-html-initial`, proving exact `gemma_read_page` can read untouched destination role select HTML before role selection mutates `#dest-role`.
+- Updated the fake extension harness so `#dest-role` with `format=html` returns the select's option `innerHTML`, matching the real content-script `read_page_content` contract instead of the text summary used for select text reads.
+- An initial local attempt was discarded at 132 tasks because raw MCP text escaped quotes in the `contains` assertion even though parsed content carried the HTML; the kept task now asserts exact option HTML through `jsonFieldIncludes` and uses quote-insensitive raw `contains`.
+- Baseline local before the task stayed green at 131/131 with `actions_per_success 1.34` and `p95_task_seconds 0.005`; after the harness parity fix and task correction, local passed 132/132 with `actions_per_success 1.33`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 116/116 with `actions_per_success 1.12`, `p95_task_seconds 0.125`, and `timeout_rate 0.0000`; real agent passed 126/126 with `actions_per_success 1.25`, `p95_task_seconds 0.603`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 157 raw positive records from 110 tasks and 226 training records from 119 tasks because the new deterministic real-extension select HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
