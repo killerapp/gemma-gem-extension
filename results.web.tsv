@@ -642,3 +642,7 @@ f404110	local-fake-extension	110	0.9909	0.9909	1.0000	1.0000	1.40	0.003	0.005	0.
 f404110	local-fake-extension	110	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	keep	save profile button read local
 f404110	real-chrome-extension-smoke	94	1.0000	1.0000	1.0000	1.0000	1.15	0.009	0.498	0.0000	0.000	keep	save profile button read real smoke
 f404110	real-chrome-extension-agent	104	1.0000	1.0000	1.0000	1.0000	1.30	0.011	4.142	0.0000	0.001	keep	save profile button read real agent
+6580021	local-fake-extension	110	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	baseline	save result after click baseline local
+6580021	local-fake-extension	111	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	keep	save result after click local
+6580021	real-chrome-extension-smoke	95	1.0000	1.0000	1.0000	1.0000	1.15	0.008	0.499	0.0000	0.000	keep	save result after click real smoke
+6580021	real-chrome-extension-agent	105	1.0000	1.0000	1.0000	1.0000	1.30	0.014	4.260	0.0000	0.001	keep	save result after click real agent

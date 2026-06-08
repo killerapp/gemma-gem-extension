@@ -936,6 +936,32 @@
     }
   },
   {
+    "id": "read-save-result-after-click",
+    "suite": "forms",
+    "title": "Read save result after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#save-result",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Saved Grace Hopper Jr.", "<>"]
+      },
+      "contains": ["Saved Grace Hopper Jr.", "<>"],
+      "notContains": ["Ada Lovelace", "ada@example.test", "Save profile"],
+      "selector": "#save-result",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#save-result format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#save-result",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "transfer-profile-fields",
     "suite": "forms",
     "title": "Transfer account fields between tabs",

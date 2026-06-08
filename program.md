@@ -1445,6 +1445,14 @@ June 8, 2026 save-profile button read coverage result:
 - Real smoke passed 94/94 with `actions_per_success 1.15`, `p95_task_seconds 0.498`, and `timeout_rate 0.0000`; real agent passed 104/104 with `actions_per_success 1.30`, `p95_task_seconds 4.142`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 135 raw positive records from 88 tasks and 204 training records from 97 tasks because the new deterministic real-extension read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 save-result after-click read coverage result:
+
+- Added frozen `forms/read-save-result-after-click`, proving exact `gemma_read_page` can read the destination form result immediately after the recovered save-profile click and before `transfer-profile-fields` rewrites the same result node.
+- The task locks in the pre-transfer mutation state `Saved Grace Hopper Jr. <>`, complementing the prior save-button read and the later transferred-profile result read.
+- Baseline local before the task stayed green at 110/110 with `actions_per_success 1.40` and `p95_task_seconds 0.005`; after adding the task, local passed 111/111 with `actions_per_success 1.40`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 95/95 with `actions_per_success 1.15`, `p95_task_seconds 0.499`, and `timeout_rate 0.0000`; real agent passed 105/105 with `actions_per_success 1.30`, `p95_task_seconds 4.260`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 136 raw positive records from 89 tasks and 205 training records from 98 tasks because the new deterministic real-extension read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
