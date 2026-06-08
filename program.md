@@ -1823,6 +1823,14 @@ June 8, 2026 source name after transfer read coverage result:
 - Real smoke passed 141/141 with `actions_per_success 1.10`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; real agent passed 151/151 with `actions_per_success 1.21`, `p95_task_seconds 0.604`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 182 raw positive records from 135 tasks and 251 training records from 144 tasks because the new deterministic real-extension source-tab post-transfer read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 source email after transfer read coverage result:
+
+- Added frozen `forms/read-source-email-after-transfer`, proving exact `gemma_read_page` can return to source tab 103 and read `#source-email` after `transfer-profile-fields` copies mapped fields into the destination tab and submits the destination form.
+- The task completes source-tab immutability text coverage for both copied source fields, asserting `ada@example.test`, one `read_page_content` action, exact `#source-email` selector propagation, and absence of destination/save-result/name content.
+- Baseline local before the task stayed green at 157/157 with `actions_per_success 1.28` and `p95_task_seconds 0.005`; after adding the task, local passed 158/158 with `actions_per_success 1.28`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 142/142 with `actions_per_success 1.10`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; real agent passed 152/152 with `actions_per_success 1.20`, `p95_task_seconds 0.601`, `model_ready_status ready`, `model_load_seconds 0.002`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 183 raw positive records from 136 tasks and 252 training records from 145 tasks because the new deterministic real-extension source-email post-transfer read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
