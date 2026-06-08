@@ -1550,6 +1550,14 @@ June 8, 2026 transferred destination body HTML read coverage result:
 - Real smoke passed 107/107 with `actions_per_success 1.13`, `p95_task_seconds 0.125`, and `timeout_rate 0.0000`; real agent passed 117/117 with `actions_per_success 1.26`, `p95_task_seconds 3.912`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 148 raw positive records from 101 tasks and 217 training records from 110 tasks because the new deterministic real-extension body HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 post-click destination body HTML read coverage result:
+
+- Added frozen `forms/read-destination-body-html-after-click`, proving exact `gemma_read_page` can read the destination page body's HTML after the recovered save click but before `transfer-profile-fields` overwrites `#save-result`.
+- The task completes body-scoped HTML coverage for both result mutation states, asserting escaped `&lt;&gt;`, the body selector, one `read_page_content` action, and absence of source-page/raw-angle variants.
+- Baseline local before the task stayed green at 123/123 with `actions_per_success 1.36` and `p95_task_seconds 0.005`; after adding the task, local passed 124/124 with `actions_per_success 1.35`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 108/108 with `actions_per_success 1.13`, `p95_task_seconds 0.130`, and `timeout_rate 0.0000`; real agent passed 118/118 with `actions_per_success 1.26`, `p95_task_seconds 4.172`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 149 raw positive records from 102 tasks and 218 training records from 111 tasks because the new deterministic real-extension body HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
