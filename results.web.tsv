@@ -746,3 +746,7 @@ e10a078	real-chrome-extension-agent	124	1.0000	1.0000	1.0000	1.0000	1.25	0.008	0
 0d2cc14	local-fake-extension	135	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	keep	destination priority low checked html read local
 0d2cc14	real-chrome-extension-smoke	119	1.0000	1.0000	1.0000	1.0000	1.12	0.008	0.124	0.0000	0.000	keep	destination priority low checked html read real smoke
 0d2cc14	real-chrome-extension-agent	129	1.0000	1.0000	1.0000	1.0000	1.24	0.008	0.605	0.0000	0.001	keep	destination priority low checked html read real agent
+ca5e975	local-fake-extension	135	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	baseline	destination priority low unchecked html read baseline local
+ca5e975	local-fake-extension	136	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.005	0.0000	0.000	keep	destination priority low unchecked html read local
+ca5e975	real-chrome-extension-smoke	120	1.0000	1.0000	1.0000	1.0000	1.12	0.007	0.124	0.0000	0.000	keep	destination priority low unchecked html read real smoke
+ca5e975	real-chrome-extension-agent	130	1.0000	1.0000	1.0000	1.0000	1.24	0.007	0.603	0.0000	0.001	keep	destination priority low unchecked html read real agent
