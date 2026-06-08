@@ -850,3 +850,8 @@ dcb16bf	local-fake-extension	160	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.
 dcb16bf	local-fake-extension	161	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	keep	source body after transfer html read local
 dcb16bf	real-chrome-extension-smoke	145	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.124	0.0000	0.000	keep	source body after transfer html read real smoke
 dcb16bf	real-chrome-extension-agent	155	1.0000	1.0000	1.0000	1.0000	1.20	0.009	0.604	0.0000	0.001	keep	source body after transfer html read real agent
+c5ea2bf	local-fake-extension	161	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	baseline	source body after transfer text read baseline local
+c5ea2bf	local-fake-extension	162	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	keep	source body after transfer text read local
+c5ea2bf	real-chrome-extension-smoke	146	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.123	0.0000	0.000	keep	source body after transfer text read real smoke
+c5ea2bf	real-chrome-extension-agent	156	0.9872	0.9872	1.0000	1.0000	1.16	0.008	0.509	0.0064	0.001	discard	source body after transfer text read real agent
+c5ea2bf	real-chrome-extension-agent	156	1.0000	1.0000	1.0000	1.0000	1.20	0.008	0.595	0.0000	0.001	keep	source body after transfer text read real agent

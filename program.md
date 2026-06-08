@@ -1855,6 +1855,14 @@ June 8, 2026 source body after transfer HTML read coverage result:
 - Real smoke passed 145/145 with `actions_per_success 1.10`, `p95_task_seconds 0.124`, and `timeout_rate 0.0000`; real agent passed 155/155 with `actions_per_success 1.20`, `p95_task_seconds 0.604`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 186 raw positive records from 139 tasks and 255 training records from 148 tasks because the new deterministic real-extension source-body HTML post-transfer read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 source body after transfer text read coverage result:
+
+- Added frozen `forms/read-source-body-after-transfer`, proving exact `gemma_read_page` can return to source tab 103 and read source body text after `transfer-profile-fields` copies mapped fields into the destination tab and submits the destination form.
+- The task completes source-body immutability coverage across HTML and text formats, asserting source name/email text while excluding destination, save-result, and pricing fixture content.
+- Baseline local before the task stayed green at 161/161 with `actions_per_success 1.27` and `p95_task_seconds 0.005`; after adding the task, local passed 162/162 with `actions_per_success 1.27`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 146/146 with `actions_per_success 1.10`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; the first real-agent attempt discarded an unrelated `semantic-invoice-agent` timeout at 156 tasks with `task_success_rate 0.9872` and `timeout_rate 0.0064`, then the rerun passed 156/156 with `actions_per_success 1.20`, `p95_task_seconds 0.595`, `deterministic_p95_task_seconds 0.124`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 187 raw positive records from 140 tasks and 256 training records from 149 tasks because the new deterministic real-extension source-body text post-transfer read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:
