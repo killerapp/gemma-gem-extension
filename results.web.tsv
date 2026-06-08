@@ -637,3 +637,8 @@ b35f1a4	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.013	4
 926f51e	local-fake-extension	109	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.006	0.0000	0.000	keep	isolated scroll target read local
 926f51e	real-chrome-extension-smoke	93	1.0000	1.0000	1.0000	1.0000	1.15	0.009	0.501	0.0000	0.000	keep	isolated scroll target read real smoke
 926f51e	real-chrome-extension-agent	103	1.0000	1.0000	1.0000	1.0000	1.30	0.009	4.205	0.0000	0.161	keep	isolated scroll target read real agent
+f404110	local-fake-extension	109	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	baseline	save profile button read baseline local
+f404110	local-fake-extension	110	0.9909	0.9909	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	discard	save profile button read local
+f404110	local-fake-extension	110	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	keep	save profile button read local
+f404110	real-chrome-extension-smoke	94	1.0000	1.0000	1.0000	1.0000	1.15	0.009	0.498	0.0000	0.000	keep	save profile button read real smoke
+f404110	real-chrome-extension-agent	104	1.0000	1.0000	1.0000	1.0000	1.30	0.011	4.142	0.0000	0.001	keep	save profile button read real agent

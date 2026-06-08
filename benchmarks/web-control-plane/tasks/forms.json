@@ -884,6 +884,32 @@
     }
   },
   {
+    "id": "read-save-profile-button-before-click",
+    "suite": "forms",
+    "title": "Read save profile button by exact selector before click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#save-profile",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Save profile"]
+      },
+      "contains": ["Save profile"],
+      "notContains": ["Ada Lovelace", "ada@example.test", "Saved profile"],
+      "selector": "#save-profile",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#save-profile format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#save-profile",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "click-save-profile-recover-selector",
     "suite": "forms",
     "title": "Recover save profile button text selector",

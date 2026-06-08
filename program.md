@@ -1437,6 +1437,14 @@ June 8, 2026 isolated scroll-target read coverage result:
 - Real smoke passed 93/93 with `actions_per_success 1.15`, `p95_task_seconds 0.501`, and `timeout_rate 0.0000`; real agent passed 103/103 with `actions_per_success 1.30`, `p95_task_seconds 4.205`, `model_ready_status ready`, `model_load_seconds 0.161`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 134 raw positive records from 87 tasks and 203 training records from 96 tasks because the new deterministic real-extension read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 8, 2026 save-profile button read coverage result:
+
+- Added frozen `forms/read-save-profile-button-before-click`, proving exact `gemma_read_page` can read the destination form submit button on tab 104 before the existing save-profile recovery click mutates `#save-result`.
+- The first candidate was discarded at 109/110 because fake-extension `#save-profile` reads returned an empty field value; fixing the fake reader to return the fixture button label made the harness match the real content executor without weakening the text assertion.
+- Baseline local before the task stayed green at 109/109 with `actions_per_success 1.40` and `p95_task_seconds 0.005`; after the harness fidelity fix, local passed 110/110 with `actions_per_success 1.40`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- Real smoke passed 94/94 with `actions_per_success 1.15`, `p95_task_seconds 0.498`, and `timeout_rate 0.0000`; real agent passed 104/104 with `actions_per_success 1.30`, `p95_task_seconds 4.142`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 135 raw positive records from 88 tasks and 204 training records from 97 tasks because the new deterministic real-extension read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

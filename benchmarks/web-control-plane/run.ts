@@ -836,6 +836,7 @@ class FakeExtension implements HarnessProbe {
           'Reviewer',
         ].join('\n')
       }
+      if (selector === '#save-profile') return 'Save profile'
       return this.value(104, selector)
     }
     if (tabId === 105 || tabId === 106) {
