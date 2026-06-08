@@ -2100,6 +2100,31 @@
     }
   },
   {
+    "id": "read-destination-priority-high-after-transfer-html",
+    "suite": "forms",
+    "title": "Read destination high priority radio HTML after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-high",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["checked", "unchecked", "Ada Lovelace", "ada@example.test", "Saved", "Priority High"],
+      "selector": "#dest-priority-high",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-high format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-high",
+      "bridgeRunAgent": false
+    }
+  },
+  {
     "id": "read-save-result-after-transfer",
     "suite": "forms",
     "title": "Read save result after transferred profile submit",
