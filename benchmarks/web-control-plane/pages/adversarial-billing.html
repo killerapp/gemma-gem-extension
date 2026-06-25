@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Adversarial billing sandbox</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 2rem;
+      }
+
+      main {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr);
+      }
+
+      section {
+        border: 1px solid #ccd3df;
+        padding: 1rem;
+      }
+
+      button {
+        display: block;
+        margin-block: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section id="current-invoice-panel" aria-labelledby="current-heading">
+        <h1 id="current-heading">Current invoice INV-2026-041</h1>
+        <p>Use these controls for the active billing cycle.</p>
+        <button id="primary-receipt-download" data-invoice-id="INV-2026-041">Receipt PDF</button>
+        <button id="primary-invoice-download" data-invoice-id="INV-2026-041">Invoice PDF</button>
+      </section>
+
+      <section id="archive-panel" aria-labelledby="archive-heading">
+        <h2 id="archive-heading">Archive invoice INV-2025-009</h2>
+        <p>These controls are historical records and must not be used for the current invoice.</p>
+        <button id="archive-receipt-download" data-invoice-id="INV-2025-009">Receipt PDF</button>
+        <button id="archive-invoice-download" data-invoice-id="INV-2025-009">Invoice PDF</button>
+      </section>
+
+      <p id="billing-status" role="status">No billing document downloaded</p>
+    </main>
+
+    <script>
+      const status = document.querySelector('#billing-status')
+      const messages = {
+        '#primary-receipt-download': 'Downloaded receipt for current invoice INV-2026-041',
+        '#primary-invoice-download': 'Downloaded invoice INV-2026-041',
+        '#archive-receipt-download': 'Downloaded archived receipt INV-2025-009',
+        '#archive-invoice-download': 'Downloaded archived invoice INV-2025-009',
+      }
+
+      for (const [selector, message] of Object.entries(messages)) {
+        document.querySelector(selector).addEventListener('click', () => {
+          status.textContent = message
+        })
+      }
+    </script>
+  </body>
+</html>

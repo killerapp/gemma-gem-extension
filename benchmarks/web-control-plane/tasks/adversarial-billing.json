@@ -1,0 +1,113 @@
+[
+  {
+    "id": "adversarial-billing-page-brief-duplicates",
+    "suite": "adversarial-billing",
+    "title": "Brief exposes duplicate invoice labels as distinct selectors",
+    "tool": "gemma_page_brief",
+    "arguments": {
+      "tabId": 107,
+      "selector": "body",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "selector": "body",
+        "interactiveControls.1.selector": "#primary-invoice-download",
+        "interactiveControls.3.selector": "#archive-invoice-download"
+      },
+      "jsonFieldIncludes": {
+        "content": ["Current invoice INV-2026-041", "Archive invoice INV-2025-009", "No billing document downloaded"]
+      },
+      "jsonFieldItemCount": {
+        "interactiveControls": 4
+      },
+      "contains": ["#primary-invoice-download", "#archive-invoice-download", "Invoice PDF", "INV-2026-041", "INV-2025-009"],
+      "selector": "body",
+      "actions": 2,
+      "actionTraceTools": ["read_page_content", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-current-invoice-panel-with-decoy-present",
+    "suite": "adversarial-billing",
+    "title": "Read current invoice panel while archive decoy is present",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 107,
+      "selector": "#current-invoice-panel",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Current invoice INV-2026-041", "Invoice PDF"]
+      },
+      "contains": ["Current invoice INV-2026-041", "Invoice PDF"],
+      "notContains": ["Archive invoice INV-2025-009", "#archive-invoice-download"],
+      "selector": "#current-invoice-panel",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#current-invoice-panel format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#current-invoice-panel",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "click-current-invoice-not-archive-decoy",
+    "suite": "adversarial-billing",
+    "title": "Click current invoice duplicate label instead of archive decoy",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 107,
+      "selector": "#primary-invoice-download"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "selector": "#primary-invoice-download"
+      },
+      "contains": ["Invoice PDF", "#primary-invoice-download"],
+      "notContains": ["#archive-invoice-download", "INV-2025-009"],
+      "selector": "#primary-invoice-download",
+      "clicked": "#primary-invoice-download",
+      "actions": 1,
+      "actionTraceTools": ["click_element"],
+      "actionTraceTextIncludes": ["selector=#primary-invoice-download"],
+      "bridgeExecuteTool": "click_element",
+      "bridgeExecuteSelector": "#primary-invoice-download",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-current-invoice-status-after-click",
+    "suite": "adversarial-billing",
+    "title": "Verify current invoice click mutated status without archive leakage",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 107,
+      "selector": "#billing-status",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Downloaded invoice INV-2026-041"]
+      },
+      "contains": ["Downloaded invoice INV-2026-041"],
+      "notContains": ["INV-2025-009", "archived", "No billing document downloaded"],
+      "selector": "#billing-status",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#billing-status format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#billing-status",
+      "bridgeRunAgent": false
+    }
+  }
+]

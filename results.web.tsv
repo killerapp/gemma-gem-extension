@@ -993,3 +993,6 @@ bc410b5	real-chrome-extension-agent	187	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0
 85061ea	local-fake-extension	194	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	semantic receipt button html read local
 85061ea	real-chrome-extension-smoke	178	1.0000	1.0000	1.0000	1.0000	1.08	0.009	0.123	0.0000	0.000	keep	semantic receipt button html read real smoke
 85061ea	real-chrome-extension-agent	188	1.0000	1.0000	1.0000	1.0000	1.16	0.008	0.497	0.0000	0.001	keep	semantic receipt button html read real agent
+795525a	local-fake-extension	198	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	adversarial duplicate invoice state verification local
+795525a	real-chrome-extension-smoke	182	1.0000	1.0000	1.0000	1.0000	1.08	0.009	0.120	0.0000	0.000	keep	adversarial duplicate invoice state verification real smoke
+795525a	real-chrome-extension-agent	192	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.550	0.0000	0.189	keep	adversarial duplicate invoice state verification real agent

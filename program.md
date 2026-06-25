@@ -2140,6 +2140,15 @@ June 8, 2026 semantic receipt button HTML read coverage result:
 - Real smoke passed 178/178 with `actions_per_success 1.08`, `p95_task_seconds 0.123`, and `timeout_rate 0.0000`; real agent passed 188/188 with `actions_per_success 1.16`, `p95_task_seconds 0.497`, `deterministic_p95_task_seconds 0.123`, `model_ready_status ready`, `model_load_seconds 0.001`, and `timeout_rate 0.0000`.
 - Trace artifacts now cover 219 raw positive records from 172 tasks and 288 training records from 181 tasks because the deterministic real-extension semantic receipt-button HTML read enters the real-agent JSONL; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 25, 2026 adversarial duplicate invoice state verification result:
+
+- Pivoted from easy exact-selector HTML twins to a harder `adversarial-billing` fixture on logical tab 107, with duplicate visible `Invoice PDF` and `Receipt PDF` labels split between a current invoice panel and an archive decoy panel.
+- Added frozen `adversarial-billing-page-brief-duplicates`, `read-current-invoice-panel-with-decoy-present`, `click-current-invoice-not-archive-decoy`, and `read-current-invoice-status-after-click`, proving the bridge can expose duplicate controls as distinct selectors, scope reads to the current invoice panel, click only `#primary-invoice-download`, and verify the resulting `#billing-status` mutation excludes archived invoice `INV-2025-009`.
+- The interrupted easy invoice-HTML experiment was discarded before this run; comparison is against the prior clean committed baseline at local 194/194, real smoke 178/178, and real agent 188/188 rather than a synthetic post-interruption baseline row.
+- After adding the hard fixture, local passed 198/198 with `actions_per_success 1.23`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`; real smoke passed 182/182 with `actions_per_success 1.08`, improved `p95_task_seconds 0.120`, and `timeout_rate 0.0000`.
+- Real agent passed 192/192 with `actions_per_success 1.17`, `p95_task_seconds 0.550`, `deterministic_p95_task_seconds 0.121`, `model_ready_status ready`, `model_load_seconds 0.189`, and `timeout_rate 0.0000`; the model p95 movement came from existing semantic model tasks while the new adversarial deterministic tasks stayed under the deterministic latency budget.
+- Trace artifacts now cover 224 raw positive records from 176 tasks and 293 training records from 185 tasks, including 246 positive and 47 negative training records, 279 selector records, 45 click records, and 191 candidate buckets; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

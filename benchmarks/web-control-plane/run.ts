@@ -387,6 +387,7 @@ class FakeExtension implements HarnessProbe {
     { id: 104, active: false, title: 'Profile destination', url: 'http://127.0.0.1:4173/forms-destination.html' },
     { id: 105, active: false, title: 'Navigation sandbox', url: 'http://127.0.0.1:4173/navigation.html' },
     { id: 106, active: false, title: 'Navigation sandbox', url: 'http://127.0.0.1:4173/navigation-billing.html' },
+    { id: 107, active: false, title: 'Adversarial billing sandbox', url: 'http://127.0.0.1:4173/adversarial-billing.html' },
   ]
 
   constructor(private readonly port: number) {
@@ -400,6 +401,7 @@ class FakeExtension implements HarnessProbe {
     this.values.set('104:#dest-priority-high', 'unchecked')
     this.values.set('104:#dest-notes', '')
     this.values.set('104:#save-result', '')
+    this.values.set('107:#billing-status', 'No billing document downloaded')
   }
 
   async connect(): Promise<void> {
@@ -484,6 +486,13 @@ class FakeExtension implements HarnessProbe {
       '#settings-link',
       '#billing-link',
       '#scroll-target',
+      '#current-invoice-panel',
+      '#archive-panel',
+      '#primary-receipt-download',
+      '#primary-invoice-download',
+      '#archive-receipt-download',
+      '#archive-invoice-download',
+      '#billing-status',
       'body',
     ])
     return knownSelectors.has(selector)
@@ -686,12 +695,34 @@ class FakeExtension implements HarnessProbe {
           const tab = this.tabs.find(item => item.id === tabId)
           if (tab) tab.url = `http://127.0.0.1:4173/${selector === '#settings-link' ? 'settings' : 'billing'}`
         }
+        if (tabId === 107) {
+          if (selector === '#primary-receipt-download') {
+            this.values.set('107:#billing-status', 'Downloaded receipt for current invoice INV-2026-041')
+          }
+          if (selector === '#primary-invoice-download') {
+            this.values.set('107:#billing-status', 'Downloaded invoice INV-2026-041')
+          }
+          if (selector === '#archive-receipt-download') {
+            this.values.set('107:#billing-status', 'Downloaded archived receipt INV-2025-009')
+          }
+          if (selector === '#archive-invoice-download') {
+            this.values.set('107:#billing-status', 'Downloaded archived invoice INV-2025-009')
+          }
+        }
         const label = selector === '#download-receipt'
           ? 'button: Receipt PDF'
           : selector === '#download-invoice'
             ? 'button: Invoice PDF'
             : selector === '#payment-settings'
               ? 'button: Payment settings'
+          : selector === '#primary-receipt-download'
+            ? 'button: Receipt PDF'
+            : selector === '#primary-invoice-download'
+              ? 'button: Invoice PDF'
+              : selector === '#archive-receipt-download'
+                ? 'button: Receipt PDF'
+                : selector === '#archive-invoice-download'
+                  ? 'button: Invoice PDF'
           : selector === '#settings-link'
             ? 'a: Settings'
             : selector === '#billing-link'
@@ -884,6 +915,75 @@ class FakeExtension implements HarnessProbe {
       if (selector === '#settings-link') return 'Settings'
       if (selector === '#billing-link') return 'Billing'
       if (selector === '#scroll-target') return 'Scroll target reached'
+    }
+    if (tabId === 107) {
+      if (selector === '#current-invoice-panel') {
+        if (format === 'html') {
+          return [
+            '<h1 id="current-heading">Current invoice INV-2026-041</h1>',
+            '<p>Use these controls for the active billing cycle.</p>',
+            '<button id="primary-receipt-download" data-invoice-id="INV-2026-041">Receipt PDF</button>',
+            '<button id="primary-invoice-download" data-invoice-id="INV-2026-041">Invoice PDF</button>',
+          ].join('\n')
+        }
+        return [
+          'Current invoice INV-2026-041',
+          'Use these controls for the active billing cycle.',
+          'Receipt PDF',
+          'Invoice PDF',
+        ].join('\n')
+      }
+      if (selector === '#archive-panel') {
+        if (format === 'html') {
+          return [
+            '<h2 id="archive-heading">Archive invoice INV-2025-009</h2>',
+            '<p>These controls are historical records and must not be used for the current invoice.</p>',
+            '<button id="archive-receipt-download" data-invoice-id="INV-2025-009">Receipt PDF</button>',
+            '<button id="archive-invoice-download" data-invoice-id="INV-2025-009">Invoice PDF</button>',
+          ].join('\n')
+        }
+        return [
+          'Archive invoice INV-2025-009',
+          'These controls are historical records and must not be used for the current invoice.',
+          'Receipt PDF',
+          'Invoice PDF',
+        ].join('\n')
+      }
+      if (selector === '#billing-status') return this.value(107, selector)
+      if (selector === '#primary-receipt-download') return 'Receipt PDF'
+      if (selector === '#primary-invoice-download') return 'Invoice PDF'
+      if (selector === '#archive-receipt-download') return 'Receipt PDF'
+      if (selector === '#archive-invoice-download') return 'Invoice PDF'
+      if (format === 'html') {
+        return [
+          '<main>',
+          '<section id="current-invoice-panel" aria-labelledby="current-heading">',
+          '<h1 id="current-heading">Current invoice INV-2026-041</h1>',
+          '<p>Use these controls for the active billing cycle.</p>',
+          '<button id="primary-receipt-download" data-invoice-id="INV-2026-041">Receipt PDF</button>',
+          '<button id="primary-invoice-download" data-invoice-id="INV-2026-041">Invoice PDF</button>',
+          '</section>',
+          '<section id="archive-panel" aria-labelledby="archive-heading">',
+          '<h2 id="archive-heading">Archive invoice INV-2025-009</h2>',
+          '<p>These controls are historical records and must not be used for the current invoice.</p>',
+          '<button id="archive-receipt-download" data-invoice-id="INV-2025-009">Receipt PDF</button>',
+          '<button id="archive-invoice-download" data-invoice-id="INV-2025-009">Invoice PDF</button>',
+          '</section>',
+          `<p id="billing-status" role="status">${escapeHtmlText(this.value(107, '#billing-status'))}</p>`,
+          '</main>',
+        ].join('\n')
+      }
+      return [
+        'Current invoice INV-2026-041',
+        'Use these controls for the active billing cycle.',
+        'Receipt PDF',
+        'Invoice PDF',
+        'Archive invoice INV-2025-009',
+        'These controls are historical records and must not be used for the current invoice.',
+        'Receipt PDF',
+        'Invoice PDF',
+        this.value(107, '#billing-status'),
+      ].join('\n')
     }
     return ''
   }
@@ -1184,6 +1284,7 @@ class RealChromeHarness implements HarnessProbe {
       [104, 'forms-destination.html'],
       [105, 'navigation.html'],
       [106, 'navigation-billing.html'],
+      [107, 'adversarial-billing.html'],
     ]
 
     for (const [logicalId, page] of pages) {
