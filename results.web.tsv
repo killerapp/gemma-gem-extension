@@ -996,3 +996,12 @@ bc410b5	real-chrome-extension-agent	187	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0
 795525a	local-fake-extension	198	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	adversarial duplicate invoice state verification local
 795525a	real-chrome-extension-smoke	182	1.0000	1.0000	1.0000	1.0000	1.08	0.009	0.120	0.0000	0.000	keep	adversarial duplicate invoice state verification real smoke
 795525a	real-chrome-extension-agent	192	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.550	0.0000	0.189	keep	adversarial duplicate invoice state verification real agent
+16c5cdc	local-fake-extension	198	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.006	0.0000	0.000	baseline	dynamic ui controls baseline local
+16c5cdc	local-fake-extension	207	1.0000	1.0000	1.0000	1.0000	1.22	0.003	0.005	0.0000	0.000	keep	dynamic react controls choose option local
+16c5cdc	real-chrome-extension-smoke	191	0.9843	0.9843	1.0000	1.0000	1.09	0.010	0.120	0.0000	0.000	discard	dynamic react controls choose option real smoke
+16c5cdc	real-chrome-extension-smoke	191	1.0000	1.0000	1.0000	1.0000	1.08	0.010	0.122	0.0000	0.000	keep	dynamic react controls choose option real smoke
+16c5cdc	real-chrome-extension-agent	201	1.0000	1.0000	1.0000	1.0000	1.16	0.011	0.544	0.0000	0.673	keep	dynamic react controls choose option real agent
+16c5cdc	local-fake-extension	207	1.0000	1.0000	1.0000	1.0000	1.22	0.003	0.005	0.0000	0.000	keep	dynamic react async controls choose option local
+16c5cdc	real-chrome-extension-smoke	191	0.9686	0.9686	1.0000	1.0000	1.09	0.011	0.126	0.0000	0.000	discard	dynamic react async controls choose option real smoke
+16c5cdc	real-chrome-extension-smoke	191	1.0000	1.0000	1.0000	1.0000	1.08	0.012	0.129	0.0000	0.000	keep	dynamic react async controls choose option real smoke
+16c5cdc	real-chrome-extension-agent	201	1.0000	1.0000	1.0000	1.0000	1.16	0.011	0.567	0.0000	1.428	keep	dynamic react async controls choose option real agent

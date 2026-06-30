@@ -2149,6 +2149,17 @@ June 25, 2026 adversarial duplicate invoice state verification result:
 - Real agent passed 192/192 with `actions_per_success 1.17`, `p95_task_seconds 0.550`, `deterministic_p95_task_seconds 0.121`, `model_ready_status ready`, `model_load_seconds 0.189`, and `timeout_rate 0.0000`; the model p95 movement came from existing semantic model tasks while the new adversarial deterministic tasks stayed under the deterministic latency budget.
 - Trace artifacts now cover 224 raw positive records from 176 tasks and 293 training records from 185 tasks, including 246 positive and 47 negative training records, 279 selector records, 45 click records, and 191 candidate buckets; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
 
+June 30, 2026 dynamic React-style async controls orchestration result:
+
+- Added a `dynamic-controls` fixture on logical tab 108 covering React Select-style combobox, Radix Select-style trigger/listbox, Headless UI menu, and MUI Switch-style controls with hidden, asynchronously opened portal options and status readbacks.
+- Added bridge/content/MCP orchestration via `choose_option` / `gemma_choose_option`, so the MCP side can open a custom trigger, wait for a visible option, and choose it by exact option selector, value, or label without exposing public `run_javascript`.
+- Added frozen tasks proving page briefs expose the four dynamic triggers, React Select-style option selection by `#assignee-grace-option`, Radix-style selection by `value=critical`, Headless UI-style selection by `label=CSV`, MUI switch clicking, and status readbacks for each mutation.
+- Baseline local before the change stayed green at 198/198 with `actions_per_success 1.23` and `p95_task_seconds 0.006`; after the async fixture and orchestrator change, local passed 207/207 with `actions_per_success 1.22`, `p95_task_seconds 0.005`, `selector_hit_rate 1.0000`, and `timeout_rate 0.0000`.
+- The first real-smoke attempt was discarded at 188/191 because real bridge activity text omitted `optionSelector`/`value`/`label` for `choose_option`; after extending `background/bridge-client.ts` trace compaction, the synchronous portal fixture passed real smoke at 191/191.
+- After making the portals asynchronous, a short 500 ms wait was discarded at 185/191 because inactive Chrome tabs throttled page timers; increasing the content-side visible-option wait to 2500 ms passed real smoke at 191/191 with `actions_per_success 1.08`, `p95_task_seconds 0.129`, and `timeout_rate 0.0000`.
+- Real agent passed 201/201 with `actions_per_success 1.16`, `p95_task_seconds 0.567`, `deterministic_p95_task_seconds 0.124`, `model_ready_status ready`, `model_load_seconds 1.428`, and `timeout_rate 0.0000`.
+- Trace artifacts now cover 234 raw positive records from 185 tasks and 303 training records from 194 tasks, including 256 positive and 47 negative training records, 289 selector records, 46 click records, and 197 candidate buckets; preference/reranker pairs remain 77 with learned LOTO margin 12 and learned LOSO margin 10.
+
 ## Results File
 
 Use tab-separated `results.web.tsv`:

@@ -6,6 +6,7 @@ export type BridgeToolName =
   | 'click_element'
   | 'type_text'
   | 'select_option'
+  | 'choose_option'
   | 'scroll_page'
   | 'run_javascript'
 

@@ -269,8 +269,8 @@ export default defineContentScript({
       }
     })
 
-    function handleToolCall(requestId: string, call: ToolCall): void {
-      const result = executeContentTool(call)
+    async function handleToolCall(requestId: string, call: ToolCall): Promise<void> {
+      const result = await executeContentTool(call)
       if (result) {
         safeSend({ type: 'tool:result', requestId, result: result.result })
       }

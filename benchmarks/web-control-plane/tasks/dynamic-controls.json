@@ -1,0 +1,253 @@
+[
+  {
+    "id": "dynamic-controls-page-brief",
+    "suite": "dynamic-controls",
+    "title": "Brief exposes React library dynamic control triggers",
+    "tool": "gemma_page_brief",
+    "arguments": {
+      "tabId": 108,
+      "selector": "body",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "selector": "body",
+        "interactiveControls.0.selector": "#react-assignee-control",
+        "interactiveControls.1.selector": "#radix-priority-trigger",
+        "interactiveControls.2.selector": "#headless-export-button",
+        "interactiveControls.3.selector": "#mui-notifications-switch"
+      },
+      "jsonFieldIncludes": {
+        "content": ["React Select-style assignee", "Radix Select-style priority", "Headless UI menu export", "MUI Switch-style notifications"]
+      },
+      "jsonFieldItemCount": {
+        "interactiveControls": 4
+      },
+      "contains": ["#react-assignee-control", "#radix-priority-trigger", "#headless-export-button", "#mui-notifications-switch"],
+      "selector": "body",
+      "actions": 2,
+      "actionTraceTools": ["read_page_content", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "choose-react-select-assignee-grace",
+    "suite": "dynamic-controls",
+    "title": "Choose React Select-style assignee from portal option",
+    "tool": "gemma_choose_option",
+    "arguments": {
+      "tabId": 108,
+      "selector": "#react-assignee-control",
+      "optionSelector": "#assignee-grace-option"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "selector": "#react-assignee-control",
+        "optionSelector": "#assignee-grace-option",
+        "selected": "Grace Hopper",
+        "value": "grace"
+      },
+      "contains": ["#react-assignee-control", "#assignee-grace-option", "Grace Hopper", "grace"],
+      "notContains": ["Ada Lovelace"],
+      "selector": "#react-assignee-control",
+      "actions": 1,
+      "actionTraceTools": ["choose_option"],
+      "actionTraceTextIncludes": ["selector=#react-assignee-control optionSelector=#assignee-grace-option"],
+      "bridgeExecuteTool": "choose_option",
+      "bridgeExecuteSelector": "#react-assignee-control",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-react-select-assignee-status",
+    "suite": "dynamic-controls",
+    "title": "Read React Select-style assignee status after portal choice",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 108,
+      "selector": "#assignee-status",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Assignee: Grace Hopper"]
+      },
+      "contains": ["Assignee: Grace Hopper"],
+      "notContains": ["Unassigned", "Ada Lovelace"],
+      "selector": "#assignee-status",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#assignee-status format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#assignee-status",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "choose-radix-priority-critical",
+    "suite": "dynamic-controls",
+    "title": "Choose Radix Select-style priority by value",
+    "tool": "gemma_choose_option",
+    "arguments": {
+      "tabId": 108,
+      "selector": "#radix-priority-trigger",
+      "value": "critical"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "selector": "#radix-priority-trigger",
+        "optionSelector": "#radix-priority-critical",
+        "selected": "Critical",
+        "value": "critical"
+      },
+      "contains": ["#radix-priority-trigger", "#radix-priority-critical", "Critical", "critical"],
+      "notContains": ["Normal"],
+      "selector": "#radix-priority-trigger",
+      "actions": 1,
+      "actionTraceTools": ["choose_option"],
+      "actionTraceTextIncludes": ["selector=#radix-priority-trigger value=critical"],
+      "bridgeExecuteTool": "choose_option",
+      "bridgeExecuteSelector": "#radix-priority-trigger",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-radix-priority-status",
+    "suite": "dynamic-controls",
+    "title": "Read Radix Select-style priority status after value choice",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 108,
+      "selector": "#priority-status",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Priority: Critical"]
+      },
+      "contains": ["Priority: Critical"],
+      "notContains": ["Backlog", "Normal"],
+      "selector": "#priority-status",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#priority-status format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#priority-status",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "choose-headless-export-csv",
+    "suite": "dynamic-controls",
+    "title": "Choose Headless UI menu item by label",
+    "tool": "gemma_choose_option",
+    "arguments": {
+      "tabId": 108,
+      "selector": "#headless-export-button",
+      "label": "CSV"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "selector": "#headless-export-button",
+        "optionSelector": "#headless-export-csv",
+        "selected": "CSV",
+        "value": "csv"
+      },
+      "contains": ["#headless-export-button", "#headless-export-csv", "CSV", "csv"],
+      "notContains": ["PDF"],
+      "selector": "#headless-export-button",
+      "actions": 1,
+      "actionTraceTools": ["choose_option"],
+      "actionTraceTextIncludes": ["selector=#headless-export-button label=CSV"],
+      "bridgeExecuteTool": "choose_option",
+      "bridgeExecuteSelector": "#headless-export-button",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-headless-export-status",
+    "suite": "dynamic-controls",
+    "title": "Read Headless UI menu status after label choice",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 108,
+      "selector": "#export-status",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Export format: CSV"]
+      },
+      "contains": ["Export format: CSV"],
+      "notContains": ["Not selected", "PDF"],
+      "selector": "#export-status",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#export-status format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#export-status",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "click-mui-notifications-switch",
+    "suite": "dynamic-controls",
+    "title": "Click MUI Switch-style notifications control",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 108,
+      "selector": "#mui-notifications-switch"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "selector": "#mui-notifications-switch"
+      },
+      "contains": ["#mui-notifications-switch", "Notifications"],
+      "selector": "#mui-notifications-switch",
+      "clicked": "#mui-notifications-switch",
+      "actions": 1,
+      "actionTraceTools": ["click_element"],
+      "actionTraceTextIncludes": ["selector=#mui-notifications-switch"],
+      "bridgeExecuteTool": "click_element",
+      "bridgeExecuteSelector": "#mui-notifications-switch",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-mui-notifications-status",
+    "suite": "dynamic-controls",
+    "title": "Read MUI Switch-style notifications status after click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 108,
+      "selector": "#notifications-status",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Notifications: on"]
+      },
+      "contains": ["Notifications: on"],
+      "notContains": ["Notifications: off"],
+      "selector": "#notifications-status",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#notifications-status format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#notifications-status",
+      "bridgeRunAgent": false
+    }
+  }
+]

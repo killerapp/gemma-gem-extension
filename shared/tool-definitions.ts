@@ -78,6 +78,32 @@ export const TOOL_DEFINITIONS: Omit<ToolDefinition, 'execute'>[] = [
     },
   },
   {
+    name: 'choose_option',
+    description: 'Open a custom combobox, listbox, menu, or React-style select trigger and choose an option by exact selector, value, or visible label.',
+    parameters: {
+      type: 'object',
+      properties: {
+        selector: {
+          type: 'string',
+          description: 'CSS selector for the trigger/control to open',
+        },
+        optionSelector: {
+          type: 'string',
+          description: 'Optional exact CSS selector for the option to choose after opening',
+        },
+        value: {
+          type: 'string',
+          description: 'Exact option value, data-value, or aria value to choose',
+        },
+        label: {
+          type: 'string',
+          description: 'Exact visible option label to choose',
+        },
+      },
+      required: ['selector'],
+    },
+  },
+  {
     name: 'scroll_page',
     description: 'Scroll the page up or down',
     parameters: {

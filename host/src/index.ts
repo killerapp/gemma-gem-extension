@@ -870,6 +870,26 @@ async function selectOptionWithSelectorRecovery(
   }
 }
 
+async function chooseOption(
+  tabId: number | undefined,
+  selector: string,
+  optionSelector: string | undefined,
+  value: string | undefined,
+  label: string | undefined,
+): Promise<unknown> {
+  return sendBridgeRequest({
+    type: 'bridge:execute_tool',
+    tabId,
+    name: 'choose_option',
+    arguments: {
+      selector,
+      ...(optionSelector ? { optionSelector } : {}),
+      ...(value ? { value } : {}),
+      ...(label ? { label } : {}),
+    },
+  })
+}
+
 const MULTI_ACTION_SEQUENCER_PATTERN = /\b(?:and\s+then|then|after\s+that|next|followed\s+by)\b/i
 const ACTION_VERBS = new Set([
   'click',
@@ -1261,6 +1281,22 @@ function registerTools(server: McpServer): void {
     return asTextResult(await selectOptionWithSelectorRecovery(tabId, selector, value, label))
   })
 
+  server.registerTool('gemma_choose_option', {
+    description: 'Open a custom React-style combobox/listbox/menu trigger and choose an option by exact option selector, value, or visible label. Use this for Radix Select, React Select, Headless UI Listbox/Menu, MUI Autocomplete, and similar non-native controls.',
+    inputSchema: {
+      tabId: z.number().int().optional().describe('Optional target tab id from gemma_tabs. Defaults to the active tab.'),
+      selector: z.string().describe('CSS selector for the trigger/control to open.'),
+      optionSelector: z.string().optional().describe('Exact CSS selector for the option to choose after opening.'),
+      value: z.string().optional().describe('Exact option value or data-value to choose.'),
+      label: z.string().optional().describe('Exact visible option label to choose.'),
+    },
+  }, async ({ tabId, selector, optionSelector, value, label }) => {
+    if (!optionSelector && !value && !label) {
+      throw new Error('gemma_choose_option requires optionSelector, value, or label')
+    }
+    return asTextResult(await chooseOption(tabId, selector, optionSelector, value, label))
+  })
+
   server.registerTool('gemma_scroll', {
     description: 'Scroll the target browser tab by a pixel amount.',
     inputSchema: {
@@ -1324,6 +1360,7 @@ function registerTools(server: McpServer): void {
       peerGuidance: [
         'Use gemma_read_page for exact selector reads.',
         'Use gemma_transfer_fields when copying values from one tab into another tab.',
+        'Use gemma_choose_option for React Select, Radix Select, Headless UI, MUI Autocomplete, and other custom non-native option controls.',
         'Use gemma_type_text and gemma_click for deterministic form operations.',
         'Use gemma_agent only when page interpretation or judgment is needed.',
       ],

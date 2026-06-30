@@ -326,6 +326,10 @@ function compactBenchmarkToolText(name: string, args: Record<string, unknown>): 
   } else if (name === 'select_option') {
     if (typeof args.value === 'string') parts.push(`value=${args.value}`)
     if (typeof args.label === 'string') parts.push(`label=${args.label}`)
+  } else if (name === 'choose_option') {
+    if (typeof args.optionSelector === 'string') parts.push(`optionSelector=${args.optionSelector}`)
+    if (typeof args.value === 'string') parts.push(`value=${args.value}`)
+    if (typeof args.label === 'string') parts.push(`label=${args.label}`)
   } else if (name === 'scroll_page') {
     if (typeof args.direction === 'string') parts.push(`direction=${args.direction}`)
     if (typeof args.amount === 'number') parts.push(`amount=${args.amount}`)
@@ -388,6 +392,7 @@ class FakeExtension implements HarnessProbe {
     { id: 105, active: false, title: 'Navigation sandbox', url: 'http://127.0.0.1:4173/navigation.html' },
     { id: 106, active: false, title: 'Navigation sandbox', url: 'http://127.0.0.1:4173/navigation-billing.html' },
     { id: 107, active: false, title: 'Adversarial billing sandbox', url: 'http://127.0.0.1:4173/adversarial-billing.html' },
+    { id: 108, active: false, title: 'Dynamic controls sandbox', url: 'http://127.0.0.1:4173/dynamic-controls.html' },
   ]
 
   constructor(private readonly port: number) {
@@ -402,6 +407,11 @@ class FakeExtension implements HarnessProbe {
     this.values.set('104:#dest-notes', '')
     this.values.set('104:#save-result', '')
     this.values.set('107:#billing-status', 'No billing document downloaded')
+    this.values.set('108:#assignee-status', 'Assignee: Unassigned')
+    this.values.set('108:#priority-status', 'Priority: Backlog')
+    this.values.set('108:#export-status', 'Export format: Not selected')
+    this.values.set('108:#notifications-status', 'Notifications: off')
+    this.values.set('108:#mui-notifications-switch', 'false')
   }
 
   async connect(): Promise<void> {
@@ -493,6 +503,20 @@ class FakeExtension implements HarnessProbe {
       '#archive-receipt-download',
       '#archive-invoice-download',
       '#billing-status',
+      '#react-assignee-control',
+      '#assignee-ada-option',
+      '#assignee-grace-option',
+      '#assignee-status',
+      '#radix-priority-trigger',
+      '#radix-priority-normal',
+      '#radix-priority-critical',
+      '#priority-status',
+      '#headless-export-button',
+      '#headless-export-pdf',
+      '#headless-export-csv',
+      '#export-status',
+      '#mui-notifications-switch',
+      '#notifications-status',
       'body',
     ])
     return knownSelectors.has(selector)
@@ -709,6 +733,11 @@ class FakeExtension implements HarnessProbe {
             this.values.set('107:#billing-status', 'Downloaded archived invoice INV-2025-009')
           }
         }
+        if (tabId === 108 && selector === '#mui-notifications-switch') {
+          const enabled = this.value(108, '#mui-notifications-switch') !== 'true'
+          this.values.set('108:#mui-notifications-switch', String(enabled))
+          this.values.set('108:#notifications-status', enabled ? 'Notifications: on' : 'Notifications: off')
+        }
         const label = selector === '#download-receipt'
           ? 'button: Receipt PDF'
           : selector === '#download-invoice'
@@ -723,6 +752,8 @@ class FakeExtension implements HarnessProbe {
                 ? 'button: Receipt PDF'
                 : selector === '#archive-invoice-download'
                   ? 'button: Invoice PDF'
+          : selector === '#mui-notifications-switch'
+            ? 'button: Notifications'
           : selector === '#settings-link'
             ? 'a: Settings'
             : selector === '#billing-link'
@@ -747,6 +778,20 @@ class FakeExtension implements HarnessProbe {
         this.values.set(`${tabId}:${selector}`, selected.value)
         return this.response(request.requestId, { selected: selected.label, value: selected.value, selector })
       }
+      case 'choose_option': {
+        const selector = String(args.selector)
+        const label = typeof args.label === 'string' ? args.label : undefined
+        const value = typeof args.value === 'string' ? args.value : undefined
+        const optionSelector = typeof args.optionSelector === 'string' ? args.optionSelector : undefined
+        if (!this.selectorExists(selector)) {
+          return this.response(request.requestId, { error: `No trigger found for selector: ${selector}` })
+        }
+        if (tabId !== 108) {
+          return this.response(request.requestId, { error: `No custom options registered for selector: ${selector}` })
+        }
+        const selected = this.chooseDynamicOption(selector, optionSelector, value, label)
+        return this.response(request.requestId, selected)
+      }
       case 'scroll_page':
         const amount = Number(args.amount ?? 500)
         const delta = args.direction === 'up' ? -amount : amount
@@ -760,6 +805,42 @@ class FakeExtension implements HarnessProbe {
       case 'run_javascript':
         return this.response(request.requestId, { error: 'run_javascript is not part of this benchmark harness' })
     }
+  }
+
+  private chooseDynamicOption(selector: string, optionSelector?: string, value?: string, label?: string): Record<string, unknown> {
+    const matches = (candidate: { selector: string; value: string; label: string }) =>
+      optionSelector === candidate.selector || value === candidate.value || label === candidate.label
+    if (selector === '#react-assignee-control') {
+      const options = [
+        { selector: '#assignee-ada-option', value: 'ada', label: 'Ada Lovelace', status: 'Assignee: Ada Lovelace' },
+        { selector: '#assignee-grace-option', value: 'grace', label: 'Grace Hopper', status: 'Assignee: Grace Hopper' },
+      ]
+      const selected = options.find(matches)
+      if (!selected) return { error: `No option found for selector: ${selector}` }
+      this.values.set('108:#assignee-status', selected.status)
+      return { selector, optionSelector: selected.selector, selected: selected.label, value: selected.value }
+    }
+    if (selector === '#radix-priority-trigger') {
+      const options = [
+        { selector: '#radix-priority-normal', value: 'normal', label: 'Normal', status: 'Priority: Normal' },
+        { selector: '#radix-priority-critical', value: 'critical', label: 'Critical', status: 'Priority: Critical' },
+      ]
+      const selected = options.find(matches)
+      if (!selected) return { error: `No option found for selector: ${selector}` }
+      this.values.set('108:#priority-status', selected.status)
+      return { selector, optionSelector: selected.selector, selected: selected.label, value: selected.value }
+    }
+    if (selector === '#headless-export-button') {
+      const options = [
+        { selector: '#headless-export-pdf', value: 'pdf', label: 'PDF', status: 'Export format: PDF' },
+        { selector: '#headless-export-csv', value: 'csv', label: 'CSV', status: 'Export format: CSV' },
+      ]
+      const selected = options.find(matches)
+      if (!selected) return { error: `No option found for selector: ${selector}` }
+      this.values.set('108:#export-status', selected.status)
+      return { selector, optionSelector: selected.selector, selected: selected.label, value: selected.value }
+    }
+    return { error: `No custom options registered for selector: ${selector}` }
   }
 
   private read(tabId: number, selector: string, format = 'text'): string {
@@ -983,6 +1064,57 @@ class FakeExtension implements HarnessProbe {
         'Receipt PDF',
         'Invoice PDF',
         this.value(107, '#billing-status'),
+      ].join('\n')
+    }
+    if (tabId === 108) {
+      if (selector === '#assignee-status') return this.value(108, selector)
+      if (selector === '#priority-status') return this.value(108, selector)
+      if (selector === '#export-status') return this.value(108, selector)
+      if (selector === '#notifications-status') return this.value(108, selector)
+      if (selector === '#react-assignee-control') return this.value(108, '#assignee-status')
+      if (selector === '#radix-priority-trigger') return this.value(108, '#priority-status')
+      if (selector === '#headless-export-button') return this.value(108, '#export-status')
+      if (selector === '#mui-notifications-switch') return this.value(108, '#notifications-status')
+      if (format === 'html') {
+        return [
+          '<main>',
+          '<h1>Dynamic React library controls</h1>',
+          '<section aria-labelledby="react-select-heading">',
+          '<h2 id="react-select-heading">React Select-style assignee</h2>',
+          '<button id="react-assignee-control" role="combobox" aria-expanded="false" aria-controls="react-assignee-listbox">Assignee: Unassigned</button>',
+          `<p id="assignee-status">${escapeHtmlText(this.value(108, '#assignee-status'))}</p>`,
+          '</section>',
+          '<section aria-labelledby="radix-heading">',
+          '<h2 id="radix-heading">Radix Select-style priority</h2>',
+          '<button id="radix-priority-trigger" data-radix-select-trigger aria-expanded="false" aria-controls="radix-priority-listbox">Priority: Backlog</button>',
+          `<p id="priority-status">${escapeHtmlText(this.value(108, '#priority-status'))}</p>`,
+          '</section>',
+          '<section aria-labelledby="headless-heading">',
+          '<h2 id="headless-heading">Headless UI menu export</h2>',
+          '<button id="headless-export-button" aria-haspopup="menu" aria-expanded="false" aria-controls="headless-export-menu">Export format</button>',
+          `<p id="export-status">${escapeHtmlText(this.value(108, '#export-status'))}</p>`,
+          '</section>',
+          '<section aria-labelledby="mui-heading">',
+          '<h2 id="mui-heading">MUI Switch-style notifications</h2>',
+          `<button id="mui-notifications-switch" class="MuiSwitch-switchBase" role="switch" aria-checked="${this.value(108, '#mui-notifications-switch')}">Notifications off</button>`,
+          `<p id="notifications-status">${escapeHtmlText(this.value(108, '#notifications-status'))}</p>`,
+          '</section>',
+          '<div id="react-assignee-portal" hidden><div id="react-assignee-listbox" role="listbox"><div id="assignee-ada-option" role="option" data-option-value="ada">Ada Lovelace</div><div id="assignee-grace-option" role="option" data-option-value="grace">Grace Hopper</div></div></div>',
+          '<div id="radix-priority-portal" hidden><div id="radix-priority-listbox" role="listbox"><div id="radix-priority-normal" role="option" data-value="normal" data-select-option>Normal</div><div id="radix-priority-critical" role="option" data-value="critical" data-select-option>Critical</div></div></div>',
+          '<div id="headless-export-portal" hidden><div id="headless-export-menu" role="menu"><div id="headless-export-pdf" role="menuitemradio" data-option-value="pdf">PDF</div><div id="headless-export-csv" role="menuitemradio" data-option-value="csv">CSV</div></div></div>',
+          '</main>',
+        ].join('\n')
+      }
+      return [
+        'Dynamic React library controls',
+        'React Select-style assignee',
+        this.value(108, '#assignee-status'),
+        'Radix Select-style priority',
+        this.value(108, '#priority-status'),
+        'Headless UI menu export',
+        this.value(108, '#export-status'),
+        'MUI Switch-style notifications',
+        this.value(108, '#notifications-status'),
       ].join('\n')
     }
     return ''
@@ -1285,6 +1417,7 @@ class RealChromeHarness implements HarnessProbe {
       [105, 'navigation.html'],
       [106, 'navigation-billing.html'],
       [107, 'adversarial-billing.html'],
+      [108, 'dynamic-controls.html'],
     ]
 
     for (const [logicalId, page] of pages) {

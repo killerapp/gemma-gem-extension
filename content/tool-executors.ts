@@ -1,6 +1,8 @@
 import type { ToolCall, ToolResponse } from '@kessler/gemma-agent'
 
 const MAX_CONTENT_LENGTH = 64000
+const CUSTOM_OPTION_WAIT_MS = 2500
+const CUSTOM_OPTION_POLL_MS = 25
 
 function readPageContent(args: Record<string, unknown>): ToolResponse {
   const selector = (args.selector as string) || 'body'
@@ -104,6 +106,118 @@ function selectOption(args: Record<string, unknown>): ToolResponse {
   return { name: 'select_option', result: { selected: option.textContent?.trim(), value: option.value, selector } }
 }
 
+async function chooseOption(args: Record<string, unknown>): Promise<ToolResponse> {
+  const selector = args.selector as string
+  const optionSelector = args.optionSelector as string | undefined
+  const value = args.value as string | undefined
+  const label = args.label as string | undefined
+  const trigger = document.querySelector(selector) as HTMLElement | null
+  if (!trigger) {
+    return { name: 'choose_option', result: { error: `No trigger found for selector: ${selector}` } }
+  }
+  if (!optionSelector && !value && !label) {
+    return { name: 'choose_option', result: { error: 'choose_option requires optionSelector, value, or label' } }
+  }
+
+  trigger.click()
+
+  const option = await waitForCustomOption(optionSelector, value, label)
+  if (!option) {
+    return {
+      name: 'choose_option',
+      result: {
+        error: `No option found for selector: ${selector}`,
+        available: customOptionCandidates().map(candidate => optionSummary(candidate)).slice(0, 50),
+      },
+    }
+  }
+
+  option.click()
+  return {
+    name: 'choose_option',
+    result: {
+      selector,
+      optionSelector: selectorForOption(option),
+      selected: option.textContent?.trim() ?? '',
+      value: optionValue(option),
+    },
+  }
+}
+
+async function waitForCustomOption(
+  optionSelector: string | undefined,
+  value: string | undefined,
+  label: string | undefined,
+): Promise<HTMLElement | null> {
+  const deadline = Date.now() + CUSTOM_OPTION_WAIT_MS
+  do {
+    const option = optionSelector ? findCustomOptionBySelector(optionSelector) : findCustomOption(value, label)
+    if (option) return option
+    await delay(CUSTOM_OPTION_POLL_MS)
+  } while (Date.now() < deadline)
+  return optionSelector ? findCustomOptionBySelector(optionSelector) : findCustomOption(value, label)
+}
+
+function findCustomOptionBySelector(optionSelector: string): HTMLElement | null {
+  const option = document.querySelector(optionSelector) as HTMLElement | null
+  return option && isVisibleCustomOption(option) ? option : null
+}
+
+function findCustomOption(value: string | undefined, label: string | undefined): HTMLElement | null {
+  const expectedValue = value?.toLowerCase()
+  const expectedLabel = label?.toLowerCase()
+  return customOptionCandidates().find(option => {
+    const actualValue = optionValue(option).toLowerCase()
+    const actualLabel = (option.textContent ?? '').trim().toLowerCase()
+    return (expectedValue != null && actualValue === expectedValue) ||
+      (expectedLabel != null && actualLabel === expectedLabel)
+  }) ?? null
+}
+
+function customOptionCandidates(): HTMLElement[] {
+  return ([...document.querySelectorAll([
+    '[role="option"]',
+    '[role="menuitem"]',
+    '[role="menuitemradio"]',
+    '[data-option-value]',
+    '[data-value][data-select-option]',
+  ].join(','))] as HTMLElement[])
+    .filter(isVisibleCustomOption)
+}
+
+function isVisibleCustomOption(option: HTMLElement): boolean {
+  return !option.hidden && !option.closest('[hidden]') && option.getAttribute('aria-hidden') !== 'true'
+}
+
+function optionValue(option: HTMLElement): string {
+  return option.getAttribute('data-option-value') ??
+    option.getAttribute('data-value') ??
+    option.getAttribute('value') ??
+    option.getAttribute('aria-label') ??
+    option.textContent?.trim() ??
+    ''
+}
+
+function selectorForOption(option: HTMLElement): string {
+  return option.id ? `#${option.id}` : option.getAttribute('data-option-value')
+    ? `[data-option-value="${option.getAttribute('data-option-value')}"]`
+    : option.getAttribute('data-value')
+      ? `[data-value="${option.getAttribute('data-value')}"]`
+      : option.tagName.toLowerCase()
+}
+
+function optionSummary(option: HTMLElement): Record<string, string> {
+  return {
+    selector: selectorForOption(option),
+    label: option.textContent?.trim() ?? '',
+    value: optionValue(option),
+  }
+}
+
+function delay(ms: number): Promise<void> {
+  return new Promise(resolve => window.setTimeout(resolve, ms))
+}
+
 function scrollPage(args: Record<string, unknown>): ToolResponse {
   const direction = args.direction as string
   const amount = (args.amount as number) || 500
@@ -114,13 +228,14 @@ function scrollPage(args: Record<string, unknown>): ToolResponse {
   return { name: 'scroll_page', result: { scrolled: `${direction} ${amount}px`, scrollY: window.scrollY } }
 }
 
-export function executeContentTool(call: ToolCall): ToolResponse | null {
+export async function executeContentTool(call: ToolCall): Promise<ToolResponse | null> {
   try {
     switch (call.name) {
       case 'read_page_content': return readPageContent(call.arguments)
       case 'click_element': return clickElement(call.arguments)
       case 'type_text': return typeText(call.arguments)
       case 'select_option': return selectOption(call.arguments)
+      case 'choose_option': return chooseOption(call.arguments)
       case 'scroll_page': return scrollPage(call.arguments)
       default: return null
     }

@@ -298,6 +298,10 @@ function compactToolActivityText(name: string, args: Record<string, unknown>): s
   } else if (name === 'select_option') {
     if (typeof args.value === 'string') parts.push(`value=${args.value}`)
     if (typeof args.label === 'string') parts.push(`label=${args.label}`)
+  } else if (name === 'choose_option') {
+    if (typeof args.optionSelector === 'string') parts.push(`optionSelector=${args.optionSelector}`)
+    if (typeof args.value === 'string') parts.push(`value=${args.value}`)
+    if (typeof args.label === 'string') parts.push(`label=${args.label}`)
   } else if (name === 'scroll_page') {
     if (typeof args.direction === 'string') parts.push(`direction=${args.direction}`)
     if (typeof args.amount === 'number') parts.push(`amount=${args.amount}`)
