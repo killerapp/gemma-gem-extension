@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Dynamic controls sandbox</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 2rem;
+      }
+
+      main {
+        display: grid;
+        gap: 1.25rem;
+        max-width: 44rem;
+      }
+
+      section {
+        border: 1px solid #ccd3df;
+        padding: 1rem;
+      }
+
+      button,
+      [role="option"],
+      [role="menuitemradio"] {
+        cursor: pointer;
+      }
+
+      [role="listbox"],
+      [role="menu"] {
+        border: 1px solid #8a94a6;
+        margin-top: 0.5rem;
+        max-width: 18rem;
+        padding: 0.25rem;
+      }
+
+      [role="option"],
+      [role="menuitemradio"] {
+        padding: 0.35rem 0.5rem;
+      }
+
+      [aria-checked="true"],
+      [aria-selected="true"] {
+        background: #e8f0ff;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Dynamic React library controls</h1>
+
+      <section aria-labelledby="react-select-heading">
+        <h2 id="react-select-heading">React Select-style assignee</h2>
+        <button id="react-assignee-control" role="combobox" aria-expanded="false" aria-controls="react-assignee-listbox">Assignee: Unassigned</button>
+        <p id="assignee-status">Assignee: Unassigned</p>
+      </section>
+
+      <section aria-labelledby="radix-heading">
+        <h2 id="radix-heading">Radix Select-style priority</h2>
+        <button id="radix-priority-trigger" data-radix-select-trigger aria-expanded="false" aria-controls="radix-priority-listbox">Priority: Backlog</button>
+        <p id="priority-status">Priority: Backlog</p>
+      </section>
+
+      <section aria-labelledby="headless-heading">
+        <h2 id="headless-heading">Headless UI menu export</h2>
+        <button id="headless-export-button" aria-haspopup="menu" aria-expanded="false" aria-controls="headless-export-menu">Export format</button>
+        <p id="export-status">Export format: Not selected</p>
+      </section>
+
+      <section aria-labelledby="mui-heading">
+        <h2 id="mui-heading">MUI Switch-style notifications</h2>
+        <button id="mui-notifications-switch" class="MuiSwitch-switchBase" role="switch" aria-checked="false">Notifications off</button>
+        <p id="notifications-status">Notifications: off</p>
+      </section>
+    </main>
+
+    <div id="react-assignee-portal" hidden>
+      <div id="react-assignee-listbox" role="listbox" aria-label="Assignee options">
+        <div id="assignee-ada-option" role="option" data-option-value="ada">Ada Lovelace</div>
+        <div id="assignee-grace-option" role="option" data-option-value="grace">Grace Hopper</div>
+      </div>
+    </div>
+
+    <div id="radix-priority-portal" hidden>
+      <div id="radix-priority-listbox" role="listbox" aria-label="Priority options" data-radix-select-viewport>
+        <div id="radix-priority-normal" role="option" data-value="normal" data-select-option>Normal</div>
+        <div id="radix-priority-critical" role="option" data-value="critical" data-select-option>Critical</div>
+      </div>
+    </div>
+
+    <div id="headless-export-portal" hidden>
+      <div id="headless-export-menu" role="menu" aria-label="Export options">
+        <div id="headless-export-pdf" role="menuitemradio" data-option-value="pdf" aria-checked="false">PDF</div>
+        <div id="headless-export-csv" role="menuitemradio" data-option-value="csv" aria-checked="false">CSV</div>
+      </div>
+    </div>
+
+    <script>
+      function bindOptionTrigger(triggerSelector, portalSelector, options) {
+        const trigger = document.querySelector(triggerSelector)
+        const portal = document.querySelector(portalSelector)
+        trigger.addEventListener('click', () => {
+          trigger.setAttribute('aria-expanded', 'true')
+          window.setTimeout(() => {
+            portal.hidden = false
+          }, 40)
+        })
+
+        for (const option of options) {
+          const node = document.querySelector(option.selector)
+          node.addEventListener('click', () => {
+            for (const sibling of portal.querySelectorAll('[role="option"], [role="menuitemradio"]')) {
+              sibling.setAttribute('aria-selected', 'false')
+              sibling.setAttribute('aria-checked', 'false')
+            }
+            node.setAttribute(node.getAttribute('role') === 'menuitemradio' ? 'aria-checked' : 'aria-selected', 'true')
+            trigger.textContent = option.triggerText
+            document.querySelector(option.statusSelector).textContent = option.statusText
+            portal.hidden = true
+            trigger.setAttribute('aria-expanded', 'false')
+          })
+        }
+      }
+
+      bindOptionTrigger('#react-assignee-control', '#react-assignee-portal', [
+        { selector: '#assignee-ada-option', triggerText: 'Assignee: Ada Lovelace', statusSelector: '#assignee-status', statusText: 'Assignee: Ada Lovelace' },
+        { selector: '#assignee-grace-option', triggerText: 'Assignee: Grace Hopper', statusSelector: '#assignee-status', statusText: 'Assignee: Grace Hopper' },
+      ])
+
+      bindOptionTrigger('#radix-priority-trigger', '#radix-priority-portal', [
+        { selector: '#radix-priority-normal', triggerText: 'Priority: Normal', statusSelector: '#priority-status', statusText: 'Priority: Normal' },
+        { selector: '#radix-priority-critical', triggerText: 'Priority: Critical', statusSelector: '#priority-status', statusText: 'Priority: Critical' },
+      ])
+
+      bindOptionTrigger('#headless-export-button', '#headless-export-portal', [
+        { selector: '#headless-export-pdf', triggerText: 'Export format: PDF', statusSelector: '#export-status', statusText: 'Export format: PDF' },
+        { selector: '#headless-export-csv', triggerText: 'Export format: CSV', statusSelector: '#export-status', statusText: 'Export format: CSV' },
+      ])
+
+      document.querySelector('#mui-notifications-switch').addEventListener('click', event => {
+        const enabled = event.currentTarget.getAttribute('aria-checked') !== 'true'
+        event.currentTarget.setAttribute('aria-checked', String(enabled))
+        event.currentTarget.textContent = enabled ? 'Notifications on' : 'Notifications off'
+        document.querySelector('#notifications-status').textContent = enabled ? 'Notifications: on' : 'Notifications: off'
+      })
+    </script>
+  </body>
+</html>

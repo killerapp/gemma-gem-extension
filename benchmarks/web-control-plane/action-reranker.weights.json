@@ -1,0 +1,1594 @@
+{
+  "recordType": "web-control-action-reranker-weights",
+  "version": 1,
+  "sourceFile": "./benchmarks/web-control-plane/action-reranker.preferences.jsonl",
+  "generatedBy": "pnpm benchmark:traces:reranker:baseline",
+  "model": {
+    "type": "pairwise_perceptron",
+    "featureSet": "web-control-action-v1",
+    "epochs": 40
+  },
+  "training": {
+    "pairs": 77,
+    "buckets": 28,
+    "tasks": 22,
+    "suites": 8
+  },
+  "metrics": {
+    "bestPolicy": "learned_perceptron",
+    "policies": [
+      {
+        "name": "semantic_keyword",
+        "accuracy": 1,
+        "pairs": 77,
+        "minMargin": 3
+      },
+      {
+        "name": "learned_perceptron",
+        "accuracy": 1,
+        "pairs": 77,
+        "minMargin": 14
+      },
+      {
+        "name": "learned_perceptron_loto",
+        "accuracy": 1,
+        "pairs": 77,
+        "minMargin": 12
+      },
+      {
+        "name": "learned_perceptron_loso",
+        "accuracy": 1,
+        "pairs": 77,
+        "minMargin": 10
+      }
+    ],
+    "targetSelectorPolicies": [
+      {
+        "name": "semantic_keyword",
+        "accuracy": 1,
+        "pairs": 6,
+        "minMargin": 11
+      },
+      {
+        "name": "learned_perceptron",
+        "accuracy": 1,
+        "pairs": 6,
+        "minMargin": 110
+      },
+      {
+        "name": "learned_perceptron_loto",
+        "accuracy": 1,
+        "pairs": 6,
+        "minMargin": 108
+      },
+      {
+        "name": "learned_perceptron_loso",
+        "accuracy": 1,
+        "pairs": 6,
+        "minMargin": 101
+      }
+    ]
+  },
+  "weights": [
+    {
+      "feature": "action_token=action",
+      "weight": -1
+    },
+    {
+      "feature": "action_token=billing",
+      "weight": -1
+    },
+    {
+      "feature": "action_token=body",
+      "weight": 1
+    },
+    {
+      "feature": "action_token=bridge",
+      "weight": 2
+    },
+    {
+      "feature": "action_token=button",
+      "weight": 1
+    },
+    {
+      "feature": "action_token=control",
+      "weight": -1
+    },
+    {
+      "feature": "action_token=data",
+      "weight": -1
+    },
+    {
+      "feature": "action_token=email",
+      "weight": -1
+    },
+    {
+      "feature": "action_token=execute",
+      "weight": 2
+    },
+    {
+      "feature": "action_token=field",
+      "weight": -1
+    },
+    {
+      "feature": "action_token=invoice",
+      "weight": -1
+    },
+    {
+      "feature": "action_token=name",
+      "weight": -2
+    },
+    {
+      "feature": "action_token=plan",
+      "weight": -1
+    },
+    {
+      "feature": "action_token=receipt",
+      "weight": 1
+    },
+    {
+      "feature": "action_token=recovered",
+      "weight": -1
+    },
+    {
+      "feature": "action_token=save",
+      "weight": 1
+    },
+    {
+      "feature": "action_token=section",
+      "weight": -1
+    },
+    {
+      "feature": "action_token=shipping",
+      "weight": 1
+    },
+    {
+      "feature": "action_token=single",
+      "weight": -1
+    },
+    {
+      "feature": "action_token=starter",
+      "weight": -2
+    },
+    {
+      "feature": "action_token=submit",
+      "weight": 1
+    },
+    {
+      "feature": "action_token=team",
+      "weight": 1
+    },
+    {
+      "feature": "action_token=tool",
+      "weight": 2
+    },
+    {
+      "feature": "billing_control_goal=match",
+      "weight": 8
+    },
+    {
+      "feature": "billing_control_goal=mismatch",
+      "weight": -8
+    },
+    {
+      "feature": "click_element_selector_role=destination",
+      "weight": -3
+    },
+    {
+      "feature": "click_element_selector_role_field=destination:name",
+      "weight": -4
+    },
+    {
+      "feature": "click_role=field",
+      "weight": -3
+    },
+    {
+      "feature": "click_role=submit",
+      "weight": 3
+    },
+    {
+      "feature": "field_title_selector=match",
+      "weight": 3
+    },
+    {
+      "feature": "field_title_selector=mismatch",
+      "weight": -6
+    },
+    {
+      "feature": "full_page_read=body",
+      "weight": 5
+    },
+    {
+      "feature": "full_page_read=narrow",
+      "weight": -5
+    },
+    {
+      "feature": "read_page_content_selector_role=destination",
+      "weight": -3
+    },
+    {
+      "feature": "read_page_content_selector_role=source",
+      "weight": 3
+    },
+    {
+      "feature": "read_page_content_selector_role_field=destination:name",
+      "weight": -4
+    },
+    {
+      "feature": "read_page_content_selector_role_field=source:name",
+      "weight": 4
+    },
+    {
+      "feature": "scoped_target_selector=match",
+      "weight": 6
+    },
+    {
+      "feature": "scoped_target_selector=mismatch",
+      "weight": -6
+    },
+    {
+      "feature": "selector=body",
+      "weight": 1
+    },
+    {
+      "feature": "selector_contains=invoice",
+      "weight": -1
+    },
+    {
+      "feature": "selector_contains=receipt",
+      "weight": 1
+    },
+    {
+      "feature": "selector_contains=save",
+      "weight": 1
+    },
+    {
+      "feature": "selector_role=destination",
+      "weight": -4
+    },
+    {
+      "feature": "selector_role=source",
+      "weight": 2
+    },
+    {
+      "feature": "selector_token=billing",
+      "weight": -1
+    },
+    {
+      "feature": "selector_token=body",
+      "weight": 1
+    },
+    {
+      "feature": "selector_token=data",
+      "weight": -1
+    },
+    {
+      "feature": "selector_token=invoice",
+      "weight": -1
+    },
+    {
+      "feature": "selector_token=name",
+      "weight": -1
+    },
+    {
+      "feature": "selector_token=plan",
+      "weight": -1
+    },
+    {
+      "feature": "selector_token=receipt",
+      "weight": 1
+    },
+    {
+      "feature": "selector_token=save",
+      "weight": 1
+    },
+    {
+      "feature": "selector_token=shipping",
+      "weight": 1
+    },
+    {
+      "feature": "selector_token=starter",
+      "weight": -2
+    },
+    {
+      "feature": "selector_token=team",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=as:body",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=as:bridge",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=as:data",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=as:execute",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=as:plan",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=as:section",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=as:single",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=as:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=as:tool",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=billing:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=billing:button",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=billing:control",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=billing:email",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=billing:field",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=billing:name",
+      "weight": -2
+    },
+    {
+      "feature": "task_action=billing:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=billing:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=billing:submit",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=card:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=card:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=cards:body",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=cards:bridge",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=cards:data",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=cards:execute",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=cards:plan",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=cards:section",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=cards:single",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=cards:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=cards:tool",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=checkout:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=checkout:button",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=checkout:control",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=checkout:email",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=checkout:field",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=checkout:name",
+      "weight": -2
+    },
+    {
+      "feature": "task_action=checkout:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=checkout:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=checkout:submit",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=click:action",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=click:bridge",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=click:execute",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=click:invoice",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=click:receipt",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=click:recovered",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=click:tool",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=contact:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=contact:button",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=contact:control",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=contact:email",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=contact:field",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=contact:name",
+      "weight": -2
+    },
+    {
+      "feature": "task_action=contact:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=contact:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=contact:submit",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=copy:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=copy:button",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=copy:control",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=copy:email",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=copy:field",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=copy:name",
+      "weight": -2
+    },
+    {
+      "feature": "task_action=copy:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=copy:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=copy:submit",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=extract:body",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=extract:bridge",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=extract:data",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=extract:execute",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=extract:plan",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=extract:section",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=extract:single",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=extract:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=extract:tool",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=fields:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=fields:button",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=fields:control",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=fields:email",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=fields:field",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=fields:name",
+      "weight": -2
+    },
+    {
+      "feature": "task_action=fields:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=fields:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=fields:submit",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=form:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=form:button",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=form:control",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=form:email",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=form:field",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=form:name",
+      "weight": -2
+    },
+    {
+      "feature": "task_action=form:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=form:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=form:submit",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=gemma:action",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=gemma:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=gemma:body",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=gemma:bridge",
+      "weight": 2
+    },
+    {
+      "feature": "task_action=gemma:button",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=gemma:control",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=gemma:data",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=gemma:email",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=gemma:execute",
+      "weight": 2
+    },
+    {
+      "feature": "task_action=gemma:field",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=gemma:invoice",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=gemma:name",
+      "weight": -2
+    },
+    {
+      "feature": "task_action=gemma:plan",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=gemma:receipt",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=gemma:recovered",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=gemma:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=gemma:section",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=gemma:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=gemma:single",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=gemma:starter",
+      "weight": -2
+    },
+    {
+      "feature": "task_action=gemma:submit",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=gemma:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=gemma:tool",
+      "weight": 2
+    },
+    {
+      "feature": "task_action=into:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=into:button",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=into:control",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=into:email",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=into:field",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=into:name",
+      "weight": -2
+    },
+    {
+      "feature": "task_action=into:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=into:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=into:submit",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=json:body",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=json:bridge",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=json:data",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=json:execute",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=json:plan",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=json:section",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=json:single",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=json:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=json:tool",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=like:action",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=like:bridge",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=like:execute",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=like:invoice",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=like:receipt",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=like:recovered",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=like:tool",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=only:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=only:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=page:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=page:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=plan:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=plan:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=pricing:body",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=pricing:bridge",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=pricing:data",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=pricing:execute",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=pricing:plan",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=pricing:section",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=pricing:single",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=pricing:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=pricing:tool",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=read:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=read:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=receipt:action",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=receipt:bridge",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=receipt:execute",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=receipt:invoice",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=receipt:receipt",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=receipt:recovered",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=receipt:tool",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=recover:action",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=recover:bridge",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=recover:execute",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=recover:invoice",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=recover:receipt",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=recover:recovered",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=recover:tool",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=scoped:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=scoped:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=selector:action",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=selector:bridge",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=selector:execute",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=selector:invoice",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=selector:receipt",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=selector:recovered",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=selector:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=selector:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=selector:tool",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=semantic:action",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=semantic:bridge",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=semantic:execute",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=semantic:invoice",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=semantic:receipt",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=semantic:recovered",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=semantic:tool",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=shipping:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=shipping:button",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=shipping:control",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=shipping:email",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=shipping:field",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=shipping:name",
+      "weight": -2
+    },
+    {
+      "feature": "task_action=shipping:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=shipping:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=shipping:submit",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=strict:body",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=strict:bridge",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=strict:data",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=strict:execute",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=strict:plan",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=strict:section",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=strict:single",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=strict:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=strict:tool",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=text:action",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=text:bridge",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=text:execute",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=text:invoice",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=text:receipt",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=text:recovered",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=text:tool",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=the:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=the:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=transfer:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=transfer:button",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=transfer:control",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=transfer:email",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=transfer:field",
+      "weight": -1
+    },
+    {
+      "feature": "task_action=transfer:name",
+      "weight": -2
+    },
+    {
+      "feature": "task_action=transfer:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=transfer:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_action=transfer:submit",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=as:body",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=as:data",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=as:plan",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=as:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=billing:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=billing:name",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=billing:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=billing:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=card:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=card:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=cards:body",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=cards:data",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=cards:plan",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=cards:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=checkout:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=checkout:name",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=checkout:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=checkout:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=click:invoice",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=click:receipt",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=contact:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=contact:name",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=contact:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=contact:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=copy:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=copy:name",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=copy:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=copy:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=extract:body",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=extract:data",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=extract:plan",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=extract:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=fields:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=fields:name",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=fields:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=fields:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=form:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=form:name",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=form:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=form:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=gemma:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=gemma:body",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=gemma:data",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=gemma:invoice",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=gemma:name",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=gemma:plan",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=gemma:receipt",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=gemma:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=gemma:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=gemma:starter",
+      "weight": -2
+    },
+    {
+      "feature": "task_selector=gemma:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=into:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=into:name",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=into:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=into:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=json:body",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=json:data",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=json:plan",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=json:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=like:invoice",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=like:receipt",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=only:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=only:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=page:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=page:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=plan:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=plan:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=pricing:body",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=pricing:data",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=pricing:plan",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=pricing:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=read:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=read:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=receipt:invoice",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=receipt:receipt",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=recover:invoice",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=recover:receipt",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=scoped:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=scoped:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=selector:invoice",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=selector:receipt",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=selector:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=selector:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=semantic:invoice",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=semantic:receipt",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=shipping:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=shipping:name",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=shipping:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=shipping:shipping",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=strict:body",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=strict:data",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=strict:plan",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=strict:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=text:invoice",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=text:receipt",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=the:starter",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=the:team",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=transfer:billing",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=transfer:name",
+      "weight": -1
+    },
+    {
+      "feature": "task_selector=transfer:save",
+      "weight": 1
+    },
+    {
+      "feature": "task_selector=transfer:shipping",
+      "weight": 1
+    }
+  ]
+}

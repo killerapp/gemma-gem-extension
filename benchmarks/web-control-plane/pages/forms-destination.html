@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Profile destination</title>
+  </head>
+  <body>
+    <main>
+      <label>
+        Name
+        <input id="dest-name" name="name">
+      </label>
+      <label>
+        Email
+        <input id="dest-email" name="email">
+      </label>
+      <label>
+        Role
+        <select id="dest-role" name="role">
+          <option value="">Choose role</option>
+          <option value="admin">Administrator</option>
+          <option value="reviewer">Reviewer</option>
+        </select>
+      </label>
+      <label>
+        <input id="dest-updates" name="updates" type="checkbox" value="subscribe">
+        Subscribe updates
+      </label>
+      <label>
+        <input id="dest-priority-low" name="priority" type="radio" value="low">
+        Priority Low
+      </label>
+      <label>
+        <input id="dest-priority-high" name="priority" type="radio" value="high">
+        Priority High
+      </label>
+      <label>
+        Notes
+        <textarea id="dest-notes" name="notes"></textarea>
+      </label>
+      <button id="save-profile">Save profile</button>
+      <p id="save-result"></p>
+    </main>
+    <script>
+      document.querySelector('#save-profile').addEventListener('click', () => {
+        const name = document.querySelector('#dest-name').value
+        const email = document.querySelector('#dest-email').value
+        document.querySelector('#save-result').textContent = `Saved ${name} <${email}>`
+      })
+    </script>
+  </body>
+</html>

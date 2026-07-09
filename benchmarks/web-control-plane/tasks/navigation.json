@@ -1,0 +1,903 @@
+[
+  {
+    "id": "tabs-contract",
+    "suite": "navigation",
+    "title": "List addressable browser fixture tabs",
+    "tool": "gemma_tabs",
+    "arguments": {},
+    "expect": {
+      "json": "array",
+      "minItems": 5,
+      "contains": ["Billing sandbox", "Pricing sandbox", "Profile source", "Profile destination", "Navigation sandbox"],
+      "actions": 0,
+      "bridgeListTabs": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "tabs-billing-navigation-contract",
+    "suite": "navigation",
+    "title": "List isolated billing navigation fixture tab",
+    "tool": "gemma_tabs",
+    "arguments": {},
+    "expect": {
+      "json": "array",
+      "minItems": 6,
+      "contains": ["Navigation sandbox", "navigation-billing.html"],
+      "actions": 0,
+      "bridgeListTabs": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "active-tab-contract",
+    "suite": "navigation",
+    "title": "Active tab metadata is available to caller agents",
+    "tool": "gemma_active_tab",
+    "arguments": {},
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "title": "Billing sandbox"
+      },
+      "jsonFieldIncludes": {
+        "url": "semantic-buttons.html"
+      },
+      "contains": ["Billing sandbox", "semantic-buttons.html"],
+      "activeTabId": 101,
+      "actions": 0,
+      "bridgeGetActiveTab": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "active-pricing-tab-contract",
+    "suite": "navigation",
+    "title": "Active tab metadata follows activated pricing fixture",
+    "tool": "gemma_active_tab",
+    "arguments": {},
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "title": "Pricing sandbox"
+      },
+      "jsonFieldIncludes": {
+        "url": "extraction.html"
+      },
+      "contains": ["Pricing sandbox", "extraction.html"],
+      "activateTabId": 102,
+      "activeTabId": 102,
+      "actions": 0,
+      "bridgeGetActiveTab": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "active-navigation-tab-contract",
+    "suite": "navigation",
+    "title": "Active tab metadata follows activated navigation fixture",
+    "tool": "gemma_active_tab",
+    "arguments": {},
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "title": "Navigation sandbox"
+      },
+      "jsonFieldIncludes": {
+        "url": "navigation.html"
+      },
+      "contains": ["Navigation sandbox", "navigation.html"],
+      "activateTabId": 105,
+      "activeTabId": 105,
+      "actions": 0,
+      "bridgeGetActiveTab": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "active-isolated-navigation-tab-contract",
+    "suite": "navigation",
+    "title": "Active tab metadata follows activated isolated navigation fixture",
+    "tool": "gemma_active_tab",
+    "arguments": {},
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "title": "Navigation sandbox"
+      },
+      "jsonFieldIncludes": {
+        "url": "navigation-billing.html"
+      },
+      "contains": ["Navigation sandbox", "navigation-billing.html"],
+      "activateTabId": 106,
+      "activeTabId": 106,
+      "actions": 0,
+      "bridgeGetActiveTab": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "active-source-tab-contract",
+    "suite": "navigation",
+    "title": "Active tab metadata follows activated source profile fixture",
+    "tool": "gemma_active_tab",
+    "arguments": {},
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "title": "Profile source"
+      },
+      "jsonFieldIncludes": {
+        "url": "forms-source.html"
+      },
+      "contains": ["Profile source", "forms-source.html"],
+      "activateTabId": 103,
+      "activeTabId": 103,
+      "actions": 0,
+      "bridgeGetActiveTab": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "active-destination-tab-contract",
+    "suite": "navigation",
+    "title": "Active tab metadata follows activated destination profile fixture",
+    "tool": "gemma_active_tab",
+    "arguments": {},
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "title": "Profile destination"
+      },
+      "jsonFieldIncludes": {
+        "url": "forms-destination.html"
+      },
+      "contains": ["Profile destination", "forms-destination.html"],
+      "activateTabId": 104,
+      "activeTabId": 104,
+      "actions": 0,
+      "bridgeGetActiveTab": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "active-billing-tab-restored-contract",
+    "suite": "navigation",
+    "title": "Active tab metadata returns to billing fixture after navigation activation",
+    "tool": "gemma_active_tab",
+    "arguments": {},
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "title": "Billing sandbox"
+      },
+      "jsonFieldIncludes": {
+        "url": "semantic-buttons.html"
+      },
+      "contains": ["Billing sandbox", "semantic-buttons.html"],
+      "activateTabId": 101,
+      "activeTabId": 101,
+      "actions": 0,
+      "bridgeGetActiveTab": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "model-ready-contract",
+    "suite": "navigation",
+    "title": "Model readiness returns bounded diagnostic status",
+    "tool": "gemma_model_ready",
+    "arguments": {
+      "timeoutMs": 1000
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "modelId": "gemma-4-e2b",
+        "status": "ready",
+        "progress": 100
+      },
+      "jsonFieldsByMode": {
+        "local-fake-extension": {
+          "phase": "fake-ready"
+        },
+        "real-chrome-extension-agent": {
+          "phase": "already-loaded"
+        }
+      },
+      "contains": ["ready", "gemma-4-e2b", "progress"],
+      "containsByMode": {
+        "local-fake-extension": ["fake-ready"],
+        "real-chrome-extension-agent": ["already-loaded"]
+      },
+      "actions": 0,
+      "bridgeEnsureModelReady": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "screenshot-contract",
+    "suite": "navigation",
+    "title": "Screenshot returns MCP image content",
+    "tool": "gemma_screenshot",
+    "arguments": {
+      "tabId": 101
+    },
+    "expect": {
+      "image": "image/png",
+      "actions": 1,
+      "actionTraceTools": ["take_screenshot"],
+      "actionTraceTextIncludes": ["take_screenshot"],
+      "bridgeExecuteTool": "take_screenshot",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "screenshot-pricing-tab-contract",
+    "suite": "navigation",
+    "title": "Screenshot returns MCP image content from pricing fixture",
+    "tool": "gemma_screenshot",
+    "arguments": {
+      "tabId": 102
+    },
+    "expect": {
+      "image": "image/png",
+      "actions": 1,
+      "actionTraceTools": ["take_screenshot"],
+      "actionTraceTextIncludes": ["take_screenshot"],
+      "bridgeExecuteTool": "take_screenshot",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "screenshot-source-tab-contract",
+    "suite": "navigation",
+    "title": "Screenshot returns MCP image content from source profile fixture",
+    "tool": "gemma_screenshot",
+    "arguments": {
+      "tabId": 103
+    },
+    "expect": {
+      "image": "image/png",
+      "actions": 1,
+      "actionTraceTools": ["take_screenshot"],
+      "actionTraceTextIncludes": ["take_screenshot"],
+      "bridgeExecuteTool": "take_screenshot",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "screenshot-destination-tab-contract",
+    "suite": "navigation",
+    "title": "Screenshot returns MCP image content from destination profile fixture",
+    "tool": "gemma_screenshot",
+    "arguments": {
+      "tabId": 104
+    },
+    "expect": {
+      "image": "image/png",
+      "actions": 1,
+      "actionTraceTools": ["take_screenshot"],
+      "actionTraceTextIncludes": ["take_screenshot"],
+      "bridgeExecuteTool": "take_screenshot",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "screenshot-navigation-tab-contract",
+    "suite": "navigation",
+    "title": "Screenshot returns MCP image content from navigation fixture",
+    "tool": "gemma_screenshot",
+    "arguments": {
+      "tabId": 105
+    },
+    "expect": {
+      "image": "image/png",
+      "actions": 1,
+      "actionTraceTools": ["take_screenshot"],
+      "actionTraceTextIncludes": ["take_screenshot"],
+      "bridgeExecuteTool": "take_screenshot",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "screenshot-isolated-navigation-tab-contract",
+    "suite": "navigation",
+    "title": "Screenshot returns MCP image content from isolated navigation fixture",
+    "tool": "gemma_screenshot",
+    "arguments": {
+      "tabId": 106
+    },
+    "expect": {
+      "image": "image/png",
+      "actions": 1,
+      "actionTraceTools": ["take_screenshot"],
+      "actionTraceTextIncludes": ["take_screenshot"],
+      "bridgeExecuteTool": "take_screenshot",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "stop-contract",
+    "suite": "navigation",
+    "title": "Stop active browser task returns a bounded acknowledgement",
+    "tool": "gemma_stop",
+    "arguments": {
+      "runId": "benchmark-stop"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "stopped": true,
+        "runId": "benchmark-stop"
+      },
+      "contains": ["stopped", "true", "benchmark-stop"],
+      "bridgeStop": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "navigation-page-brief-links",
+    "suite": "navigation",
+    "title": "Brief exposes navigation page links",
+    "tool": "gemma_page_brief",
+    "arguments": {
+      "tabId": 105,
+      "selector": "body",
+      "format": "text",
+      "maxChars": 4000
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "tab.title": "Navigation sandbox",
+        "selector": "body",
+        "format": "text",
+        "interactiveControls.0.selector": "#settings-link",
+        "interactiveControls.0.label": "Settings",
+        "interactiveControls.0.tag": "a",
+        "interactiveControls.1.selector": "#billing-link",
+        "interactiveControls.1.label": "Billing",
+        "interactiveControls.1.tag": "a"
+      },
+      "jsonFieldIncludes": {
+        "content": ["Settings", "Billing", "Scroll target reached"]
+      },
+      "jsonFieldMinItems": {
+        "interactiveControls": 2
+      },
+      "jsonFieldItemCount": {
+        "interactiveControls": 2
+      },
+      "actions": 2,
+      "actionTraceTools": ["read_page_content", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
+      "contains": ["Settings", "Billing", "\"selector\": \"#settings-link\"", "\"selector\": \"#billing-link\"", "\"tag\": \"a\""],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeListTabs": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "navigation-billing-page-brief-links",
+    "suite": "navigation",
+    "title": "Brief exposes isolated billing navigation page links",
+    "tool": "gemma_page_brief",
+    "arguments": {
+      "tabId": 106,
+      "selector": "body",
+      "format": "text",
+      "maxChars": 4000
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "tab.title": "Navigation sandbox",
+        "selector": "body",
+        "format": "text",
+        "interactiveControls.0.selector": "#settings-link",
+        "interactiveControls.0.label": "Settings",
+        "interactiveControls.0.tag": "a",
+        "interactiveControls.1.selector": "#billing-link",
+        "interactiveControls.1.label": "Billing",
+        "interactiveControls.1.tag": "a"
+      },
+      "jsonFieldIncludes": {
+        "tab.url": ["navigation-billing.html"],
+        "content": ["Settings", "Billing", "Scroll target reached"]
+      },
+      "jsonFieldMinItems": {
+        "interactiveControls": 2
+      },
+      "jsonFieldItemCount": {
+        "interactiveControls": 2
+      },
+      "actions": 2,
+      "actionTraceTools": ["read_page_content", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
+      "contains": ["navigation-billing.html", "Settings", "Billing", "\"selector\": \"#settings-link\"", "\"selector\": \"#billing-link\"", "\"tag\": \"a\""],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeListTabs": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-navigation-body-html",
+    "suite": "navigation",
+    "title": "Read navigation body HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 105,
+      "selector": "body",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["id=\"settings-link\"", "Settings", "id=\"billing-link\"", "Billing", "id=\"scroll-target\"", "Scroll target reached"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["download-receipt", "dest-name", "data-plan"]
+      },
+      "contains": ["settings-link", "Settings", "billing-link", "Billing", "scroll-target", "Scroll target reached"],
+      "notContains": ["download-receipt", "dest-name", "data-plan"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-navigation-body-text",
+    "suite": "navigation",
+    "title": "Read navigation body text",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 105,
+      "selector": "body",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Settings", "Billing", "Scroll target reached"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["settings-link", "billing-link", "scroll-target", "download-receipt", "dest-name", "data-plan"]
+      },
+      "contains": ["Settings", "Billing", "Scroll target reached"],
+      "notContains": ["settings-link", "billing-link", "scroll-target", "download-receipt", "dest-name", "data-plan"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-isolated-navigation-body-html",
+    "suite": "navigation",
+    "title": "Read isolated navigation body HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 106,
+      "selector": "body",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["id=\"settings-link\"", "Settings", "id=\"billing-link\"", "Billing", "id=\"scroll-target\"", "Scroll target reached"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["download-receipt", "dest-name", "data-plan"]
+      },
+      "contains": ["settings-link", "Settings", "billing-link", "Billing", "scroll-target", "Scroll target reached"],
+      "notContains": ["download-receipt", "dest-name", "data-plan"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-isolated-navigation-body-text",
+    "suite": "navigation",
+    "title": "Read isolated navigation body text",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 106,
+      "selector": "body",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Settings", "Billing", "Scroll target reached"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["settings-link", "billing-link", "scroll-target", "download-receipt", "dest-name", "data-plan"]
+      },
+      "contains": ["Settings", "Billing", "Scroll target reached"],
+      "notContains": ["settings-link", "billing-link", "scroll-target", "download-receipt", "dest-name", "data-plan"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "scroll-contract",
+    "suite": "navigation",
+    "title": "Scroll page changes viewport position",
+    "tool": "gemma_scroll",
+    "arguments": {
+      "tabId": 105,
+      "amount": 700
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "scrolled": "down 700px",
+        "scrollY": 700
+      },
+      "contains": ["down 700px", "scrollY"],
+      "scrollYAtLeast": 650,
+      "actions": 1,
+      "actionTraceTools": ["scroll_page"],
+      "actionTraceTextIncludes": ["direction=down amount=700"],
+      "bridgeExecuteTool": "scroll_page",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "scroll-up-contract",
+    "suite": "navigation",
+    "title": "Negative scroll moves viewport upward",
+    "tool": "gemma_scroll",
+    "arguments": {
+      "tabId": 105,
+      "amount": -300
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "scrolled": "up 300px",
+        "scrollY": 400
+      },
+      "contains": ["up 300px", "scrollY"],
+      "scrollYAtLeast": 350,
+      "scrollYAtMost": 450,
+      "actions": 1,
+      "actionTraceTools": ["scroll_page"],
+      "actionTraceTextIncludes": ["direction=up amount=300"],
+      "bridgeExecuteTool": "scroll_page",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-scroll-target-after-scroll",
+    "suite": "navigation",
+    "title": "Read scroll target by exact selector after scrolling",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 105,
+      "selector": "#scroll-target",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Scroll target reached"]
+      },
+      "contains": ["Scroll target reached"],
+      "notContains": ["Settings", "Billing"],
+      "selector": "#scroll-target",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#scroll-target format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#scroll-target",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-isolated-scroll-target-before-click",
+    "suite": "navigation",
+    "title": "Read isolated scroll target by exact selector before navigation click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 106,
+      "selector": "#scroll-target",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Scroll target reached"]
+      },
+      "contains": ["Scroll target reached"],
+      "notContains": ["Settings", "Billing"],
+      "selector": "#scroll-target",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#scroll-target format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#scroll-target",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-billing-link-before-click",
+    "suite": "navigation",
+    "title": "Read billing link by exact selector before navigation click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 105,
+      "selector": "#billing-link",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Billing"]
+      },
+      "contains": ["Billing"],
+      "notContains": ["Settings", "Scroll target reached"],
+      "selector": "#billing-link",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#billing-link format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#billing-link",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-billing-link-before-click-html",
+    "suite": "navigation",
+    "title": "Read billing link HTML by exact selector before navigation click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 105,
+      "selector": "#billing-link",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Billing"]
+      },
+      "contains": ["Billing"],
+      "notContains": ["Settings", "Scroll target reached"],
+      "selector": "#billing-link",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#billing-link format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#billing-link",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-settings-link-before-click",
+    "suite": "navigation",
+    "title": "Read settings link by exact selector before navigation click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 105,
+      "selector": "#settings-link",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Settings"]
+      },
+      "contains": ["Settings"],
+      "notContains": ["Billing", "Scroll target reached"],
+      "selector": "#settings-link",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#settings-link format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#settings-link",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-settings-link-before-click-html",
+    "suite": "navigation",
+    "title": "Read settings link HTML by exact selector before navigation click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 105,
+      "selector": "#settings-link",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Settings"]
+      },
+      "contains": ["Settings"],
+      "notContains": ["Billing", "Scroll target reached"],
+      "selector": "#settings-link",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#settings-link format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#settings-link",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-isolated-billing-link-before-click",
+    "suite": "navigation",
+    "title": "Read isolated billing link by exact selector before navigation click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 106,
+      "selector": "#billing-link",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Billing"]
+      },
+      "contains": ["Billing"],
+      "notContains": ["Settings", "Scroll target reached"],
+      "selector": "#billing-link",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#billing-link format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#billing-link",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-isolated-billing-link-before-click-html",
+    "suite": "navigation",
+    "title": "Read isolated billing link HTML by exact selector before navigation click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 106,
+      "selector": "#billing-link",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Billing"]
+      },
+      "contains": ["Billing"],
+      "notContains": ["Settings", "Scroll target reached"],
+      "selector": "#billing-link",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#billing-link format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#billing-link",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-isolated-settings-link-before-click",
+    "suite": "navigation",
+    "title": "Read isolated settings link by exact selector before navigation click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 106,
+      "selector": "#settings-link",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Settings"]
+      },
+      "contains": ["Settings"],
+      "notContains": ["Billing", "Scroll target reached"],
+      "selector": "#settings-link",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#settings-link format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#settings-link",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-isolated-settings-link-before-click-html",
+    "suite": "navigation",
+    "title": "Read isolated settings link HTML by exact selector before navigation click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 106,
+      "selector": "#settings-link",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Settings"]
+      },
+      "contains": ["Settings"],
+      "notContains": ["Billing", "Scroll target reached"],
+      "selector": "#settings-link",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#settings-link format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#settings-link",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "click-settings-link",
+    "suite": "navigation",
+    "title": "Click navigation link changes page URL",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 105,
+      "selector": "#settings-link"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "clicked": "a: Settings",
+        "selector": "#settings-link"
+      },
+      "contains": ["a: Settings", "#settings-link"],
+      "clicked": "#settings-link",
+      "urlPath": "/settings",
+      "actions": 1,
+      "actionTraceTools": ["click_element"],
+      "actionTraceTextIncludes": ["selector=#settings-link"],
+      "bridgeExecuteTool": "click_element",
+      "bridgeExecuteSelector": "#settings-link",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "click-billing-link",
+    "suite": "navigation",
+    "title": "Click billing navigation link changes page URL",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 106,
+      "selector": "#billing-link"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "clicked": "a: Billing",
+        "selector": "#billing-link"
+      },
+      "contains": ["a: Billing", "#billing-link"],
+      "clicked": "#billing-link",
+      "urlPath": "/billing",
+      "actions": 1,
+      "actionTraceTools": ["click_element"],
+      "actionTraceTextIncludes": ["selector=#billing-link"],
+      "bridgeExecuteTool": "click_element",
+      "bridgeExecuteSelector": "#billing-link",
+      "bridgeRunAgent": false
+    }
+  }
+]

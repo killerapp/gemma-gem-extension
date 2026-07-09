@@ -1,0 +1,1007 @@
+commit	suite	tasks	success_rate	strict_success_rate	json_valid_rate	selector_hit_rate	actions_per_success	p50_s	p95_s	timeout_rate	model_load_s	status	description
+e75340b	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	1.57	0.005	0.008	0.0000	0.000	baseline	local-fake-extension benchmark run
+e75340b	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.010	0.082	0.0000	0.000	baseline	real-chrome-extension-smoke benchmark run
+e75340b	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	1.57	0.005	0.009	0.0000	0.000	baseline	local-fake-extension benchmark run
+e75340b	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.007	0.157	0.0000	0.000	baseline	real-chrome-extension-smoke benchmark run
+e75340b	real-chrome-extension-agent	7	0.5714	0.5714	0.0000	1.0000	0.00	0.011	0.147	0.0000	0.000	baseline	real-chrome-extension-agent benchmark run
+e75340b	real-chrome-extension-agent	7	0.5714	0.5714	0.0000	1.0000	0.00	0.010	0.146	0.0000	0.000	keep	add failed-task output previews
+e75340b	real-chrome-extension-agent	7	0.5714	0.5714	1.0000	1.0000	0.00	0.148	60.016	0.4286	0.000	keep	allow Hugging Face model fetch in extension CSP
+e75340b	real-chrome-extension-agent	7	0.5714	0.5714	0.0000	1.0000	0.00	0.061	141.742	0.0000	0.000	keep	extend agent MCP timeout for cold model load
+e75340b	real-chrome-extension-agent	7	0.7143	0.7143	0.5000	1.0000	0.00	0.044	139.947	0.0000	0.000	keep	include page snapshot in model-driven MCP prompts
+e75340b	real-chrome-extension-agent	7	0.7143	0.7143	0.5000	1.0000	0.00	0.054	168.490	0.0000	0.000	keep	include DOM HTML in model-driven prompts
+e75340b	real-chrome-extension-agent	7	0.8571	0.8571	1.0000	1.0000	0.00	0.047	140.597	0.0000	0.000	keep	normalize fenced JSON from observe and extract
+e75340b	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.037	167.894	0.0000	0.000	keep	include interactive controls and selector reporting in agent prompt
+e75340b	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.007	0.011	0.0000	0.000	baseline	local-fake-extension benchmark run
+e75340b	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.007	0.146	0.0000	0.000	baseline	real-chrome-extension-smoke benchmark run
+e75340b	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.044	192.323	0.0000	0.000	baseline	real-chrome-extension-agent benchmark run
+e75340b	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.010	0.0000	0.000	baseline	local-fake-extension benchmark run
+e75340b	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.008	0.164	0.0000	0.000	baseline	real-chrome-extension-smoke benchmark run
+e75340b	real-chrome-extension-agent	7	0.8571	0.8571	0.5000	1.0000	0.00	0.043	163.144	0.0000	0.000	discard	split cold and warm metrics exposed transient observe runtime failure
+e75340b	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.006	0.011	0.0000	0.000	baseline	local-fake-extension benchmark run
+e75340b	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.007	0.155	0.0000	0.000	baseline	real-chrome-extension-smoke benchmark run
+e75340b	real-chrome-extension-agent	7	0.8571	0.8571	0.5000	1.0000	0.00	0.053	164.185	0.0000	0.000	discard	retry alone did not recover transient observe runtime failure
+e75340b	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.006	0.009	0.0000	0.000	baseline	local-fake-extension benchmark run
+e75340b	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.008	0.169	0.0000	0.000	baseline	real-chrome-extension-smoke benchmark run
+e75340b	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.030	168.162	0.0000	0.000	keep	deterministic observe controls plus split latency metrics
+e75340b	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.004	0.009	0.0000	0.000	baseline	local-fake-extension benchmark run
+e75340b	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.008	0.186	0.0000	0.000	baseline	real-chrome-extension-smoke benchmark run
+e75340b	real-chrome-extension-agent	7	0.8571	0.8571	1.0000	1.0000	0.00	0.023	300.014	0.1429	0.000	discard	deterministic pricing extraction exposed unprewarmed agent timeout
+e75340b	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.006	0.011	0.0000	0.000	baseline	local-fake-extension benchmark run
+e75340b	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.008	0.145	0.0000	0.000	baseline	real-chrome-extension-smoke benchmark run
+e75340b	real-chrome-extension-agent	7	0.8571	0.8571	1.0000	1.0000	0.00	0.016	16.730	0.0000	0.000	discard	deterministic pricing extraction with measured model prewarm
+e75340b	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.009	0.0000	0.000	baseline	local-fake-extension benchmark run
+e75340b	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.006	0.107	0.0000	0.000	baseline	real-chrome-extension-smoke benchmark run
+e75340b	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.024	144.475	0.0000	0.000	keep	review run verified program loop
+75bf82d	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.006	0.010	0.0000	0.000	baseline	local-fake-extension benchmark run
+75bf82d	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.010	0.100	0.0000	0.000	baseline	real-chrome-extension-smoke benchmark run
+75bf82d	real-chrome-extension-agent	7	0.7143	0.7143	1.0000	1.0000	0.00	0.058	300.008	0.2857	0.000	discard	post-pr program run
+75bf82d	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.010	0.0000	0.000	baseline	local-fake-extension benchmark run
+75bf82d	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.007	0.123	0.0000	0.000	baseline	real-chrome-extension-smoke benchmark run
+75bf82d	real-chrome-extension-agent	0	0.0000	0.0000	0.0000	0.0000	0.00	0.000	0.000	1.0000	0.000	timeout	load-only model warmup timed out before tasks
+75bf82d	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.009	0.0000	0.000	baseline	local-fake-extension benchmark run
+c22ad83	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.006	0.010	0.0000	0.000	baseline	local-fake-extension benchmark run
+c22ad83	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.015	0.153	0.0000	0.000	baseline	real-chrome-extension-smoke benchmark run
+c22ad83	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.047	250.559	0.0000	0.000	keep	capture model status diagnostics on task failure
+5608fe4	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.006	0.011	0.0000	0.000	baseline	local-fake-extension benchmark run
+5608fe4	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.007	0.148	0.0000	0.000	baseline	real-chrome-extension-smoke benchmark run
+5608fe4	real-chrome-extension-agent	7	0.8571	0.8571	1.0000	1.0000	0.00	0.029	300.009	0.1429	0.000	discard	add model load phase diagnostics
+5608fe4	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.006	0.010	0.0000	0.000	baseline	local-fake-extension benchmark run
+5608fe4	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.010	0.165	0.0000	0.000	baseline	real-chrome-extension-smoke benchmark run
+5608fe4	real-chrome-extension-agent	7	0.4286	0.4286	0.0000	1.0000	0.00	0.033	180.018	0.1429	0.000	discard	persistent benchmark profile and model load diagnostics
+5608fe4	real-chrome-extension-agent	7	0.7143	0.7143	0.5000	1.0000	0.00	0.036	3.366	0.0000	0.000	discard	persistent benchmark profile rerun after cache population
+5608fe4	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.010	0.0000	0.000	baseline	local-fake-extension benchmark run
+5608fe4	real-chrome-extension-agent	7	0.7143	0.7143	0.5000	1.0000	0.00	0.022	57.507	0.0000	0.000	discard	persistent profile default 180s model task cap
+3d8d760	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.006	0.012	0.0000	0.000	baseline	local-fake-extension benchmark run
+3d8d760	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.008	0.162	0.0000	0.000	baseline	real-chrome-extension-smoke benchmark run
+3d8d760	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.038	19.474	0.0000	0.000	keep	cft 149.0.7827.54 runtime comparison
+7fe7af5	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.007	0.012	0.0000	0.000	baseline	local-fake-extension benchmark run
+7fe7af5	real-chrome-extension-smoke	4	1.0000	1.0000	1.0000	1.0000	0.00	0.015	0.158	0.0000	0.000	baseline	real-chrome-extension-smoke benchmark run
+7fe7af5	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.045	17.949	0.0000	6.662	keep	model readiness preflight timing
+7fe7af5	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.057	20.008	0.0000	1.106	keep	model readiness preflight timing rerun
+146c5a0	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.010	0.0000	0.000	baseline	local-fake-extension benchmark run
+146c5a0	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.025	25.892	0.0000	0.291	keep	readiness debug command validation
+af549c5	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	0.00	0.034	23.509	0.0000	0.001	baseline	real-chrome-extension-agent benchmark run
+6b90c1c	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	2.43	0.035	17.894	0.0000	1.084	baseline	real-chrome-extension-agent benchmark run
+fa86e6b	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	2.43	0.023	20.885	0.0000	0.018	baseline	real-chrome-extension-agent benchmark run
+5c1b693	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.010	0.0000	0.000	baseline	local-fake-extension benchmark run
+5c1b693	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.005	0.008	0.0000	0.000	baseline	local-fake-extension benchmark run
+e10d1d7	real-chrome-extension-agent	7	1.0000	1.0000	1.0000	1.0000	2.43	0.026	20.726	0.0000	0.577	baseline	real-chrome-extension-agent benchmark run
+ebaf6f0	local-fake-extension	7	1.0000	1.0000	1.0000	1.0000	2.43	0.006	0.009	0.0000	0.000	keep	direct observed-action act path
+c0b024b	local-fake-extension	8	1.0000	1.0000	1.0000	1.0000	2.25	0.005	0.010	0.0000	0.000	keep	benchmarked observed-action act contract
+c0b024b	real-chrome-extension-smoke	5	0.8000	0.8000	1.0000	1.0000	2.00	0.010	0.061	0.0000	0.000	discard	real click activity matcher missed compact selector
+c0b024b	real-chrome-extension-smoke	5	1.0000	1.0000	1.0000	1.0000	1.80	0.012	0.064	0.0000	0.000	keep	real smoke observed-action act contract
+c0b024b	local-fake-extension	8	1.0000	1.0000	1.0000	1.0000	2.25	0.004	0.009	0.0000	0.000	keep	benchmarked observed-action act contract
+c0875d3	local-fake-extension	8	1.0000	1.0000	1.0000	1.0000	2.25	0.004	0.010	0.0000	0.000	keep	schema-validated extract retry
+5d587a2	local-fake-extension	9	1.0000	1.0000	1.0000	1.0000	2.00	0.006	0.010	0.0000	0.000	keep	multi-action act rejection contract
+5d587a2	real-chrome-extension-smoke	6	1.0000	1.0000	1.0000	1.0000	1.50	0.008	0.066	0.0000	0.000	keep	real smoke multi-action act rejection
+31a7cce	local-fake-extension	10	1.0000	1.0000	1.0000	1.0000	2.10	0.004	0.010	0.0000	0.000	keep	selector-scoped extract contract
+31a7cce	real-chrome-extension-smoke	6	1.0000	1.0000	1.0000	1.0000	1.50	0.008	0.146	0.0000	0.000	keep	real smoke after scoped extract contract
+31a7cce	local-fake-extension	10	1.0000	1.0000	1.0000	1.0000	2.10	0.005	0.009	0.0000	0.000	keep	final local scoped extract artifacts
+2bccaa8	local-fake-extension	10	1.0000	1.0000	1.0000	1.0000	2.10	0.005	0.010	0.0000	0.000	keep	observed-act paired trace prep
+2bccaa8	local-fake-extension	10	1.0000	1.0000	1.0000	1.0000	2.10	0.005	0.010	0.0000	0.000	keep	observed-act paired trace rerun
+2bccaa8	real-chrome-extension-smoke	6	1.0000	1.0000	1.0000	1.0000	1.50	0.010	0.120	0.0000	0.000	keep	real smoke observed-act paired traces
+2bccaa8	local-fake-extension	10	1.0000	1.0000	1.0000	1.0000	2.10	0.005	0.011	0.0000	0.000	keep	final observed-act paired artifacts
+f6a1373	local-fake-extension	11	1.0000	1.0000	1.0000	1.0000	2.18	0.005	0.014	0.0000	0.000	keep	selector recovery local prep
+f6a1373	local-fake-extension	11	1.0000	1.0000	1.0000	1.0000	2.09	0.005	0.012	0.0000	0.000	keep	selector recovery local benchmark
+f6a1373	local-fake-extension	11	1.0000	1.0000	1.0000	1.0000	2.09	0.005	0.014	0.0000	0.000	keep	selector recovery trace prep
+f6a1373	real-chrome-extension-smoke	7	1.0000	1.0000	1.0000	1.0000	1.71	0.010	0.151	0.0000	0.000	keep	real smoke selector recovery
+f6a1373	local-fake-extension	11	1.0000	1.0000	1.0000	1.0000	2.09	0.005	0.014	0.0000	0.000	keep	final selector recovery artifacts
+8d89baf	local-fake-extension	12	1.0000	1.0000	1.0000	1.0000	2.17	0.005	0.012	0.0000	0.000	keep	type selector recovery local benchmark
+8d89baf	real-chrome-extension-smoke	8	1.0000	1.0000	1.0000	1.0000	1.88	0.010	0.134	0.0000	0.000	keep	real smoke type selector recovery
+8d89baf	local-fake-extension	12	1.0000	1.0000	1.0000	1.0000	2.17	0.006	0.012	0.0000	0.000	keep	final type selector recovery artifacts
+a4636af	local-fake-extension	13	1.0000	1.0000	1.0000	1.0000	2.23	0.006	0.011	0.0000	0.000	keep	page brief controls local benchmark
+a4636af	real-chrome-extension-smoke	9	1.0000	1.0000	1.0000	1.0000	2.00	0.011	0.128	0.0000	0.000	keep	real smoke page brief controls
+a4636af	local-fake-extension	13	1.0000	1.0000	1.0000	1.0000	2.23	0.005	0.010	0.0000	0.000	keep	final page brief controls artifacts
+3e7d549	local-fake-extension	14	1.0000	1.0000	1.0000	1.0000	2.14	0.005	0.010	0.0000	0.000	keep	stop contract local benchmark
+3e7d549	real-chrome-extension-smoke	10	1.0000	1.0000	1.0000	1.0000	1.80	0.011	0.120	0.0000	0.000	keep	real smoke stop contract
+3e7d549	local-fake-extension	14	1.0000	1.0000	1.0000	1.0000	2.14	0.006	0.014	0.0000	0.000	keep	final stop contract artifacts
+ece5367	local-fake-extension	15	1.0000	1.0000	1.0000	1.0000	2.07	0.005	0.013	0.0000	0.000	keep	select option local benchmark
+ece5367	real-chrome-extension-smoke	11	1.0000	1.0000	1.0000	1.0000	1.73	0.010	0.176	0.0000	0.000	keep	real smoke select option
+ece5367	local-fake-extension	15	1.0000	1.0000	1.0000	1.0000	2.07	0.005	0.011	0.0000	0.000	keep	final select option artifacts
+ac71617	local-fake-extension	16	1.0000	1.0000	1.0000	1.0000	2.00	0.004	0.011	0.0000	0.000	keep	scoped read local benchmark
+ac71617	real-chrome-extension-smoke	12	1.0000	1.0000	1.0000	1.0000	1.67	0.008	0.066	0.0000	0.000	keep	real smoke scoped read
+ac71617	local-fake-extension	16	1.0000	1.0000	1.0000	1.0000	2.00	0.004	0.010	0.0000	0.000	keep	final scoped read artifacts
+d8b1acb	local-fake-extension	17	0.9412	0.9412	1.0000	1.0000	2.00	0.005	0.010	0.0000	0.000	discard	scroll evaluator draft bug
+d8b1acb	local-fake-extension	17	1.0000	1.0000	1.0000	1.0000	1.94	0.004	0.011	0.0000	0.000	keep	scroll contract local benchmark
+d8b1acb	real-chrome-extension-smoke	13	1.0000	1.0000	1.0000	1.0000	1.62	0.008	0.035	0.0000	0.000	keep	real smoke scroll contract
+d8b1acb	local-fake-extension	17	1.0000	1.0000	1.0000	1.0000	1.94	0.004	0.010	0.0000	0.000	keep	final scroll contract artifacts
+32d8f90	local-fake-extension	18	1.0000	1.0000	1.0000	1.0000	1.83	0.004	0.010	0.0000	0.000	keep	tabs contract local benchmark
+32d8f90	real-chrome-extension-smoke	14	1.0000	1.0000	1.0000	1.0000	1.50	0.009	0.103	0.0000	0.000	keep	real smoke tabs contract
+32d8f90	local-fake-extension	18	1.0000	1.0000	1.0000	1.0000	1.83	0.005	0.011	0.0000	0.000	keep	final tabs contract artifacts
+7949cb4	local-fake-extension	19	0.9474	0.9474	1.0000	1.0000	1.83	0.004	0.012	0.0000	0.000	discard	rank metadata label draft
+7949cb4	local-fake-extension	19	1.0000	1.0000	1.0000	1.0000	1.74	0.005	0.013	0.0000	0.000	keep	rank actions local benchmark
+7949cb4	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.107	0.0000	0.000	keep	real smoke rank actions
+7949cb4	local-fake-extension	19	1.0000	1.0000	1.0000	1.0000	1.74	0.005	0.011	0.0000	0.000	keep	final rank actions artifacts
+6c4e65a	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.009	0.0000	0.000	keep	model ready local benchmark
+6c4e65a	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.010	0.081	0.0000	0.000	keep	real smoke model ready excluded
+6c4e65a	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final model ready artifacts
+a30c294	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	active screenshot local benchmark
+a30c294	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.009	0.094	0.0000	0.000	keep	real smoke active screenshot
+a30c294	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final active screenshot artifacts
+690c98f	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.005	0.010	0.0000	0.000	keep	transfer bridge local benchmark
+690c98f	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.009	0.104	0.0000	0.000	keep	real smoke transfer bridge
+690c98f	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final transfer bridge artifacts
+aa2f894	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	semantic context local benchmark
+aa2f894	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.009	0.149	0.0000	0.000	keep	real smoke semantic context
+aa2f894	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final semantic context artifacts
+32b7ef0	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	extraction context local benchmark
+32b7ef0	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.152	0.0000	0.000	keep	real smoke extraction context
+32b7ef0	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final extraction context artifacts
+436c40e	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	agent context local benchmark
+436c40e	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.011	0.078	0.0000	0.000	keep	real smoke agent context
+436c40e	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.011	0.0000	0.000	keep	final agent context artifacts
+cac86e6	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	selector recovery local benchmark
+cac86e6	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.116	0.0000	0.000	keep	real smoke selector recovery
+cac86e6	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.011	0.0000	0.000	keep	final selector recovery artifacts
+6ee2818	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	form brief json local benchmark
+6ee2818	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.009	0.024	0.0000	0.000	keep	real smoke form brief json
+6ee2818	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final form brief json artifacts
+f725976	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	deterministic json local benchmark
+f725976	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.009	0.076	0.0000	0.000	keep	real smoke deterministic json
+f725976	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final deterministic json artifacts
+d986494	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	discard	volatile exact fields local only
+d986494	real-chrome-extension-smoke	15	0.8000	0.8000	1.0000	1.0000	1.17	0.007	0.070	0.0000	0.000	discard	volatile exact fields real failure
+d986494	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.005	0.011	0.0000	0.000	keep	stable json fields local benchmark
+d986494	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.158	0.0000	0.000	keep	real smoke stable json fields
+d986494	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.009	0.0000	0.000	keep	final stable json field artifacts
+b70acbd	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.011	0.0000	0.000	keep	page brief fields local benchmark
+b70acbd	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.072	0.0000	0.000	keep	real smoke page brief fields
+b70acbd	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final page brief field artifacts
+48774af	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	model json fields local benchmark
+48774af	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.007	0.074	0.0000	0.000	keep	real smoke model json fields
+48774af	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.005	0.010	0.0000	0.000	keep	final model json field artifacts
+9a0a522	real-chrome-extension-agent	20	0.9500	0.9500	1.0000	1.0000	1.74	0.008	7.212	0.0000	0.630	discard	real agent fake phase exact field
+9a0a522	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	mode fields local benchmark
+9a0a522	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.010	6.431	0.0000	0.001	keep	mode fields real agent
+9a0a522	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final mode field artifacts
+cf1a004	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	field includes local baseline
+cf1a004	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	field includes local benchmark
+cf1a004	real-chrome-extension-smoke	15	0.9333	0.9333	1.0000	1.0000	1.50	0.008	0.101	0.0000	0.000	discard	active field real missing
+cf1a004	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.108	0.0000	0.000	keep	field includes real smoke
+cf1a004	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.009	6.507	0.0000	0.001	keep	field includes real agent
+cf1a004	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final field include artifacts
+7099c7b	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	array length local baseline
+7099c7b	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	array length local benchmark
+7099c7b	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.107	0.0000	0.000	keep	array length real smoke
+7099c7b	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.480	0.0000	0.001	keep	array length real agent
+7099c7b	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final array length artifacts
+005d9f0	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	exact count local baseline
+005d9f0	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	exact count local benchmark
+005d9f0	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.030	0.0000	0.000	keep	exact count real smoke
+005d9f0	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.530	0.0000	0.001	keep	exact count real agent
+005d9f0	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final exact count artifacts
+a9fa4fa	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.009	0.0000	0.000	baseline	action count local baseline
+a9fa4fa	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.009	0.0000	0.000	keep	action count local benchmark
+a9fa4fa	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.142	0.0000	0.000	keep	action count real smoke
+a9fa4fa	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.007	6.501	0.0000	0.001	keep	action count real agent
+a9fa4fa	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final action count artifacts
+0095b48	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	zero action local baseline
+0095b48	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.009	0.0000	0.000	keep	zero action local benchmark
+0095b48	real-chrome-extension-smoke	15	0.9333	0.9333	1.0000	1.0000	1.50	0.009	0.069	0.0000	0.000	discard	stop action real mismatch
+0095b48	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.009	0.0000	0.000	keep	narrowed zero action local benchmark
+0095b48	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.069	0.0000	0.000	keep	zero action real smoke
+0095b48	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.457	0.0000	0.001	keep	zero action real agent
+0095b48	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final zero action artifacts
+6038b64	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	root count local baseline
+6038b64	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	root count local benchmark
+6038b64	real-chrome-extension-smoke	15	0.9333	0.9333	1.0000	1.0000	1.50	0.008	0.063	0.0000	0.000	discard	tabs root count real extra tabs
+6038b64	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	narrowed root count local benchmark
+6038b64	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.028	0.0000	0.000	keep	root count real smoke
+6038b64	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.009	6.539	0.0000	0.001	keep	root count real agent
+6038b64	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final root count artifacts
+ed98fe8	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.547	0.0000	0.001	baseline	model action real-agent baseline
+ed98fe8	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	model action local benchmark
+ed98fe8	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.007	0.031	0.0000	0.000	keep	model action real smoke
+ed98fe8	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.007	6.573	0.0000	0.001	keep	model action real agent
+ed98fe8	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final model action artifacts
+091e66e	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	trace tools local baseline
+091e66e	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.009	6.520	0.0000	0.001	baseline	trace tools real-agent baseline
+091e66e	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	trace tools local benchmark
+091e66e	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.154	0.0000	0.000	keep	trace tools real smoke
+091e66e	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.529	0.0000	0.001	keep	trace tools real agent
+091e66e	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final trace tools artifacts
+0077184	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.067	0.0000	0.000	baseline	deterministic trace tools real-smoke baseline
+0077184	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	deterministic trace tools local benchmark
+0077184	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.009	0.146	0.0000	0.000	keep	deterministic trace tools real smoke
+0077184	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.009	6.466	0.0000	0.001	keep	deterministic trace tools real agent
+0077184	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final deterministic trace tools artifacts
+363750d	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.484	0.0000	0.001	baseline	trace text real-agent baseline
+363750d	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	trace text local benchmark
+363750d	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.009	0.148	0.0000	0.000	keep	trace text real smoke
+363750d	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.432	0.0000	0.001	keep	trace text real agent
+363750d	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final trace text artifacts
+1651dad	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.073	0.0000	0.000	baseline	deterministic trace text real-smoke baseline
+1651dad	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	deterministic trace text local benchmark
+1651dad	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.026	0.0000	0.000	keep	deterministic trace text real smoke
+1651dad	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.473	0.0000	0.002	keep	deterministic trace text real agent
+1651dad	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final deterministic trace text artifacts
+e393b2d	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	scoped target trace data local benchmark
+e393b2d	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.065	0.0000	0.000	keep	scoped target trace data real smoke
+e393b2d	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.640	0.0000	0.001	keep	scoped target trace data real agent
+e393b2d	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	final scoped target trace data artifacts
+e6c0928	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	target selector schema gates local benchmark
+a93c2ee	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.011	0.0000	0.000	keep	target selector summary reporting local benchmark
+634f639	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	target selector match summary reporting local benchmark
+02d3cf3	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	target selector match gates local benchmark
+8114fa3	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.005	0.010	0.0000	0.000	keep	target selector bucket gates local benchmark
+6bdc731	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	target selector preference diversity gates local benchmark
+2284791	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	target selector trace policy gates local benchmark
+c173380	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	target selector reranker baseline gates local benchmark
+41b2761	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	target selector reranker weight gates local benchmark
+0c4d2e9	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	reranker weight coverage gates local benchmark
+c3d814f	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	target selector preference policy gates local benchmark
+3e686fb	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.011	0.0000	0.000	keep	preference policy coverage gates local benchmark
+06459d0	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	trace policy coverage gates local benchmark
+4d767b0	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	trace policy bucket gates local benchmark
+a9ec084	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	trace policy target margin gate local benchmark
+e03b5bc	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.119	0.0000	0.000	keep	current branch real smoke refresh
+fc8f97a	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.463	0.0000	0.002	keep	current branch real agent refresh
+adb148e	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.032	0.0000	0.000	baseline	direct real smoke before alias scripts
+adb148e	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.116	0.0000	0.000	keep	benchmark web real alias smoke
+adb148e	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.534	0.0000	0.001	keep	benchmark web real agent alias
+737b09c	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.067	0.0000	0.000	baseline	report footer alias baseline real smoke
+737b09c	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.151	0.0000	0.000	keep	report footer real agent alias real smoke
+7c6dbc1	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.009	0.146	0.0000	0.000	baseline	report header command baseline real smoke
+7c6dbc1	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.009	0.142	0.0000	0.000	keep	report header real command real smoke
+ef57de4	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.431	0.0000	0.001	baseline	report mode description baseline real agent
+ef57de4	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.415	0.0000	0.001	keep	report mode description real agent
+8fcc210	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	report recent ledger baseline local
+8fcc210	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	report recent ledger local
+2cb0bbc	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	report best by suite baseline local
+2cb0bbc	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	report best by suite local
+9f8fef6	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	report recent decisions baseline local
+9f8fef6	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.009	0.0000	0.000	keep	report recent decisions local
+f719e1c	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	report followups baseline local
+f719e1c	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	keep	report followups local
+ee50d80	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	report artifacts baseline local
+ee50d80	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.005	0.010	0.0000	0.000	keep	report artifacts local
+aff1d45	real-chrome-extension-smoke	15	1.0000	1.0000	1.0000	1.0000	1.40	0.008	0.072	0.0000	0.000	keep	current real smoke refresh after report artifacts
+c51f5b5	real-chrome-extension-agent	20	1.0000	1.0000	1.0000	1.0000	1.65	0.008	6.560	0.0000	0.002	keep	current real agent refresh after real smoke
+32932d7	local-fake-extension	20	1.0000	1.0000	1.0000	1.0000	1.65	0.004	0.010	0.0000	0.000	baseline	source read task baseline local
+32932d7	local-fake-extension	21	1.0000	1.0000	1.0000	1.0000	1.62	0.005	0.010	0.0000	0.000	keep	source read task local
+32932d7	real-chrome-extension-smoke	16	0.9375	0.9375	1.0000	0.8571	1.40	0.008	0.107	0.0000	0.000	discard	source read task real smoke
+32932d7	local-fake-extension	21	1.0000	1.0000	1.0000	1.0000	1.62	0.004	0.009	0.0000	0.000	keep	source read task tab-aware local
+32932d7	real-chrome-extension-smoke	16	1.0000	1.0000	1.0000	1.0000	1.38	0.007	0.025	0.0000	0.000	keep	source read task real smoke tab-aware selector
+32932d7	real-chrome-extension-agent	21	1.0000	1.0000	1.0000	1.0000	1.62	0.008	6.684	0.0000	0.001	keep	source read task real agent tab-aware selector
+b00165a	local-fake-extension	21	1.0000	1.0000	1.0000	1.0000	1.62	0.004	0.010	0.0000	0.000	baseline	source email read task baseline local
+b00165a	local-fake-extension	22	1.0000	1.0000	1.0000	1.0000	1.59	0.004	0.010	0.0000	0.000	keep	source email read task local
+b00165a	real-chrome-extension-smoke	17	1.0000	1.0000	1.0000	1.0000	1.35	0.008	0.087	0.0000	0.000	keep	source email read task real smoke
+b00165a	real-chrome-extension-agent	22	1.0000	1.0000	1.0000	1.0000	1.59	0.008	6.523	0.0000	0.001	keep	source email read task real agent
+d61031f	local-fake-extension	22	1.0000	1.0000	1.0000	1.0000	1.59	0.004	0.011	0.0000	0.000	baseline	destination select read baseline local
+d61031f	local-fake-extension	23	1.0000	1.0000	1.0000	1.0000	1.57	0.004	0.009	0.0000	0.000	keep	destination select read local
+d61031f	real-chrome-extension-smoke	18	1.0000	1.0000	1.0000	1.0000	1.33	0.007	0.142	0.0000	0.000	keep	destination select read real smoke
+d61031f	real-chrome-extension-agent	23	1.0000	1.0000	1.0000	1.0000	1.57	0.008	6.639	0.0000	0.001	keep	destination select read real agent
+6ddbef3	local-fake-extension	23	1.0000	1.0000	1.0000	1.0000	1.57	0.004	0.010	0.0000	0.000	baseline	scoped html read baseline local
+6ddbef3	local-fake-extension	24	0.9583	0.9583	1.0000	1.0000	1.57	0.004	0.009	0.0000	0.000	discard	scoped html read local
+6ddbef3	local-fake-extension	24	1.0000	1.0000	1.0000	1.0000	1.54	0.004	0.010	0.0000	0.000	keep	scoped html read local escaped text
+6ddbef3	real-chrome-extension-smoke	19	1.0000	1.0000	1.0000	1.0000	1.32	0.008	0.092	0.0000	0.000	keep	scoped html read real smoke
+6ddbef3	real-chrome-extension-agent	24	1.0000	1.0000	1.0000	1.0000	1.54	0.007	7.403	0.0000	0.001	keep	scoped html read real agent
+a1e798c	local-fake-extension	24	1.0000	1.0000	1.0000	1.0000	1.54	0.004	0.010	0.0000	0.000	baseline	negative scroll baseline local
+a1e798c	local-fake-extension	25	1.0000	1.0000	1.0000	1.0000	1.52	0.004	0.010	0.0000	0.000	keep	negative scroll local
+a1e798c	real-chrome-extension-smoke	20	1.0000	1.0000	1.0000	1.0000	1.30	0.007	0.017	0.0000	0.000	keep	negative scroll real smoke
+a1e798c	real-chrome-extension-agent	25	1.0000	1.0000	1.0000	1.0000	1.52	0.007	6.821	0.0000	0.001	keep	negative scroll real agent
+340651b	local-fake-extension	25	1.0000	1.0000	1.0000	1.0000	1.52	0.004	0.010	0.0000	0.000	baseline	navigation link brief baseline local
+340651b	local-fake-extension	26	1.0000	1.0000	1.0000	1.0000	1.54	0.003	0.010	0.0000	0.000	keep	navigation link brief local
+340651b	real-chrome-extension-smoke	21	1.0000	1.0000	1.0000	1.0000	1.33	0.008	0.019	0.0000	0.000	keep	navigation link brief real smoke
+340651b	real-chrome-extension-agent	26	1.0000	1.0000	1.0000	1.0000	1.54	0.007	6.636	0.0000	0.001	keep	navigation link brief real agent
+e4d5902	local-fake-extension	26	1.0000	1.0000	1.0000	1.0000	1.54	0.004	0.010	0.0000	0.000	baseline	navigation link click baseline local
+e4d5902	local-fake-extension	27	1.0000	1.0000	1.0000	1.0000	1.52	0.004	0.010	0.0000	0.000	keep	navigation link click local
+e4d5902	real-chrome-extension-smoke	22	1.0000	1.0000	1.0000	1.0000	1.32	0.007	0.019	0.0000	0.000	keep	navigation link click real smoke
+e4d5902	real-chrome-extension-agent	27	1.0000	1.0000	1.0000	1.0000	1.52	0.007	6.539	0.0000	0.001	keep	navigation link click real agent
+b03be1e	local-fake-extension	27	1.0000	1.0000	1.0000	1.0000	1.52	0.004	0.010	0.0000	0.000	baseline	select role value baseline local
+b03be1e	local-fake-extension	28	1.0000	1.0000	1.0000	1.0000	1.50	0.004	0.010	0.0000	0.000	keep	select role value local
+b03be1e	real-chrome-extension-smoke	23	1.0000	1.0000	1.0000	1.0000	1.30	0.008	0.027	0.0000	0.000	keep	select role value real smoke
+b03be1e	real-chrome-extension-agent	28	1.0000	1.0000	1.0000	1.0000	1.50	0.008	6.614	0.0000	0.001	keep	select role value real agent
+a5e43b9	local-fake-extension	28	1.0000	1.0000	1.0000	1.0000	1.50	0.004	0.010	0.0000	0.000	baseline	destination name readback baseline local
+a5e43b9	local-fake-extension	29	1.0000	1.0000	1.0000	1.0000	1.48	0.004	0.011	0.0000	0.000	keep	destination name readback local
+a5e43b9	real-chrome-extension-smoke	24	0.9583	0.9583	1.0000	1.0000	1.30	0.007	0.018	0.0000	0.000	discard	destination name readback real smoke
+a5e43b9	real-chrome-extension-smoke	24	1.0000	1.0000	1.0000	1.0000	1.29	0.007	0.019	0.0000	0.000	keep	destination name readback real smoke input value
+a5e43b9	real-chrome-extension-agent	29	0.9655	0.9655	1.0000	1.0000	1.39	0.008	6.525	0.0000	0.001	discard	destination name readback real agent
+a5e43b9	real-chrome-extension-agent	29	0.9655	0.9655	1.0000	1.0000	1.39	0.008	6.494	0.0000	0.001	discard	destination name readback real agent retry
+a5e43b9	real-chrome-extension-agent	29	0.9655	0.9655	1.0000	1.0000	1.39	0.007	6.545	0.0000	0.001	discard	destination name readback real agent identifier prompt
+a5e43b9	real-chrome-extension-agent	29	0.9655	0.9655	1.0000	1.0000	1.39	0.008	6.509	0.0000	0.001	discard	destination name readback real agent receipt prompt
+a5e43b9	real-chrome-extension-agent	29	1.0000	1.0000	1.0000	1.0000	1.48	0.007	6.483	0.0000	0.001	keep	destination name readback real agent identifier append
+0ac5423	local-fake-extension	29	1.0000	1.0000	1.0000	1.0000	1.48	0.003	0.010	0.0000	0.000	baseline	checkbox readback baseline local
+0ac5423	local-fake-extension	31	1.0000	1.0000	1.0000	1.0000	1.45	0.004	0.010	0.0000	0.000	keep	checkbox readback local
+0ac5423	real-chrome-extension-smoke	26	1.0000	1.0000	1.0000	1.0000	1.27	0.007	0.022	0.0000	0.000	keep	checkbox readback real smoke
+0ac5423	real-chrome-extension-agent	31	1.0000	1.0000	1.0000	1.0000	1.45	0.007	6.852	0.0000	0.002	keep	checkbox readback real agent
+31f95dd	local-fake-extension	31	1.0000	1.0000	1.0000	1.0000	1.45	0.004	0.010	0.0000	0.000	baseline	radio readback baseline local
+31f95dd	local-fake-extension	34	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.010	0.0000	0.000	keep	radio readback local
+31f95dd	real-chrome-extension-smoke	29	1.0000	1.0000	1.0000	1.0000	1.24	0.007	0.017	0.0000	0.000	keep	radio readback real smoke
+31f95dd	real-chrome-extension-agent	34	1.0000	1.0000	1.0000	1.0000	1.41	0.007	6.566	0.0000	0.001	keep	radio readback real agent
+47daab9	local-fake-extension	34	1.0000	1.0000	1.0000	1.0000	1.41	0.004	0.011	0.0000	0.000	baseline	type append baseline local
+47daab9	local-fake-extension	36	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.010	0.0000	0.000	keep	type append local
+47daab9	real-chrome-extension-smoke	31	0.9677	0.9677	1.0000	1.0000	1.23	0.007	0.017	0.0000	0.000	discard	type append real smoke
+47daab9	real-chrome-extension-smoke	31	1.0000	1.0000	1.0000	1.0000	1.23	0.010	0.032	0.0000	0.000	keep	type append real smoke trace clear
+47daab9	real-chrome-extension-agent	36	1.0000	1.0000	1.0000	1.0000	1.39	0.006	6.656	0.0000	0.001	keep	type append real agent
+4960107	local-fake-extension	36	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.010	0.0000	0.000	baseline	textarea type read baseline local
+4960107	local-fake-extension	38	0.8947	0.8947	1.0000	0.8947	1.35	0.003	0.010	0.0000	0.000	discard	textarea type read local
+4960107	local-fake-extension	38	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.009	0.0000	0.000	keep	textarea type read local metadata label
+4960107	real-chrome-extension-smoke	33	1.0000	1.0000	1.0000	1.0000	1.21	0.007	0.016	0.0000	0.000	keep	textarea type read real smoke
+4960107	real-chrome-extension-agent	38	1.0000	1.0000	1.0000	1.0000	1.37	0.007	6.483	0.0000	0.002	keep	textarea type read real agent
+7f45df4	local-fake-extension	38	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.010	0.0000	0.000	baseline	save button recovery baseline local
+7f45df4	local-fake-extension	39	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.009	0.0000	0.000	keep	save button recovery local
+7f45df4	real-chrome-extension-smoke	34	1.0000	1.0000	1.0000	1.0000	1.26	0.006	0.016	0.0000	0.000	keep	save button recovery real smoke
+7f45df4	real-chrome-extension-agent	39	1.0000	1.0000	1.0000	1.0000	1.41	0.008	6.504	0.0000	0.001	keep	save button recovery real agent
+20cfb0b	local-fake-extension	39	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.009	0.0000	0.000	baseline	textarea recovery baseline local
+20cfb0b	local-fake-extension	40	1.0000	1.0000	1.0000	1.0000	1.45	0.003	0.006	0.0000	0.000	keep	textarea recovery local
+20cfb0b	real-chrome-extension-smoke	35	1.0000	1.0000	1.0000	1.0000	1.31	0.006	0.017	0.0000	0.000	keep	textarea recovery real smoke
+20cfb0b	real-chrome-extension-agent	40	1.0000	1.0000	1.0000	1.0000	1.45	0.008	4.186	0.0000	0.001	keep	textarea recovery real agent
+60c0075	local-fake-extension	40	1.0000	1.0000	1.0000	1.0000	1.45	0.003	0.007	0.0000	0.000	baseline	checkbox recovery baseline local
+60c0075	local-fake-extension	42	1.0000	1.0000	1.0000	1.0000	1.48	0.003	0.006	0.0000	0.000	keep	checkbox recovery local
+60c0075	real-chrome-extension-smoke	37	1.0000	1.0000	1.0000	1.0000	1.35	0.008	0.021	0.0000	0.000	keep	checkbox recovery real smoke
+60c0075	real-chrome-extension-agent	42	1.0000	1.0000	1.0000	1.0000	1.48	0.008	4.220	0.0000	0.002	keep	checkbox recovery real agent
+c62f0d9	local-fake-extension	42	1.0000	1.0000	1.0000	1.0000	1.48	0.003	0.007	0.0000	0.000	baseline	radio recovery baseline local
+c62f0d9	local-fake-extension	45	1.0000	1.0000	1.0000	1.0000	1.49	0.003	0.007	0.0000	0.000	keep	radio recovery local
+c62f0d9	real-chrome-extension-smoke	40	1.0000	1.0000	1.0000	1.0000	1.38	0.007	0.015	0.0000	0.000	keep	radio recovery real smoke
+c62f0d9	real-chrome-extension-agent	45	1.0000	1.0000	1.0000	1.0000	1.49	0.007	4.120	0.0000	0.001	keep	radio recovery real agent
+e5373ab	local-fake-extension	45	1.0000	1.0000	1.0000	1.0000	1.49	0.003	0.008	0.0000	0.000	baseline	semantic settings recovery baseline local
+e5373ab	local-fake-extension	46	1.0000	1.0000	1.0000	1.0000	1.52	0.003	0.006	0.0000	0.000	keep	semantic settings recovery local
+e5373ab	real-chrome-extension-smoke	41	1.0000	1.0000	1.0000	1.0000	1.41	0.007	0.015	0.0000	0.000	keep	semantic settings recovery real smoke
+e5373ab	real-chrome-extension-agent	46	1.0000	1.0000	1.0000	1.0000	1.52	0.007	4.192	0.0000	0.001	keep	semantic settings recovery real agent
+f735b80	local-fake-extension	46	1.0000	1.0000	1.0000	1.0000	1.52	0.003	0.007	0.0000	0.000	baseline	starter scoped read baseline local
+f735b80	local-fake-extension	47	1.0000	1.0000	1.0000	1.0000	1.51	0.003	0.005	0.0000	0.000	keep	starter scoped read local
+f735b80	real-chrome-extension-smoke	42	1.0000	1.0000	1.0000	1.0000	1.40	0.007	0.017	0.0000	0.000	keep	starter scoped read real smoke
+f735b80	real-chrome-extension-agent	47	1.0000	1.0000	1.0000	1.0000	1.51	0.008	4.159	0.0000	0.001	keep	starter scoped read real agent
+67c5b8e	local-fake-extension	47	1.0000	1.0000	1.0000	1.0000	1.51	0.003	0.007	0.0000	0.000	baseline	starter scoped html baseline local
+67c5b8e	local-fake-extension	48	1.0000	1.0000	1.0000	1.0000	1.50	0.003	0.006	0.0000	0.000	keep	starter scoped html local
+67c5b8e	real-chrome-extension-smoke	43	1.0000	1.0000	1.0000	1.0000	1.40	0.006	0.014	0.0000	0.000	keep	starter scoped html real smoke
+67c5b8e	real-chrome-extension-agent	48	1.0000	1.0000	1.0000	1.0000	1.50	0.007	4.183	0.0000	0.001	keep	starter scoped html real agent
+4df2e8f	local-fake-extension	48	1.0000	1.0000	1.0000	1.0000	1.50	0.003	0.006	0.0000	0.000	baseline	starter scoped extract baseline local
+4df2e8f	local-fake-extension	49	1.0000	1.0000	1.0000	1.0000	1.53	0.003	0.006	0.0000	0.000	keep	starter scoped extract local
+4df2e8f	real-chrome-extension-smoke	43	1.0000	1.0000	1.0000	1.0000	1.40	0.007	0.014	0.0000	0.000	keep	starter scoped extract real smoke
+4df2e8f	real-chrome-extension-agent	49	1.0000	1.0000	1.0000	1.0000	1.53	0.007	4.845	0.0000	0.001	keep	starter scoped extract real agent
+11f2644	local-fake-extension	49	1.0000	1.0000	1.0000	1.0000	1.53	0.003	0.007	0.0000	0.000	baseline	select selected readback baseline local
+11f2644	local-fake-extension	50	1.0000	1.0000	1.0000	1.0000	1.52	0.003	0.006	0.0000	0.000	keep	select selected readback local
+11f2644	real-chrome-extension-smoke	44	1.0000	1.0000	1.0000	1.0000	1.39	0.007	0.015	0.0000	0.000	keep	select selected readback real smoke
+11f2644	real-chrome-extension-agent	50	1.0000	1.0000	1.0000	1.0000	1.52	0.007	4.903	0.0000	0.001	keep	select selected readback real agent
+e8a1f21	local-fake-extension	50	1.0000	1.0000	1.0000	1.0000	1.52	0.003	0.006	0.0000	0.000	baseline	select recovery baseline local
+e8a1f21	local-fake-extension	51	1.0000	1.0000	1.0000	1.0000	1.55	0.003	0.006	0.0000	0.000	keep	select recovery local
+e8a1f21	real-chrome-extension-smoke	45	1.0000	1.0000	1.0000	1.0000	1.42	0.006	0.014	0.0000	0.000	keep	select recovery real smoke
+e8a1f21	real-chrome-extension-agent	51	1.0000	1.0000	1.0000	1.0000	1.55	0.007	4.873	0.0000	0.001	keep	select recovery real agent
+90c6287	local-fake-extension	51	1.0000	1.0000	1.0000	1.0000	1.55	0.003	0.005	0.0000	0.000	baseline	select recovered readback baseline local
+90c6287	local-fake-extension	52	1.0000	1.0000	1.0000	1.0000	1.54	0.003	0.005	0.0000	0.000	keep	select recovered readback local
+90c6287	real-chrome-extension-smoke	46	1.0000	1.0000	1.0000	1.0000	1.41	0.007	0.016	0.0000	0.000	keep	select recovered readback real smoke
+90c6287	real-chrome-extension-agent	52	1.0000	1.0000	1.0000	1.0000	1.54	0.007	4.881	0.0000	0.001	keep	select recovered readback real agent
+7a0754f	local-fake-extension	52	1.0000	1.0000	1.0000	1.0000	1.54	0.003	0.005	0.0000	0.000	baseline	navigation scroll target read baseline local
+7a0754f	local-fake-extension	53	1.0000	1.0000	1.0000	1.0000	1.53	0.003	0.006	0.0000	0.000	keep	navigation scroll target read local
+7a0754f	real-chrome-extension-smoke	47	1.0000	1.0000	1.0000	1.0000	1.40	0.007	0.018	0.0000	0.000	keep	navigation scroll target read real smoke
+7a0754f	real-chrome-extension-agent	53	0.9811	0.9811	1.0000	1.0000	1.48	0.007	4.866	0.0000	0.001	discard	navigation scroll target read real agent
+7a0754f	real-chrome-extension-agent	53	1.0000	1.0000	1.0000	1.0000	1.53	0.006	4.850	0.0000	0.001	keep	navigation scroll target read real agent retry
+762400a	local-fake-extension	53	1.0000	1.0000	1.0000	1.0000	1.53	0.003	0.006	0.0000	0.000	baseline	navigation billing link read baseline local
+762400a	local-fake-extension	54	1.0000	1.0000	1.0000	1.0000	1.52	0.003	0.006	0.0000	0.000	keep	navigation billing link read local
+762400a	real-chrome-extension-smoke	48	1.0000	1.0000	1.0000	1.0000	1.40	0.007	0.017	0.0000	0.000	keep	navigation billing link read real smoke
+762400a	real-chrome-extension-agent	54	1.0000	1.0000	1.0000	1.0000	1.52	0.007	4.799	0.0000	0.001	keep	navigation billing link read real agent
+aa90f83	local-fake-extension	54	1.0000	1.0000	1.0000	1.0000	1.52	0.003	0.006	0.0000	0.000	baseline	navigation settings link read baseline local
+aa90f83	local-fake-extension	55	1.0000	1.0000	1.0000	1.0000	1.51	0.003	0.006	0.0000	0.000	keep	navigation settings link read local
+aa90f83	real-chrome-extension-smoke	49	1.0000	1.0000	1.0000	1.0000	1.39	0.007	0.017	0.0000	0.000	keep	navigation settings link read real smoke
+aa90f83	real-chrome-extension-agent	55	1.0000	1.0000	1.0000	1.0000	1.51	0.007	4.822	0.0000	0.001	keep	navigation settings link read real agent
+d19ceba	local-fake-extension	55	1.0000	1.0000	1.0000	1.0000	1.51	0.003	0.006	0.0000	0.000	baseline	transfer email readback baseline local
+d19ceba	local-fake-extension	56	1.0000	1.0000	1.0000	1.0000	1.50	0.003	0.006	0.0000	0.000	keep	transfer email readback local
+d19ceba	real-chrome-extension-smoke	50	1.0000	1.0000	1.0000	1.0000	1.38	0.007	0.016	0.0000	0.000	keep	transfer email readback real smoke
+d19ceba	real-chrome-extension-agent	56	1.0000	1.0000	1.0000	1.0000	1.50	0.007	4.844	0.0000	0.001	keep	transfer email readback real agent
+693b575	local-fake-extension	56	1.0000	1.0000	1.0000	1.0000	1.50	0.003	0.007	0.0000	0.000	baseline	transfer name readback baseline local
+693b575	local-fake-extension	57	1.0000	1.0000	1.0000	1.0000	1.49	0.003	0.006	0.0000	0.000	keep	transfer name readback local
+693b575	real-chrome-extension-smoke	51	1.0000	1.0000	1.0000	1.0000	1.37	0.007	0.017	0.0000	0.000	keep	transfer name readback real smoke
+693b575	real-chrome-extension-agent	57	1.0000	1.0000	1.0000	1.0000	1.49	0.006	4.833	0.0000	0.001	keep	transfer name readback real agent
+66461d4	local-fake-extension	57	1.0000	1.0000	1.0000	1.0000	1.49	0.003	0.006	0.0000	0.000	baseline	transfer save result readback baseline local
+66461d4	local-fake-extension	58	1.0000	1.0000	1.0000	1.0000	1.48	0.003	0.006	0.0000	0.000	keep	transfer save result readback local
+66461d4	real-chrome-extension-smoke	52	1.0000	1.0000	1.0000	1.0000	1.37	0.007	0.014	0.0000	0.000	keep	transfer save result readback real smoke
+66461d4	real-chrome-extension-agent	58	1.0000	1.0000	1.0000	1.0000	1.48	0.008	4.817	0.0000	0.001	keep	transfer save result readback real agent
+8f51504	local-fake-extension	58	1.0000	1.0000	1.0000	1.0000	1.48	0.003	0.007	0.0000	0.000	baseline	transfer body readback baseline local
+8f51504	local-fake-extension	59	1.0000	1.0000	1.0000	1.0000	1.47	0.003	0.006	0.0000	0.000	keep	transfer body readback local
+8f51504	real-chrome-extension-smoke	53	1.0000	1.0000	1.0000	1.0000	1.36	0.007	0.016	0.0000	0.000	keep	transfer body readback real smoke
+8f51504	real-chrome-extension-agent	59	1.0000	1.0000	1.0000	1.0000	1.47	0.007	4.825	0.0000	0.001	keep	transfer body readback real agent
+414b96b	local-fake-extension	59	1.0000	1.0000	1.0000	1.0000	1.47	0.003	0.006	0.0000	0.000	baseline	semantic receipt read baseline local
+414b96b	local-fake-extension	60	1.0000	1.0000	1.0000	1.0000	1.47	0.003	0.006	0.0000	0.000	keep	semantic receipt read local
+414b96b	real-chrome-extension-smoke	54	1.0000	1.0000	1.0000	1.0000	1.35	0.007	0.017	0.0000	0.000	keep	semantic receipt read real smoke
+414b96b	real-chrome-extension-agent	60	1.0000	1.0000	1.0000	1.0000	1.47	0.007	4.097	0.0000	0.001	keep	semantic receipt read real agent
+1b4d700	local-fake-extension	60	1.0000	1.0000	1.0000	1.0000	1.47	0.003	0.005	0.0000	0.000	baseline	semantic settings read baseline local
+1b4d700	local-fake-extension	61	0.9836	0.9836	1.0000	1.0000	1.47	0.003	0.007	0.0000	0.000	discard	semantic settings read local
+1b4d700	local-fake-extension	61	0.9836	0.9836	1.0000	1.0000	1.47	0.003	0.006	0.0000	0.000	discard	semantic settings read before click local
+1b4d700	local-fake-extension	61	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.006	0.0000	0.000	keep	semantic settings read harness parity local
+1b4d700	real-chrome-extension-smoke	55	1.0000	1.0000	1.0000	1.0000	1.35	0.007	0.016	0.0000	0.000	keep	semantic settings read real smoke
+1b4d700	real-chrome-extension-agent	61	1.0000	1.0000	1.0000	1.0000	1.46	0.007	4.179	0.0000	0.001	keep	semantic settings read real agent
+cfb08a8	local-fake-extension	61	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.006	0.0000	0.000	baseline	semantic invoice read baseline local
+cfb08a8	local-fake-extension	62	1.0000	1.0000	1.0000	1.0000	1.45	0.003	0.007	0.0000	0.000	keep	semantic invoice read local
+cfb08a8	real-chrome-extension-smoke	56	1.0000	1.0000	1.0000	1.0000	1.34	0.008	0.016	0.0000	0.000	keep	semantic invoice read real smoke
+cfb08a8	real-chrome-extension-agent	62	1.0000	1.0000	1.0000	1.0000	1.45	0.007	4.164	0.0000	0.001	keep	semantic invoice read real agent
+fd87850	local-fake-extension	62	1.0000	1.0000	1.0000	1.0000	1.45	0.003	0.005	0.0000	0.000	baseline	semantic settings act baseline local
+fd87850	local-fake-extension	63	1.0000	1.0000	1.0000	1.0000	1.44	0.003	0.006	0.0000	0.000	keep	semantic settings act local
+fd87850	real-chrome-extension-smoke	57	1.0000	1.0000	1.0000	1.0000	1.33	0.006	0.015	0.0000	0.000	keep	semantic settings act real smoke
+fd87850	real-chrome-extension-agent	63	1.0000	1.0000	1.0000	1.0000	1.44	0.007	4.173	0.0000	0.001	keep	semantic settings act real agent
+c65cdee	local-fake-extension	63	1.0000	1.0000	1.0000	1.0000	1.44	0.003	0.005	0.0000	0.000	baseline	semantic invoice act baseline local
+c65cdee	local-fake-extension	64	1.0000	1.0000	1.0000	1.0000	1.44	0.003	0.006	0.0000	0.000	keep	semantic invoice act local
+c65cdee	real-chrome-extension-smoke	58	1.0000	1.0000	1.0000	1.0000	1.33	0.007	0.016	0.0000	0.000	keep	semantic invoice act real smoke
+c65cdee	real-chrome-extension-agent	64	1.0000	1.0000	1.0000	1.0000	1.44	0.007	4.148	0.0000	0.001	keep	semantic invoice act real agent
+abb6b42	local-fake-extension	64	1.0000	1.0000	1.0000	1.0000	1.44	0.003	0.005	0.0000	0.000	baseline	semantic invoice recovery baseline local
+abb6b42	local-fake-extension	65	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.007	0.0000	0.000	keep	semantic invoice recovery local
+abb6b42	real-chrome-extension-smoke	59	1.0000	1.0000	1.0000	1.0000	1.36	0.006	0.016	0.0000	0.000	keep	semantic invoice recovery real smoke
+abb6b42	real-chrome-extension-agent	65	1.0000	1.0000	1.0000	1.0000	1.46	0.007	4.150	0.0000	0.001	keep	semantic invoice recovery real agent
+b148f96	local-fake-extension	65	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.005	0.0000	0.000	baseline	semantic invoice rerank baseline local
+b148f96	local-fake-extension	66	0.9848	0.9848	1.0000	1.0000	1.46	0.003	0.006	0.0000	0.000	discard	semantic invoice rerank local
+b148f96	local-fake-extension	66	1.0000	1.0000	1.0000	1.0000	1.44	0.003	0.006	0.0000	0.000	keep	semantic invoice rerank local
+b148f96	real-chrome-extension-smoke	60	1.0000	1.0000	1.0000	1.0000	1.33	0.006	0.011	0.0000	0.000	keep	semantic invoice rerank real smoke
+b148f96	real-chrome-extension-agent	66	1.0000	1.0000	1.0000	1.0000	1.44	0.007	4.111	0.0000	0.001	keep	semantic invoice rerank real agent
+8a5d5a8	local-fake-extension	66	1.0000	1.0000	1.0000	1.0000	1.44	0.003	0.005	0.0000	0.000	baseline	semantic settings rerank baseline local
+8a5d5a8	local-fake-extension	67	1.0000	1.0000	1.0000	1.0000	1.42	0.003	0.006	0.0000	0.000	keep	semantic settings rerank local
+8a5d5a8	real-chrome-extension-smoke	61	1.0000	1.0000	1.0000	1.0000	1.31	0.007	0.014	0.0000	0.000	keep	semantic settings rerank real smoke
+8a5d5a8	real-chrome-extension-agent	67	1.0000	1.0000	1.0000	1.0000	1.42	0.007	4.176	0.0000	0.001	keep	semantic settings rerank real agent
+013cf7b	local-fake-extension	67	1.0000	1.0000	1.0000	1.0000	1.42	0.003	0.005	0.0000	0.000	baseline	semantic invoice observe baseline local
+013cf7b	local-fake-extension	68	1.0000	1.0000	1.0000	1.0000	1.43	0.003	0.005	0.0000	0.000	keep	semantic invoice observe local
+013cf7b	real-chrome-extension-smoke	61	1.0000	1.0000	1.0000	1.0000	1.31	0.006	0.011	0.0000	0.000	keep	semantic invoice observe real smoke
+013cf7b	real-chrome-extension-smoke	61	1.0000	1.0000	1.0000	1.0000	1.31	0.006	0.012	0.0000	0.000	keep	semantic invoice observe real smoke
+013cf7b	real-chrome-extension-agent	68	1.0000	1.0000	1.0000	1.0000	1.43	0.007	4.211	0.0000	0.001	keep	semantic invoice observe real agent
+acf1e9d	local-fake-extension	68	1.0000	1.0000	1.0000	1.0000	1.43	0.003	0.006	0.0000	0.000	baseline	semantic settings observe baseline local
+acf1e9d	local-fake-extension	69	1.0000	1.0000	1.0000	1.0000	1.43	0.003	0.005	0.0000	0.000	keep	semantic settings observe local
+acf1e9d	real-chrome-extension-smoke	61	1.0000	1.0000	1.0000	1.0000	1.31	0.007	0.011	0.0000	0.000	keep	semantic settings observe real smoke
+acf1e9d	real-chrome-extension-agent	69	1.0000	1.0000	1.0000	1.0000	1.43	0.007	4.213	0.0000	0.001	keep	semantic settings observe real agent
+66e51d4	local-fake-extension	69	1.0000	1.0000	1.0000	1.0000	1.43	0.003	0.005	0.0000	0.000	baseline	semantic invoice agent baseline local
+66e51d4	local-fake-extension	70	0.9857	0.9857	1.0000	1.0000	1.43	0.003	0.005	0.0000	0.000	discard	semantic invoice agent local
+66e51d4	local-fake-extension	70	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.006	0.0000	0.000	keep	semantic invoice agent local
+66e51d4	real-chrome-extension-smoke	61	1.0000	1.0000	1.0000	1.0000	1.31	0.007	0.011	0.0000	0.000	keep	semantic invoice agent real smoke
+66e51d4	real-chrome-extension-agent	70	1.0000	1.0000	1.0000	1.0000	1.47	0.007	4.875	0.0000	0.001	keep	semantic invoice agent real agent
+2386051	local-fake-extension	70	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.005	0.0000	0.000	baseline	semantic settings agent baseline local
+2386051	local-fake-extension	71	1.0000	1.0000	1.0000	1.0000	1.48	0.003	0.006	0.0000	0.000	keep	semantic settings agent local
+2386051	real-chrome-extension-smoke	61	1.0000	1.0000	1.0000	1.0000	1.31	0.007	0.014	0.0000	0.000	keep	semantic settings agent real smoke
+2386051	real-chrome-extension-agent	71	0.9859	0.9859	1.0000	1.0000	1.47	0.007	4.832	0.0000	0.001	discard	semantic settings agent real agent
+2386051	real-chrome-extension-agent	71	0.9859	0.9859	1.0000	1.0000	1.47	0.007	4.931	0.0000	0.001	discard	semantic settings agent real agent
+2386051	local-fake-extension	71	1.0000	1.0000	1.0000	1.0000	1.48	0.003	0.006	0.0000	0.000	keep	semantic settings agent retry local
+2386051	real-chrome-extension-agent	71	0.9859	0.9859	1.0000	1.0000	1.47	0.007	4.952	0.0000	0.001	discard	semantic settings agent retry real agent
+2386051	local-fake-extension	71	1.0000	1.0000	1.0000	1.0000	1.48	0.003	0.006	0.0000	0.000	keep	semantic settings agent fallback local
+2386051	real-chrome-extension-agent	71	0.9859	0.9859	1.0000	1.0000	1.47	0.007	4.926	0.0000	0.001	discard	semantic settings agent fallback real agent
+2386051	local-fake-extension	71	1.0000	1.0000	1.0000	1.0000	1.48	0.003	0.005	0.0000	0.000	keep	semantic settings agent fallback local
+2386051	real-chrome-extension-agent	71	1.0000	1.0000	1.0000	1.0000	1.51	0.007	4.883	0.0000	0.001	keep	semantic settings agent fallback real agent
+2386051	real-chrome-extension-smoke	61	1.0000	1.0000	1.0000	1.0000	1.31	0.007	0.015	0.0000	0.000	keep	semantic settings agent fallback real smoke
+2386051	real-chrome-extension-agent	71	1.0000	1.0000	1.0000	1.0000	1.51	0.008	4.919	0.0000	0.001	keep	semantic settings agent fallback real agent
+288857f	local-fake-extension	71	1.0000	1.0000	1.0000	1.0000	1.48	0.003	0.006	0.0000	0.000	baseline	semantic settings invoice-id rank baseline local
+288857f	local-fake-extension	72	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.006	0.0000	0.000	keep	semantic settings invoice-id rank local
+288857f	real-chrome-extension-smoke	62	1.0000	1.0000	1.0000	1.0000	1.29	0.007	0.013	0.0000	0.000	keep	semantic settings invoice-id rank real smoke
+288857f	real-chrome-extension-agent	72	1.0000	1.0000	1.0000	1.0000	1.49	0.007	4.924	0.0000	0.001	keep	semantic settings invoice-id rank real agent
+ba8a167	local-fake-extension	72	1.0000	1.0000	1.0000	1.0000	1.46	0.003	0.006	0.0000	0.000	baseline	navigation billing click baseline local
+ba8a167	local-fake-extension	73	1.0000	1.0000	1.0000	1.0000	1.45	0.003	0.005	0.0000	0.000	keep	navigation billing click local
+ba8a167	real-chrome-extension-smoke	63	0.9841	0.9841	1.0000	1.0000	1.29	0.007	0.017	0.0000	0.000	discard	navigation billing click real smoke
+ba8a167	local-fake-extension	73	1.0000	1.0000	1.0000	1.0000	1.45	0.003	0.006	0.0000	0.000	keep	navigation billing click isolated local
+ba8a167	real-chrome-extension-smoke	63	0.9841	0.9841	1.0000	1.0000	1.29	0.007	0.016	0.0000	0.000	discard	navigation billing click isolated real smoke
+ba8a167	local-fake-extension	73	1.0000	1.0000	1.0000	1.0000	1.45	0.003	0.006	0.0000	0.000	keep	navigation billing click unique tab local
+ba8a167	real-chrome-extension-smoke	63	1.0000	1.0000	1.0000	1.0000	1.29	0.007	0.015	0.0000	0.000	keep	navigation billing click unique tab real smoke
+ba8a167	real-chrome-extension-agent	73	1.0000	1.0000	1.0000	1.0000	1.48	0.007	4.813	0.0000	0.001	keep	navigation billing click unique tab real agent
+6a2b3b6	local-fake-extension	73	1.0000	1.0000	1.0000	1.0000	1.45	0.003	0.006	0.0000	0.000	baseline	navigation billing tab visibility baseline local
+6a2b3b6	local-fake-extension	74	1.0000	1.0000	1.0000	1.0000	1.43	0.003	0.006	0.0000	0.000	keep	navigation billing tab visibility local
+6a2b3b6	real-chrome-extension-smoke	64	1.0000	1.0000	1.0000	1.0000	1.27	0.007	0.014	0.0000	0.000	keep	navigation billing tab visibility real smoke
+6a2b3b6	real-chrome-extension-agent	74	1.0000	1.0000	1.0000	1.0000	1.46	0.007	4.910	0.0000	0.001	keep	navigation billing tab visibility real agent
+a6cd371	local-fake-extension	74	1.0000	1.0000	1.0000	1.0000	1.43	0.003	0.006	0.0000	0.000	baseline	navigation isolated billing read baseline local
+a6cd371	local-fake-extension	75	1.0000	1.0000	1.0000	1.0000	1.43	0.003	0.006	0.0000	0.000	keep	navigation isolated billing read local
+a6cd371	real-chrome-extension-smoke	65	1.0000	1.0000	1.0000	1.0000	1.26	0.006	0.015	0.0000	0.000	keep	navigation isolated billing read real smoke
+a6cd371	real-chrome-extension-agent	75	1.0000	1.0000	1.0000	1.0000	1.45	0.008	4.938	0.0000	0.001	keep	navigation isolated billing read real agent
+038b7d9	local-fake-extension	75	1.0000	1.0000	1.0000	1.0000	1.43	0.003	0.006	0.0000	0.000	baseline	navigation active tab activation baseline local
+038b7d9	local-fake-extension	76	1.0000	1.0000	1.0000	1.0000	1.41	0.004	0.006	0.0000	0.000	keep	navigation active tab activation local
+038b7d9	real-chrome-extension-smoke	66	1.0000	1.0000	1.0000	1.0000	1.24	0.007	0.016	0.0000	0.000	keep	navigation active tab activation real smoke
+038b7d9	real-chrome-extension-agent	76	0.9737	0.9737	1.0000	1.0000	1.36	0.008	4.843	0.0000	0.001	discard	navigation active tab activation real agent
+038b7d9	local-fake-extension	77	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.006	0.0000	0.000	keep	navigation active tab activation restored local
+038b7d9	real-chrome-extension-smoke	67	1.0000	1.0000	1.0000	1.0000	1.22	0.007	0.019	0.0000	0.000	keep	navigation active tab activation restored real smoke
+038b7d9	real-chrome-extension-agent	77	1.0000	1.0000	1.0000	1.0000	1.42	0.007	4.887	0.0000	0.001	keep	navigation active tab activation restored real agent
+f295aa8	local-fake-extension	77	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.006	0.0000	0.000	baseline	navigation screenshot baseline local
+f295aa8	local-fake-extension	78	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	keep	navigation screenshot local
+f295aa8	real-chrome-extension-smoke	68	1.0000	1.0000	1.0000	1.0000	1.22	0.006	0.055	0.0000	0.000	keep	navigation screenshot real smoke
+f295aa8	real-chrome-extension-agent	78	0.9744	0.9744	1.0000	1.0000	1.34	0.007	4.904	0.0000	0.001	discard	navigation screenshot real agent
+f295aa8	real-chrome-extension-agent	78	1.0000	1.0000	1.0000	1.0000	1.41	0.007	4.886	0.0000	0.001	keep	navigation screenshot real agent retry
+9c0dbc2	local-fake-extension	78	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	baseline	navigation isolated page brief baseline local
+9c0dbc2	local-fake-extension	79	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.005	0.0000	0.000	keep	navigation isolated page brief local
+9c0dbc2	real-chrome-extension-smoke	69	1.0000	1.0000	1.0000	1.0000	1.23	0.006	0.052	0.0000	0.000	keep	navigation isolated page brief real smoke
+9c0dbc2	real-chrome-extension-agent	79	1.0000	1.0000	1.0000	1.0000	1.42	0.007	4.920	0.0000	0.001	keep	navigation isolated page brief real agent
+e6e6bde	local-fake-extension	79	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.005	0.0000	0.000	baseline	extraction page brief baseline local
+e6e6bde	local-fake-extension	80	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	keep	extraction page brief local
+e6e6bde	real-chrome-extension-smoke	70	1.0000	1.0000	1.0000	1.0000	1.24	0.006	0.037	0.0000	0.000	keep	extraction page brief real smoke
+e6e6bde	real-chrome-extension-agent	80	1.0000	1.0000	1.0000	1.0000	1.43	0.007	4.172	0.0000	0.001	keep	extraction page brief real agent
+2647ab8	local-fake-extension	80	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.006	0.0000	0.000	baseline	forms source page brief baseline local
+2647ab8	local-fake-extension	81	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.005	0.0000	0.000	keep	forms source page brief local
+2647ab8	real-chrome-extension-smoke	71	1.0000	1.0000	1.0000	1.0000	1.25	0.007	0.023	0.0000	0.000	keep	forms source page brief real smoke
+2647ab8	real-chrome-extension-agent	81	1.0000	1.0000	1.0000	1.0000	1.43	0.006	4.213	0.0000	0.001	keep	forms source page brief real agent
+9b5c48e	local-fake-extension	81	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.006	0.0000	0.000	baseline	forms source html read baseline local
+9b5c48e	local-fake-extension	82	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	keep	forms source html read local
+9b5c48e	real-chrome-extension-smoke	72	1.0000	1.0000	1.0000	1.0000	1.25	0.006	0.049	0.0000	0.000	keep	forms source html read real smoke
+9b5c48e	real-chrome-extension-agent	82	1.0000	1.0000	1.0000	1.0000	1.43	0.007	4.248	0.0000	0.001	keep	forms source html read real agent
+413e5c5	local-fake-extension	82	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	baseline	extraction pricing html read baseline local
+413e5c5	local-fake-extension	83	0.9880	0.9880	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	discard	extraction pricing html read local
+413e5c5	local-fake-extension	83	0.9880	0.9880	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	discard	extraction pricing html read local
+413e5c5	local-fake-extension	83	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	keep	extraction pricing html read local
+413e5c5	real-chrome-extension-smoke	73	1.0000	1.0000	1.0000	1.0000	1.25	0.006	0.088	0.0000	0.000	keep	extraction pricing html read real smoke
+413e5c5	real-chrome-extension-agent	83	1.0000	1.0000	1.0000	1.0000	1.42	0.007	4.209	0.0000	0.001	keep	extraction pricing html read real agent
+03883ed	local-fake-extension	83	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.007	0.0000	0.000	baseline	forms destination html read baseline local
+03883ed	local-fake-extension	84	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.005	0.0000	0.000	keep	forms destination html read local
+03883ed	real-chrome-extension-smoke	74	1.0000	1.0000	1.0000	1.0000	1.24	0.006	0.104	0.0000	0.000	keep	forms destination html read real smoke
+03883ed	real-chrome-extension-agent	84	1.0000	1.0000	1.0000	1.0000	1.42	0.007	4.137	0.0000	0.001	keep	forms destination html read real agent
+af32c9d	local-fake-extension	84	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.005	0.0000	0.000	baseline	semantic billing html read baseline local
+af32c9d	local-fake-extension	85	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.006	0.0000	0.000	keep	semantic billing html read local
+af32c9d	real-chrome-extension-smoke	75	1.0000	1.0000	1.0000	1.0000	1.24	0.006	0.097	0.0000	0.000	keep	semantic billing html read real smoke
+af32c9d	real-chrome-extension-agent	85	1.0000	1.0000	1.0000	1.0000	1.41	0.007	4.216	0.0000	0.001	keep	semantic billing html read real agent
+f1bb818	local-fake-extension	85	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.006	0.0000	0.000	baseline	navigation isolated html read baseline local
+f1bb818	local-fake-extension	86	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	keep	navigation isolated html read local
+f1bb818	real-chrome-extension-smoke	76	1.0000	1.0000	1.0000	1.0000	1.24	0.006	0.027	0.0000	0.000	keep	navigation isolated html read real smoke
+f1bb818	real-chrome-extension-agent	86	1.0000	1.0000	1.0000	1.0000	1.41	0.007	4.133	0.0000	0.001	keep	navigation isolated html read real agent
+c7d67b1	local-fake-extension	86	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.006	0.0000	0.000	baseline	navigation body html read baseline local
+c7d67b1	local-fake-extension	87	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.006	0.0000	0.000	keep	navigation body html read local
+c7d67b1	real-chrome-extension-smoke	77	1.0000	1.0000	1.0000	1.0000	1.23	0.006	0.102	0.0000	0.000	keep	navigation body html read real smoke
+c7d67b1	real-chrome-extension-agent	87	0.9770	0.9770	1.0000	1.0000	1.34	0.006	4.184	0.0000	0.001	discard	navigation body html read real agent
+c7d67b1	real-chrome-extension-agent	87	1.0000	1.0000	1.0000	1.0000	1.40	0.007	4.147	0.0000	0.001	keep	navigation body html read real agent retry
+af5ac2e	local-fake-extension	87	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	baseline	navigation isolated screenshot baseline local
+af5ac2e	local-fake-extension	88	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.006	0.0000	0.000	keep	navigation isolated screenshot local
+af5ac2e	real-chrome-extension-smoke	78	0.9872	0.9872	1.0000	1.0000	1.23	0.006	0.025	0.0000	0.000	discard	navigation isolated screenshot real smoke
+af5ac2e	real-chrome-extension-smoke	78	1.0000	1.0000	1.0000	1.0000	1.23	0.007	0.124	0.0000	0.000	keep	navigation isolated screenshot real smoke throttled
+af5ac2e	real-chrome-extension-agent	88	0.9773	0.9773	1.0000	1.0000	1.34	0.007	4.199	0.0000	0.001	discard	navigation isolated screenshot real agent throttled
+af5ac2e	real-chrome-extension-agent	88	1.0000	1.0000	1.0000	1.0000	1.40	0.007	4.193	0.0000	0.001	keep	navigation isolated screenshot real agent throttled retry
+b803408	local-fake-extension	88	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	baseline	navigation isolated active tab baseline local
+b803408	local-fake-extension	89	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	keep	navigation isolated active tab local
+b803408	real-chrome-extension-smoke	79	1.0000	1.0000	1.0000	1.0000	1.22	0.006	0.121	0.0000	0.000	keep	navigation isolated active tab real smoke
+b803408	real-chrome-extension-agent	89	1.0000	1.0000	1.0000	1.0000	1.38	0.007	4.249	0.0000	0.001	keep	navigation isolated active tab real agent
+673354e	local-fake-extension	89	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	baseline	pricing screenshot baseline local
+673354e	local-fake-extension	90	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	keep	pricing screenshot local
+673354e	real-chrome-extension-smoke	80	1.0000	1.0000	1.0000	1.0000	1.21	0.007	0.122	0.0000	0.000	keep	pricing screenshot real smoke
+673354e	real-chrome-extension-agent	90	1.0000	1.0000	1.0000	1.0000	1.38	0.006	4.158	0.0000	0.001	keep	pricing screenshot real agent
+e1537f7	local-fake-extension	90	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	baseline	source screenshot baseline local
+e1537f7	local-fake-extension	91	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.006	0.0000	0.000	keep	source screenshot local
+e1537f7	real-chrome-extension-smoke	81	1.0000	1.0000	1.0000	1.0000	1.21	0.007	0.124	0.0000	0.000	keep	source screenshot real smoke
+e1537f7	real-chrome-extension-agent	91	1.0000	1.0000	1.0000	1.0000	1.37	0.007	4.221	0.0000	0.001	keep	source screenshot real agent
+36c8a13	local-fake-extension	91	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.005	0.0000	0.000	baseline	destination screenshot baseline local
+36c8a13	local-fake-extension	92	1.0000	1.0000	1.0000	1.0000	1.35	0.002	0.005	0.0000	0.000	keep	destination screenshot local
+36c8a13	real-chrome-extension-smoke	82	1.0000	1.0000	1.0000	1.0000	1.21	0.006	0.498	0.0000	0.000	keep	destination screenshot real smoke
+36c8a13	real-chrome-extension-agent	92	0.9783	0.9783	1.0000	1.0000	1.31	0.007	4.080	0.0000	0.001	discard	destination screenshot real agent
+36c8a13	real-chrome-extension-agent	92	1.0000	1.0000	1.0000	1.0000	1.37	0.007	4.186	0.0000	0.001	keep	destination screenshot real agent retry
+1ed4f50	local-fake-extension	92	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.005	0.0000	0.000	baseline	source active tab baseline local
+1ed4f50	local-fake-extension	93	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.006	0.0000	0.000	keep	source active tab local
+1ed4f50	real-chrome-extension-smoke	83	1.0000	1.0000	1.0000	1.0000	1.19	0.006	0.501	0.0000	0.000	keep	source active tab real smoke
+1ed4f50	real-chrome-extension-agent	93	0.9785	0.9785	1.0000	1.0000	1.30	0.007	4.141	0.0000	0.001	discard	source active tab real agent
+1ed4f50	real-chrome-extension-agent	93	1.0000	1.0000	1.0000	1.0000	1.35	0.007	4.191	0.0000	0.001	keep	source active tab real agent retry
+9b71a42	local-fake-extension	93	1.0000	1.0000	1.0000	1.0000	1.33	0.002	0.006	0.0000	0.000	baseline	destination active tab baseline local
+9b71a42	local-fake-extension	94	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.006	0.0000	0.000	keep	destination active tab local
+9b71a42	real-chrome-extension-smoke	84	1.0000	1.0000	1.0000	1.0000	1.18	0.006	0.501	0.0000	0.000	keep	destination active tab real smoke
+9b71a42	real-chrome-extension-agent	94	1.0000	1.0000	1.0000	1.0000	1.34	0.007	4.184	0.0000	0.001	keep	destination active tab real agent
+f0d435f	local-fake-extension	94	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.006	0.0000	0.000	baseline	pricing active tab baseline local
+f0d435f	local-fake-extension	95	1.0000	1.0000	1.0000	1.0000	1.31	0.002	0.005	0.0000	0.000	keep	pricing active tab local
+f0d435f	real-chrome-extension-smoke	85	1.0000	1.0000	1.0000	1.0000	1.16	0.007	0.504	0.0000	0.000	keep	pricing active tab real smoke
+f0d435f	real-chrome-extension-agent	95	1.0000	1.0000	1.0000	1.0000	1.33	0.008	4.158	0.0000	0.001	keep	pricing active tab real agent
+ed19166	local-fake-extension	95	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.005	0.0000	0.000	baseline	source body text baseline local
+ed19166	local-fake-extension	96	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	keep	source body text local
+ed19166	real-chrome-extension-smoke	86	1.0000	1.0000	1.0000	1.0000	1.16	0.007	0.502	0.0000	0.000	keep	source body text real smoke
+ed19166	real-chrome-extension-agent	96	0.9792	0.9792	1.0000	1.0000	1.27	0.007	4.119	0.0000	0.001	discard	source body text real agent
+ed19166	real-chrome-extension-agent	96	1.0000	1.0000	1.0000	1.0000	1.32	0.007	4.189	0.0000	0.001	keep	source body text real agent retry
+804a514	local-fake-extension	96	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	baseline	destination body text baseline local
+804a514	local-fake-extension	97	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.006	0.0000	0.000	keep	destination body text local
+804a514	real-chrome-extension-smoke	87	1.0000	1.0000	1.0000	1.0000	1.16	0.007	0.548	0.0000	0.000	keep	destination body text real smoke
+804a514	real-chrome-extension-agent	97	1.0000	1.0000	1.0000	1.0000	1.32	0.008	4.191	0.0000	0.717	keep	destination body text real agent
+845ecbd	local-fake-extension	97	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.006	0.0000	0.000	baseline	pricing body text baseline local
+845ecbd	local-fake-extension	98	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.006	0.0000	0.000	keep	pricing body text local
+845ecbd	real-chrome-extension-smoke	88	1.0000	1.0000	1.0000	1.0000	1.16	0.008	0.547	0.0000	0.000	keep	pricing body text real smoke
+845ecbd	real-chrome-extension-agent	98	0.9490	0.9490	1.0000	1.0000	1.33	0.009	5.053	0.0000	0.001	discard	pricing body text real agent
+845ecbd	real-chrome-extension-agent	98	1.0000	1.0000	1.0000	1.0000	1.32	0.008	4.281	0.0000	0.001	keep	pricing body text real agent retry
+6fa0757	local-fake-extension	98	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.007	0.0000	0.000	baseline	navigation body text baseline local
+6fa0757	local-fake-extension	99	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.006	0.0000	0.000	keep	navigation body text local
+6fa0757	real-chrome-extension-smoke	89	1.0000	1.0000	1.0000	1.0000	1.16	0.008	0.548	0.0000	0.000	keep	navigation body text real smoke
+6fa0757	real-chrome-extension-agent	99	0.9495	0.9495	1.0000	1.0000	1.33	0.009	4.450	0.0000	0.001	discard	navigation body text real agent
+6fa0757	real-chrome-extension-agent	99	0.9495	0.9495	1.0000	1.0000	1.33	0.008	4.236	0.0000	0.001	discard	navigation body text real agent retry
+6fa0757	real-chrome-extension-smoke	89	1.0000	1.0000	1.0000	1.0000	1.16	0.010	0.548	0.0000	0.000	discard	navigation body text screenshot retry real smoke
+6fa0757	real-chrome-extension-agent	99	0.9495	0.9495	1.0000	1.0000	1.33	0.008	4.318	0.0000	0.127	discard	navigation body text screenshot retry real agent
+6fa0757	real-chrome-extension-agent	99	1.0000	1.0000	1.0000	1.0000	1.31	0.008	4.297	0.0000	178.834	discard	navigation body text fresh profile diagnostic
+6fa0757	real-chrome-extension-agent	99	1.0000	1.0000	1.0000	1.0000	1.31	0.009	4.906	0.0000	148.459	keep	navigation body text real agent clean profile
+7dc0fcb	local-fake-extension	99	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.006	0.0000	0.000	baseline	isolated navigation body text baseline local
+7dc0fcb	local-fake-extension	100	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	keep	isolated navigation body text local
+7dc0fcb	real-chrome-extension-smoke	90	1.0000	1.0000	1.0000	1.0000	1.16	0.008	0.532	0.0000	0.000	keep	isolated navigation body text real smoke
+7dc0fcb	real-chrome-extension-agent	100	0.9800	0.9800	1.0000	1.0000	1.26	0.008	0.572	0.0000	0.333	discard	isolated navigation body text real agent
+7dc0fcb	real-chrome-extension-agent	100	1.0000	1.0000	1.0000	1.0000	1.31	0.008	4.429	0.0000	0.093	keep	isolated navigation body text real agent retry
+28eb4f0	local-fake-extension	100	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	baseline	billing body text baseline local
+28eb4f0	local-fake-extension	101	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.006	0.0000	0.000	keep	billing body text local
+28eb4f0	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.010	0.546	0.0000	0.000	keep	billing body text real smoke
+28eb4f0	real-chrome-extension-agent	101	0.9802	0.9802	1.0000	1.0000	1.25	0.008	0.570	0.0000	0.002	discard	billing body text real agent
+28eb4f0	real-chrome-extension-agent	101	0.9802	0.9802	1.0000	1.0000	1.25	0.007	0.584	0.0000	0.001	discard	billing body text real agent retry
+28eb4f0	real-chrome-extension-agent	101	0.9802	0.9802	1.0000	1.0000	1.25	0.009	0.566	0.0000	143.389	discard	billing body text real agent clean profile
+28eb4f0	local-fake-extension	101	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	keep	billing body text local with unaligned runtime fallback
+28eb4f0	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.008	0.531	0.0000	0.000	keep	billing body text real smoke with unaligned runtime fallback
+28eb4f0	real-chrome-extension-agent	101	0.9901	0.9901	1.0000	1.0000	1.28	0.010	0.567	0.0000	0.001	discard	billing body text real agent with unaligned runtime fallback
+28eb4f0	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.007	0.566	0.0000	0.001	keep	billing body text real agent with deduplicated unaligned runtime fallback
+43deab4	local-fake-extension	101	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	baseline	agent runtime fallback benchmark baseline local
+43deab4	local-fake-extension	102	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.006	0.0000	0.000	keep	agent runtime fallback benchmark local
+43deab4	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.007	0.548	0.0000	0.000	keep	agent runtime fallback benchmark real smoke
+43deab4	real-chrome-extension-agent	101	0.9802	0.9802	1.0000	1.0000	1.25	0.008	0.566	0.0099	0.001	discard	agent runtime fallback benchmark real agent
+43deab4	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.010	0.565	0.0000	0.001	keep	agent runtime fallback benchmark real agent retry
+9563e43	local-fake-extension	102	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.006	0.0000	0.000	baseline	preclick runtime fallback benchmark baseline local
+9563e43	local-fake-extension	103	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	keep	preclick runtime fallback benchmark local
+9563e43	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.008	0.532	0.0000	0.000	keep	preclick runtime fallback benchmark real smoke
+9563e43	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.007	0.564	0.0000	0.001	keep	preclick runtime fallback benchmark real agent
+e19c371	local-fake-extension	103	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	baseline	invoice preclick runtime fallback baseline local
+e19c371	local-fake-extension	104	0.9904	0.9904	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	discard	invoice preclick runtime fallback local
+e19c371	local-fake-extension	104	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	keep	invoice preclick runtime fallback local
+e19c371	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.007	0.547	0.0000	0.000	keep	invoice preclick runtime fallback real smoke
+e19c371	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.007	4.130	0.0000	0.001	keep	invoice preclick runtime fallback real agent
+a9fffa9	local-fake-extension	104	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.006	0.0000	0.000	baseline	settings preclick runtime fallback baseline local
+a9fffa9	local-fake-extension	105	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.006	0.0000	0.000	keep	settings preclick runtime fallback local
+a9fffa9	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.007	0.548	0.0000	0.000	keep	settings preclick runtime fallback real smoke
+a9fffa9	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.008	0.566	0.0000	0.001	keep	settings preclick runtime fallback real agent
+969c5e7	local-fake-extension	105	1.0000	1.0000	1.0000	1.0000	1.38	0.004	0.006	0.0000	0.000	baseline	invoice afterclick runtime fallback baseline local
+969c5e7	local-fake-extension	106	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.006	0.0000	0.000	keep	invoice afterclick runtime fallback local
+969c5e7	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.008	0.548	0.0000	0.000	keep	invoice afterclick runtime fallback real smoke
+969c5e7	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.009	4.145	0.0000	0.001	keep	invoice afterclick runtime fallback real agent
+0efd6ce	local-fake-extension	106	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	baseline	settings afterclick runtime fallback baseline local
+0efd6ce	local-fake-extension	107	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.005	0.0000	0.000	keep	settings afterclick runtime fallback local
+0efd6ce	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.008	0.548	0.0000	0.000	keep	settings afterclick runtime fallback real smoke
+0efd6ce	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.008	0.581	0.0000	0.001	keep	settings afterclick runtime fallback real agent
+b35f1a4	local-fake-extension	107	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.006	0.0000	0.000	baseline	latest kept report baseline local
+b35f1a4	local-fake-extension	107	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.006	0.0000	0.000	keep	latest kept report section local
+b35f1a4	real-chrome-extension-smoke	91	1.0000	1.0000	1.0000	1.0000	1.15	0.011	0.548	0.0000	0.000	keep	latest kept report section real smoke
+b35f1a4	real-chrome-extension-agent	101	1.0000	1.0000	1.0000	1.0000	1.31	0.013	4.209	0.0000	0.533	keep	latest kept report section real agent
+9617c61	local-fake-extension	107	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.005	0.0000	0.000	baseline	isolated settings link read baseline local
+9617c61	local-fake-extension	108	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.005	0.0000	0.000	keep	isolated settings link read local
+9617c61	real-chrome-extension-smoke	92	1.0000	1.0000	1.0000	1.0000	1.15	0.009	0.546	0.0000	0.000	keep	isolated settings link read real smoke
+9617c61	real-chrome-extension-agent	102	1.0000	1.0000	1.0000	1.0000	1.30	0.011	4.424	0.0000	0.055	keep	isolated settings link read real agent
+926f51e	local-fake-extension	108	1.0000	1.0000	1.0000	1.0000	1.41	0.003	0.005	0.0000	0.000	baseline	isolated scroll target read baseline local
+926f51e	local-fake-extension	109	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.006	0.0000	0.000	keep	isolated scroll target read local
+926f51e	real-chrome-extension-smoke	93	1.0000	1.0000	1.0000	1.0000	1.15	0.009	0.501	0.0000	0.000	keep	isolated scroll target read real smoke
+926f51e	real-chrome-extension-agent	103	1.0000	1.0000	1.0000	1.0000	1.30	0.009	4.205	0.0000	0.161	keep	isolated scroll target read real agent
+f404110	local-fake-extension	109	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	baseline	save profile button read baseline local
+f404110	local-fake-extension	110	0.9909	0.9909	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	discard	save profile button read local
+f404110	local-fake-extension	110	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	keep	save profile button read local
+f404110	real-chrome-extension-smoke	94	1.0000	1.0000	1.0000	1.0000	1.15	0.009	0.498	0.0000	0.000	keep	save profile button read real smoke
+f404110	real-chrome-extension-agent	104	1.0000	1.0000	1.0000	1.0000	1.30	0.011	4.142	0.0000	0.001	keep	save profile button read real agent
+6580021	local-fake-extension	110	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	baseline	save result after click baseline local
+6580021	local-fake-extension	111	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	keep	save result after click local
+6580021	real-chrome-extension-smoke	95	1.0000	1.0000	1.0000	1.0000	1.15	0.008	0.499	0.0000	0.000	keep	save result after click real smoke
+6580021	real-chrome-extension-agent	105	1.0000	1.0000	1.0000	1.0000	1.30	0.014	4.260	0.0000	0.001	keep	save result after click real agent
+1b71a98	local-fake-extension	111	1.0000	1.0000	1.0000	1.0000	1.40	0.003	0.005	0.0000	0.000	baseline	empty destination email read baseline local
+1b71a98	local-fake-extension	112	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.005	0.0000	0.000	keep	empty destination email read local
+1b71a98	real-chrome-extension-smoke	96	1.0000	1.0000	1.0000	1.0000	1.15	0.009	0.498	0.0000	0.000	keep	empty destination email read real smoke
+1b71a98	real-chrome-extension-agent	106	1.0000	1.0000	1.0000	1.0000	1.29	0.009	0.606	0.0000	0.001	keep	empty destination email read real agent
+058a00f	local-fake-extension	112	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.005	0.0000	0.000	baseline	empty destination name read baseline local
+058a00f	local-fake-extension	113	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.006	0.0000	0.000	keep	empty destination name read local
+058a00f	real-chrome-extension-smoke	97	1.0000	1.0000	1.0000	1.0000	1.14	0.010	0.500	0.0000	0.000	keep	empty destination name read real smoke
+058a00f	real-chrome-extension-agent	107	1.0000	1.0000	1.0000	1.0000	1.29	0.014	4.330	0.0000	0.001	keep	empty destination name read real agent
+ee8f664	local-fake-extension	113	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.005	0.0000	0.000	baseline	empty destination notes read baseline local
+ee8f664	local-fake-extension	114	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.006	0.0000	0.000	keep	empty destination notes read local
+ee8f664	real-chrome-extension-smoke	98	1.0000	1.0000	1.0000	1.0000	1.14	0.008	0.499	0.0000	0.000	keep	empty destination notes read real smoke
+ee8f664	real-chrome-extension-agent	108	1.0000	1.0000	1.0000	1.0000	1.29	0.009	0.602	0.0000	0.001	keep	empty destination notes read real agent
+a32a230	local-fake-extension	114	1.0000	1.0000	1.0000	1.0000	1.39	0.003	0.005	0.0000	0.000	baseline	initial destination role read baseline local
+a32a230	local-fake-extension	115	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	keep	initial destination role read local
+a32a230	real-chrome-extension-smoke	99	1.0000	1.0000	1.0000	1.0000	1.14	0.009	0.499	0.0000	0.000	keep	initial destination role read real smoke
+a32a230	real-chrome-extension-agent	109	1.0000	1.0000	1.0000	1.0000	1.28	0.010	4.288	0.0000	0.002	keep	initial destination role read real agent
+2a91539	local-fake-extension	115	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	baseline	initial destination updates read baseline local
+2a91539	local-fake-extension	116	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	keep	initial destination updates read local
+2a91539	real-chrome-extension-smoke	100	1.0000	1.0000	1.0000	1.0000	1.14	0.008	0.126	0.0000	0.000	keep	initial destination updates read real smoke
+2a91539	real-chrome-extension-agent	110	1.0000	1.0000	1.0000	1.0000	1.28	0.010	4.185	0.0000	0.001	keep	initial destination updates read real agent
+b449bd5	local-fake-extension	116	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	baseline	initial destination priority high read baseline local
+b449bd5	local-fake-extension	117	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	keep	initial destination priority high read local
+b449bd5	real-chrome-extension-smoke	101	1.0000	1.0000	1.0000	1.0000	1.14	0.008	0.130	0.0000	0.000	keep	initial destination priority high read real smoke
+b449bd5	real-chrome-extension-agent	111	1.0000	1.0000	1.0000	1.0000	1.28	0.008	4.189	0.0000	0.012	keep	initial destination priority high read real agent
+f8df568	local-fake-extension	117	1.0000	1.0000	1.0000	1.0000	1.38	0.003	0.005	0.0000	0.000	baseline	initial destination priority low read baseline local
+f8df568	local-fake-extension	118	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.005	0.0000	0.000	keep	initial destination priority low read local
+f8df568	real-chrome-extension-smoke	102	1.0000	1.0000	1.0000	1.0000	1.14	0.009	0.125	0.0000	0.000	keep	initial destination priority low read real smoke
+f8df568	real-chrome-extension-agent	112	1.0000	1.0000	1.0000	1.0000	1.28	0.008	4.228	0.0000	0.001	keep	initial destination priority low read real agent
+bf95884	local-fake-extension	118	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.005	0.0000	0.000	baseline	empty save result read baseline local
+bf95884	local-fake-extension	119	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.006	0.0000	0.000	keep	empty save result read local
+bf95884	real-chrome-extension-smoke	103	1.0000	1.0000	1.0000	1.0000	1.14	0.009	0.124	0.0000	0.000	keep	empty save result read real smoke
+bf95884	real-chrome-extension-agent	113	1.0000	1.0000	1.0000	1.0000	1.27	0.009	0.566	0.0000	0.001	keep	empty save result read real agent
+d8c1037	local-fake-extension	119	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.005	0.0000	0.000	baseline	empty save result html read baseline local
+d8c1037	local-fake-extension	120	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.005	0.0000	0.000	keep	empty save result html read local
+d8c1037	real-chrome-extension-smoke	104	1.0000	1.0000	1.0000	1.0000	1.13	0.007	0.125	0.0000	0.000	keep	empty save result html read real smoke
+d8c1037	real-chrome-extension-agent	114	1.0000	1.0000	1.0000	1.0000	1.27	0.008	4.214	0.0000	0.001	keep	empty save result html read real agent
+7e407a9	local-fake-extension	120	1.0000	1.0000	1.0000	1.0000	1.37	0.003	0.005	0.0000	0.000	baseline	save result after click html read baseline local
+7e407a9	local-fake-extension	121	0.9917	0.9917	1.0000	1.0000	1.37	0.003	0.005	0.0000	0.000	discard	save result after click html read local
+7e407a9	local-fake-extension	121	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	keep	save result after click html read local
+7e407a9	real-chrome-extension-smoke	105	0.9905	0.9905	1.0000	1.0000	1.13	0.007	0.125	0.0000	0.000	discard	save result after click html read real smoke
+7e407a9	local-fake-extension	121	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	keep	save result after click html read local
+7e407a9	real-chrome-extension-smoke	105	1.0000	1.0000	1.0000	1.0000	1.13	0.007	0.129	0.0000	0.000	keep	save result after click html read real smoke
+7e407a9	real-chrome-extension-agent	115	1.0000	1.0000	1.0000	1.0000	1.27	0.008	4.142	0.0000	0.001	keep	save result after click html read real agent
+51c4827	local-fake-extension	121	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.006	0.0000	0.000	baseline	save result after transfer html read baseline local
+51c4827	local-fake-extension	122	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	keep	save result after transfer html read local
+51c4827	real-chrome-extension-smoke	106	1.0000	1.0000	1.0000	1.0000	1.13	0.007	0.124	0.0000	0.000	keep	save result after transfer html read real smoke
+51c4827	real-chrome-extension-agent	116	1.0000	1.0000	1.0000	1.0000	1.27	0.007	4.205	0.0000	0.646	keep	save result after transfer html read real agent
+6b3c852	local-fake-extension	122	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	baseline	destination body after transfer html read baseline local
+6b3c852	local-fake-extension	123	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	keep	destination body after transfer html read local
+6b3c852	real-chrome-extension-smoke	107	1.0000	1.0000	1.0000	1.0000	1.13	0.008	0.125	0.0000	0.000	keep	destination body after transfer html read real smoke
+6b3c852	real-chrome-extension-agent	117	1.0000	1.0000	1.0000	1.0000	1.26	0.009	3.912	0.0000	0.001	keep	destination body after transfer html read real agent
+fb55260	local-fake-extension	123	1.0000	1.0000	1.0000	1.0000	1.36	0.003	0.005	0.0000	0.000	baseline	destination body after click html read baseline local
+fb55260	local-fake-extension	124	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.005	0.0000	0.000	keep	destination body after click html read local
+fb55260	real-chrome-extension-smoke	108	1.0000	1.0000	1.0000	1.0000	1.13	0.008	0.130	0.0000	0.000	keep	destination body after click html read real smoke
+fb55260	real-chrome-extension-agent	118	1.0000	1.0000	1.0000	1.0000	1.26	0.008	4.172	0.0000	0.001	keep	destination body after click html read real agent
+71d56ec	local-fake-extension	124	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.005	0.0000	0.000	baseline	destination body after click text read baseline local
+71d56ec	local-fake-extension	125	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.005	0.0000	0.000	keep	destination body after click text read local
+71d56ec	real-chrome-extension-smoke	109	1.0000	1.0000	1.0000	1.0000	1.13	0.007	0.126	0.0000	0.000	keep	destination body after click text read real smoke
+71d56ec	real-chrome-extension-agent	119	1.0000	1.0000	1.0000	1.0000	1.26	0.008	4.128	0.0000	0.001	keep	destination body after click text read real agent
+a23cf65	local-fake-extension	125	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.005	0.0000	0.000	baseline	source name html read baseline local
+a23cf65	local-fake-extension	126	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.005	0.0000	0.000	keep	source name html read local
+a23cf65	real-chrome-extension-smoke	110	1.0000	1.0000	1.0000	1.0000	1.13	0.008	0.125	0.0000	0.000	keep	source name html read real smoke
+a23cf65	real-chrome-extension-agent	120	1.0000	1.0000	1.0000	1.0000	1.26	0.007	0.604	0.0000	0.001	keep	source name html read real agent
+6aa0332	local-fake-extension	126	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.005	0.0000	0.000	baseline	source email html read baseline local
+6aa0332	local-fake-extension	127	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.005	0.0000	0.000	keep	source email html read local
+6aa0332	real-chrome-extension-smoke	111	1.0000	1.0000	1.0000	1.0000	1.13	0.008	0.124	0.0000	0.000	keep	source email html read real smoke
+6aa0332	real-chrome-extension-agent	121	1.0000	1.0000	1.0000	1.0000	1.26	0.008	0.601	0.0000	0.059	keep	source email html read real agent
+8b334ad	local-fake-extension	127	1.0000	1.0000	1.0000	1.0000	1.35	0.003	0.005	0.0000	0.000	baseline	save profile button html read baseline local
+8b334ad	local-fake-extension	128	1.0000	1.0000	1.0000	1.0000	1.34	0.003	0.005	0.0000	0.000	keep	save profile button html read local
+8b334ad	real-chrome-extension-smoke	112	1.0000	1.0000	1.0000	1.0000	1.13	0.007	0.125	0.0000	0.000	keep	save profile button html read real smoke
+8b334ad	real-chrome-extension-agent	122	1.0000	1.0000	1.0000	1.0000	1.25	0.008	0.605	0.0000	0.001	keep	save profile button html read real agent
+b66c034	local-fake-extension	128	1.0000	1.0000	1.0000	1.0000	1.34	0.003	0.005	0.0000	0.000	baseline	empty destination email html read baseline local
+b66c034	local-fake-extension	129	1.0000	1.0000	1.0000	1.0000	1.34	0.003	0.005	0.0000	0.000	keep	empty destination email html read local
+b66c034	real-chrome-extension-smoke	113	1.0000	1.0000	1.0000	1.0000	1.12	0.008	0.126	0.0000	0.000	keep	empty destination email html read real smoke
+b66c034	real-chrome-extension-agent	123	1.0000	1.0000	1.0000	1.0000	1.25	0.008	0.607	0.0000	0.001	keep	empty destination email html read real agent
+e10a078	local-fake-extension	129	1.0000	1.0000	1.0000	1.0000	1.34	0.003	0.006	0.0000	0.000	baseline	empty destination name html read baseline local
+e10a078	local-fake-extension	130	1.0000	1.0000	1.0000	1.0000	1.34	0.003	0.005	0.0000	0.000	keep	empty destination name html read local
+e10a078	real-chrome-extension-smoke	114	1.0000	1.0000	1.0000	1.0000	1.12	0.007	0.125	0.0000	0.000	keep	empty destination name html read real smoke
+e10a078	real-chrome-extension-agent	124	1.0000	1.0000	1.0000	1.0000	1.25	0.008	0.606	0.0000	0.001	keep	empty destination name html read real agent
+176caf3	local-fake-extension	130	1.0000	1.0000	1.0000	1.0000	1.34	0.003	0.006	0.0000	0.000	baseline	empty destination notes html read baseline local
+176caf3	local-fake-extension	131	1.0000	1.0000	1.0000	1.0000	1.34	0.003	0.005	0.0000	0.000	keep	empty destination notes html read local
+176caf3	real-chrome-extension-smoke	115	1.0000	1.0000	1.0000	1.0000	1.12	0.008	0.128	0.0000	0.000	keep	empty destination notes html read real smoke
+176caf3	real-chrome-extension-agent	125	1.0000	1.0000	1.0000	1.0000	1.25	0.007	0.602	0.0000	0.001	keep	empty destination notes html read real agent
+129468e	local-fake-extension	131	1.0000	1.0000	1.0000	1.0000	1.34	0.003	0.005	0.0000	0.000	baseline	destination role html read baseline local
+129468e	local-fake-extension	132	0.9924	0.9924	1.0000	1.0000	1.34	0.003	0.006	0.0000	0.000	discard	destination role html read local
+129468e	local-fake-extension	132	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	keep	destination role html read local
+129468e	real-chrome-extension-smoke	116	1.0000	1.0000	1.0000	1.0000	1.12	0.008	0.125	0.0000	0.000	keep	destination role html read real smoke
+129468e	real-chrome-extension-agent	126	1.0000	1.0000	1.0000	1.0000	1.25	0.009	0.603	0.0000	0.001	keep	destination role html read real agent
+782e91b	local-fake-extension	132	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	baseline	destination updates checked html read baseline local
+782e91b	local-fake-extension	133	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	keep	destination updates checked html read local
+782e91b	real-chrome-extension-smoke	117	1.0000	1.0000	1.0000	1.0000	1.12	0.007	0.125	0.0000	0.000	keep	destination updates checked html read real smoke
+782e91b	real-chrome-extension-agent	127	1.0000	1.0000	1.0000	1.0000	1.24	0.007	0.606	0.0000	0.001	keep	destination updates checked html read real agent
+59f137c	local-fake-extension	133	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	baseline	destination priority high checked html read baseline local
+59f137c	local-fake-extension	134	1.0000	1.0000	1.0000	1.0000	1.33	0.004	0.006	0.0000	0.000	keep	destination priority high checked html read local
+59f137c	real-chrome-extension-smoke	118	1.0000	1.0000	1.0000	1.0000	1.12	0.009	0.123	0.0000	0.000	keep	destination priority high checked html read real smoke
+59f137c	real-chrome-extension-agent	128	1.0000	1.0000	1.0000	1.0000	1.24	0.008	0.604	0.0000	0.001	keep	destination priority high checked html read real agent
+0d2cc14	local-fake-extension	134	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	baseline	destination priority low checked html read baseline local
+0d2cc14	local-fake-extension	135	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	keep	destination priority low checked html read local
+0d2cc14	real-chrome-extension-smoke	119	1.0000	1.0000	1.0000	1.0000	1.12	0.008	0.124	0.0000	0.000	keep	destination priority low checked html read real smoke
+0d2cc14	real-chrome-extension-agent	129	1.0000	1.0000	1.0000	1.0000	1.24	0.008	0.605	0.0000	0.001	keep	destination priority low checked html read real agent
+ca5e975	local-fake-extension	135	1.0000	1.0000	1.0000	1.0000	1.33	0.003	0.005	0.0000	0.000	baseline	destination priority low unchecked html read baseline local
+ca5e975	local-fake-extension	136	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.005	0.0000	0.000	keep	destination priority low unchecked html read local
+ca5e975	real-chrome-extension-smoke	120	1.0000	1.0000	1.0000	1.0000	1.12	0.007	0.124	0.0000	0.000	keep	destination priority low unchecked html read real smoke
+ca5e975	real-chrome-extension-agent	130	1.0000	1.0000	1.0000	1.0000	1.24	0.007	0.603	0.0000	0.001	keep	destination priority low unchecked html read real agent
+3be5445	local-fake-extension	136	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.006	0.0000	0.000	baseline	destination priority high unchecked html read baseline local
+3be5445	local-fake-extension	137	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.006	0.0000	0.000	keep	destination priority high unchecked html read local
+3be5445	real-chrome-extension-smoke	121	1.0000	1.0000	1.0000	1.0000	1.12	0.009	0.123	0.0000	0.000	keep	destination priority high unchecked html read real smoke
+3be5445	real-chrome-extension-agent	131	1.0000	1.0000	1.0000	1.0000	1.24	0.009	0.584	0.0000	0.001	keep	destination priority high unchecked html read real agent
+4b7094e	local-fake-extension	137	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.005	0.0000	0.000	baseline	destination updates unchecked html read baseline local
+4b7094e	local-fake-extension	138	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.005	0.0000	0.000	keep	destination updates unchecked html read local
+4b7094e	real-chrome-extension-smoke	122	1.0000	1.0000	1.0000	1.0000	1.11	0.008	0.122	0.0000	0.000	keep	destination updates unchecked html read real smoke
+4b7094e	real-chrome-extension-agent	132	1.0000	1.0000	1.0000	1.0000	1.23	0.010	0.566	0.0000	0.001	keep	destination updates unchecked html read real agent
+cd5b710	local-fake-extension	138	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.005	0.0000	0.000	baseline	destination name typed html read baseline local
+cd5b710	local-fake-extension	139	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.005	0.0000	0.000	keep	destination name typed html read local
+cd5b710	real-chrome-extension-smoke	123	1.0000	1.0000	1.0000	1.0000	1.11	0.010	0.124	0.0000	0.000	keep	destination name typed html read real smoke
+cd5b710	real-chrome-extension-agent	133	1.0000	1.0000	1.0000	1.0000	1.23	0.010	0.565	0.0000	0.001	keep	destination name typed html read real agent
+f690d7e	local-fake-extension	139	1.0000	1.0000	1.0000	1.0000	1.32	0.003	0.006	0.0000	0.000	baseline	destination name appended html read baseline local
+f690d7e	local-fake-extension	140	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.005	0.0000	0.000	keep	destination name appended html read local
+f690d7e	real-chrome-extension-smoke	124	1.0000	1.0000	1.0000	1.0000	1.11	0.010	0.124	0.0000	0.000	keep	destination name appended html read real smoke
+f690d7e	real-chrome-extension-agent	134	1.0000	1.0000	1.0000	1.0000	1.23	0.009	0.581	0.0000	0.001	keep	destination name appended html read real agent
+e1465a5	local-fake-extension	140	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.005	0.0000	0.000	baseline	destination name transfer html read baseline local
+e1465a5	local-fake-extension	141	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.006	0.0000	0.000	keep	destination name transfer html read local
+e1465a5	real-chrome-extension-smoke	125	1.0000	1.0000	1.0000	1.0000	1.11	0.009	0.125	0.0000	0.000	keep	destination name transfer html read real smoke
+e1465a5	real-chrome-extension-agent	135	1.0000	1.0000	1.0000	1.0000	1.23	0.010	0.577	0.0000	0.001	keep	destination name transfer html read real agent
+6f48ddd	local-fake-extension	141	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.005	0.0000	0.000	baseline	destination email transfer html read baseline local
+6f48ddd	local-fake-extension	142	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.005	0.0000	0.000	keep	destination email transfer html read local
+6f48ddd	real-chrome-extension-smoke	126	1.0000	1.0000	1.0000	1.0000	1.11	0.009	0.124	0.0000	0.000	keep	destination email transfer html read real smoke
+6f48ddd	real-chrome-extension-agent	136	1.0000	1.0000	1.0000	1.0000	1.23	0.010	0.577	0.0000	0.001	keep	destination email transfer html read real agent
+0ebe307	local-fake-extension	142	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.005	0.0000	0.000	baseline	destination notes typed html read baseline local
+0ebe307	local-fake-extension	143	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.005	0.0000	0.000	keep	destination notes typed html read local
+0ebe307	real-chrome-extension-smoke	127	1.0000	1.0000	1.0000	1.0000	1.11	0.011	0.125	0.0000	0.000	keep	destination notes typed html read real smoke
+0ebe307	real-chrome-extension-agent	137	1.0000	1.0000	1.0000	1.0000	1.23	0.010	0.558	0.0000	0.001	keep	destination notes typed html read real agent
+387b9e2	local-fake-extension	143	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.005	0.0000	0.000	baseline	destination notes recovered text read baseline local
+387b9e2	local-fake-extension	144	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.005	0.0000	0.000	keep	destination notes recovered text read local
+387b9e2	real-chrome-extension-smoke	128	1.0000	1.0000	1.0000	1.0000	1.11	0.009	0.124	0.0000	0.000	keep	destination notes recovered text read real smoke
+387b9e2	real-chrome-extension-agent	138	1.0000	1.0000	1.0000	1.0000	1.22	0.009	0.558	0.0000	0.001	keep	destination notes recovered text read real agent
+505204c	local-fake-extension	144	1.0000	1.0000	1.0000	1.0000	1.31	0.003	0.005	0.0000	0.000	baseline	destination role recovered html read baseline local
+505204c	local-fake-extension	145	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	keep	destination role recovered html read local
+505204c	real-chrome-extension-smoke	129	1.0000	1.0000	1.0000	1.0000	1.11	0.007	0.124	0.0000	0.000	keep	destination role recovered html read real smoke
+505204c	real-chrome-extension-agent	139	1.0000	1.0000	1.0000	1.0000	1.22	0.009	0.599	0.0000	0.001	keep	destination role recovered html read real agent
+687c23a	local-fake-extension	145	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	baseline	destination role selected html read baseline local
+687c23a	local-fake-extension	146	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.004	0.0000	0.000	keep	destination role selected html read local
+687c23a	real-chrome-extension-smoke	130	1.0000	1.0000	1.0000	1.0000	1.11	0.009	0.124	0.0000	0.000	keep	destination role selected html read real smoke
+687c23a	real-chrome-extension-agent	140	1.0000	1.0000	1.0000	1.0000	1.22	0.008	0.603	0.0000	0.001	keep	destination role selected html read real agent
+096f911	local-fake-extension	146	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	baseline	destination role after transfer read baseline local
+096f911	local-fake-extension	147	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	keep	destination role after transfer read local
+096f911	real-chrome-extension-smoke	131	1.0000	1.0000	1.0000	1.0000	1.11	0.008	0.126	0.0000	0.000	keep	destination role after transfer read real smoke
+096f911	real-chrome-extension-agent	141	1.0000	1.0000	1.0000	1.0000	1.22	0.009	0.600	0.0000	0.001	keep	destination role after transfer read real agent
+8a9d019	local-fake-extension	147	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	baseline	destination role after transfer html read baseline local
+8a9d019	local-fake-extension	148	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	keep	destination role after transfer html read local
+8a9d019	real-chrome-extension-smoke	132	1.0000	1.0000	1.0000	1.0000	1.11	0.009	0.124	0.0000	0.000	keep	destination role after transfer html read real smoke
+8a9d019	real-chrome-extension-agent	142	1.0000	1.0000	1.0000	1.0000	1.22	0.008	0.603	0.0000	0.001	keep	destination role after transfer html read real agent
+975fdcf	local-fake-extension	148	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	baseline	destination updates after transfer read baseline local
+975fdcf	local-fake-extension	149	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	keep	destination updates after transfer read local
+975fdcf	real-chrome-extension-smoke	133	1.0000	1.0000	1.0000	1.0000	1.11	0.009	0.126	0.0000	0.000	keep	destination updates after transfer read real smoke
+975fdcf	real-chrome-extension-agent	143	1.0000	1.0000	1.0000	1.0000	1.22	0.008	0.602	0.0000	0.001	keep	destination updates after transfer read real agent
+a850729	local-fake-extension	149	1.0000	1.0000	1.0000	1.0000	1.30	0.003	0.005	0.0000	0.000	baseline	destination updates after transfer html read baseline local
+a850729	local-fake-extension	150	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	keep	destination updates after transfer html read local
+a850729	real-chrome-extension-smoke	134	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.123	0.0000	0.000	keep	destination updates after transfer html read real smoke
+a850729	real-chrome-extension-agent	144	1.0000	1.0000	1.0000	1.0000	1.22	0.010	0.604	0.0000	0.001	keep	destination updates after transfer html read real agent
+1440fc9	local-fake-extension	150	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	baseline	destination priority after transfer read baseline local
+1440fc9	local-fake-extension	151	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	keep	destination priority after transfer read local
+1440fc9	real-chrome-extension-smoke	135	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.123	0.0000	0.000	keep	destination priority after transfer read real smoke
+1440fc9	real-chrome-extension-agent	145	1.0000	1.0000	1.0000	1.0000	1.21	0.009	0.601	0.0000	0.001	keep	destination priority after transfer read real agent
+c8641ce	local-fake-extension	151	1.0000	1.0000	1.0000	1.0000	1.29	0.002	0.005	0.0000	0.000	baseline	destination priority after transfer html read baseline local
+c8641ce	local-fake-extension	152	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	keep	destination priority after transfer html read local
+c8641ce	real-chrome-extension-smoke	136	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.125	0.0000	0.000	keep	destination priority after transfer html read real smoke
+c8641ce	real-chrome-extension-agent	146	1.0000	1.0000	1.0000	1.0000	1.21	0.008	0.597	0.0000	0.001	keep	destination priority after transfer html read real agent
+90e923e	local-fake-extension	152	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	baseline	destination priority high after transfer read baseline local
+90e923e	local-fake-extension	153	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	keep	destination priority high after transfer read local
+90e923e	real-chrome-extension-smoke	137	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.125	0.0000	0.000	keep	destination priority high after transfer read real smoke
+90e923e	real-chrome-extension-agent	147	1.0000	1.0000	1.0000	1.0000	1.21	0.009	0.601	0.0000	0.001	keep	destination priority high after transfer read real agent
+d111584	local-fake-extension	153	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	baseline	destination priority high after transfer html read baseline local
+d111584	local-fake-extension	154	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	keep	destination priority high after transfer html read local
+d111584	real-chrome-extension-smoke	138	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.124	0.0000	0.000	keep	destination priority high after transfer html read real smoke
+d111584	real-chrome-extension-agent	148	1.0000	1.0000	1.0000	1.0000	1.21	0.009	0.599	0.0000	0.001	keep	destination priority high after transfer html read real agent
+92268b5	local-fake-extension	154	1.0000	1.0000	1.0000	1.0000	1.29	0.003	0.005	0.0000	0.000	baseline	destination notes after transfer read baseline local
+92268b5	local-fake-extension	155	1.0000	1.0000	1.0000	1.0000	1.28	0.003	0.005	0.0000	0.000	keep	destination notes after transfer read local
+92268b5	real-chrome-extension-smoke	139	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.124	0.0000	0.000	keep	destination notes after transfer read real smoke
+92268b5	real-chrome-extension-agent	149	1.0000	1.0000	1.0000	1.0000	1.21	0.008	0.602	0.0000	0.002	keep	destination notes after transfer read real agent
+66f1f16	local-fake-extension	155	1.0000	1.0000	1.0000	1.0000	1.28	0.003	0.005	0.0000	0.000	baseline	destination notes after transfer html read baseline local
+66f1f16	local-fake-extension	156	1.0000	1.0000	1.0000	1.0000	1.28	0.003	0.005	0.0000	0.000	keep	destination notes after transfer html read local
+66f1f16	real-chrome-extension-smoke	140	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.124	0.0000	0.000	keep	destination notes after transfer html read real smoke
+66f1f16	real-chrome-extension-agent	150	1.0000	1.0000	1.0000	1.0000	1.21	0.009	0.602	0.0000	0.001	keep	destination notes after transfer html read real agent
+c92ecf7	local-fake-extension	156	1.0000	1.0000	1.0000	1.0000	1.28	0.003	0.005	0.0000	0.000	baseline	source name after transfer read baseline local
+c92ecf7	local-fake-extension	157	1.0000	1.0000	1.0000	1.0000	1.28	0.003	0.005	0.0000	0.000	keep	source name after transfer read local
+c92ecf7	real-chrome-extension-smoke	141	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.123	0.0000	0.000	keep	source name after transfer read real smoke
+c92ecf7	real-chrome-extension-agent	151	1.0000	1.0000	1.0000	1.0000	1.21	0.010	0.604	0.0000	0.001	keep	source name after transfer read real agent
+13e372c	local-fake-extension	157	1.0000	1.0000	1.0000	1.0000	1.28	0.003	0.005	0.0000	0.000	baseline	source email after transfer read baseline local
+13e372c	local-fake-extension	158	1.0000	1.0000	1.0000	1.0000	1.28	0.003	0.005	0.0000	0.000	keep	source email after transfer read local
+13e372c	real-chrome-extension-smoke	142	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.123	0.0000	0.000	keep	source email after transfer read real smoke
+13e372c	real-chrome-extension-agent	152	1.0000	1.0000	1.0000	1.0000	1.20	0.009	0.601	0.0000	0.002	keep	source email after transfer read real agent
+d511406	local-fake-extension	158	1.0000	1.0000	1.0000	1.0000	1.28	0.003	0.005	0.0000	0.000	baseline	source name after transfer html read baseline local
+d511406	local-fake-extension	159	1.0000	1.0000	1.0000	1.0000	1.28	0.003	0.005	0.0000	0.000	keep	source name after transfer html read local
+d511406	real-chrome-extension-smoke	143	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.124	0.0000	0.000	keep	source name after transfer html read real smoke
+d511406	real-chrome-extension-agent	153	1.0000	1.0000	1.0000	1.0000	1.20	0.012	0.604	0.0000	0.001	keep	source name after transfer html read real agent
+6301b40	local-fake-extension	159	1.0000	1.0000	1.0000	1.0000	1.28	0.003	0.005	0.0000	0.000	baseline	source email after transfer html read baseline local
+6301b40	local-fake-extension	160	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	keep	source email after transfer html read local
+6301b40	real-chrome-extension-smoke	144	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.124	0.0000	0.000	keep	source email after transfer html read real smoke
+6301b40	real-chrome-extension-agent	154	1.0000	1.0000	1.0000	1.0000	1.20	0.009	0.599	0.0000	0.071	keep	source email after transfer html read real agent
+dcb16bf	local-fake-extension	160	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	baseline	source body after transfer html read baseline local
+dcb16bf	local-fake-extension	161	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	keep	source body after transfer html read local
+dcb16bf	real-chrome-extension-smoke	145	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.124	0.0000	0.000	keep	source body after transfer html read real smoke
+dcb16bf	real-chrome-extension-agent	155	1.0000	1.0000	1.0000	1.0000	1.20	0.009	0.604	0.0000	0.001	keep	source body after transfer html read real agent
+c5ea2bf	local-fake-extension	161	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	baseline	source body after transfer text read baseline local
+c5ea2bf	local-fake-extension	162	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	keep	source body after transfer text read local
+c5ea2bf	real-chrome-extension-smoke	146	1.0000	1.0000	1.0000	1.0000	1.10	0.008	0.123	0.0000	0.000	keep	source body after transfer text read real smoke
+c5ea2bf	real-chrome-extension-agent	156	0.9872	0.9872	1.0000	1.0000	1.16	0.008	0.509	0.0064	0.001	discard	source body after transfer text read real agent
+c5ea2bf	real-chrome-extension-agent	156	1.0000	1.0000	1.0000	1.0000	1.20	0.008	0.595	0.0000	0.001	keep	source body after transfer text read real agent
+2bdd54b	local-fake-extension	162	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	baseline	source body after save click text read baseline local
+2bdd54b	local-fake-extension	163	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.006	0.0000	0.000	keep	source body after save click text read local
+2bdd54b	real-chrome-extension-smoke	147	1.0000	1.0000	1.0000	1.0000	1.10	0.010	0.124	0.0000	0.000	keep	source body after save click text read real smoke
+2bdd54b	real-chrome-extension-agent	157	1.0000	1.0000	1.0000	1.0000	1.20	0.010	0.599	0.0000	0.001	keep	source body after save click text read real agent
+2e64fce	local-fake-extension	163	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	baseline	source body after save click html read baseline local
+2e64fce	local-fake-extension	164	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	keep	source body after save click html read local
+2e64fce	real-chrome-extension-smoke	148	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.124	0.0000	0.000	keep	source body after save click html read real smoke
+2e64fce	real-chrome-extension-agent	158	1.0000	1.0000	1.0000	1.0000	1.20	0.008	0.596	0.0000	0.001	keep	source body after save click html read real agent
+4a3ee8b	local-fake-extension	164	1.0000	1.0000	1.0000	1.0000	1.27	0.002	0.004	0.0000	0.000	baseline	source name after save click read baseline local
+4a3ee8b	local-fake-extension	165	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	keep	source name after save click read local
+4a3ee8b	real-chrome-extension-smoke	149	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.124	0.0000	0.000	keep	source name after save click read real smoke
+4a3ee8b	real-chrome-extension-agent	159	1.0000	1.0000	1.0000	1.0000	1.19	0.008	0.605	0.0000	0.002	keep	source name after save click read real agent
+aef54fd	local-fake-extension	165	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	baseline	source name after save click html read baseline local
+aef54fd	local-fake-extension	166	1.0000	1.0000	1.0000	1.0000	1.27	0.002	0.005	0.0000	0.000	keep	source name after save click html read local
+aef54fd	real-chrome-extension-smoke	150	1.0000	1.0000	1.0000	1.0000	1.09	0.009	0.124	0.0000	0.000	keep	source name after save click html read real smoke
+aef54fd	real-chrome-extension-agent	160	1.0000	1.0000	1.0000	1.0000	1.19	0.009	0.600	0.0000	0.001	keep	source name after save click html read real agent
+2f360f3	local-fake-extension	166	1.0000	1.0000	1.0000	1.0000	1.27	0.003	0.005	0.0000	0.000	baseline	source email after save click read baseline local
+2f360f3	local-fake-extension	167	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.004	0.0000	0.000	keep	source email after save click read local
+2f360f3	real-chrome-extension-smoke	151	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.121	0.0000	0.000	keep	source email after save click read real smoke
+2f360f3	real-chrome-extension-agent	161	1.0000	1.0000	1.0000	1.0000	1.19	0.008	0.593	0.0000	0.009	keep	source email after save click read real agent
+01ae311	local-fake-extension	167	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	baseline	source email after save click html read baseline local
+01ae311	local-fake-extension	168	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	keep	source email after save click html read local
+01ae311	real-chrome-extension-smoke	152	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.123	0.0000	0.000	keep	source email after save click html read real smoke
+01ae311	real-chrome-extension-agent	162	1.0000	1.0000	1.0000	1.0000	1.19	0.008	0.594	0.0000	0.001	keep	source email after save click html read real agent
+5a31529	local-fake-extension	168	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.004	0.0000	0.000	baseline	destination name after save click read baseline local
+5a31529	local-fake-extension	169	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	keep	destination name after save click read local
+5a31529	real-chrome-extension-smoke	153	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.123	0.0000	0.000	keep	destination name after save click read real smoke
+5a31529	real-chrome-extension-agent	163	1.0000	1.0000	1.0000	1.0000	1.19	0.009	0.601	0.0000	0.001	keep	destination name after save click read real agent
+2f665ec	local-fake-extension	169	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.004	0.0000	0.000	baseline	destination name after save click html read baseline local
+2f665ec	local-fake-extension	170	0.9941	0.9941	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	discard	destination name after save click html read local
+2f665ec	local-fake-extension	169	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	baseline	destination name after save click html discard restored local
+e19f1ef	local-fake-extension	169	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	baseline	destination email after save click read baseline local
+e19f1ef	local-fake-extension	170	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.004	0.0000	0.000	keep	destination email after save click read local
+e19f1ef	real-chrome-extension-smoke	154	1.0000	1.0000	1.0000	1.0000	1.09	0.009	0.124	0.0000	0.000	keep	destination email after save click read real smoke
+e19f1ef	real-chrome-extension-agent	164	1.0000	1.0000	1.0000	1.0000	1.19	0.008	0.504	0.0000	0.001	keep	destination email after save click read real agent
+0083aa2	local-fake-extension	170	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	baseline	destination role after save click read baseline local
+0083aa2	local-fake-extension	171	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.004	0.0000	0.000	keep	destination role after save click read local
+0083aa2	real-chrome-extension-smoke	155	1.0000	1.0000	1.0000	1.0000	1.09	0.009	0.123	0.0000	0.000	keep	destination role after save click read real smoke
+0083aa2	real-chrome-extension-agent	165	1.0000	1.0000	1.0000	1.0000	1.19	0.008	0.594	0.0000	0.001	keep	destination role after save click read real agent
+54db15d	local-fake-extension	171	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	baseline	destination updates after save click read baseline local
+54db15d	local-fake-extension	172	0.9942	0.9942	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	discard	destination updates after save click read local
+54db15d	local-fake-extension	171	1.0000	1.0000	1.0000	1.0000	1.26	0.002	0.004	0.0000	0.000	baseline	destination updates after save click discard restored local
+a97b96b	local-fake-extension	171	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	baseline	destination updates checked after save click read baseline local
+a97b96b	local-fake-extension	172	0.9942	0.9942	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	discard	destination updates checked after save click read local
+a97b96b	local-fake-extension	171	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	baseline	destination updates checked after save click discard restored local
+a97b96b	local-fake-extension	171	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	baseline	destination updates unchecked after save click read baseline local
+a97b96b	local-fake-extension	172	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	keep	destination updates unchecked after save click read local
+a97b96b	real-chrome-extension-smoke	156	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.124	0.0000	0.000	keep	destination updates unchecked after save click read real smoke
+a97b96b	real-chrome-extension-agent	166	1.0000	1.0000	1.0000	1.0000	1.19	0.008	0.604	0.0000	0.001	keep	destination updates unchecked after save click read real agent
+274f6d0	local-fake-extension	172	1.0000	1.0000	1.0000	1.0000	1.26	0.003	0.005	0.0000	0.000	baseline	destination priority low after save click read baseline local
+274f6d0	local-fake-extension	173	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	keep	destination priority low after save click read local
+274f6d0	real-chrome-extension-smoke	157	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.124	0.0000	0.000	keep	destination priority low after save click read real smoke
+274f6d0	real-chrome-extension-agent	167	1.0000	1.0000	1.0000	1.0000	1.19	0.008	0.601	0.0000	0.001	keep	destination priority low after save click read real agent
+b4e5c1a	local-fake-extension	173	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	baseline	destination priority high after save click read baseline local
+b4e5c1a	local-fake-extension	174	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	keep	destination priority high after save click read local
+b4e5c1a	real-chrome-extension-smoke	158	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.124	0.0000	0.000	keep	destination priority high after save click read real smoke
+b4e5c1a	real-chrome-extension-agent	168	1.0000	1.0000	1.0000	1.0000	1.18	0.009	0.599	0.0000	0.001	keep	destination priority high after save click read real agent
+f89661e	local-fake-extension	174	1.0000	1.0000	1.0000	1.0000	1.25	0.002	0.005	0.0000	0.000	baseline	destination notes after save click read baseline local
+f89661e	local-fake-extension	175	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	keep	destination notes after save click read local
+f89661e	real-chrome-extension-smoke	159	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.124	0.0000	0.000	keep	destination notes after save click read real smoke
+f89661e	real-chrome-extension-agent	169	1.0000	1.0000	1.0000	1.0000	1.18	0.008	0.595	0.0000	0.001	keep	destination notes after save click read real agent
+04c0428	local-fake-extension	175	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	baseline	destination notes after save click html read baseline local
+04c0428	local-fake-extension	176	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	keep	destination notes after save click html read local
+04c0428	real-chrome-extension-smoke	160	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.119	0.0000	0.000	keep	destination notes after save click html read real smoke
+04c0428	real-chrome-extension-agent	170	1.0000	1.0000	1.0000	1.0000	1.18	0.008	0.502	0.0000	0.001	keep	destination notes after save click html read real agent
+a9082ac	local-fake-extension	176	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	baseline	save profile button after save click read baseline local
+a9082ac	local-fake-extension	177	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	keep	save profile button after save click read local
+a9082ac	real-chrome-extension-smoke	161	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.122	0.0000	0.000	keep	save profile button after save click read real smoke
+a9082ac	real-chrome-extension-agent	171	1.0000	1.0000	1.0000	1.0000	1.18	0.008	0.599	0.0000	0.001	keep	save profile button after save click read real agent
+dc2acab	local-fake-extension	177	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	baseline	save profile button after save click html read baseline local
+dc2acab	local-fake-extension	178	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	keep	save profile button after save click html read local
+dc2acab	real-chrome-extension-smoke	162	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.120	0.0000	0.000	keep	save profile button after save click html read real smoke
+dc2acab	real-chrome-extension-agent	172	1.0000	1.0000	1.0000	1.0000	1.18	0.008	0.505	0.0000	0.001	keep	save profile button after save click html read real agent
+b4d7ecf	local-fake-extension	178	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	baseline	destination name after save click html read baseline local
+b4d7ecf	local-fake-extension	179	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	keep	destination name after save click html read local
+b4d7ecf	real-chrome-extension-smoke	163	1.0000	1.0000	1.0000	1.0000	1.09	0.007	0.122	0.0000	0.000	keep	destination name after save click html read real smoke
+b4d7ecf	real-chrome-extension-agent	173	1.0000	1.0000	1.0000	1.0000	1.18	0.008	0.506	0.0000	0.001	keep	destination name after save click html read real agent
+2359ce5	local-fake-extension	179	1.0000	1.0000	1.0000	1.0000	1.25	0.003	0.005	0.0000	0.000	baseline	destination email after save click html read baseline local
+2359ce5	local-fake-extension	180	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.006	0.0000	0.000	keep	destination email after save click html read local
+2359ce5	real-chrome-extension-smoke	164	1.0000	1.0000	1.0000	1.0000	1.09	0.008	0.123	0.0000	0.000	keep	destination email after save click html read real smoke
+2359ce5	real-chrome-extension-agent	174	1.0000	1.0000	1.0000	1.0000	1.18	0.009	0.594	0.0000	0.001	keep	destination email after save click html read real agent
+cc1fc42	local-fake-extension	180	1.0000	1.0000	1.0000	1.0000	1.24	0.002	0.005	0.0000	0.000	baseline	destination role after save click html read baseline local
+cc1fc42	local-fake-extension	181	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	keep	destination role after save click html read local
+cc1fc42	real-chrome-extension-smoke	165	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.123	0.0000	0.000	keep	destination role after save click html read real smoke
+cc1fc42	real-chrome-extension-agent	175	1.0000	1.0000	1.0000	1.0000	1.18	0.010	0.499	0.0000	0.095	keep	destination role after save click html read real agent
+4a3a7a1	local-fake-extension	181	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	baseline	destination updates after save click html read baseline local
+4a3a7a1	local-fake-extension	182	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.004	0.0000	0.000	keep	destination updates after save click html read local
+4a3a7a1	real-chrome-extension-smoke	166	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.123	0.0000	0.000	keep	destination updates after save click html read real smoke
+4a3a7a1	real-chrome-extension-agent	176	1.0000	1.0000	1.0000	1.0000	1.18	0.008	0.594	0.0000	0.001	keep	destination updates after save click html read real agent
+862b847	local-fake-extension	182	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.004	0.0000	0.000	baseline	destination low priority after save click html read baseline local
+862b847	local-fake-extension	183	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.004	0.0000	0.000	keep	destination low priority after save click html read local
+862b847	real-chrome-extension-smoke	167	1.0000	1.0000	1.0000	1.0000	1.08	0.007	0.122	0.0000	0.000	keep	destination low priority after save click html read real smoke
+862b847	real-chrome-extension-agent	177	1.0000	1.0000	1.0000	1.0000	1.18	0.008	0.601	0.0000	0.001	keep	destination low priority after save click html read real agent
+c2c1918	local-fake-extension	183	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.004	0.0000	0.000	baseline	destination high priority after save click html read baseline local
+c2c1918	local-fake-extension	184	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	keep	destination high priority after save click html read local
+c2c1918	real-chrome-extension-smoke	168	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.123	0.0000	0.000	keep	destination high priority after save click html read real smoke
+c2c1918	real-chrome-extension-agent	178	0.9888	0.9888	1.0000	1.0000	1.14	0.009	0.499	0.0000	0.001	discard	destination high priority after save click html read real agent
+c2c1918	real-chrome-extension-agent	178	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.506	0.0000	0.002	keep	destination high priority after save click html read real agent
+db23740	local-fake-extension	184	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	baseline	destination updates initial html read baseline local
+db23740	local-fake-extension	185	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	keep	destination updates initial html read local
+db23740	real-chrome-extension-smoke	169	1.0000	1.0000	1.0000	1.0000	1.08	0.007	0.121	0.0000	0.000	keep	destination updates initial html read real smoke
+db23740	real-chrome-extension-agent	179	1.0000	1.0000	1.0000	1.0000	1.17	0.008	0.503	0.0000	0.001	keep	destination updates initial html read real agent
+bd42640	local-fake-extension	185	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	baseline	destination high priority initial html read baseline local
+bd42640	local-fake-extension	186	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	keep	destination high priority initial html read local
+bd42640	real-chrome-extension-smoke	170	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.114	0.0000	0.000	keep	destination high priority initial html read real smoke
+bd42640	real-chrome-extension-agent	180	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.502	0.0000	0.001	keep	destination high priority initial html read real agent
+2bf0037	local-fake-extension	186	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	baseline	destination low priority initial html read baseline local
+2bf0037	local-fake-extension	187	1.0000	1.0000	1.0000	1.0000	1.24	0.003	0.005	0.0000	0.000	keep	destination low priority initial html read local
+2bf0037	real-chrome-extension-smoke	171	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.122	0.0000	0.000	keep	destination low priority initial html read real smoke
+2bf0037	real-chrome-extension-agent	181	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.500	0.0000	0.001	keep	destination low priority initial html read real agent
+9e87540	local-fake-extension	187	1.0000	1.0000	1.0000	1.0000	1.24	0.002	0.005	0.0000	0.000	baseline	destination notes recovered html read baseline local
+9e87540	local-fake-extension	188	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	destination notes recovered html read local
+9e87540	real-chrome-extension-smoke	172	1.0000	1.0000	1.0000	1.0000	1.08	0.007	0.120	0.0000	0.000	keep	destination notes recovered html read real smoke
+9e87540	real-chrome-extension-agent	182	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.497	0.0000	0.001	keep	destination notes recovered html read real agent
+a85f454	local-fake-extension	188	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	baseline	destination role options html read baseline local
+a85f454	local-fake-extension	189	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	destination role options html read local
+a85f454	real-chrome-extension-smoke	173	1.0000	1.0000	1.0000	1.0000	1.08	0.010	0.123	0.0000	0.000	keep	destination role options html read real smoke
+a85f454	real-chrome-extension-agent	183	1.0000	1.0000	1.0000	1.0000	1.17	0.008	0.501	0.0000	0.001	keep	destination role options html read real agent
+d47fc5c	local-fake-extension	189	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	baseline	navigation billing link html read baseline local
+d47fc5c	local-fake-extension	190	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	navigation billing link html read local
+d47fc5c	real-chrome-extension-smoke	174	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.123	0.0000	0.000	keep	navigation billing link html read real smoke
+d47fc5c	real-chrome-extension-agent	184	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.503	0.0000	0.001	keep	navigation billing link html read real agent
+ff53ec3	local-fake-extension	190	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	baseline	navigation settings link html read baseline local
+ff53ec3	local-fake-extension	191	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	navigation settings link html read local
+ff53ec3	real-chrome-extension-smoke	175	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.121	0.0000	0.000	keep	navigation settings link html read real smoke
+ff53ec3	real-chrome-extension-agent	185	1.0000	1.0000	1.0000	1.0000	1.17	0.008	0.506	0.0000	0.001	keep	navigation settings link html read real agent
+c095dc8	local-fake-extension	191	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	baseline	navigation isolated billing link html read baseline local
+c095dc8	local-fake-extension	192	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	navigation isolated billing link html read local
+c095dc8	real-chrome-extension-smoke	176	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.123	0.0000	0.000	keep	navigation isolated billing link html read real smoke
+c095dc8	real-chrome-extension-agent	186	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.496	0.0000	0.001	keep	navigation isolated billing link html read real agent
+bc410b5	local-fake-extension	192	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	baseline	navigation isolated settings link html read baseline local
+bc410b5	local-fake-extension	193	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	navigation isolated settings link html read local
+bc410b5	real-chrome-extension-smoke	177	1.0000	1.0000	1.0000	1.0000	1.08	0.008	0.121	0.0000	0.000	keep	navigation isolated settings link html read real smoke
+bc410b5	real-chrome-extension-agent	187	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.508	0.0000	0.001	keep	navigation isolated settings link html read real agent
+85061ea	local-fake-extension	193	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.006	0.0000	0.000	baseline	semantic receipt button html read baseline local
+85061ea	local-fake-extension	194	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	semantic receipt button html read local
+85061ea	real-chrome-extension-smoke	178	1.0000	1.0000	1.0000	1.0000	1.08	0.009	0.123	0.0000	0.000	keep	semantic receipt button html read real smoke
+85061ea	real-chrome-extension-agent	188	1.0000	1.0000	1.0000	1.0000	1.16	0.008	0.497	0.0000	0.001	keep	semantic receipt button html read real agent
+795525a	local-fake-extension	198	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.005	0.0000	0.000	keep	adversarial duplicate invoice state verification local
+795525a	real-chrome-extension-smoke	182	1.0000	1.0000	1.0000	1.0000	1.08	0.009	0.120	0.0000	0.000	keep	adversarial duplicate invoice state verification real smoke
+795525a	real-chrome-extension-agent	192	1.0000	1.0000	1.0000	1.0000	1.17	0.009	0.550	0.0000	0.189	keep	adversarial duplicate invoice state verification real agent
+16c5cdc	local-fake-extension	198	1.0000	1.0000	1.0000	1.0000	1.23	0.003	0.006	0.0000	0.000	baseline	dynamic ui controls baseline local
+16c5cdc	local-fake-extension	207	1.0000	1.0000	1.0000	1.0000	1.22	0.003	0.005	0.0000	0.000	keep	dynamic react controls choose option local
+16c5cdc	real-chrome-extension-smoke	191	0.9843	0.9843	1.0000	1.0000	1.09	0.010	0.120	0.0000	0.000	discard	dynamic react controls choose option real smoke
+16c5cdc	real-chrome-extension-smoke	191	1.0000	1.0000	1.0000	1.0000	1.08	0.010	0.122	0.0000	0.000	keep	dynamic react controls choose option real smoke
+16c5cdc	real-chrome-extension-agent	201	1.0000	1.0000	1.0000	1.0000	1.16	0.011	0.544	0.0000	0.673	keep	dynamic react controls choose option real agent
+16c5cdc	local-fake-extension	207	1.0000	1.0000	1.0000	1.0000	1.22	0.003	0.005	0.0000	0.000	keep	dynamic react async controls choose option local
+16c5cdc	real-chrome-extension-smoke	191	0.9686	0.9686	1.0000	1.0000	1.09	0.011	0.126	0.0000	0.000	discard	dynamic react async controls choose option real smoke
+16c5cdc	real-chrome-extension-smoke	191	1.0000	1.0000	1.0000	1.0000	1.08	0.012	0.129	0.0000	0.000	keep	dynamic react async controls choose option real smoke
+16c5cdc	real-chrome-extension-agent	201	1.0000	1.0000	1.0000	1.0000	1.16	0.011	0.567	0.0000	1.428	keep	dynamic react async controls choose option real agent

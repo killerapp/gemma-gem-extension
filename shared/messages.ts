@@ -1,5 +1,6 @@
 import type { ToolCall } from '@kessler/gemma-agent'
 import type { ModelId } from './models'
+import type { BridgeConnectionStatus, BridgeSettings } from './bridge-settings'
 
 // Content Script -> Service Worker
 export type ChatSettings = {
@@ -29,6 +30,15 @@ export type ChatOpenMessage = {
 
 export type ChatStopMessage = {
   type: 'chat:stop'
+}
+
+export type BridgeSettingsGetMessage = {
+  type: 'bridge:settings:get'
+}
+
+export type BridgeSettingsUpdateMessage = {
+  type: 'bridge:settings:update'
+  settings: Partial<Pick<BridgeSettings, 'enabled' | 'port'>>
 }
 
 export type ToolResultMessage = {
@@ -65,6 +75,8 @@ export type ModelStatusMessage = {
   modelId?: ModelId
   progress?: number
   error?: string
+  phase?: string
+  elapsedMs?: number
 }
 
 export type ModelSwitchMessage = {
@@ -72,11 +84,31 @@ export type ModelSwitchMessage = {
   modelId: ModelId
 }
 
+export type BridgeStatusMessage = {
+  type: 'bridge:status'
+  status: BridgeConnectionStatus
+  error?: string
+}
+
+export type BridgeActivityStatus = 'started' | 'chunk' | 'tool' | 'completed' | 'error'
+
+export type BridgeActivityMessage = {
+  type: 'bridge:activity'
+  status: BridgeActivityStatus
+  tabId?: number
+  requestId?: string
+  title?: string
+  text?: string
+  toolName?: string
+  timestamp: number
+}
+
 // Service Worker -> Offscreen Document
 export type AgentRunMessage = {
   type: 'agent:run'
   tabId: number
   userMessage: string
+  modelId?: ModelId
   settings?: ChatSettings
   pageContext?: string
 }
@@ -112,6 +144,8 @@ export type OffscreenModelStatusMessage = {
   modelId?: ModelId
   progress?: number
   error?: string
+  phase?: string
+  elapsedMs?: number
 }
 
 export type GPUWarningMessage = {
@@ -123,6 +157,8 @@ export type Message =
   | ChatSendMessage
   | ChatOpenMessage
   | ChatStopMessage
+  | BridgeSettingsGetMessage
+  | BridgeSettingsUpdateMessage
   | SettingsUpdateMessage
   | ContextClearMessage
   | ToolResultMessage
@@ -132,6 +168,8 @@ export type Message =
   | AgentToolCallMessage
   | ModelStatusMessage
   | ModelSwitchMessage
+  | BridgeStatusMessage
+  | BridgeActivityMessage
   | AgentRunMessage
   | ModelLoadMessage
   | OffscreenToolExecuteMessage

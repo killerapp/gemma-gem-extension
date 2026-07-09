@@ -1,0 +1,884 @@
+[
+  {
+    "id": "semantic-receipt-agent",
+    "suite": "semantic-buttons",
+    "title": "Choose the receipt proof button",
+    "tool": "gemma_agent",
+    "arguments": {
+      "tabId": 101,
+      "task": "get proof of last payment",
+      "thinking": false,
+      "maxIterations": 3
+    },
+    "expect": {
+      "contains": ["#download-receipt", "INV-2026-041"],
+      "actions": 3,
+      "actionsByMode": {
+        "real-chrome-extension-agent": 4
+      },
+      "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent"],
+      "actionTraceToolsByMode": {
+        "real-chrome-extension-agent": ["read_page_content", "read_page_content", "gemma_agent", "click_element"]
+      },
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model"],
+      "actionTraceTextIncludesByMode": {
+        "real-chrome-extension-agent": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model", "#download-receipt"]
+      },
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": true
+    }
+  },
+  {
+    "id": "semantic-invoice-agent",
+    "suite": "semantic-buttons",
+    "title": "Choose the invoice PDF button",
+    "tool": "gemma_agent",
+    "arguments": {
+      "tabId": 101,
+      "task": "download the invoice PDF",
+      "thinking": false,
+      "maxIterations": 3
+    },
+    "expect": {
+      "contains": ["#download-invoice", "INV-2026-041"],
+      "actions": 3,
+      "actionsByMode": {
+        "real-chrome-extension-agent": 4
+      },
+      "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent"],
+      "actionTraceToolsByMode": {
+        "real-chrome-extension-agent": ["read_page_content", "read_page_content", "gemma_agent", "click_element"]
+      },
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model"],
+      "actionTraceTextIncludesByMode": {
+        "real-chrome-extension-agent": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model", "#download-invoice"]
+      },
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": true
+    }
+  },
+  {
+    "id": "semantic-receipt-agent-runtime-error-after-click",
+    "suite": "semantic-buttons",
+    "title": "Recover receipt agent runtime error after internal click",
+    "tool": "gemma_agent",
+    "modes": ["local-fake-extension"],
+    "arguments": {
+      "tabId": 101,
+      "task": "simulate transient runtime error after clicking receipt",
+      "thinking": false,
+      "maxIterations": 3
+    },
+    "expect": {
+      "contains": ["Recovered from transient model runtime error", "#download-receipt", "already executed", "INV-2026-041"],
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": true
+    }
+  },
+  {
+    "id": "semantic-invoice-agent-runtime-error-after-click",
+    "suite": "semantic-buttons",
+    "title": "Recover invoice agent runtime error after internal click",
+    "tool": "gemma_agent",
+    "modes": ["local-fake-extension"],
+    "arguments": {
+      "tabId": 101,
+      "task": "simulate transient runtime error after clicking invoice",
+      "thinking": false,
+      "maxIterations": 3
+    },
+    "expect": {
+      "contains": ["Recovered from transient model runtime error", "#download-invoice", "already executed", "INV-2026-041"],
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": true
+    }
+  },
+  {
+    "id": "semantic-settings-agent-runtime-error-after-click",
+    "suite": "semantic-buttons",
+    "title": "Recover settings agent runtime error after internal click",
+    "tool": "gemma_agent",
+    "modes": ["local-fake-extension"],
+    "arguments": {
+      "tabId": 101,
+      "task": "simulate transient runtime error after clicking settings",
+      "thinking": false,
+      "maxIterations": 3
+    },
+    "expect": {
+      "contains": ["Recovered from transient model runtime error", "#payment-settings", "already executed", "INV-2026-041"],
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": true
+    }
+  },
+  {
+    "id": "semantic-receipt-agent-runtime-error-before-click",
+    "suite": "semantic-buttons",
+    "title": "Recover receipt agent runtime error before internal click",
+    "tool": "gemma_agent",
+    "modes": ["local-fake-extension"],
+    "arguments": {
+      "tabId": 101,
+      "task": "simulate transient runtime error before clicking receipt",
+      "thinking": false,
+      "maxIterations": 3
+    },
+    "expect": {
+      "contains": ["Recovered from transient model runtime error", "#download-receipt", "Result", "Receipt PDF", "INV-2026-041"],
+      "actions": 4,
+      "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent", "click_element"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model", "selector=#download-receipt"],
+      "bridgeExecuteTools": ["read_page_content", "click_element"],
+      "bridgeExecuteSelectors": ["body", "#download-receipt"],
+      "bridgeRunAgent": true
+    }
+  },
+  {
+    "id": "semantic-invoice-agent-runtime-error-before-click",
+    "suite": "semantic-buttons",
+    "title": "Recover invoice agent runtime error before internal click",
+    "tool": "gemma_agent",
+    "modes": ["local-fake-extension"],
+    "arguments": {
+      "tabId": 101,
+      "task": "simulate transient runtime error before clicking invoice",
+      "thinking": false,
+      "maxIterations": 3
+    },
+    "expect": {
+      "contains": ["Recovered from transient model runtime error", "#download-invoice", "Result", "Invoice PDF", "INV-2026-041"],
+      "actions": 4,
+      "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent", "click_element"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model", "selector=#download-invoice"],
+      "bridgeExecuteTools": ["read_page_content", "click_element"],
+      "bridgeExecuteSelectors": ["body", "#download-invoice"],
+      "bridgeRunAgent": true
+    }
+  },
+  {
+    "id": "semantic-settings-agent-runtime-error-before-click",
+    "suite": "semantic-buttons",
+    "title": "Recover settings agent runtime error before internal click",
+    "tool": "gemma_agent",
+    "modes": ["local-fake-extension"],
+    "arguments": {
+      "tabId": 101,
+      "task": "simulate transient runtime error before clicking settings",
+      "thinking": false,
+      "maxIterations": 3
+    },
+    "expect": {
+      "contains": ["Recovered from transient model runtime error", "#payment-settings", "Result", "Payment settings", "INV-2026-041"],
+      "actions": 4,
+      "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent", "click_element"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model", "selector=#payment-settings"],
+      "bridgeExecuteTools": ["read_page_content", "click_element"],
+      "bridgeExecuteSelectors": ["body", "#payment-settings"],
+      "bridgeRunAgent": true
+    }
+  },
+  {
+    "id": "semantic-settings-agent",
+    "suite": "semantic-buttons",
+    "title": "Choose the payment settings button",
+    "tool": "gemma_agent",
+    "arguments": {
+      "tabId": 101,
+      "task": "open payment settings for invoice INV-2026-041",
+      "thinking": false,
+      "maxIterations": 3
+    },
+    "expect": {
+      "contains": ["#payment-settings", "INV-2026-041"],
+      "actions": 3,
+      "actionsByMode": {
+        "real-chrome-extension-agent": 4
+      },
+      "actionTraceTools": ["read_page_content", "read_page_content", "gemma_agent"],
+      "actionTraceToolsByMode": {
+        "real-chrome-extension-agent": ["read_page_content", "read_page_content", "gemma_agent", "click_element"]
+      },
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model"],
+      "actionTraceTextIncludesByMode": {
+        "real-chrome-extension-agent": ["selector=body format=text", "selector=body format=html", "collaborating with another AI model", "#payment-settings"]
+      },
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": true
+    }
+  },
+  {
+    "id": "semantic-observe-json",
+    "suite": "semantic-buttons",
+    "title": "Observe the receipt action as valid JSON",
+    "tool": "gemma_observe",
+    "arguments": {
+      "tabId": 101,
+      "instruction": "find the control that downloads proof of the last payment"
+    },
+    "expect": {
+      "json": "array",
+      "jsonFields": {
+        "0.selector": "#download-receipt",
+        "0.method": "click",
+        "1.selector": "#payment-settings",
+        "1.method": "click"
+      },
+      "minItems": 2,
+      "itemCount": 2,
+      "selector": "#download-receipt",
+      "method": "click",
+      "actions": 2,
+      "actionTraceTools": ["read_page_content", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "semantic-invoice-observe-json",
+    "suite": "semantic-buttons",
+    "title": "Observe the invoice action as valid JSON",
+    "tool": "gemma_observe",
+    "arguments": {
+      "tabId": 101,
+      "instruction": "find the control that downloads the invoice PDF"
+    },
+    "expect": {
+      "json": "array",
+      "jsonFields": {
+        "0.selector": "#download-invoice",
+        "0.method": "click"
+      },
+      "minItems": 1,
+      "selector": "#download-invoice",
+      "method": "click",
+      "actions": 2,
+      "actionTraceTools": ["read_page_content", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "semantic-settings-observe-json",
+    "suite": "semantic-buttons",
+    "title": "Observe the payment settings action as valid JSON",
+    "tool": "gemma_observe",
+    "arguments": {
+      "tabId": 101,
+      "instruction": "find the control for payment settings"
+    },
+    "expect": {
+      "json": "array",
+      "jsonFields": {
+        "0.selector": "#payment-settings",
+        "0.method": "click"
+      },
+      "minItems": 1,
+      "selector": "#payment-settings",
+      "method": "click",
+      "actions": 2,
+      "actionTraceTools": ["read_page_content", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "rank-receipt-actions",
+    "suite": "semantic-buttons",
+    "title": "Rank receipt action above billing distractors",
+    "tool": "gemma_rank_actions",
+    "arguments": {
+      "task": {
+        "id": "rank-receipt-actions",
+        "suite": "semantic-buttons",
+        "title": "find the control that downloads proof of the last payment",
+        "tool": "gemma_observe"
+      },
+      "candidates": [
+        {
+          "description": "Invoice PDF (#download-invoice)",
+          "method": "click",
+          "arguments": ["#download-invoice"],
+          "selector": "#download-invoice"
+        },
+        {
+          "description": "Payment settings (#payment-settings)",
+          "method": "click",
+          "arguments": ["#payment-settings"],
+          "selector": "#payment-settings"
+        },
+        {
+          "description": "Receipt PDF (#download-receipt)",
+          "method": "click",
+          "arguments": ["#download-receipt"],
+          "selector": "#download-receipt"
+        }
+      ]
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "best.candidate.selector": "#download-receipt",
+        "model.type": "pairwise_perceptron"
+      },
+      "contains": ["pairwise_perceptron", "action-reranker.weights.json", "#download-receipt"],
+      "bestSelector": "#download-receipt",
+      "actions": 0,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "rank-invoice-actions",
+    "suite": "semantic-buttons",
+    "title": "Rank invoice action above billing distractors",
+    "tool": "gemma_rank_actions",
+    "arguments": {
+      "task": {
+        "id": "rank-invoice-actions",
+        "suite": "semantic-buttons",
+        "title": "find the control that downloads the invoice PDF",
+        "tool": "gemma_observe"
+      },
+      "candidates": [
+        {
+          "description": "Receipt PDF (#download-receipt)",
+          "method": "click",
+          "arguments": ["#download-receipt"],
+          "selector": "#download-receipt"
+        },
+        {
+          "description": "Payment settings (#payment-settings)",
+          "method": "click",
+          "arguments": ["#payment-settings"],
+          "selector": "#payment-settings"
+        },
+        {
+          "description": "Invoice PDF (#download-invoice)",
+          "method": "click",
+          "arguments": ["#download-invoice"],
+          "selector": "#download-invoice"
+        }
+      ]
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "best.candidate.selector": "#download-invoice",
+        "model.type": "pairwise_perceptron"
+      },
+      "contains": ["pairwise_perceptron", "action-reranker.weights.json", "#download-invoice"],
+      "bestSelector": "#download-invoice",
+      "actions": 0,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "rank-settings-actions",
+    "suite": "semantic-buttons",
+    "title": "Rank payment settings action above billing distractors",
+    "tool": "gemma_rank_actions",
+    "arguments": {
+      "task": {
+        "id": "rank-settings-actions",
+        "suite": "semantic-buttons",
+        "title": "find the control that opens payment settings",
+        "tool": "gemma_observe"
+      },
+      "candidates": [
+        {
+          "description": "Receipt PDF (#download-receipt)",
+          "method": "click",
+          "arguments": ["#download-receipt"],
+          "selector": "#download-receipt"
+        },
+        {
+          "description": "Invoice PDF (#download-invoice)",
+          "method": "click",
+          "arguments": ["#download-invoice"],
+          "selector": "#download-invoice"
+        },
+        {
+          "description": "Payment settings (#payment-settings)",
+          "method": "click",
+          "arguments": ["#payment-settings"],
+          "selector": "#payment-settings"
+        }
+      ]
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "best.candidate.selector": "#payment-settings",
+        "model.type": "pairwise_perceptron"
+      },
+      "contains": ["pairwise_perceptron", "action-reranker.weights.json", "#payment-settings"],
+      "bestSelector": "#payment-settings",
+      "actions": 0,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "rank-settings-with-invoice-id-actions",
+    "suite": "semantic-buttons",
+    "title": "Rank payment settings above invoice control when invoice id is context",
+    "tool": "gemma_rank_actions",
+    "arguments": {
+      "task": {
+        "id": "rank-settings-with-invoice-id-actions",
+        "suite": "semantic-buttons",
+        "title": "open payment settings for invoice INV-2026-041",
+        "tool": "gemma_agent"
+      },
+      "candidates": [
+        {
+          "description": "Receipt PDF (#download-receipt)",
+          "method": "click",
+          "arguments": ["#download-receipt"],
+          "selector": "#download-receipt"
+        },
+        {
+          "description": "Invoice PDF (#download-invoice)",
+          "method": "click",
+          "arguments": ["#download-invoice"],
+          "selector": "#download-invoice"
+        },
+        {
+          "description": "Payment settings (#payment-settings)",
+          "method": "click",
+          "arguments": ["#payment-settings"],
+          "selector": "#payment-settings"
+        }
+      ]
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "best.candidate.selector": "#payment-settings",
+        "model.type": "pairwise_perceptron"
+      },
+      "contains": ["pairwise_perceptron", "action-reranker.weights.json", "#payment-settings"],
+      "bestSelector": "#payment-settings",
+      "actions": 0,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-receipt-button-before-act",
+    "suite": "semantic-buttons",
+    "title": "Read receipt button by exact selector before act",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 101,
+      "selector": "#download-receipt",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Receipt PDF"]
+      },
+      "contains": ["Receipt PDF"],
+      "notContains": ["Invoice PDF", "Payment settings", "INV-2026-041"],
+      "selector": "#download-receipt",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#download-receipt format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#download-receipt",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-receipt-button-before-act-html",
+    "suite": "semantic-buttons",
+    "title": "Read receipt button HTML by exact selector before act",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 101,
+      "selector": "#download-receipt",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Receipt PDF"]
+      },
+      "contains": ["Receipt PDF"],
+      "notContains": ["Invoice PDF", "Payment settings", "INV-2026-041"],
+      "selector": "#download-receipt",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#download-receipt format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#download-receipt",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-billing-body-html",
+    "suite": "semantic-buttons",
+    "title": "Read billing controls body HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 101,
+      "selector": "body",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Invoice INV-2026-041", "id=\"download-receipt\"", "Receipt PDF", "id=\"download-invoice\"", "Invoice PDF", "id=\"payment-settings\"", "Payment settings"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["data-plan", "dest-name", "settings-link"]
+      },
+      "contains": ["Invoice INV-2026-041", "download-receipt", "Receipt PDF", "download-invoice", "Invoice PDF", "payment-settings", "Payment settings"],
+      "notContains": ["data-plan", "dest-name", "settings-link"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-billing-body-text",
+    "suite": "semantic-buttons",
+    "title": "Read billing controls body text",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 101,
+      "selector": "body",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Invoice INV-2026-041", "Last payment: paid on May 20, 2026.", "Receipt PDF", "Invoice PDF", "Payment settings"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["download-receipt", "download-invoice", "payment-settings", "data-plan", "dest-name", "settings-link"]
+      },
+      "contains": ["Invoice INV-2026-041", "Last payment: paid on May 20, 2026.", "Receipt PDF", "Invoice PDF", "Payment settings"],
+      "notContains": ["download-receipt", "download-invoice", "payment-settings", "data-plan", "dest-name", "settings-link"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-invoice-button-before-act",
+    "suite": "semantic-buttons",
+    "title": "Read invoice button by exact selector before act",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 101,
+      "selector": "#download-invoice",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Invoice PDF"]
+      },
+      "contains": ["Invoice PDF"],
+      "notContains": ["Receipt PDF", "Payment settings", "INV-2026-041"],
+      "selector": "#download-invoice",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#download-invoice format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#download-invoice",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-payment-settings-button-before-recovery",
+    "suite": "semantic-buttons",
+    "title": "Read payment settings button by exact selector before recovery",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 101,
+      "selector": "#payment-settings",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Payment settings"]
+      },
+      "contains": ["Payment settings"],
+      "notContains": ["Receipt PDF", "Invoice PDF", "INV-2026-041"],
+      "selector": "#payment-settings",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#payment-settings format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#payment-settings",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "semantic-observed-act",
+    "suite": "semantic-buttons",
+    "title": "Execute observed receipt action without generation",
+    "tool": "gemma_act",
+    "arguments": {
+      "tabId": 101,
+      "action": {
+        "description": "Receipt PDF (#download-receipt)",
+        "method": "click",
+        "arguments": ["#download-receipt"],
+        "selector": "#download-receipt",
+        "confidence": 0.97
+      }
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "selector": "#download-receipt"
+      },
+      "jsonFieldIncludes": {
+        "clicked": "Receipt PDF"
+      },
+      "contains": ["#download-receipt", "Receipt PDF"],
+      "selector": "#download-receipt",
+      "clicked": "#download-receipt",
+      "actions": 1,
+      "actionTraceTools": ["click_element"],
+      "actionTraceTextIncludes": ["selector=#download-receipt"],
+      "bridgeExecuteTool": "click_element",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "semantic-settings-observed-act",
+    "suite": "semantic-buttons",
+    "title": "Execute observed payment settings action without generation",
+    "tool": "gemma_act",
+    "arguments": {
+      "tabId": 101,
+      "action": {
+        "description": "Payment settings (#payment-settings)",
+        "method": "click",
+        "arguments": ["#payment-settings"],
+        "selector": "#payment-settings",
+        "confidence": 0.63
+      }
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "selector": "#payment-settings"
+      },
+      "contains": ["#payment-settings"],
+      "selector": "#payment-settings",
+      "clicked": "#payment-settings",
+      "actions": 1,
+      "actionTraceTools": ["click_element"],
+      "actionTraceTextIncludes": ["selector=#payment-settings"],
+      "bridgeExecuteTool": "click_element",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "semantic-invoice-observed-act",
+    "suite": "semantic-buttons",
+    "title": "Execute observed invoice action without generation",
+    "tool": "gemma_act",
+    "arguments": {
+      "tabId": 101,
+      "action": {
+        "description": "Invoice PDF (#download-invoice)",
+        "method": "click",
+        "arguments": ["#download-invoice"],
+        "selector": "#download-invoice",
+        "confidence": 0.61
+      }
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "selector": "#download-invoice"
+      },
+      "contains": ["#download-invoice"],
+      "selector": "#download-invoice",
+      "clicked": "#download-invoice",
+      "actions": 1,
+      "actionTraceTools": ["click_element"],
+      "actionTraceTextIncludes": ["selector=#download-invoice"],
+      "bridgeExecuteTool": "click_element",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "semantic-click-recover-selector",
+    "suite": "semantic-buttons",
+    "title": "Recover a receipt text-like click selector",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 101,
+      "selector": "button:has-text(\"Receipt PDF\")"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "recovered": true,
+        "recoveredSelector": "#download-receipt",
+        "result.selector": "#download-receipt"
+      },
+      "contains": ["recoveredSelector", "#download-receipt", "Receipt PDF"],
+      "selector": "#download-receipt",
+      "clicked": "#download-receipt",
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "click_element"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "selector=#download-receipt"],
+      "bridgeExecuteTools": ["read_page_content", "click_element"],
+      "bridgeExecuteSelectors": ["body", "#download-receipt"],
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "semantic-invoice-recover-selector",
+    "suite": "semantic-buttons",
+    "title": "Recover an invoice text-like click selector",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 101,
+      "selector": "button:has-text(\"Invoice PDF\")"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "recovered": true,
+        "recoveredSelector": "#download-invoice",
+        "result.selector": "#download-invoice"
+      },
+      "contains": ["recoveredSelector", "#download-invoice", "Invoice PDF"],
+      "selector": "#download-invoice",
+      "clicked": "#download-invoice",
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "click_element"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "selector=#download-invoice"],
+      "bridgeExecuteTools": ["read_page_content", "click_element"],
+      "bridgeExecuteSelectors": ["body", "#download-invoice"],
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "semantic-settings-recover-selector",
+    "suite": "semantic-buttons",
+    "title": "Recover a payment settings text-like click selector",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 101,
+      "selector": "button:has-text(\"Payment settings\")"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "recovered": true,
+        "recoveredSelector": "#payment-settings",
+        "result.selector": "#payment-settings"
+      },
+      "contains": ["recoveredSelector", "#payment-settings", "Payment settings"],
+      "selector": "#payment-settings",
+      "clicked": "#payment-settings",
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "click_element"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "selector=#payment-settings"],
+      "bridgeExecuteTools": ["read_page_content", "click_element"],
+      "bridgeExecuteSelectors": ["body", "#payment-settings"],
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "semantic-act-multi-reject",
+    "suite": "semantic-buttons",
+    "title": "Reject multi-step action prompt",
+    "tool": "gemma_act",
+    "arguments": {
+      "tabId": 101,
+      "instruction": "click the receipt button and then open payment settings"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "error": "ERROR_MULTIPLE_ACTIONS",
+        "instruction": "click the receipt button and then open payment settings"
+      },
+      "contains": ["ERROR_MULTIPLE_ACTIONS", "gemma_agent"],
+      "actions": 0,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "semantic-page-brief",
+    "suite": "semantic-buttons",
+    "title": "Brief exposes meaningful billing controls",
+    "tool": "gemma_page_brief",
+    "arguments": {
+      "tabId": 101,
+      "selector": "body",
+      "format": "text",
+      "maxChars": 4000
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "tab.title": "Billing sandbox",
+        "selector": "body",
+        "format": "text",
+        "interactiveControls.0.selector": "#download-receipt",
+        "interactiveControls.0.label": "Receipt PDF",
+        "interactiveControls.0.tag": "button",
+        "interactiveControls.1.selector": "#download-invoice",
+        "interactiveControls.2.selector": "#payment-settings",
+        "interactiveControls.2.label": "Payment settings"
+      },
+      "jsonFieldIncludes": {
+        "content": ["Invoice INV-2026-041", "Receipt PDF", "Payment settings"]
+      },
+      "jsonFieldMinItems": {
+        "interactiveControls": 3
+      },
+      "jsonFieldItemCount": {
+        "interactiveControls": 3
+      },
+      "actions": 2,
+      "actionTraceTools": ["read_page_content", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
+      "contains": ["Receipt PDF", "Payment settings", "INV-2026-041", "\"selector\": \"#download-receipt\"", "\"selector\": \"#payment-settings\""],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeListTabs": true,
+      "bridgeRunAgent": false
+    }
+  }
+]

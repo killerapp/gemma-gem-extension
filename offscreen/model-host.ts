@@ -31,7 +31,7 @@ function stripSpecialTokens(text: string): string {
 }
 
 // Configure ONNX Runtime to load backend files locally instead of from CDN
-env.backends.onnx.wasm.wasmPaths = chrome.runtime.getURL('ort/')
+env.backends.onnx.wasm!.wasmPaths = chrome.runtime.getURL('ort/')
 
 // On Windows, Chrome ignores powerPreference in requestAdapter() and emits a warning.
 // Patch it out before ORT's WebGPU backend calls it.
@@ -46,7 +46,13 @@ if (navigator.gpu && navigator.userAgent.includes('Windows')) {
   }
 }
 
-type StatusCallback = (status: 'loading' | 'ready' | 'error', progress?: number, error?: string) => void
+type StatusCallback = (
+  status: 'loading' | 'ready' | 'error',
+  progress?: number,
+  error?: string,
+  phase?: string,
+  elapsedMs?: number,
+) => void
 
 export class GemmaModelHost implements ModelBackend {
   private model: InstanceType<typeof Gemma4ForConditionalGeneration> | null = null
@@ -62,9 +68,14 @@ export class GemmaModelHost implements ModelBackend {
   }
 
   async load(modelId: ModelId = DEFAULT_MODEL_ID): Promise<void> {
+    const startedAt = performance.now()
+    const emitStatus = (status: 'loading' | 'ready' | 'error', progress?: number, error?: string, phase?: string) => {
+      this.onStatus(status, progress, error, phase, performance.now() - startedAt)
+    }
+
     log.info('load() called:', modelId, '| current:', this.currentModelId, '| hasModel:', !!this.model, '| loading:', this.loading)
     if (this.model && this.currentModelId === modelId) {
-      this.onStatus('ready')
+      emitStatus('ready', 100, undefined, 'already-loaded')
       return
     }
     if (this.model && this.currentModelId !== modelId) {
@@ -78,6 +89,7 @@ export class GemmaModelHost implements ModelBackend {
     }
     this.loading = true
     this.loadingModelId = modelId
+    emitStatus('loading', 0, undefined, 'load-start')
 
     const config = MODELS[modelId]
     log.info('Starting from_pretrained for:', config.hfModelId)
@@ -92,23 +104,34 @@ export class GemmaModelHost implements ModelBackend {
         const overall = Math.round(values.reduce((a, b) => a + b, 0) / Math.max(values.length, 1))
         if (overall !== lastReportedProgress) {
           lastReportedProgress = overall
-          this.onStatus('loading', overall)
+          emitStatus('loading', overall, undefined, `model-file:${info.file}`)
         }
       } else if (info.status === 'done' && info.file != null) {
         fileProgress.set(info.file, 100)
       } else if (info.status === 'ready') {
-        this.onStatus('ready')
+        emitStatus('loading', 100, undefined, 'model-files-ready')
       }
     }
 
     try {
+      emitStatus('loading', 0, undefined, 'from-pretrained-start')
       const [model, processor] = await Promise.all([
-        Gemma4ForConditionalGeneration.from_pretrained(config.hfModelId, {
-          dtype: 'q4f16',
-          device: 'webgpu',
-          progress_callback,
-        }),
-        AutoProcessor.from_pretrained(config.hfModelId),
+        (async () => {
+          const modelLoadStartedAt = performance.now()
+          const loadedModel = await Gemma4ForConditionalGeneration.from_pretrained(config.hfModelId, {
+            dtype: 'q4f16',
+            device: 'webgpu',
+            progress_callback,
+          })
+          emitStatus('loading', 100, undefined, `model-loaded:${Math.round(performance.now() - modelLoadStartedAt)}ms`)
+          return loadedModel
+        })(),
+        (async () => {
+          const processorLoadStartedAt = performance.now()
+          const loadedProcessor = await AutoProcessor.from_pretrained(config.hfModelId)
+          emitStatus('loading', undefined, undefined, `processor-loaded:${Math.round(performance.now() - processorLoadStartedAt)}ms`)
+          return loadedProcessor
+        })(),
       ])
 
       this.model = model as InstanceType<typeof Gemma4ForConditionalGeneration>
@@ -117,11 +140,11 @@ export class GemmaModelHost implements ModelBackend {
       this.loadingModelId = null
       this.contextLimit = config.contextLimit
       this.loading = false
-      this.onStatus('ready')
+      emitStatus('ready', 100, undefined, 'ready')
     } catch (e) {
       this.loading = false
       this.loadingModelId = null
-      this.onStatus('error', undefined, String(e))
+      emitStatus('error', undefined, String(e), 'load-error')
       throw e
     }
   }
@@ -159,12 +182,17 @@ export class GemmaModelHost implements ModelBackend {
 
     log.debug('Step 1: tokenizing')
     let inputs: any
+    const processor = this.processor as any
+    const tokenizer = processor.tokenizer
+    if (!tokenizer) {
+      throw new Error('Tokenizer not loaded')
+    }
     try {
       if (options?.imageDataUrl) {
         const image = await load_image(options.imageDataUrl)
-        inputs = await this.processor(prompt, image, null, { add_special_tokens: false })
+        inputs = await processor(prompt, image, null, { add_special_tokens: false })
       } else {
-        inputs = this.processor.tokenizer(prompt, {
+        inputs = tokenizer(prompt, {
           add_special_tokens: false,
           return_tensor: 'pt',
         })
@@ -180,7 +208,7 @@ export class GemmaModelHost implements ModelBackend {
     let insideToolCall = false
     let streamer: InstanceType<typeof TextStreamer>
     try {
-      streamer = new TextStreamer(this.processor.tokenizer, {
+      streamer = new TextStreamer(tokenizer, {
         skip_prompt: true,
         skip_special_tokens: false,
         callback_function: (text: string) => {
@@ -249,7 +277,11 @@ export class GemmaModelHost implements ModelBackend {
     if (!this.processor) {
       throw new Error('Cannot count tokens: model not loaded')
     }
-    const { input_ids } = this.processor.tokenizer(text, { add_special_tokens: false })
+    const tokenizer = (this.processor as any).tokenizer
+    if (!tokenizer) {
+      throw new Error('Cannot count tokens: tokenizer not loaded')
+    }
+    const { input_ids } = tokenizer(text, { add_special_tokens: false })
     return input_ids.size
   }
 

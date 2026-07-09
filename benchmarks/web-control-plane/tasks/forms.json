@@ -1,0 +1,3143 @@
+[
+  {
+    "id": "forms-page-brief-controls",
+    "suite": "forms",
+    "title": "Brief exposes destination form controls",
+    "tool": "gemma_page_brief",
+    "arguments": {
+      "tabId": 104,
+      "selector": "body",
+      "format": "text",
+      "maxChars": 4000
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "tab.title": "Profile destination",
+        "selector": "body",
+        "format": "text",
+        "interactiveControls.0.selector": "#dest-name",
+        "interactiveControls.0.label": "Name",
+        "interactiveControls.0.tag": "input",
+        "interactiveControls.0.name": "name",
+        "interactiveControls.3.selector": "#dest-updates",
+        "interactiveControls.3.label": "Subscribe updates",
+        "interactiveControls.3.tag": "input",
+        "interactiveControls.3.name": "updates",
+        "interactiveControls.3.value": "subscribe",
+        "interactiveControls.4.selector": "#dest-priority-low",
+        "interactiveControls.4.label": "Priority Low",
+        "interactiveControls.4.tag": "input",
+        "interactiveControls.4.name": "priority",
+        "interactiveControls.4.value": "low",
+        "interactiveControls.5.selector": "#dest-priority-high",
+        "interactiveControls.5.label": "Priority High",
+        "interactiveControls.5.tag": "input",
+        "interactiveControls.5.name": "priority",
+        "interactiveControls.5.value": "high",
+        "interactiveControls.6.selector": "#dest-notes",
+        "interactiveControls.6.label": "Notes",
+        "interactiveControls.6.tag": "textarea",
+        "interactiveControls.6.name": "notes",
+        "interactiveControls.7.selector": "#save-profile",
+        "interactiveControls.7.label": "Save profile",
+        "interactiveControls.7.tag": "button"
+      },
+      "jsonFieldIncludes": {
+        "content": ["Name", "Email", "Role", "Subscribe updates", "Priority Low", "Priority High", "Notes", "Save profile"]
+      },
+      "jsonFieldMinItems": {
+        "interactiveControls": 8
+      },
+      "jsonFieldItemCount": {
+        "interactiveControls": 8
+      },
+      "actions": 2,
+      "actionTraceTools": ["read_page_content", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
+      "contains": ["interactiveControls", "\"selector\": \"#dest-name\"", "\"label\": \"Name\"", "\"tag\": \"input\"", "\"name\": \"name\"", "\"selector\": \"#dest-updates\"", "\"selector\": \"#dest-priority-low\"", "\"selector\": \"#dest-priority-high\"", "\"selector\": \"#dest-notes\"", "\"selector\": \"#save-profile\""],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeListTabs": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-body-html-initial",
+    "suite": "forms",
+    "title": "Read initial destination form body HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "body",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["id=\"dest-name\"", "id=\"dest-email\"", "id=\"dest-role\"", "id=\"dest-updates\"", "id=\"dest-priority-low\"", "id=\"dest-priority-high\"", "id=\"dest-notes\"", "id=\"save-profile\"", "id=\"save-result\""]
+      },
+      "jsonFieldExcludes": {
+        "content": ["source-name", "data-plan", "download-receipt"]
+      },
+      "contains": ["dest-name", "dest-email", "dest-role", "dest-updates", "dest-priority-low", "dest-priority-high", "dest-notes", "save-profile", "save-result"],
+      "notContains": ["source-name", "data-plan", "download-receipt"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-body-text-initial",
+    "suite": "forms",
+    "title": "Read initial destination form body text",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "body",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Name", "Email", "Role", "Choose role", "Administrator", "Reviewer", "Subscribe updates", "Priority Low", "Priority High", "Notes", "Save profile"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["Ada Lovelace", "ada@example.test", "data-plan", "download-receipt"]
+      },
+      "contains": ["Name", "Email", "Role", "Choose role", "Administrator", "Reviewer", "Subscribe updates", "Priority Low", "Priority High", "Notes", "Save profile"],
+      "notContains": ["Ada Lovelace", "ada@example.test", "data-plan", "download-receipt"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-email-empty-initial",
+    "suite": "forms",
+    "title": "Read empty destination email field by exact selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-email",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Ada Lovelace", "ada@example.test", "Email", "Save profile"],
+      "selector": "#dest-email",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-email format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-email",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-email-empty-html-initial",
+    "suite": "forms",
+    "title": "Read empty destination email HTML by exact selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-email",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Ada Lovelace", "ada@example.test", "Email", "Save profile"],
+      "selector": "#dest-email",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-email format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-email",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-name-empty-initial",
+    "suite": "forms",
+    "title": "Read empty destination name field by exact selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-name",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Grace Hopper", "Ada Lovelace", "Name", "Save profile"],
+      "selector": "#dest-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-name format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-name-empty-html-initial",
+    "suite": "forms",
+    "title": "Read empty destination name HTML by exact selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-name",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Grace Hopper", "Ada Lovelace", "Name", "Save profile"],
+      "selector": "#dest-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-name format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "type-text-recover-selector",
+    "suite": "forms",
+    "title": "Recover a name text-like type selector",
+    "tool": "gemma_type_text",
+    "arguments": {
+      "tabId": 104,
+      "selector": "text=Name",
+      "text": "Grace Hopper"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "recovered": true,
+        "recoveredSelector": "#dest-name",
+        "result.into": "#dest-name"
+      },
+      "contains": ["recoveredSelector", "#dest-name", "Grace Hopper"],
+      "destinationValues": {
+        "#dest-name": "Grace Hopper"
+      },
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "type_text"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "selector=#dest-name"],
+      "bridgeExecuteTools": ["read_page_content", "type_text"],
+      "bridgeExecuteSelectors": ["body", "#dest-name"],
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-name-after-type",
+    "suite": "forms",
+    "title": "Read typed destination name by selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-name",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Grace Hopper"]
+      },
+      "contains": ["Grace Hopper"],
+      "notContains": ["Reviewer", "ada@example.test"],
+      "selector": "#dest-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-name format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-name-after-type-html",
+    "suite": "forms",
+    "title": "Read typed destination name input HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-name",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Grace Hopper", "Grace Hopper Jr.", "Name", "Save profile"],
+      "selector": "#dest-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-name format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "append-destination-name-without-clear",
+    "suite": "forms",
+    "title": "Append destination name without clearing",
+    "tool": "gemma_type_text",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-name",
+      "text": " Jr.",
+      "clear": false
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "typed": " Jr.",
+        "into": "#dest-name",
+        "value": "Grace Hopper Jr."
+      },
+      "contains": ["Grace Hopper Jr.", "#dest-name"],
+      "destinationValues": {
+        "#dest-name": "Grace Hopper Jr."
+      },
+      "actions": 1,
+      "actionTraceTools": ["type_text"],
+      "actionTraceTextIncludes": ["selector=#dest-name textLength=4 clear=false"],
+      "bridgeExecuteTool": "type_text",
+      "bridgeExecuteSelector": "#dest-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-name-after-append",
+    "suite": "forms",
+    "title": "Read appended destination name by selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-name",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Grace Hopper Jr."]
+      },
+      "contains": ["Grace Hopper Jr."],
+      "notContains": ["Reviewer", "ada@example.test"],
+      "selector": "#dest-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-name format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-name-after-append-html",
+    "suite": "forms",
+    "title": "Read appended destination name input HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-name",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Grace Hopper", "Grace Hopper Jr.", "Name", "Save profile"],
+      "selector": "#dest-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-name format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-notes-empty-initial",
+    "suite": "forms",
+    "title": "Read empty destination notes textarea by exact selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-notes",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Coordinate follow-up", "Ops note", "Notes", "Save profile"],
+      "selector": "#dest-notes",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-notes format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-notes",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-notes-empty-html-initial",
+    "suite": "forms",
+    "title": "Read empty destination notes HTML by exact selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-notes",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Coordinate follow-up", "Ops note", "Notes", "Save profile"],
+      "selector": "#dest-notes",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-notes format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-notes",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "type-destination-notes-textarea",
+    "suite": "forms",
+    "title": "Type destination notes textarea",
+    "tool": "gemma_type_text",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-notes",
+      "text": "Coordinate follow-up"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "typed": "Coordinate follow-up",
+        "into": "#dest-notes",
+        "value": "Coordinate follow-up"
+      },
+      "contains": ["Coordinate follow-up", "#dest-notes"],
+      "destinationValues": {
+        "#dest-notes": "Coordinate follow-up"
+      },
+      "actions": 1,
+      "actionTraceTools": ["type_text"],
+      "actionTraceTextIncludes": ["selector=#dest-notes textLength=20"],
+      "bridgeExecuteTool": "type_text",
+      "bridgeExecuteSelector": "#dest-notes",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-notes-textarea",
+    "suite": "forms",
+    "title": "Read destination notes textarea",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-notes",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Coordinate follow-up"]
+      },
+      "contains": ["Coordinate follow-up"],
+      "notContains": ["Save profile", "Grace Hopper"],
+      "selector": "#dest-notes",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-notes format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-notes",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-notes-textarea-html",
+    "suite": "forms",
+    "title": "Read typed destination notes textarea HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-notes",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Coordinate follow-up", "Notes", "Save profile", "Grace Hopper"],
+      "selector": "#dest-notes",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-notes format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-notes",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "type-notes-recover-selector",
+    "suite": "forms",
+    "title": "Recover destination notes textarea selector",
+    "tool": "gemma_type_text",
+    "arguments": {
+      "tabId": 104,
+      "selector": "text=Notes",
+      "text": "Ops note"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "recovered": true,
+        "recoveredSelector": "#dest-notes",
+        "result.into": "#dest-notes",
+        "result.value": "Ops note"
+      },
+      "contains": ["recoveredSelector", "#dest-notes", "Ops note"],
+      "destinationValues": {
+        "#dest-notes": "Ops note"
+      },
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "type_text"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "selector=#dest-notes textLength=8"],
+      "bridgeExecuteTools": ["read_page_content", "type_text"],
+      "bridgeExecuteSelectors": ["body", "#dest-notes"],
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-notes-after-recovered-type",
+    "suite": "forms",
+    "title": "Read recovered destination notes textarea",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-notes",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Ops note"]
+      },
+      "contains": ["Ops note"],
+      "notContains": ["Coordinate follow-up", "Notes", "Save profile", "Grace Hopper"],
+      "selector": "#dest-notes",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-notes format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-notes",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-notes-after-recovered-type-html",
+    "suite": "forms",
+    "title": "Read recovered destination notes textarea HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-notes",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Ops note", "Coordinate follow-up", "Notes", "Save profile", "Grace Hopper"],
+      "selector": "#dest-notes",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-notes format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-notes",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-role-initial",
+    "suite": "forms",
+    "title": "Read initial destination role select state",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["selected: Choose role ()", "options:", "Administrator", "Reviewer"]
+      },
+      "contains": ["selected: Choose role", "Administrator", "Reviewer"],
+      "notContains": ["selected: Administrator", "selected: Reviewer", "Save profile", "Ada Lovelace"],
+      "selector": "#dest-role",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-role format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-role-html-initial",
+    "suite": "forms",
+    "title": "Read initial destination role select HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["<option value=\"\">Choose role</option>", "<option value=\"admin\">Administrator</option>", "<option value=\"reviewer\">Reviewer</option>"]
+      },
+      "contains": ["Choose role", "Administrator", "Reviewer"],
+      "notContains": ["selected:", "Save profile", "Ada Lovelace", "dest-name"],
+      "selector": "#dest-role",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-role format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "select-role-label",
+    "suite": "forms",
+    "title": "Select a role option by visible label",
+    "tool": "gemma_select_option",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "label": "Reviewer"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "selected": "Reviewer",
+        "value": "reviewer",
+        "selector": "#dest-role"
+      },
+      "contains": ["Reviewer", "reviewer", "#dest-role"],
+      "destinationValues": {
+        "#dest-role": "reviewer"
+      },
+      "actions": 1,
+      "actionTraceTools": ["select_option"],
+      "actionTraceTextIncludes": ["selector=#dest-role label=Reviewer"],
+      "bridgeExecuteTool": "select_option",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "select-role-value",
+    "suite": "forms",
+    "title": "Select a role option by value",
+    "tool": "gemma_select_option",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "value": "admin"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "selected": "Administrator",
+        "value": "admin",
+        "selector": "#dest-role"
+      },
+      "contains": ["Administrator", "admin", "#dest-role"],
+      "destinationValues": {
+        "#dest-role": "admin"
+      },
+      "actions": 1,
+      "actionTraceTools": ["select_option"],
+      "actionTraceTextIncludes": ["selector=#dest-role value=admin"],
+      "bridgeExecuteTool": "select_option",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-role-after-select",
+    "suite": "forms",
+    "title": "Read selected destination role after select",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["selected: Administrator (admin)", "options:", "Choose role", "Reviewer"]
+      },
+      "contains": ["selected: Administrator", "admin", "Choose role", "Reviewer"],
+      "notContains": ["Save profile", "Ada Lovelace"],
+      "selector": "#dest-role",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-role format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-role-after-select-html",
+    "suite": "forms",
+    "title": "Read selected destination role HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["<option value=\"\">Choose role</option>", "<option value=\"admin\">Administrator</option>", "<option value=\"reviewer\">Reviewer</option>"]
+      },
+      "contains": ["Choose role", "Administrator", "Reviewer"],
+      "notContains": ["selected: Administrator", "selected:", "Save profile", "Ada Lovelace", "dest-name"],
+      "selector": "#dest-role",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-role format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-role-options",
+    "suite": "forms",
+    "title": "Read destination role options by selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Choose role", "Administrator", "Reviewer"]
+      },
+      "contains": ["Choose role", "Administrator", "Reviewer"],
+      "notContains": ["Save profile", "Ada Lovelace"],
+      "selector": "#dest-role",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-role format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-role-options-html",
+    "suite": "forms",
+    "title": "Read destination role options HTML by selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["<option value=\"\">Choose role</option>", "<option value=\"admin\">Administrator</option>", "<option value=\"reviewer\">Reviewer</option>"]
+      },
+      "contains": ["Choose role", "Administrator", "Reviewer"],
+      "notContains": ["selected:", "Save profile", "Ada Lovelace", "dest-name"],
+      "selector": "#dest-role",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-role format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "select-role-recover-selector",
+    "suite": "forms",
+    "title": "Select role after recovering text selector",
+    "tool": "gemma_select_option",
+    "arguments": {
+      "tabId": 104,
+      "selector": "text=Role",
+      "label": "Reviewer"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "recovered": true,
+        "recoveredSelector": "#dest-role",
+        "result.selected": "Reviewer",
+        "result.value": "reviewer"
+      },
+      "contains": ["recoveredSelector", "#dest-role", "Reviewer", "reviewer"],
+      "destinationValues": {
+        "#dest-role": "reviewer"
+      },
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "select_option"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "selector=#dest-role label=Reviewer"],
+      "bridgeExecuteTools": ["read_page_content", "select_option"],
+      "bridgeExecuteSelectors": ["body", "#dest-role"],
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-role-after-recovered-select",
+    "suite": "forms",
+    "title": "Read selected destination role after recovered select",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["selected: Reviewer (reviewer)", "options:", "Administrator"]
+      },
+      "contains": ["selected: Reviewer", "reviewer", "Administrator"],
+      "notContains": ["Save profile", "Ada Lovelace"],
+      "selector": "#dest-role",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-role format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-role-after-recovered-select-html",
+    "suite": "forms",
+    "title": "Read recovered selected destination role HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["<option value=\"\">Choose role</option>", "<option value=\"admin\">Administrator</option>", "<option value=\"reviewer\">Reviewer</option>"]
+      },
+      "contains": ["Choose role", "Administrator", "Reviewer"],
+      "notContains": ["selected: Reviewer", "selected:", "Save profile", "Ada Lovelace", "dest-name"],
+      "selector": "#dest-role",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-role format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-updates-initial",
+    "suite": "forms",
+    "title": "Read initial destination updates checkbox state",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-updates",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": "unchecked"
+      },
+      "contains": ["unchecked"],
+      "notContains": ["Subscribe updates", "Save profile", "Ada Lovelace"],
+      "selector": "#dest-updates",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-updates format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-updates",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-updates-html-initial",
+    "suite": "forms",
+    "title": "Read initial destination updates checkbox HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-updates",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["checked", "unchecked", "Subscribe updates", "Save profile", "Ada Lovelace"],
+      "selector": "#dest-updates",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-updates format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-updates",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "click-destination-updates-checkbox",
+    "suite": "forms",
+    "title": "Click destination updates checkbox",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-updates"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "selector": "#dest-updates"
+      },
+      "contains": ["#dest-updates"],
+      "clicked": "#dest-updates",
+      "actions": 1,
+      "actionTraceTools": ["click_element"],
+      "actionTraceTextIncludes": ["selector=#dest-updates"],
+      "bridgeExecuteTool": "click_element",
+      "bridgeExecuteSelector": "#dest-updates",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-updates-after-click",
+    "suite": "forms",
+    "title": "Read checked destination updates state",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-updates",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["checked"]
+      },
+      "contains": ["checked"],
+      "notContains": ["unchecked", "Subscribe updates", "Save profile"],
+      "selector": "#dest-updates",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-updates format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-updates",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-updates-after-click-html",
+    "suite": "forms",
+    "title": "Read checked destination updates checkbox HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-updates",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["checked", "unchecked", "Subscribe updates", "Save profile"],
+      "selector": "#dest-updates",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-updates format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-updates",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "click-updates-recover-selector",
+    "suite": "forms",
+    "title": "Recover updates checkbox text selector",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 104,
+      "selector": "text=Subscribe updates"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "recovered": true,
+        "recoveredSelector": "#dest-updates",
+        "result.selector": "#dest-updates"
+      },
+      "contains": ["recoveredSelector", "#dest-updates", "Subscribe updates"],
+      "clicked": "#dest-updates",
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "click_element"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "selector=#dest-updates"],
+      "bridgeExecuteTools": ["read_page_content", "click_element"],
+      "bridgeExecuteSelectors": ["body", "#dest-updates"],
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-updates-after-recovered-click",
+    "suite": "forms",
+    "title": "Read unchecked destination updates after recovered click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-updates",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["unchecked"]
+      },
+      "contains": ["unchecked"],
+      "notContains": ["Subscribe updates", "Save profile"],
+      "selector": "#dest-updates",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-updates format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-updates",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-updates-after-recovered-click-html",
+    "suite": "forms",
+    "title": "Read unchecked destination updates checkbox HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-updates",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["checked", "unchecked", "Subscribe updates", "Save profile"],
+      "selector": "#dest-updates",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-updates format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-updates",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-high-initial",
+    "suite": "forms",
+    "title": "Read initial high priority radio state",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-high",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": "unchecked"
+      },
+      "contains": ["unchecked"],
+      "notContains": ["Priority High", "Save profile", "Ada Lovelace"],
+      "selector": "#dest-priority-high",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-high format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-high",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-high-html-initial",
+    "suite": "forms",
+    "title": "Read initial high priority radio HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-high",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["checked", "unchecked", "Priority High", "Save profile", "Ada Lovelace"],
+      "selector": "#dest-priority-high",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-high format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-high",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-low-initial",
+    "suite": "forms",
+    "title": "Read initial low priority radio state",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-low",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": "unchecked"
+      },
+      "contains": ["unchecked"],
+      "notContains": ["Priority Low", "Save profile", "Ada Lovelace"],
+      "selector": "#dest-priority-low",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-low format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-low",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-low-html-initial",
+    "suite": "forms",
+    "title": "Read initial low priority radio HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-low",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["checked", "unchecked", "Priority Low", "Save profile", "Ada Lovelace"],
+      "selector": "#dest-priority-low",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-low format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-low",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "click-destination-priority-high-radio",
+    "suite": "forms",
+    "title": "Click destination high priority radio",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-high"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "selector": "#dest-priority-high"
+      },
+      "contains": ["#dest-priority-high"],
+      "clicked": "#dest-priority-high",
+      "actions": 1,
+      "actionTraceTools": ["click_element"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-high"],
+      "bridgeExecuteTool": "click_element",
+      "bridgeExecuteSelector": "#dest-priority-high",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-high-after-click",
+    "suite": "forms",
+    "title": "Read selected destination priority radio",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-high",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["checked"]
+      },
+      "contains": ["checked"],
+      "notContains": ["unchecked", "Priority High", "Save profile"],
+      "selector": "#dest-priority-high",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-high format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-high",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-high-after-click-html",
+    "suite": "forms",
+    "title": "Read selected destination priority radio HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-high",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["checked", "unchecked", "Priority High", "Save profile"],
+      "selector": "#dest-priority-high",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-high format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-high",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-low-after-high-click",
+    "suite": "forms",
+    "title": "Read unselected destination priority radio",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-low",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["unchecked"]
+      },
+      "contains": ["unchecked"],
+      "notContains": ["Priority Low", "Save profile"],
+      "selector": "#dest-priority-low",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-low format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-low",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-low-after-high-click-html",
+    "suite": "forms",
+    "title": "Read unselected destination priority radio HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-low",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["checked", "unchecked", "Priority Low", "Save profile"],
+      "selector": "#dest-priority-low",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-low format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-low",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "click-priority-low-recover-selector",
+    "suite": "forms",
+    "title": "Recover low priority radio text selector",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 104,
+      "selector": "text=Priority Low"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "recovered": true,
+        "recoveredSelector": "#dest-priority-low",
+        "result.selector": "#dest-priority-low"
+      },
+      "contains": ["recoveredSelector", "#dest-priority-low", "Priority Low"],
+      "clicked": "#dest-priority-low",
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "click_element"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "selector=#dest-priority-low"],
+      "bridgeExecuteTools": ["read_page_content", "click_element"],
+      "bridgeExecuteSelectors": ["body", "#dest-priority-low"],
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-low-after-recovered-click",
+    "suite": "forms",
+    "title": "Read selected low priority radio after recovered click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-low",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["checked"]
+      },
+      "contains": ["checked"],
+      "notContains": ["unchecked", "Priority Low", "Save profile"],
+      "selector": "#dest-priority-low",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-low format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-low",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-low-after-recovered-click-html",
+    "suite": "forms",
+    "title": "Read selected low priority radio HTML after recovered click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-low",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["checked", "unchecked", "Priority Low", "Save profile"],
+      "selector": "#dest-priority-low",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-low format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-low",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-high-after-low-recovered-click",
+    "suite": "forms",
+    "title": "Read unselected high priority radio after low recovered click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-high",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["unchecked"]
+      },
+      "contains": ["unchecked"],
+      "notContains": ["Priority High", "Save profile"],
+      "selector": "#dest-priority-high",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-high format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-high",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-high-after-low-recovered-click-html",
+    "suite": "forms",
+    "title": "Read unselected high priority radio HTML after low recovered click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-high",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["checked", "unchecked", "Priority High", "Save profile"],
+      "selector": "#dest-priority-high",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-high format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-high",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "source-page-brief-no-controls",
+    "suite": "forms",
+    "title": "Brief exposes source profile content without controls",
+    "tool": "gemma_page_brief",
+    "arguments": {
+      "tabId": 103,
+      "selector": "body",
+      "format": "text",
+      "maxChars": 4000
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "tab.title": "Profile source",
+        "selector": "body",
+        "format": "text"
+      },
+      "jsonFieldIncludes": {
+        "tab.url": ["forms-source.html"],
+        "content": ["Name", "Ada Lovelace", "Email", "ada@example.test"]
+      },
+      "jsonFieldItemCount": {
+        "interactiveControls": 0
+      },
+      "actions": 2,
+      "actionTraceTools": ["read_page_content", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html"],
+      "contains": ["Profile source", "forms-source.html", "Ada Lovelace", "ada@example.test", "\"interactiveControls\": []"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeListTabs": true,
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-body-html",
+    "suite": "forms",
+    "title": "Read source profile body HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "body",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["<dt>Name</dt>", "id=\"source-name\"", "Ada Lovelace", "id=\"source-email\"", "ada@example.test"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["dest-name", "Save profile"]
+      },
+      "contains": ["<dt>Name</dt>", "source-name", "Ada Lovelace", "source-email", "ada@example.test"],
+      "notContains": ["dest-name", "Save profile"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-body-text",
+    "suite": "forms",
+    "title": "Read source profile body text",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "body",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Name", "Ada Lovelace", "Email", "ada@example.test"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["dest-name", "Save profile", "data-plan"]
+      },
+      "contains": ["Name", "Ada Lovelace", "Email", "ada@example.test"],
+      "notContains": ["dest-name", "Save profile", "data-plan"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-name",
+    "suite": "forms",
+    "title": "Read a source profile field by selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "#source-name",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Ada Lovelace"]
+      },
+      "contains": ["Ada Lovelace"],
+      "notContains": ["ada@example.test"],
+      "selector": "#source-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-name format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#source-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-name-html",
+    "suite": "forms",
+    "title": "Read source profile name HTML by selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "#source-name",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Ada Lovelace"]
+      },
+      "contains": ["Ada Lovelace"],
+      "notContains": ["ada@example.test", "source-email", "dest-name"],
+      "selector": "#source-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-name format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#source-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-email",
+    "suite": "forms",
+    "title": "Read a source profile email field by selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "#source-email",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["ada@example.test"]
+      },
+      "contains": ["ada@example.test"],
+      "notContains": ["Ada Lovelace"],
+      "selector": "#source-email",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-email format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#source-email",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-email-html",
+    "suite": "forms",
+    "title": "Read source profile email HTML by selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "#source-email",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["ada@example.test"]
+      },
+      "contains": ["ada@example.test"],
+      "notContains": ["Ada Lovelace", "source-name", "dest-email"],
+      "selector": "#source-email",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-email format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#source-email",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-save-profile-button-before-click",
+    "suite": "forms",
+    "title": "Read save profile button by exact selector before click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#save-profile",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Save profile"]
+      },
+      "contains": ["Save profile"],
+      "notContains": ["Ada Lovelace", "ada@example.test", "Saved profile"],
+      "selector": "#save-profile",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#save-profile format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#save-profile",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-save-profile-button-html-before-click",
+    "suite": "forms",
+    "title": "Read save profile button HTML by exact selector before click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#save-profile",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Save profile"]
+      },
+      "contains": ["Save profile"],
+      "notContains": ["Saved", "Ada Lovelace", "source-name", "dest-name"],
+      "selector": "#save-profile",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#save-profile format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#save-profile",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-save-result-empty-before-click",
+    "suite": "forms",
+    "title": "Read empty save result before save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#save-result",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Saved", "Grace Hopper", "Ada Lovelace", "Save profile"],
+      "selector": "#save-result",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#save-result format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#save-result",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-save-result-empty-html-before-click",
+    "suite": "forms",
+    "title": "Read empty save result HTML before save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#save-result",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Saved", "Grace Hopper", "Ada Lovelace", "Save profile"],
+      "selector": "#save-result",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#save-result format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#save-result",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "click-save-profile-recover-selector",
+    "suite": "forms",
+    "title": "Recover save profile button text selector",
+    "tool": "gemma_click",
+    "arguments": {
+      "tabId": 104,
+      "selector": "text=Save profile"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "recovered": true,
+        "recoveredSelector": "#save-profile",
+        "result.selector": "#save-profile"
+      },
+      "contains": ["recoveredSelector", "#save-profile", "Save profile"],
+      "clicked": "#save-profile",
+      "actions": 3,
+      "actionTraceTools": ["read_page_content", "read_page_content", "click_element"],
+      "actionTraceTextIncludes": ["selector=body format=text", "selector=body format=html", "selector=#save-profile"],
+      "bridgeExecuteTools": ["read_page_content", "click_element"],
+      "bridgeExecuteSelectors": ["body", "#save-profile"],
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-save-result-after-click",
+    "suite": "forms",
+    "title": "Read save result after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#save-result",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Saved Grace Hopper Jr.", "<>"]
+      },
+      "contains": ["Saved Grace Hopper Jr.", "<>"],
+      "notContains": ["Ada Lovelace", "ada@example.test", "Save profile"],
+      "selector": "#save-result",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#save-result format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#save-result",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-save-result-after-click-html",
+    "suite": "forms",
+    "title": "Read save result HTML after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#save-result",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Saved Grace Hopper Jr.", "&lt;&gt;"]
+      },
+      "contains": ["Saved Grace Hopper Jr.", "&lt;&gt;"],
+      "notContains": ["Ada Lovelace", "ada@example.test", "Save profile", "<>"],
+      "selector": "#save-result",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#save-result format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#save-result",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-save-profile-button-after-click",
+    "suite": "forms",
+    "title": "Read save profile button after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#save-profile",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Save profile"]
+      },
+      "contains": ["Save profile"],
+      "notContains": ["Saved Grace Hopper", "Grace Hopper Jr.", "Ada Lovelace", "ada@example.test", "save-result"],
+      "selector": "#save-profile",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#save-profile format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#save-profile",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-save-profile-button-html-after-click",
+    "suite": "forms",
+    "title": "Read save profile button HTML after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#save-profile",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Save profile"]
+      },
+      "contains": ["Save profile"],
+      "notContains": ["Saved Grace Hopper", "Grace Hopper Jr.", "Ada Lovelace", "ada@example.test", "save-result", "dest-name"],
+      "selector": "#save-profile",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#save-profile format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#save-profile",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-body-html-after-click",
+    "suite": "forms",
+    "title": "Read destination body HTML after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "body",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["id=\"save-result\"", "Saved Grace Hopper Jr.", "&lt;&gt;"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["Ada Lovelace", "ada@example.test", "<>"]
+      },
+      "contains": ["save-result", "Saved Grace Hopper Jr.", "&lt;&gt;"],
+      "notContains": ["Ada Lovelace", "ada@example.test", "<>"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-body-text-after-click",
+    "suite": "forms",
+    "title": "Read destination body text after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "body",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Name", "Email", "Save profile", "Saved Grace Hopper Jr.", "<>"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["Ada Lovelace", "ada@example.test", "&lt;&gt;"]
+      },
+      "contains": ["Name", "Email", "Save profile", "Saved Grace Hopper Jr.", "<>"],
+      "notContains": ["Ada Lovelace", "ada@example.test", "&lt;&gt;"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-name-after-save-click",
+    "suite": "forms",
+    "title": "Read destination name after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-name",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Grace Hopper Jr."]
+      },
+      "contains": ["Grace Hopper Jr."],
+      "notContains": ["Ada Lovelace", "ada@example.test", "Saved", "save-result", "source-name"],
+      "selector": "#dest-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-name format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-name-after-save-click-html",
+    "suite": "forms",
+    "title": "Read destination name HTML after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-name",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Grace Hopper", "Grace Hopper Jr.", "Ada Lovelace", "ada@example.test", "Saved", "Save profile", "save-result", "source-name"],
+      "selector": "#dest-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-name format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-email-after-save-click",
+    "suite": "forms",
+    "title": "Read destination email after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-email",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Grace Hopper", "Saved", "save-result", "Ada Lovelace", "ada@example.test", "source-email"],
+      "selector": "#dest-email",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-email format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-email",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-email-after-save-click-html",
+    "suite": "forms",
+    "title": "Read destination email HTML after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-email",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Grace Hopper", "Grace Hopper Jr.", "Saved", "Save profile", "Ada Lovelace", "ada@example.test", "save-result", "source-email"],
+      "selector": "#dest-email",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-email format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-email",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-role-after-save-click",
+    "suite": "forms",
+    "title": "Read destination role after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["selected: Reviewer (reviewer)", "options:", "Administrator"]
+      },
+      "contains": ["selected: Reviewer", "reviewer", "Administrator"],
+      "notContains": ["Grace Hopper", "Saved", "save-result", "Ada Lovelace", "ada@example.test", "source-name"],
+      "selector": "#dest-role",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-role format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-role-after-save-click-html",
+    "suite": "forms",
+    "title": "Read destination role HTML after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["<option value=\"\">Choose role</option>", "<option value=\"admin\">Administrator</option>", "<option value=\"reviewer\">Reviewer</option>"]
+      },
+      "contains": ["Choose role", "Administrator", "Reviewer"],
+      "notContains": ["selected:", "Grace Hopper", "Grace Hopper Jr.", "Saved", "Save profile", "Ada Lovelace", "ada@example.test", "save-result", "source-name", "dest-name"],
+      "selector": "#dest-role",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-role format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-updates-unchecked-after-save-click",
+    "suite": "forms",
+    "title": "Read unchecked destination updates after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-updates",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["unchecked"]
+      },
+      "contains": ["unchecked"],
+      "notContains": ["Subscribe updates", "Grace Hopper", "Saved", "save-result", "Ada Lovelace", "ada@example.test"],
+      "selector": "#dest-updates",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-updates format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-updates",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-updates-after-save-click-html",
+    "suite": "forms",
+    "title": "Read destination updates HTML after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-updates",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["checked", "unchecked", "Subscribe updates", "Grace Hopper", "Saved", "save-result", "Ada Lovelace", "ada@example.test"],
+      "selector": "#dest-updates",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-updates format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-updates",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-low-after-save-click",
+    "suite": "forms",
+    "title": "Read low priority after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-low",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["checked"]
+      },
+      "contains": ["checked"],
+      "notContains": ["unchecked", "Priority Low", "Grace Hopper", "Saved", "save-result", "Ada Lovelace", "ada@example.test"],
+      "selector": "#dest-priority-low",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-low format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-low",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-low-after-save-click-html",
+    "suite": "forms",
+    "title": "Read low priority HTML after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-low",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["checked", "unchecked", "Priority Low", "Grace Hopper", "Saved", "save-result", "Ada Lovelace", "ada@example.test"],
+      "selector": "#dest-priority-low",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-low format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-low",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-high-after-save-click",
+    "suite": "forms",
+    "title": "Read high priority after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-high",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["unchecked"]
+      },
+      "contains": ["unchecked"],
+      "notContains": ["Priority High", "Grace Hopper", "Saved", "save-result", "Ada Lovelace", "ada@example.test"],
+      "selector": "#dest-priority-high",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-high format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-high",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-high-after-save-click-html",
+    "suite": "forms",
+    "title": "Read high priority HTML after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-high",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["checked", "unchecked", "Priority High", "Grace Hopper", "Saved", "save-result", "Ada Lovelace", "ada@example.test"],
+      "selector": "#dest-priority-high",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-high format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-high",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-notes-after-save-click",
+    "suite": "forms",
+    "title": "Read destination notes after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-notes",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Ops note"]
+      },
+      "contains": ["Ops note"],
+      "notContains": ["Coordinate follow-up", "Notes", "Grace Hopper", "Saved", "save-result", "Ada Lovelace", "ada@example.test"],
+      "selector": "#dest-notes",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-notes format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-notes",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-notes-after-save-click-html",
+    "suite": "forms",
+    "title": "Read destination notes HTML after recovered save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-notes",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Ops note", "Coordinate follow-up", "Notes", "Grace Hopper", "Saved", "save-result", "Ada Lovelace", "ada@example.test"],
+      "selector": "#dest-notes",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-notes format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-notes",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-body-after-save-click",
+    "suite": "forms",
+    "title": "Read source body after destination save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "body",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Name", "Ada Lovelace", "Email", "ada@example.test"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["Grace Hopper", "Saved Grace Hopper", "dest-name", "Save profile", "data-plan"]
+      },
+      "contains": ["Name", "Ada Lovelace", "Email", "ada@example.test"],
+      "notContains": ["Grace Hopper", "Saved Grace Hopper", "dest-name", "Save profile", "data-plan"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-body-html-after-save-click",
+    "suite": "forms",
+    "title": "Read source body HTML after destination save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "body",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["<dt>Name</dt>", "id=\"source-name\"", "Ada Lovelace", "id=\"source-email\"", "ada@example.test"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["Grace Hopper", "Saved Grace Hopper", "dest-name", "save-profile", "save-result"]
+      },
+      "contains": ["<dt>Name</dt>", "source-name", "Ada Lovelace", "source-email", "ada@example.test"],
+      "notContains": ["Grace Hopper", "Saved Grace Hopper", "dest-name", "save-profile", "save-result"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-name-after-save-click",
+    "suite": "forms",
+    "title": "Read source name after destination save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "#source-name",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Ada Lovelace"]
+      },
+      "contains": ["Ada Lovelace"],
+      "notContains": ["Grace Hopper", "Saved", "save-result", "dest-name", "ada@example.test"],
+      "selector": "#source-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-name format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#source-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-name-after-save-click-html",
+    "suite": "forms",
+    "title": "Read source name HTML after destination save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "#source-name",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Ada Lovelace"]
+      },
+      "contains": ["Ada Lovelace"],
+      "notContains": ["Grace Hopper", "Saved", "save-result", "dest-name", "ada@example.test", "source-email"],
+      "selector": "#source-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-name format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#source-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-email-after-save-click",
+    "suite": "forms",
+    "title": "Read source email after destination save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "#source-email",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["ada@example.test"]
+      },
+      "contains": ["ada@example.test"],
+      "notContains": ["Grace Hopper", "Saved", "save-result", "dest-email", "Ada Lovelace", "source-name"],
+      "selector": "#source-email",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-email format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#source-email",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-email-after-save-click-html",
+    "suite": "forms",
+    "title": "Read source email HTML after destination save click",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "#source-email",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["ada@example.test"]
+      },
+      "contains": ["ada@example.test"],
+      "notContains": ["Grace Hopper", "Saved", "save-result", "dest-email", "Ada Lovelace", "source-name"],
+      "selector": "#source-email",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-email format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#source-email",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "transfer-profile-fields",
+    "suite": "forms",
+    "title": "Transfer account fields between tabs",
+    "tool": "gemma_transfer_fields",
+    "arguments": {
+      "sourceTabId": 103,
+      "destinationTabId": 104,
+      "mappings": [
+        {
+          "label": "Full name",
+          "fromSelector": "#source-name",
+          "toSelector": "#dest-name"
+        },
+        {
+          "label": "Email",
+          "fromSelector": "#source-email",
+          "toSelector": "#dest-email"
+        }
+      ],
+      "submitSelector": "#save-profile",
+      "resultSelector": "#save-result"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "ok": true,
+        "copiedFields.0.fromSelector": "#source-name",
+        "copiedFields.0.toSelector": "#dest-name",
+        "copiedFields.0.value": "Ada Lovelace",
+        "copiedFields.1.fromSelector": "#source-email",
+        "copiedFields.1.toSelector": "#dest-email",
+        "copiedFields.1.value": "ada@example.test",
+        "submitSelector": "#save-profile",
+        "submitResult.selector": "#save-profile",
+        "resultSelector": "#save-result"
+      },
+      "jsonFieldIncludes": {
+        "destinationResult.content": ["Saved Ada Lovelace", "ada@example.test"],
+        "peerSummary.action": "Copied mapped source fields"
+      },
+      "jsonFieldMinItems": {
+        "copiedFields": 2
+      },
+      "jsonFieldItemCount": {
+        "copiedFields": 2
+      },
+      "contains": ["Ada Lovelace", "ada@example.test", "Copied mapped source fields", "Saved Ada Lovelace"],
+      "destinationValues": {
+        "#dest-name": "Ada Lovelace",
+        "#dest-email": "ada@example.test"
+      },
+      "clicked": "#save-profile",
+      "actions": 6,
+      "actionTraceTools": ["read_page_content", "type_text", "read_page_content", "type_text", "click_element", "read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-name", "selector=#dest-name", "selector=#source-email", "selector=#dest-email", "selector=#save-profile", "selector=#save-result"],
+      "bridgeExecuteTools": ["read_page_content", "type_text", "click_element"],
+      "bridgeExecuteSelectors": ["#source-name", "#source-email", "#dest-name", "#dest-email", "#save-profile", "#save-result"],
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-email-after-transfer",
+    "suite": "forms",
+    "title": "Read transferred destination email by selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-email",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["ada@example.test"]
+      },
+      "contains": ["ada@example.test"],
+      "notContains": ["Ada Lovelace", "Saved", "Save profile"],
+      "selector": "#dest-email",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-email format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-email",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-email-after-transfer-html",
+    "suite": "forms",
+    "title": "Read transferred destination email input HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-email",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["ada@example.test", "Ada Lovelace", "Saved", "Save profile"],
+      "selector": "#dest-email",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-email format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-email",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-name-after-transfer",
+    "suite": "forms",
+    "title": "Read transferred destination name by selector",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-name",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Ada Lovelace"]
+      },
+      "contains": ["Ada Lovelace"],
+      "notContains": ["ada@example.test", "Saved", "Save profile"],
+      "selector": "#dest-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-name format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-name-after-transfer-html",
+    "suite": "forms",
+    "title": "Read transferred destination name input HTML",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-name",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Ada Lovelace", "ada@example.test", "Saved", "Save profile"],
+      "selector": "#dest-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-name format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-role-after-transfer",
+    "suite": "forms",
+    "title": "Read destination role after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["selected: Reviewer (reviewer)", "options:", "Administrator"]
+      },
+      "contains": ["selected: Reviewer", "reviewer", "Administrator"],
+      "notContains": ["Ada Lovelace", "ada@example.test", "Saved", "Save profile"],
+      "selector": "#dest-role",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-role format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-role-after-transfer-html",
+    "suite": "forms",
+    "title": "Read destination role HTML after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-role",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["<option value=\"\">Choose role</option>", "<option value=\"admin\">Administrator</option>", "<option value=\"reviewer\">Reviewer</option>"]
+      },
+      "contains": ["Choose role", "Administrator", "Reviewer"],
+      "notContains": ["selected:", "Ada Lovelace", "ada@example.test", "Saved", "Save profile"],
+      "selector": "#dest-role",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-role format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-role",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-updates-after-transfer",
+    "suite": "forms",
+    "title": "Read destination updates checkbox after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-updates",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["unchecked"]
+      },
+      "contains": ["unchecked"],
+      "notContains": ["Ada Lovelace", "ada@example.test", "Saved", "Subscribe updates"],
+      "selector": "#dest-updates",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-updates format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-updates",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-updates-after-transfer-html",
+    "suite": "forms",
+    "title": "Read destination updates checkbox HTML after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-updates",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["checked", "unchecked", "Ada Lovelace", "ada@example.test", "Saved", "Subscribe updates"],
+      "selector": "#dest-updates",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-updates format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-updates",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-low-after-transfer",
+    "suite": "forms",
+    "title": "Read destination low priority radio after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-low",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["checked"]
+      },
+      "contains": ["checked"],
+      "notContains": ["unchecked", "Ada Lovelace", "ada@example.test", "Saved", "Priority Low"],
+      "selector": "#dest-priority-low",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-low format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-low",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-low-after-transfer-html",
+    "suite": "forms",
+    "title": "Read destination low priority radio HTML after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-low",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["checked", "unchecked", "Ada Lovelace", "ada@example.test", "Saved", "Priority Low"],
+      "selector": "#dest-priority-low",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-low format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-low",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-high-after-transfer",
+    "suite": "forms",
+    "title": "Read destination high priority radio after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-high",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["unchecked"]
+      },
+      "contains": ["unchecked"],
+      "notContains": ["Ada Lovelace", "ada@example.test", "Saved", "Priority High"],
+      "selector": "#dest-priority-high",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-high format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-high",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-priority-high-after-transfer-html",
+    "suite": "forms",
+    "title": "Read destination high priority radio HTML after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-priority-high",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["checked", "unchecked", "Ada Lovelace", "ada@example.test", "Saved", "Priority High"],
+      "selector": "#dest-priority-high",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-priority-high format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-priority-high",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-notes-after-transfer",
+    "suite": "forms",
+    "title": "Read destination notes after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-notes",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Ops note"]
+      },
+      "contains": ["Ops note"],
+      "notContains": ["Coordinate follow-up", "Ada Lovelace", "ada@example.test", "Saved", "Notes"],
+      "selector": "#dest-notes",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-notes format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-notes",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-notes-after-transfer-html",
+    "suite": "forms",
+    "title": "Read destination notes HTML after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#dest-notes",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFields": {
+        "content": ""
+      },
+      "notContains": ["Ops note", "Coordinate follow-up", "Ada Lovelace", "ada@example.test", "Saved", "Notes"],
+      "selector": "#dest-notes",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#dest-notes format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#dest-notes",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-save-result-after-transfer",
+    "suite": "forms",
+    "title": "Read save result after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#save-result",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Saved Ada Lovelace", "ada@example.test"]
+      },
+      "contains": ["Saved Ada Lovelace", "ada@example.test"],
+      "notContains": ["Save profile", "Role", "Priority High"],
+      "selector": "#save-result",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#save-result format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#save-result",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-save-result-after-transfer-html",
+    "suite": "forms",
+    "title": "Read save result HTML after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "#save-result",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Saved Ada Lovelace", "&lt;ada@example.test&gt;"]
+      },
+      "contains": ["Saved Ada Lovelace", "&lt;ada@example.test&gt;"],
+      "notContains": ["Save profile", "Role", "Priority High", "<ada@example.test>"],
+      "selector": "#save-result",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#save-result format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#save-result",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-body-html-after-transfer",
+    "suite": "forms",
+    "title": "Read destination body HTML after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "body",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["id=\"save-result\"", "Saved Ada Lovelace", "&lt;ada@example.test&gt;"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["source-name", "data-plan", "<ada@example.test>"]
+      },
+      "contains": ["save-result", "Saved Ada Lovelace", "&lt;ada@example.test&gt;"],
+      "notContains": ["source-name", "data-plan", "<ada@example.test>"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-destination-body-after-transfer",
+    "suite": "forms",
+    "title": "Read destination body after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 104,
+      "selector": "body",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Name", "Email", "Save profile", "Saved Ada Lovelace", "ada@example.test"]
+      },
+      "contains": ["Name", "Email", "Save profile", "Saved Ada Lovelace", "ada@example.test"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-name-after-transfer",
+    "suite": "forms",
+    "title": "Read source name after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "#source-name",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Ada Lovelace"]
+      },
+      "contains": ["Ada Lovelace"],
+      "notContains": ["Saved", "save-result", "dest-name", "ada@example.test"],
+      "selector": "#source-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-name format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#source-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-name-after-transfer-html",
+    "suite": "forms",
+    "title": "Read source name HTML after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "#source-name",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Ada Lovelace"]
+      },
+      "contains": ["Ada Lovelace"],
+      "notContains": ["Saved", "save-result", "dest-name", "ada@example.test", "source-email"],
+      "selector": "#source-name",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-name format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#source-name",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-email-after-transfer",
+    "suite": "forms",
+    "title": "Read source email after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "#source-email",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["ada@example.test"]
+      },
+      "contains": ["ada@example.test"],
+      "notContains": ["Saved", "save-result", "dest-email", "Ada Lovelace"],
+      "selector": "#source-email",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-email format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#source-email",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-email-after-transfer-html",
+    "suite": "forms",
+    "title": "Read source email HTML after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "#source-email",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["ada@example.test"]
+      },
+      "contains": ["ada@example.test"],
+      "notContains": ["Saved", "save-result", "dest-email", "Ada Lovelace", "source-name"],
+      "selector": "#source-email",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=#source-email format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "#source-email",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-body-html-after-transfer",
+    "suite": "forms",
+    "title": "Read source body HTML after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "body",
+      "format": "html"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["<dt>Name</dt>", "id=\"source-name\"", "Ada Lovelace", "id=\"source-email\"", "ada@example.test"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["dest-name", "save-result", "Saved Ada Lovelace"]
+      },
+      "contains": ["<dt>Name</dt>", "source-name", "Ada Lovelace", "source-email", "ada@example.test"],
+      "notContains": ["dest-name", "save-result", "Saved Ada Lovelace"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=html"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  },
+  {
+    "id": "read-source-body-after-transfer",
+    "suite": "forms",
+    "title": "Read source body after transferred profile submit",
+    "tool": "gemma_read_page",
+    "arguments": {
+      "tabId": 103,
+      "selector": "body",
+      "format": "text"
+    },
+    "expect": {
+      "json": "object",
+      "jsonFieldIncludes": {
+        "content": ["Name", "Ada Lovelace", "Email", "ada@example.test"]
+      },
+      "jsonFieldExcludes": {
+        "content": ["dest-name", "Save profile", "Saved Ada Lovelace", "data-plan"]
+      },
+      "contains": ["Name", "Ada Lovelace", "Email", "ada@example.test"],
+      "notContains": ["dest-name", "Save profile", "Saved Ada Lovelace", "data-plan"],
+      "selector": "body",
+      "actions": 1,
+      "actionTraceTools": ["read_page_content"],
+      "actionTraceTextIncludes": ["selector=body format=text"],
+      "bridgeExecuteTool": "read_page_content",
+      "bridgeExecuteSelector": "body",
+      "bridgeRunAgent": false
+    }
+  }
+]
